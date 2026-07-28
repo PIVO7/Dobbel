@@ -1,8 +1,6 @@
 # Yahtzee (SwiftUI)
 
-Nieuwe iOS-app voor kinderen: klassiek Yahtzee met profielen, lokale multiplayer en solo tegen de computer.
-
-> Dit project staat naast de bestaande Interval-app in dezelfde repo, onder `Yahtzee/`. Het is een **apart Xcode-project**.
+iOS-app voor kinderen: klassiek Yahtzee met profielen, lokale multiplayer en solo tegen de computer.
 
 ## Features
 
@@ -15,12 +13,12 @@ Nieuwe iOS-app voor kinderen: klassiek Yahtzee met profielen, lokale multiplayer
 
 ## Openen in Xcode
 
-Op een Mac:
+Er staat geen `.xcodeproj` in de repo: die wordt gegenereerd uit `project.yml` met
+[XcodeGen](https://github.com/yonaskolb/XcodeGen). Op een Mac, vanuit de **root** van de repo:
 
 ```bash
-cd Yahtzee
 brew install xcodegen   # eenmalig, indien nodig
-xcodegen generate
+xcodegen generate       # maakt Yahtzee.xcodeproj aan
 open Yahtzee.xcodeproj
 ```
 
@@ -28,21 +26,23 @@ Kies een simulator of iPhone, druk op Run.
 
 Vereisten: Xcode 15+, iOS 17+.
 
+Draai `xcodegen generate` opnieuw nadat je bestanden hebt toegevoegd, verwijderd of hernoemd —
+het gegenereerde project staat in `.gitignore` en wordt dus niet meegecommit.
+
 ## App-structuur
 
 ```
+project.yml                 # XcodeGen-definitie (repo-root)
 Yahtzee/
-  project.yml                 # XcodeGen
-  Yahtzee/
-    YahtzeeApp.swift
-    Models/                   # Dobbelsteen, scorecategorieën, profiel, scoreblad
-    Game/                     # GameEngine + YahtzeeScorer
-    AI/                       # ComputerAI
-    Persistence/              # ProfileStore (JSON in Documents)
-    Components/               # Dice, scoreblad, avatar
-    Screens/                  # Home, Profiles, Setup, Game
-    Theme/
-  Yahtzee Tests/              # Scoring, AI, profielen, engine
+  YahtzeeApp.swift
+  Models/                   # Dobbelsteen, scorecategorieën, profiel, scoreblad
+  Game/                     # GameEngine + YahtzeeScorer
+  AI/                       # ComputerAI
+  Persistence/              # ProfileStore (JSON in Documents)
+  Components/               # Dice, scoreblad, avatar
+  Screens/                  # Home, Profiles, Setup, Game
+  Theme/
+Yahtzee Tests/              # Scoring, AI, profielen, engine
 ```
 
 ## Spelregels (kort)
