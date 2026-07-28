@@ -116,6 +116,20 @@ enum YahtzeeScorer {
         return (score, bonus)
     }
 
+    /// De hoogst scorende open categorie voor deze worp, of `nil` als elke open
+    /// categorie nul oplevert. Puur advies — de speler mag altijd iets anders kiezen.
+    static func bestCategory(dice: [Int], scorecard: Scorecard) -> ScoreCategory? {
+        let open = availableCategories(dice: dice, scorecard: scorecard)
+        var best: (category: ScoreCategory, score: Int)?
+        for category in open {
+            let score = pointsForPlacing(category: category, dice: dice, scorecard: scorecard).score
+            if score > (best?.score ?? 0) {
+                best = (category, score)
+            }
+        }
+        return best?.category
+    }
+
     private static func hasStraight(_ values: [Int], length: Int) -> Bool {
         let unique = Array(Set(values)).sorted()
         guard unique.count >= length else { return false }

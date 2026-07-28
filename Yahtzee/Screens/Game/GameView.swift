@@ -10,18 +10,15 @@ struct GameView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [AppTheme.felt, AppTheme.feltDeep],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            AppTheme.cream.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 header
-                playerStrip
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
+                    .padding(.top, 6)
+
+                roundStrip
+                    .padding(.top, 16)
 
                 DiceTrayView(
                     dice: engine.dice,
@@ -30,39 +27,12 @@ struct GameView: View {
                 ) { id in
                     engine.toggleHold(dieID: id)
                 }
-                .padding(.horizontal, 12)
+                .padding(.top, 12)
 
-                Text(engine.turnMessage)
-                    .font(AppTheme.bodyFont)
-                    .foregroundStyle(AppTheme.cream)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-
-                HStack(spacing: 12) {
-                    Label("\(engine.rollsRemaining) worpen over", systemImage: "arrow.trianglehead.2.clockwise.rotate.90")
-                        .font(AppTheme.captionFont)
-                        .foregroundStyle(AppTheme.gold)
-
-                    Spacer()
-
-                    Button {
-                        Task { await engine.rollDice() }
-                    } label: {
-                        Text(engine.isRolling ? "Bezig…" : "Gooien")
-                            .font(AppTheme.headlineFont)
-                            .padding(.horizontal, 28)
-                            .padding(.vertical, 12)
-                            .background(
-                                engine.canRoll ? AppTheme.coral : AppTheme.coral.opacity(0.35),
-                                in: Capsule()
-                            )
-                            .foregroundStyle(.white)
-                    }
-                    .disabled(!engine.canRoll)
-                }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 10)
+                callout
+                    .padding(.horizontal, 24)
+                    .padding(.top, 4)
+                    .padding(.bottom, 14)
 
                 ScorecardView(
                     players: engine.players,
@@ -71,6 +41,13 @@ struct GameView: View {
                     canScore: engine.canScore,
                     onSelect: { engine.score(in: $0) }
                 )
+                .padding(.horizontal, 14)
+
+                Spacer(minLength: 12)
+
+                rollButton
+                    .padding(.horizontal, 14)
+                    .padding(.bottom, 22)
             }
 
             if engine.isFinished {
@@ -94,8 +71,28 @@ struct GameView: View {
         }
     }
 
+    // MARK: - Kop
+
     private var header: some View {
-        HStack {
+        HStack(spacing: 8) {
+            HStack(spacing: 8) {
+                ForEach(Array(engine.players.enumerated()), id: \.element.id) { index, player in
+                    if index > 0 {
+                        Text("·")
+                            .font(AppTheme.captionFont)
+                            .foregroundStyle(AppTheme.dim)
+                    }
+                    Text("\(player.name) \(player.scorecard.total)")
+                        .font(AppTheme.captionFont)
+                        .foregroundStyle(player.id == engine.currentPlayer.id ? AppTheme.coral : AppTheme.ink)
+                        .lineLimit(1)
+                }
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
+            .frame(maxWidth: .infinity)
+            .toyBlock(fill: .white, radius: 14, depth: 3, border: 2.5)
+
             Button {
                 if engine.isFinished {
                     onClose()
@@ -103,73 +100,131 @@ struct GameView: View {
                     showExitConfirm = true
                 }
             } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title2)
-                    .foregroundStyle(AppTheme.cream.opacity(0.9))
+                Image(systemName: "xmark")
+                    .font(.system(size: 14, weight: .black))
+                    .foregroundStyle(AppTheme.ink)
+                    .frame(width: 34, height: 34)
             }
-            Spacer()
-            Text("Yahtzee")
-                .font(AppTheme.headlineFont)
-                .foregroundStyle(AppTheme.cream)
-            Spacer()
-            Color.clear.frame(width: 28, height: 28)
+            .buttonStyle(ToyButtonStyle(fill: .white, radius: 11, depth: 3))
+            .accessibilityLabel("Spel verlaten")
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 8)
-        .padding(.bottom, 4)
     }
 
-    private var playerStrip: some View {
-        HStack(spacing: 8) {
-            ForEach(engine.players) { player in
-                VStack(spacing: 4) {
-                    Text(player.name)
-                        .font(AppTheme.captionFont)
-                        .lineLimit(1)
-                    Text("\(player.scorecard.total)")
-                        .font(AppTheme.headlineFont)
+    private var roundStrip: some View {
+        VStack(spacing: 7) {
+            Text("RONDE \(roundNumber) / \(ScoreCategory.allCases.count)")
+                .font(AppTheme.labelFont)
+                .kerning(1.6)
+                .foregroundStyle(AppTheme.faint)
+
+            HStack(spacing: 4) {
+                ForEach(0..<ScoreCategory.allCases.count, id: \.self) { index in
+                    Circle()
+                        .fill(index < roundNumber ? AppTheme.amber : AppTheme.tintStone)
+                        .frame(width: 7, height: 7)
                 }
-                .foregroundStyle(player.id == engine.currentPlayer.id ? AppTheme.ink : AppTheme.cream)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 8)
-                .background(
-                    player.id == engine.currentPlayer.id ? AppTheme.gold : AppTheme.feltDeep.opacity(0.5),
-                    in: RoundedRectangle(cornerRadius: 12, style: .continuous)
-                )
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Ronde \(roundNumber) van \(ScoreCategory.allCases.count)")
     }
+
+    private var roundNumber: Int {
+        min(engine.currentPlayer.scorecard.filledCount + 1, ScoreCategory.allCases.count)
+    }
+
+    // MARK: - Uitslag in woorden
+
+    private var callout: some View {
+        VStack(spacing: 4) {
+            Text(engine.isRolling ? "…" : RollPhrase.describe(engine.diceValues))
+                .font(AppTheme.displayFont)
+                .foregroundStyle(AppTheme.ink)
+                .multilineTextAlignment(.center)
+                .contentTransition(.opacity)
+
+            Text(engine.turnMessage)
+                .font(AppTheme.captionFont)
+                .foregroundStyle(AppTheme.soft)
+                .multilineTextAlignment(.center)
+        }
+        .frame(minHeight: 62)
+    }
+
+    // MARK: - Gooien
+
+    private var rollButton: some View {
+        Button {
+            Task { await engine.rollDice() }
+        } label: {
+            HStack(spacing: 10) {
+                Text(rollTitle)
+                    .font(.system(size: 21, weight: .black, design: .rounded))
+                if engine.rollsRemaining > 0 {
+                    Text("\(engine.rollsRemaining)")
+                        .font(.system(size: 15, weight: .black, design: .rounded))
+                        .frame(minWidth: 28, minHeight: 28)
+                        .background(Color.black.opacity(0.18), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+                }
+            }
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: 60)
+        }
+        .buttonStyle(ToyButtonStyle(fill: engine.canRoll ? AppTheme.mint : AppTheme.offFill, radius: 18, depth: 6))
+        .disabled(!engine.canRoll)
+    }
+
+    private var rollTitle: String {
+        if engine.isRolling { return "Bezig…" }
+        if engine.rollsRemaining == 0 { return "Kies een vakje" }
+        return "Gooien"
+    }
+
+    // MARK: - Einde
 
     private var resultOverlay: some View {
         ZStack {
-            Color.black.opacity(0.45).ignoresSafeArea()
+            AppTheme.ink.opacity(0.5).ignoresSafeArea()
+
             VStack(spacing: 16) {
                 Text("Klaar!")
                     .font(AppTheme.titleFont)
+                    .foregroundStyle(AppTheme.ink)
+
                 Text(engine.turnMessage)
                     .font(AppTheme.bodyFont)
+                    .foregroundStyle(AppTheme.soft)
                     .multilineTextAlignment(.center)
 
-                ForEach(engine.players) { player in
-                    HStack {
-                        Text(player.name)
-                        Spacer()
-                        Text("\(player.scorecard.total)")
-                            .font(AppTheme.headlineFont)
+                VStack(spacing: 8) {
+                    ForEach(engine.players) { player in
+                        HStack {
+                            Text(player.name)
+                                .font(AppTheme.bodyFont)
+                            Spacer()
+                            Text("\(player.scorecard.total)")
+                                .font(AppTheme.headlineFont)
+                        }
+                        .foregroundStyle(AppTheme.ink)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .toyBlock(fill: AppTheme.sunk, radius: 12, depth: 0, border: 2)
                     }
                 }
 
-                Button("Terug naar menu", action: onClose)
-                    .font(AppTheme.headlineFont)
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 12)
-                    .background(AppTheme.coral, in: Capsule())
-                    .foregroundStyle(.white)
-                    .padding(.top, 8)
+                Button(action: onClose) {
+                    Text("Terug naar menu")
+                        .font(AppTheme.headlineFont)
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 54)
+                }
+                .buttonStyle(ToyButtonStyle(fill: AppTheme.coral, radius: 16, depth: 5))
+                .padding(.top, 4)
             }
-            .foregroundStyle(AppTheme.ink)
-            .padding(24)
-            .background(AppTheme.cream, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+            .padding(22)
+            .toyBlock(fill: .white, radius: 24, depth: 6)
             .padding(28)
         }
         .transition(.opacity.combined(with: .scale))

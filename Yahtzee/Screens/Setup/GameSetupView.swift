@@ -8,16 +8,18 @@ struct GameSetupView: View {
 
     var body: some View {
         ZStack {
-            AppTheme.felt.ignoresSafeArea()
+            AppTheme.cream.ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 18) {
-                Text(mode.title)
-                    .font(AppTheme.titleFont)
-                    .foregroundStyle(AppTheme.cream)
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(mode.title)
+                        .font(AppTheme.titleFont)
+                        .foregroundStyle(AppTheme.ink)
 
-                Text(mode.subtitle)
-                    .font(AppTheme.bodyFont)
-                    .foregroundStyle(AppTheme.cream.opacity(0.85))
+                    Text(mode.subtitle)
+                        .font(AppTheme.bodyFont)
+                        .foregroundStyle(AppTheme.soft)
+                }
 
                 if profileStore.humanProfiles.isEmpty {
                     ContentUnavailableView(
@@ -25,55 +27,37 @@ struct GameSetupView: View {
                         systemImage: "person.crop.circle.badge.plus",
                         description: Text("Maak eerst een profiel aan onder Profielen.")
                     )
-                    .foregroundStyle(AppTheme.cream)
+                    .foregroundStyle(AppTheme.soft)
                 } else {
-                    Text(mode == .versusComputer ? "Kies jouw profiel" : "Kies 2 tot 4 spelers")
-                        .font(AppTheme.captionFont)
-                        .foregroundStyle(AppTheme.gold)
+                    Text(mode == .versusComputer ? "KIES JOUW PROFIEL" : "KIES 2 TOT 4 SPELERS")
+                        .font(AppTheme.labelFont)
+                        .kerning(1.4)
+                        .foregroundStyle(AppTheme.faint)
 
                     ScrollView {
-                        VStack(spacing: 10) {
+                        VStack(spacing: 12) {
                             ForEach(profileStore.humanProfiles) { profile in
-                                Button {
-                                    toggle(profile.id)
-                                } label: {
-                                    HStack(spacing: 14) {
-                                        AvatarBadge(profile: profile)
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            Text(profile.name)
-                                                .font(AppTheme.headlineFont)
-                                                .foregroundStyle(AppTheme.ink)
-                                            Text("\(profile.wins) overwinningen")
-                                                .font(AppTheme.captionFont)
-                                                .foregroundStyle(AppTheme.ink.opacity(0.6))
-                                        }
-                                        Spacer()
-                                        Image(systemName: selectedIDs.contains(profile.id) ? "checkmark.circle.fill" : "circle")
-                                            .foregroundStyle(selectedIDs.contains(profile.id) ? AppTheme.coral : AppTheme.ink.opacity(0.3))
-                                            .font(.title2)
-                                    }
-                                    .padding(14)
-                                    .background(AppTheme.cream.opacity(0.95), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                                }
-                                .buttonStyle(.plain)
+                                profileButton(profile)
                             }
                         }
+                        .padding(.vertical, 2)
                     }
 
-                    Button {
-                        startGame()
-                    } label: {
+                    Button(action: startGame) {
                         Text("Start spel")
-                            .font(AppTheme.headlineFont)
+                            .font(.system(size: 21, weight: .black, design: .rounded))
+                            .foregroundStyle(canStart ? .white : AppTheme.offInk)
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background(canStart ? AppTheme.coral : AppTheme.coral.opacity(0.4), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                            .foregroundStyle(.white)
+                            .frame(height: 58)
                     }
+                    .buttonStyle(ToyButtonStyle(fill: canStart ? AppTheme.mint : AppTheme.offFill, radius: 18, depth: 6))
                     .disabled(!canStart)
+                    .padding(.bottom, 6)
                 }
             }
-            .padding(24)
+            .padding(.horizontal, 22)
+            .padding(.top, 6)
+            .padding(.bottom, 18)
         }
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(item: $activeGame) { game in
@@ -82,6 +66,34 @@ struct GameSetupView: View {
             }
             .environment(profileStore)
         }
+    }
+
+    private func profileButton(_ profile: PlayerProfile) -> some View {
+        let picked = selectedIDs.contains(profile.id)
+        return Button {
+            toggle(profile.id)
+        } label: {
+            HStack(spacing: 13) {
+                AvatarBadge(profile: profile)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(profile.name)
+                        .font(AppTheme.headlineFont)
+                        .foregroundStyle(AppTheme.ink)
+                    Text("\(profile.wins) overwinningen")
+                        .font(AppTheme.captionFont)
+                        .foregroundStyle(AppTheme.soft)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Image(systemName: picked ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 24, weight: .black))
+                    .foregroundStyle(picked ? AppTheme.coral : AppTheme.dim)
+            }
+            .padding(13)
+        }
+        .buttonStyle(ToyButtonStyle(fill: picked ? AppTheme.tintCoral : .white, radius: 18, depth: 5))
+        .accessibilityAddTraits(picked ? .isSelected : [])
     }
 
     private var canStart: Bool {

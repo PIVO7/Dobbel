@@ -1,5 +1,8 @@
 import SwiftUI
 
+/// Het hele scoreblad in twee kolommen, zodat alle dertien vakjes tegelijk in
+/// beeld staan. De zevende rij links draagt de bonus; rechts loopt Chance daar
+/// gewoon door, waardoor het raster sluit.
 struct ScorecardView: View {
     let players: [GamePlayer]
     let currentPlayerID: UUID
@@ -7,140 +10,193 @@ struct ScorecardView: View {
     let canScore: Bool
     let onSelect: (ScoreCategory) -> Void
 
+    private let rowHeight: CGFloat = 38
+    private let iconWidth: CGFloat = 38
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                section(title: "Bovenkant", categories: ScoreCategory.upper)
-                totalsBlock(isUpper: true)
-                section(title: "Onderkant", categories: ScoreCategory.lower)
-                totalsBlock(isUpper: false)
+        HStack(alignment: .top, spacing: 8) {
+            column(title: "BOVEN", categories: ScoreCategory.upper, showsBonus: true)
+            column(title: "ONDER", categories: ScoreCategory.lower, showsBonus: false)
+        }
+        .padding(11)
+        .toyBlock(fill: .white, radius: 20, depth: 5)
+    }
+
+    private var current: GamePlayer? {
+        players.first { $0.id == currentPlayerID }
+    }
+
+    /// Advies van de scorer: alleen tonen als er echt gegooid is.
+    private var bestCategory: ScoreCategory? {
+        guard canScore, let current else { return nil }
+        return YahtzeeScorer.bestCategory(dice: diceValues, scorecard: current.scorecard)
+    }
+
+    @ViewBuilder
+    private func column(title: String, categories: [ScoreCategory], showsBonus: Bool) -> some View {
+        VStack(spacing: 4) {
+            Text(title)
+                .font(AppTheme.labelFont)
+                .kerning(1.4)
+                .foregroundStyle(AppTheme.faint)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 3)
+                .padding(.bottom, 2)
+
+            ForEach(categories) { category in
+                row(for: category)
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 24)
+
+            if showsBonus {
+                bonusRow
+            }
+        }
+    }
+
+    private func row(for category: ScoreCategory) -> some View {
+        HStack(spacing: 3) {
+            CategoryIcon(category: category)
+                .frame(width: iconWidth, height: rowHeight)
+
+            ForEach(players) { player in
+                cell(for: category, player: player)
+            }
         }
     }
 
     @ViewBuilder
-    private func section(title: String, categories: [ScoreCategory]) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(AppTheme.headlineFont)
-                .foregroundStyle(AppTheme.cream)
+    private func cell(for category: ScoreCategory, player: GamePlayer) -> some View {
+        let scored = player.scorecard.scores[category]
+        let isMine = player.id == currentPlayerID
+        let open = openCategories.contains(category)
+        let selectable = isMine && canScore && open
 
-            ForEach(categories) { category in
-                ScoreRowView(
-                    category: category,
-                    players: players,
-                    currentPlayerID: currentPlayerID,
-                    preview: preview(for: category),
-                    isSelectable: canSelect(category),
-                    onSelect: { onSelect(category) }
-                )
+        if selectable {
+            let points = YahtzeeScorer.pointsForPlacing(
+                category: category,
+                dice: diceValues,
+                scorecard: player.scorecard
+            ).score
+            let isBest = category == bestCategory
+
+            Button {
+                onSelect(category)
+            } label: {
+                Text("\(points)")
+                    .font(AppTheme.bodyFont)
+                    .foregroundStyle(isBest ? .white : AppTheme.coral)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: rowHeight)
+            }
+            .buttonStyle(ToyButtonStyle(
+                fill: isBest ? AppTheme.mint : .white,
+                radius: 11,
+                depth: isBest ? 3 : 0,
+                border: 2
+            ))
+            .accessibilityLabel("\(category.title), \(points) punten\(isBest ? ", beste zet" : "")")
+        } else {
+            Text(scored.map { "\($0)" } ?? "–")
+                .font(AppTheme.bodyFont)
+                .foregroundStyle(scored == nil ? AppTheme.dim : AppTheme.ink)
+                .frame(maxWidth: .infinity)
+                .frame(height: rowHeight)
+                .toyBlock(fill: AppTheme.sunk, radius: 11, depth: 0, border: 2)
+                .accessibilityLabel("\(category.title), \(scored.map { "\($0) punten" } ?? "leeg")")
+        }
+    }
+
+    private var bonusRow: some View {
+        HStack(spacing: 3) {
+            VStack(spacing: 0) {
+                Text("BONUS")
+                    .font(.system(size: 8, weight: .black, design: .rounded))
+                    .kerning(0.6)
+                    .foregroundStyle(AppTheme.soft)
+                Text("+35")
+                    .font(.system(size: 12, weight: .black, design: .rounded))
+                    .foregroundStyle(AppTheme.ink)
+            }
+            .frame(width: iconWidth, height: rowHeight)
+            .toyBlock(fill: AppTheme.tintStone, radius: 11, depth: 0, border: 2)
+
+            ForEach(players) { player in
+                let subtotal = player.scorecard.upperSubtotal
+                let reached = player.scorecard.upperBonus > 0
+                Text(reached ? "+35" : "\(subtotal)/63")
+                    .font(.system(size: 11, weight: .black, design: .rounded))
+                    .foregroundStyle(reached ? AppTheme.mint : AppTheme.soft)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: rowHeight)
+                    .toyBlock(fill: AppTheme.sunk, radius: 11, depth: 0, border: 2)
+                    .accessibilityLabel(
+                        reached
+                            ? "Bonus behaald, 35 punten"
+                            : "Bonus bij 63, nu \(subtotal)"
+                    )
             }
         }
     }
 
-    private func totalsBlock(isUpper: Bool) -> some View {
-        VStack(spacing: 6) {
-            if isUpper {
-                totalRow(label: "Subtotaal", values: players.map { "\($0.scorecard.upperSubtotal)" })
-                totalRow(label: "Bonus (≥63 → 35)", values: players.map { card in
-                    card.scorecard.upperBonus > 0
-                        ? "\(card.scorecard.upperBonus)"
-                        : "\(card.scorecard.upperSubtotal)/63"
-                })
-            } else {
-                totalRow(label: "Yahtzee-bonus", values: players.map { "\($0.scorecard.yahtzeeBonusTotal)" })
-                totalRow(label: "Totaal", values: players.map { "\($0.scorecard.total)" }, emphasize: true)
-            }
-        }
-        .padding(12)
-        .background(AppTheme.feltDeep.opacity(0.65), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-    }
-
-    private func totalRow(label: String, values: [String], emphasize: Bool = false) -> some View {
-        HStack {
-            Text(label)
-                .font(emphasize ? AppTheme.headlineFont : AppTheme.bodyFont)
-                .foregroundStyle(AppTheme.cream)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            ForEach(Array(values.enumerated()), id: \.offset) { _, value in
-                Text(value)
-                    .font(emphasize ? AppTheme.headlineFont : AppTheme.bodyFont)
-                    .foregroundStyle(emphasize ? AppTheme.gold : AppTheme.cream)
-                    .frame(width: 52, alignment: .trailing)
-            }
-        }
-    }
-
-    private func preview(for category: ScoreCategory) -> Int? {
-        guard canScore else { return nil }
-        let current = players.first(where: { $0.id == currentPlayerID })
-        guard let current, current.scorecard.scores[category] == nil else { return nil }
-        let open = YahtzeeScorer.availableCategories(dice: diceValues, scorecard: current.scorecard)
-        guard open.contains(category) else { return nil }
-        return YahtzeeScorer.pointsForPlacing(
-            category: category,
-            dice: diceValues,
-            scorecard: current.scorecard
-        ).score
-    }
-
-    private func canSelect(_ category: ScoreCategory) -> Bool {
-        guard canScore,
-              let current = players.first(where: { $0.id == currentPlayerID }) else { return false }
+    private var openCategories: [ScoreCategory] {
+        guard let current else { return [] }
         return YahtzeeScorer.availableCategories(dice: diceValues, scorecard: current.scorecard)
-            .contains(category)
     }
 }
 
-struct ScoreRowView: View {
+/// De icoontegel links van elke rij: ogen voor de bovenkant, een symbool voor
+/// de onderkant.
+struct CategoryIcon: View {
     let category: ScoreCategory
-    let players: [GamePlayer]
-    let currentPlayerID: UUID
-    let preview: Int?
-    let isSelectable: Bool
-    let onSelect: () -> Void
 
     var body: some View {
-        Button(action: onSelect) {
-            HStack(spacing: 8) {
-                Text(category.title)
-                    .font(AppTheme.bodyFont)
-                    .foregroundStyle(AppTheme.ink)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                ForEach(players) { player in
-                    cell(for: player)
-                }
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 10)
-            .background(
-                isSelectable ? AppTheme.gold.opacity(0.9) : AppTheme.cream.opacity(0.92),
-                in: RoundedRectangle(cornerRadius: 12, style: .continuous)
-            )
-        }
-        .buttonStyle(.plain)
-        .disabled(!isSelectable)
+        content
+            .foregroundStyle(inkColor)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .toyBlock(fill: tint, radius: 11, depth: 0, border: 2)
+            .accessibilityLabel(category.title)
     }
 
     @ViewBuilder
-    private func cell(for player: GamePlayer) -> some View {
-        let scored = player.scorecard.scores[category]
-        let text: String = {
-            if let scored { return "\(scored)" }
-            if player.id == currentPlayerID, let preview { return "\(preview)" }
-            return "—"
-        }()
+    private var content: some View {
+        switch category {
+        case .ones, .twos, .threes, .fours, .fives, .sixes:
+            DiePips(value: face, inset: 4)
+        case .threeOfAKind:
+            Text("3×").font(.system(size: 13, weight: .black, design: .rounded))
+        case .fourOfAKind:
+            Text("4×").font(.system(size: 13, weight: .black, design: .rounded))
+        case .fullHouse:
+            Image(systemName: "house.fill").font(.system(size: 14, weight: .black))
+        case .smallStraight:
+            StraightGlyph(bars: 4).padding(9)
+        case .largeStraight:
+            StraightGlyph(bars: 5).padding(9)
+        case .yahtzee:
+            Image(systemName: "star.fill").font(.system(size: 15, weight: .black))
+        case .chance:
+            Text("?").font(.system(size: 15, weight: .black, design: .rounded))
+        }
+    }
 
-        Text(text)
-            .font(AppTheme.bodyFont)
-            .foregroundStyle(
-                scored != nil
-                    ? AppTheme.ink
-                    : (player.id == currentPlayerID && preview != nil ? AppTheme.coral : AppTheme.ink.opacity(0.35))
-            )
-            .frame(width: 52, alignment: .trailing)
+    private var face: Int {
+        switch category {
+        case .ones: return 1
+        case .twos: return 2
+        case .threes: return 3
+        case .fours: return 4
+        case .fives: return 5
+        default: return 6
+        }
+    }
+
+    private var tint: Color {
+        if category == .yahtzee { return AppTheme.tintCoral }
+        return category.isUpper ? AppTheme.tintAmber : AppTheme.tintSky
+    }
+
+    private var inkColor: Color {
+        if category == .yahtzee { return AppTheme.coral }
+        return category.isUpper ? AppTheme.ink : AppTheme.sky
     }
 }

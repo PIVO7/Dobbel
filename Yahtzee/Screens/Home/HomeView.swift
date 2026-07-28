@@ -6,35 +6,37 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                background
+                AppTheme.cream.ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    Spacer(minLength: 24)
+                    Spacer(minLength: 30)
 
-                    VStack(spacing: 10) {
+                    VStack(spacing: 8) {
                         Text("Yahtzee")
-                            .font(.system(size: 56, weight: .heavy, design: .rounded))
-                            .foregroundStyle(AppTheme.cream)
-                            .shadow(color: .black.opacity(0.25), radius: 8, y: 4)
+                            .font(.system(size: 52, weight: .black, design: .rounded))
+                            .foregroundStyle(AppTheme.ink)
 
                         Text("Gooi, reken en win samen")
                             .font(AppTheme.bodyFont)
-                            .foregroundStyle(AppTheme.cream.opacity(0.9))
+                            .foregroundStyle(AppTheme.soft)
                     }
-                    .padding(.bottom, 36)
+                    .padding(.bottom, 34)
 
-                    VStack(spacing: 14) {
+                    VStack(spacing: 16) {
                         NavigationLink(value: Destination.setup(.versusFriends)) {
-                            menuLabel("Tegen elkaar", subtitle: "Samen op één iPhone of iPad")
+                            menuLabel("Tegen elkaar", subtitle: "2 tot 4 spelers, één toestel",
+                                      tint: AppTheme.amber, face: 4)
                         }
                         NavigationLink(value: Destination.setup(.versusComputer)) {
-                            menuLabel("Tegen de computer", subtitle: "Solo uitdaging")
+                            menuLabel("Tegen de computer", subtitle: "Solo uitdaging",
+                                      tint: AppTheme.sky, face: 1)
                         }
                         NavigationLink(value: Destination.profiles) {
-                            menuLabel("Profielen", subtitle: winsSubtitle)
+                            menuLabel("Profielen", subtitle: winsSubtitle,
+                                      tint: AppTheme.mint, face: 6)
                         }
                     }
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal, 22)
 
                     Spacer()
                 }
@@ -49,6 +51,7 @@ struct HomeView: View {
             }
             .toolbarBackground(.hidden, for: .navigationBar)
         }
+        .tint(AppTheme.coral)
     }
 
     private var winsSubtitle: String {
@@ -59,50 +62,33 @@ struct HomeView: View {
         return "\(profileStore.humanProfiles.count) spelers · \(total) overwinningen"
     }
 
-    private var background: some View {
-        LinearGradient(
-            colors: [AppTheme.felt, AppTheme.feltDeep, Color(red: 0.03, green: 0.18, blue: 0.14)],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
-        .overlay {
-            DicePattern()
-                .opacity(0.12)
-                .ignoresSafeArea()
-        }
-    }
-
-    private func menuLabel(_ title: String, subtitle: String) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(title)
-                .font(AppTheme.headlineFont)
+    private func menuLabel(_ title: String, subtitle: String, tint: Color, face: Int) -> some View {
+        HStack(spacing: 14) {
+            DiePips(value: face, inset: 9)
                 .foregroundStyle(AppTheme.ink)
-            Text(subtitle)
-                .font(AppTheme.captionFont)
-                .foregroundStyle(AppTheme.ink.opacity(0.65))
+                .frame(width: 46, height: 46)
+                .toyBlock(fill: tint, radius: 13, depth: 0, border: 2.5)
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(AppTheme.headlineFont)
+                    .foregroundStyle(AppTheme.ink)
+                Text(subtitle)
+                    .font(AppTheme.captionFont)
+                    .foregroundStyle(AppTheme.soft)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            Image(systemName: "chevron.right")
+                .font(.system(size: 15, weight: .black))
+                .foregroundStyle(AppTheme.dim)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(18)
-        .background(AppTheme.cream.opacity(0.95), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .padding(16)
+        .toyBlock(fill: .white, radius: 20, depth: 5)
     }
 }
 
 enum Destination: Hashable {
     case profiles
     case setup(GameMode)
-}
-
-private struct DicePattern: View {
-    var body: some View {
-        Canvas { context, size in
-            let step: CGFloat = 56
-            for x in stride(from: 0, through: size.width, by: step) {
-                for y in stride(from: 0, through: size.height, by: step) {
-                    var path = Path(roundedRect: CGRect(x: x, y: y, width: 18, height: 18), cornerRadius: 4)
-                    context.fill(path, with: .color(.white))
-                }
-            }
-        }
-    }
 }
