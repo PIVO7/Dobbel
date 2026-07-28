@@ -102,6 +102,8 @@ struct ScoreRowView: View {
     let isSelectable: Bool
     let onSelect: () -> Void
 
+    @State private var pulse = false
+
     var body: some View {
         Button(action: onSelect) {
             HStack(spacing: 8) {
@@ -117,12 +119,33 @@ struct ScoreRowView: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
             .background(
-                isSelectable ? AppTheme.gold.opacity(0.9) : AppTheme.cream.opacity(0.92),
-                in: RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(isSelectable ? AppTheme.gold.opacity(0.95) : AppTheme.cream.opacity(0.92))
             )
+            .overlay {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .strokeBorder(isSelectable ? AppTheme.coral.opacity(0.55) : .clear, lineWidth: 2)
+            }
+            .scaleEffect(isSelectable && pulse ? 1.02 : 1)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PopButtonStyle())
         .disabled(!isSelectable)
+        .onChange(of: isSelectable) { _, selectable in
+            if selectable {
+                withAnimation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true)) {
+                    pulse = true
+                }
+            } else {
+                pulse = false
+            }
+        }
+        .onAppear {
+            if isSelectable {
+                withAnimation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true)) {
+                    pulse = true
+                }
+            }
+        }
     }
 
     @ViewBuilder

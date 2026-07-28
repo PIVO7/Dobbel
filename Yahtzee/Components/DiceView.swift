@@ -8,18 +8,32 @@ struct DiceTrayView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            ForEach(dice) { die in
+            ForEach(Array(dice.enumerated()), id: \.element.id) { index, die in
                 DieView(die: die, isRolling: isRolling && !die.isHeld)
                     .onTapGesture {
                         guard canInteract else { return }
-                        onToggle(die.id)
+                        withAnimation(AppTheme.springSnappy) {
+                            onToggle(die.id)
+                        }
                     }
                     .accessibilityLabel("Dobbelsteen \(die.value)")
                     .accessibilityHint(die.isHeld ? "Vastgehouden, tik om los te laten" : "Tik om vast te houden")
                     .accessibilityAddTraits(die.isHeld ? .isSelected : [])
+                    .transition(.scale.combined(with: .opacity))
+                    .animation(AppTheme.springSoft.delay(Double(index) * 0.03), value: die.isHeld)
             }
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 8)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .fill(AppTheme.feltDeep.opacity(0.45))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 22, style: .continuous)
+                        .strokeBorder(AppTheme.cream.opacity(0.12), lineWidth: 1)
+                }
+        )
     }
 }
 
@@ -28,30 +42,49 @@ struct DieView: View {
     let isRolling: Bool
 
     @State private var spin = 0.0
+    @State private var bounce = false
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .fill(die.isHeld ? AppTheme.held : AppTheme.cream)
-                .shadow(color: .black.opacity(0.25), radius: die.isHeld ? 2 : 6, y: 3)
+                .shadow(color: .black.opacity(0.28), radius: die.isHeld ? 2 : 7, y: die.isHeld ? 1 : 4)
 
             DiePips(value: die.value)
                 .foregroundStyle(AppTheme.ink)
+                .opacity(isRolling ? 0.35 : 1)
         }
-        .frame(width: 58, height: 58)
+        .frame(width: 60, height: 60)
         .overlay {
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .strokeBorder(die.isHeld ? AppTheme.coral : .white.opacity(0.5), lineWidth: die.isHeld ? 3 : 1)
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(
+                    die.isHeld ? AppTheme.coral : AppTheme.cream.opacity(0.55),
+                    lineWidth: die.isHeld ? 3.5 : 1.5
+                )
         }
+        .scaleEffect(die.isHeld ? 1.06 : (bounce ? 1.08 : 1))
         .rotationEffect(.degrees(isRolling ? spin : 0))
-        .offset(y: isRolling ? -6 : 0)
-        .animation(.easeInOut(duration: 0.08).repeatCount(6, autoreverses: true), value: isRolling)
+        .offset(y: isRolling ? -10 : (die.isHeld ? -2 : 0))
+        .animation(AppTheme.springSnappy, value: die.isHeld)
         .onChange(of: isRolling) { _, rolling in
             if rolling {
-                spin = Double.random(in: -18...18)
+                spin = Double.random(in: -28...28)
+                bounce = true
             } else {
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                withAnimation(AppTheme.springBouncy) {
                     spin = 0
+                    bounce = false
+                }
+            }
+        }
+        .onChange(of: die.value) { _, _ in
+            guard !isRolling else { return }
+            withAnimation(AppTheme.springSnappy) {
+                bounce = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
+                withAnimation(AppTheme.springSoft) {
+                    bounce = false
                 }
             }
         }

@@ -8,7 +8,7 @@ struct ProfilesView: View {
 
     var body: some View {
         ZStack {
-            AppTheme.feltDeep.ignoresSafeArea()
+            FeltBackground()
 
             List {
                 Section {

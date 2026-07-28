@@ -8,7 +8,7 @@ struct GameSetupView: View {
 
     var body: some View {
         ZStack {
-            AppTheme.felt.ignoresSafeArea()
+            FeltBackground()
 
             VStack(alignment: .leading, spacing: 18) {
                 Text(mode.title)
@@ -55,7 +55,7 @@ struct GameSetupView: View {
                                     .padding(14)
                                     .background(AppTheme.cream.opacity(0.95), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                                 }
-                                .buttonStyle(.plain)
+                                .buttonStyle(PopButtonStyle())
                             }
                         }
                     }
@@ -67,9 +67,10 @@ struct GameSetupView: View {
                             .font(AppTheme.headlineFont)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
-                            .background(canStart ? AppTheme.coral : AppTheme.coral.opacity(0.4), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            .background(canStart ? AppTheme.coral : AppTheme.coral.opacity(0.4), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
                             .foregroundStyle(.white)
                     }
+                    .buttonStyle(PopButtonStyle())
                     .disabled(!canStart)
                 }
             }
