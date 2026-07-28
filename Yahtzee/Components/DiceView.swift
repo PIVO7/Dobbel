@@ -6,8 +6,11 @@ struct DiceTrayView: View {
     let canInteract: Bool
     let onToggle: (UUID) -> Void
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    private var m: AppMetrics { .resolve(sizeClass) }
+
     var body: some View {
-        HStack(spacing: 9) {
+        HStack(spacing: m.dieGap) {
             ForEach(dice) { die in
                 DieView(die: die, isRolling: isRolling && !die.isHeld)
                     .onTapGesture {
@@ -29,15 +32,21 @@ struct DieView: View {
 
     @State private var spin = 0.0
 
-    private let size: CGFloat = 60
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    private var m: AppMetrics { .resolve(sizeClass) }
 
     var body: some View {
         DiePips(value: die.value)
             .foregroundStyle(AppTheme.ink)
-            .frame(width: size, height: size)
+            .frame(width: m.dieSize, height: m.dieSize)
             // Vastgehouden stenen zakken in: schaduw krimpt, steen schuift mee omlaag.
-            .toyBlock(fill: die.isHeld ? AppTheme.amber : .white, radius: 16, depth: die.isHeld ? 2 : 5)
-            .offset(y: die.isHeld ? 3 : 0)
+            .toyBlock(
+                fill: die.isHeld ? AppTheme.amber : .white,
+                radius: m.dieCorner,
+                depth: die.isHeld ? 2 : m.depth,
+                border: m.border
+            )
+            .offset(y: die.isHeld ? m.depth - 2 : 0)
             .rotationEffect(.degrees(isRolling ? spin : 0))
             .offset(y: isRolling ? -8 : 0)
             .animation(.easeInOut(duration: 0.08).repeatCount(6, autoreverses: true), value: isRolling)

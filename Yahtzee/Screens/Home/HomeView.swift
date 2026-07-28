@@ -2,43 +2,48 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(ProfileStore.self) private var profileStore
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
+    private var m: AppMetrics { .resolve(sizeClass) }
 
     var body: some View {
         NavigationStack {
             ZStack {
                 AppTheme.cream.ignoresSafeArea()
 
-                VStack(spacing: 0) {
-                    Spacer(minLength: 30)
+                ScrollView {
+                    VStack(spacing: 0) {
+                        VStack(spacing: 8) {
+                            Text("Yahtzee")
+                                .font(AppTheme.rounded(m.brandSize))
+                                .foregroundStyle(AppTheme.ink)
 
-                    VStack(spacing: 8) {
-                        Text("Yahtzee")
-                            .font(.system(size: 52, weight: .black, design: .rounded))
-                            .foregroundStyle(AppTheme.ink)
+                            Text("Gooi, reken en win samen")
+                                .font(AppTheme.rounded(m.bodySize, .bold))
+                                .foregroundStyle(AppTheme.soft)
+                        }
+                        .padding(.top, m.gutter * 2)
+                        .padding(.bottom, m.gutter * 2.4)
 
-                        Text("Gooi, reken en win samen")
-                            .font(AppTheme.bodyFont)
-                            .foregroundStyle(AppTheme.soft)
+                        VStack(spacing: m.gutter) {
+                            NavigationLink(value: Destination.setup(.versusFriends)) {
+                                menuLabel("Tegen elkaar", subtitle: "2 tot 4 spelers, één toestel",
+                                          tint: AppTheme.amber, face: 4)
+                            }
+                            NavigationLink(value: Destination.setup(.versusComputer)) {
+                                menuLabel("Tegen de computer", subtitle: "Solo uitdaging",
+                                          tint: AppTheme.sky, face: 1)
+                            }
+                            NavigationLink(value: Destination.profiles) {
+                                menuLabel("Profielen", subtitle: winsSubtitle,
+                                          tint: AppTheme.mint, face: 6)
+                            }
+                        }
+                        .padding(.bottom, m.gutter * 2)
                     }
-                    .padding(.bottom, 34)
-
-                    VStack(spacing: 16) {
-                        NavigationLink(value: Destination.setup(.versusFriends)) {
-                            menuLabel("Tegen elkaar", subtitle: "2 tot 4 spelers, één toestel",
-                                      tint: AppTheme.amber, face: 4)
-                        }
-                        NavigationLink(value: Destination.setup(.versusComputer)) {
-                            menuLabel("Tegen de computer", subtitle: "Solo uitdaging",
-                                      tint: AppTheme.sky, face: 1)
-                        }
-                        NavigationLink(value: Destination.profiles) {
-                            menuLabel("Profielen", subtitle: winsSubtitle,
-                                      tint: AppTheme.mint, face: 6)
-                        }
-                    }
-                    .padding(.horizontal, 22)
-
-                    Spacer()
+                    .padding(.horizontal, m.gutter * 1.5)
+                    .frame(maxWidth: m.contentMaxWidth)
+                    .frame(maxWidth: .infinity)
                 }
             }
             .navigationDestination(for: Destination.self) { destination in
@@ -63,28 +68,28 @@ struct HomeView: View {
     }
 
     private func menuLabel(_ title: String, subtitle: String, tint: Color, face: Int) -> some View {
-        HStack(spacing: 14) {
-            DiePips(value: face, inset: 9)
+        HStack(spacing: m.gutter) {
+            DiePips(value: face, inset: m.avatarSize * 0.2)
                 .foregroundStyle(AppTheme.ink)
-                .frame(width: 46, height: 46)
-                .toyBlock(fill: tint, radius: 13, depth: 0, border: 2.5)
+                .frame(width: m.avatarSize + 2, height: m.avatarSize + 2)
+                .toyBlock(fill: tint, radius: m.cellCorner + 2, depth: 0, border: m.thinBorder + 0.5)
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(title)
-                    .font(AppTheme.headlineFont)
+                    .font(AppTheme.rounded(m.bodySize + 3))
                     .foregroundStyle(AppTheme.ink)
                 Text(subtitle)
-                    .font(AppTheme.captionFont)
+                    .font(AppTheme.rounded(m.captionSize, .bold))
                     .foregroundStyle(AppTheme.soft)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
             Image(systemName: "chevron.right")
-                .font(.system(size: 15, weight: .black))
+                .font(.system(size: m.bodySize * 0.9, weight: .black))
                 .foregroundStyle(AppTheme.dim)
         }
-        .padding(16)
-        .toyBlock(fill: .white, radius: 20, depth: 5)
+        .padding(m.gutter * 1.15)
+        .toyBlock(fill: .white, radius: m.cardCorner, depth: m.depth, border: m.border)
     }
 }
 

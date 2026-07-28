@@ -2,55 +2,64 @@ import SwiftUI
 
 struct ProfilesView: View {
     @Environment(ProfileStore.self) private var profileStore
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var newName = ""
     @State private var renameTarget: PlayerProfile?
     @State private var renameText = ""
     @State private var deleteTarget: PlayerProfile?
+
+    private var m: AppMetrics { .resolve(sizeClass) }
+
+    /// Op een iPad past er een tweede kolom naast; op een iPhone niet.
+    private var columns: [GridItem] {
+        let count = sizeClass == .regular ? 2 : 1
+        return Array(repeating: GridItem(.flexible(), spacing: m.gutter), count: count)
+    }
 
     var body: some View {
         ZStack {
             AppTheme.cream.ignoresSafeArea()
 
             ScrollView {
-                VStack(alignment: .leading, spacing: 22) {
+                VStack(alignment: .leading, spacing: m.gutter * 1.5) {
                     section("NIEUW PROFIEL") {
                         HStack(spacing: 10) {
                             TextField("Naam van je kind", text: $newName)
-                                .font(AppTheme.bodyFont)
+                                .font(AppTheme.rounded(m.bodySize, .bold))
                                 .foregroundStyle(AppTheme.ink)
                                 .textInputAutocapitalization(.words)
                                 .submitLabel(.done)
                                 .onSubmit(addProfile)
 
                             Button("Voeg toe", action: addProfile)
-                                .font(AppTheme.captionFont)
+                                .font(AppTheme.rounded(m.captionSize, .bold))
                                 .foregroundStyle(canAdd ? .white : AppTheme.offInk)
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 9)
                                 .toyBlock(
                                     fill: canAdd ? AppTheme.mint : AppTheme.offFill,
-                                    radius: 12,
+                                    radius: m.cellCorner + 1,
                                     depth: 3,
-                                    border: 2.5,
+                                    border: m.thinBorder + 0.5,
                                     borderColor: canAdd ? AppTheme.ink : AppTheme.offInk,
                                     shadowColor: canAdd ? AppTheme.ink : AppTheme.offInk
                                 )
                                 .disabled(!canAdd)
                         }
-                        .padding(14)
-                        .toyBlock(fill: .white, radius: 18, depth: 5)
+                        .padding(m.gutter)
+                        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
                     }
 
                     section("SPELERS") {
                         if profileStore.humanProfiles.isEmpty {
                             Text("Nog geen profielen. Maak er een aan om te spelen.")
-                                .font(AppTheme.bodyFont)
+                                .font(AppTheme.rounded(m.bodySize, .bold))
                                 .foregroundStyle(AppTheme.soft)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(16)
-                                .toyBlock(fill: .white, radius: 18, depth: 5)
+                                .padding(m.gutter)
+                                .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
                         } else {
-                            VStack(spacing: 12) {
+                            LazyVGrid(columns: columns, spacing: m.gutter) {
                                 ForEach(profileStore.humanProfiles) { profile in
                                     profileRow(profile)
                                 }
@@ -58,9 +67,11 @@ struct ProfilesView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 18)
+                .padding(.horizontal, m.gutter * 1.3)
                 .padding(.top, 8)
-                .padding(.bottom, 32)
+                .padding(.bottom, m.gutter * 2)
+                .frame(maxWidth: m.contentMaxWidth)
+                .frame(maxWidth: .infinity)
             }
         }
         .navigationTitle("Profielen")
@@ -117,7 +128,7 @@ struct ProfilesView: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
-                .font(AppTheme.labelFont)
+                .font(AppTheme.rounded(m.captionSize * 0.9))
                 .kerning(1.4)
                 .foregroundStyle(AppTheme.faint)
                 .padding(.leading, 4)
@@ -126,16 +137,18 @@ struct ProfilesView: View {
     }
 
     private func profileRow(_ profile: PlayerProfile) -> some View {
-        HStack(spacing: 13) {
-            AvatarBadge(profile: profile)
+        HStack(spacing: m.gutter * 0.9) {
+            AvatarBadge(profile: profile, size: m.avatarSize)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(profile.name)
-                    .font(AppTheme.headlineFont)
+                    .font(AppTheme.rounded(m.bodySize + 2))
                     .foregroundStyle(AppTheme.ink)
+                    .lineLimit(1)
                 Text("\(profile.wins)× gewonnen · \(profile.gamesPlayed) gespeeld")
-                    .font(AppTheme.captionFont)
+                    .font(AppTheme.rounded(m.captionSize, .bold))
                     .foregroundStyle(AppTheme.soft)
+                    .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -144,25 +157,25 @@ struct ProfilesView: View {
                 renameText = profile.name
             } label: {
                 Image(systemName: "pencil")
-                    .font(.system(size: 14, weight: .black))
+                    .font(.system(size: m.captionSize + 2, weight: .black))
                     .foregroundStyle(AppTheme.ink)
-                    .frame(width: 34, height: 34)
+                    .frame(width: m.avatarSize * 0.78, height: m.avatarSize * 0.78)
             }
-            .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: 11, depth: 3))
+            .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: 3, border: m.thinBorder))
             .accessibilityLabel("\(profile.name) hernoemen")
 
             Button {
                 deleteTarget = profile
             } label: {
                 Image(systemName: "trash")
-                    .font(.system(size: 14, weight: .black))
+                    .font(.system(size: m.captionSize + 2, weight: .black))
                     .foregroundStyle(AppTheme.ink)
-                    .frame(width: 34, height: 34)
+                    .frame(width: m.avatarSize * 0.78, height: m.avatarSize * 0.78)
             }
-            .buttonStyle(ToyButtonStyle(fill: AppTheme.tintCoral, radius: 11, depth: 3))
+            .buttonStyle(ToyButtonStyle(fill: AppTheme.tintCoral, radius: m.cellCorner, depth: 3, border: m.thinBorder))
             .accessibilityLabel("\(profile.name) verwijderen")
         }
-        .padding(13)
-        .toyBlock(fill: .white, radius: 18, depth: 5)
+        .padding(m.gutter * 0.9)
+        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
     }
 }

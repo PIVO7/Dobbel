@@ -3,21 +3,31 @@ import SwiftUI
 struct GameSetupView: View {
     let mode: GameMode
     @Environment(ProfileStore.self) private var profileStore
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var selectedIDs: Set<UUID> = []
     @State private var activeGame: ActiveGame?
+
+    private var m: AppMetrics { .resolve(sizeClass) }
+
+    private var columns: [GridItem] {
+        let count = sizeClass == .regular ? 2 : 1
+        return Array(repeating: GridItem(.flexible(), spacing: m.gutter), count: count)
+    }
 
     var body: some View {
         ZStack {
             AppTheme.cream.ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: m.gutter) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(mode.title)
-                        .font(AppTheme.titleFont)
+                        .font(AppTheme.rounded(m.titleSize))
                         .foregroundStyle(AppTheme.ink)
+                        .minimumScaleFactor(0.7)
+                        .lineLimit(1)
 
                     Text(mode.subtitle)
-                        .font(AppTheme.bodyFont)
+                        .font(AppTheme.rounded(m.bodySize, .bold))
                         .foregroundStyle(AppTheme.soft)
                 }
 
@@ -30,12 +40,12 @@ struct GameSetupView: View {
                     .foregroundStyle(AppTheme.soft)
                 } else {
                     Text(mode == .versusComputer ? "KIES JOUW PROFIEL" : "KIES 2 TOT 4 SPELERS")
-                        .font(AppTheme.labelFont)
+                        .font(AppTheme.rounded(m.captionSize * 0.9))
                         .kerning(1.4)
                         .foregroundStyle(AppTheme.faint)
 
                     ScrollView {
-                        VStack(spacing: 12) {
+                        LazyVGrid(columns: columns, spacing: m.gutter) {
                             ForEach(profileStore.humanProfiles) { profile in
                                 profileButton(profile)
                             }
@@ -45,19 +55,26 @@ struct GameSetupView: View {
 
                     Button(action: startGame) {
                         Text("Start spel")
-                            .font(.system(size: 21, weight: .black, design: .rounded))
+                            .font(AppTheme.rounded(m.buttonTextSize))
                             .foregroundStyle(canStart ? .white : AppTheme.offInk)
                             .frame(maxWidth: .infinity)
-                            .frame(height: 58)
+                            .frame(height: m.buttonHeight * 0.96)
                     }
-                    .buttonStyle(ToyButtonStyle(fill: canStart ? AppTheme.mint : AppTheme.offFill, radius: 18, depth: 6))
+                    .buttonStyle(ToyButtonStyle(
+                        fill: canStart ? AppTheme.mint : AppTheme.offFill,
+                        radius: m.cardCorner * 0.9,
+                        depth: m.depth + 1,
+                        border: m.border
+                    ))
                     .disabled(!canStart)
                     .padding(.bottom, 6)
                 }
             }
-            .padding(.horizontal, 22)
+            .padding(.horizontal, m.gutter * 1.5)
             .padding(.top, 6)
-            .padding(.bottom, 18)
+            .padding(.bottom, m.gutter)
+            .frame(maxWidth: m.contentMaxWidth)
+            .frame(maxWidth: .infinity)
         }
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(item: $activeGame) { game in
@@ -73,26 +90,32 @@ struct GameSetupView: View {
         return Button {
             toggle(profile.id)
         } label: {
-            HStack(spacing: 13) {
-                AvatarBadge(profile: profile)
+            HStack(spacing: m.gutter * 0.9) {
+                AvatarBadge(profile: profile, size: m.avatarSize)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(profile.name)
-                        .font(AppTheme.headlineFont)
+                        .font(AppTheme.rounded(m.bodySize + 2))
                         .foregroundStyle(AppTheme.ink)
+                        .lineLimit(1)
                     Text("\(profile.wins) overwinningen")
-                        .font(AppTheme.captionFont)
+                        .font(AppTheme.rounded(m.captionSize, .bold))
                         .foregroundStyle(AppTheme.soft)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
                 Image(systemName: picked ? "checkmark.circle.fill" : "circle")
-                    .font(.system(size: 24, weight: .black))
+                    .font(.system(size: m.bodySize * 1.4, weight: .black))
                     .foregroundStyle(picked ? AppTheme.coral : AppTheme.dim)
             }
-            .padding(13)
+            .padding(m.gutter * 0.9)
         }
-        .buttonStyle(ToyButtonStyle(fill: picked ? AppTheme.tintCoral : .white, radius: 18, depth: 5))
+        .buttonStyle(ToyButtonStyle(
+            fill: picked ? AppTheme.tintCoral : .white,
+            radius: m.cardCorner * 0.9,
+            depth: m.depth,
+            border: m.border
+        ))
         .accessibilityAddTraits(picked ? .isSelected : [])
     }
 

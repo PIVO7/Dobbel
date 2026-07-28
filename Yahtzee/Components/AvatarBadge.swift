@@ -21,7 +21,14 @@ struct AvatarBadge: View {
             .font(.system(size: size * 0.36, weight: .black, design: .rounded))
             .foregroundStyle(.white)
             .frame(width: size, height: size)
-            .toyBlock(fill: color, radius: size / 2, depth: 3, border: 2.5)
+            // Rand en diepte meeschalen, anders oogt een grote avatar op een
+            // iPad dunner omlijnd dan een kleine op een iPhone.
+            .toyBlock(
+                fill: color,
+                radius: size / 2,
+                depth: max(size * 0.07, 3),
+                border: max(size * 0.057, 2.5)
+            )
             .accessibilityHidden(true)
     }
 

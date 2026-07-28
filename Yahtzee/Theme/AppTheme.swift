@@ -29,12 +29,66 @@ enum AppTheme {
     static let offFill = Color(red: 0.86, green: 0.83, blue: 0.76) // #DCD3C2
     static let offInk = Color(red: 0.70, green: 0.66, blue: 0.59)  // #B3A896
 
-    static let titleFont = Font.system(size: 40, weight: .black, design: .rounded)
-    static let displayFont = Font.system(size: 30, weight: .black, design: .rounded)
-    static let headlineFont = Font.system(.title3, design: .rounded).weight(.black)
-    static let bodyFont = Font.system(.body, design: .rounded).weight(.bold)
-    static let captionFont = Font.system(.caption, design: .rounded).weight(.bold)
-    static let labelFont = Font.system(size: 11, weight: .black, design: .rounded)
+    /// Alle tekst in de app komt hier langs; de maat komt uit `AppMetrics`,
+    /// zodat een iPad grotere letters krijgt zonder aparte fontconstanten.
+    static func rounded(_ size: CGFloat, _ weight: Font.Weight = .black) -> Font {
+        .system(size: size, weight: weight, design: .rounded)
+    }
+}
+
+/// Alle maten op één plek, zodat een iPad niet dezelfde punten krijgt als een
+/// iPhone. Wordt uit de horizontale grootteklasse afgeleid: `.regular` is een
+/// iPad op vol scherm, `.compact` een iPhone of een smal deelvenster.
+struct AppMetrics {
+    var dieSize: CGFloat
+    var dieCorner: CGFloat
+    var dieGap: CGFloat
+
+    var rowHeight: CGFloat
+    var iconWidth: CGFloat
+    var cellCorner: CGFloat
+
+    var cardCorner: CGFloat
+    var depth: CGFloat
+    var border: CGFloat
+    var thinBorder: CGFloat
+
+    var gutter: CGFloat
+    var contentMaxWidth: CGFloat
+    var avatarSize: CGFloat
+
+    var brandSize: CGFloat
+    var titleSize: CGFloat
+    var displaySize: CGFloat
+    var bodySize: CGFloat
+    var captionSize: CGFloat
+    var cellTextSize: CGFloat
+    var buttonTextSize: CGFloat
+    var buttonHeight: CGFloat
+
+    static let phone = AppMetrics(
+        dieSize: 60, dieCorner: 16, dieGap: 9,
+        rowHeight: 38, iconWidth: 38, cellCorner: 11,
+        cardCorner: 20, depth: 5, border: 3, thinBorder: 2,
+        gutter: 14, contentMaxWidth: .infinity, avatarSize: 44,
+        brandSize: 52, titleSize: 40, displaySize: 30,
+        bodySize: 17, captionSize: 12, cellTextSize: 17,
+        buttonTextSize: 21, buttonHeight: 60
+    )
+
+    static let pad = AppMetrics(
+        dieSize: 88, dieCorner: 23, dieGap: 15,
+        rowHeight: 54, iconWidth: 54, cellCorner: 15,
+        cardCorner: 26, depth: 7, border: 4, thinBorder: 2.5,
+        gutter: 24, contentMaxWidth: 760, avatarSize: 58,
+        brandSize: 78, titleSize: 56, displaySize: 44,
+        bodySize: 21, captionSize: 15, cellTextSize: 24,
+        buttonTextSize: 28, buttonHeight: 78
+    )
+
+    static func resolve(_ sizeClass: UserInterfaceSizeClass?) -> AppMetrics {
+        sizeClass == .regular ? .pad : .phone
+    }
 }
 
 /// Het kenmerk van deze stijl: een gevuld blok met een inktrand, en daarachter

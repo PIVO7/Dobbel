@@ -10,16 +10,16 @@ struct ScorecardView: View {
     let canScore: Bool
     let onSelect: (ScoreCategory) -> Void
 
-    private let rowHeight: CGFloat = 38
-    private let iconWidth: CGFloat = 38
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    private var m: AppMetrics { .resolve(sizeClass) }
 
     var body: some View {
-        HStack(alignment: .top, spacing: 8) {
+        HStack(alignment: .top, spacing: m.gutter * 0.6) {
             column(title: "BOVEN", categories: ScoreCategory.upper, showsBonus: true)
             column(title: "ONDER", categories: ScoreCategory.lower, showsBonus: false)
         }
-        .padding(11)
-        .toyBlock(fill: .white, radius: 20, depth: 5)
+        .padding(m.gutter * 0.8)
+        .toyBlock(fill: .white, radius: m.cardCorner, depth: m.depth, border: m.border)
     }
 
     private var current: GamePlayer? {
@@ -36,7 +36,7 @@ struct ScorecardView: View {
     private func column(title: String, categories: [ScoreCategory], showsBonus: Bool) -> some View {
         VStack(spacing: 4) {
             Text(title)
-                .font(AppTheme.labelFont)
+                .font(AppTheme.rounded(m.captionSize * 0.9))
                 .kerning(1.4)
                 .foregroundStyle(AppTheme.faint)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -56,7 +56,7 @@ struct ScorecardView: View {
     private func row(for category: ScoreCategory) -> some View {
         HStack(spacing: 3) {
             CategoryIcon(category: category)
-                .frame(width: iconWidth, height: rowHeight)
+                .frame(width: m.iconWidth, height: m.rowHeight)
 
             ForEach(players) { player in
                 cell(for: category, player: player)
@@ -68,8 +68,7 @@ struct ScorecardView: View {
     private func cell(for category: ScoreCategory, player: GamePlayer) -> some View {
         let scored = player.scorecard.scores[category]
         let isMine = player.id == currentPlayerID
-        let open = openCategories.contains(category)
-        let selectable = isMine && canScore && open
+        let selectable = isMine && canScore && openCategories.contains(category)
 
         if selectable {
             let points = YahtzeeScorer.pointsForPlacing(
@@ -83,25 +82,25 @@ struct ScorecardView: View {
                 onSelect(category)
             } label: {
                 Text("\(points)")
-                    .font(AppTheme.bodyFont)
+                    .font(AppTheme.rounded(m.cellTextSize, .bold))
                     .foregroundStyle(isBest ? .white : AppTheme.coral)
                     .frame(maxWidth: .infinity)
-                    .frame(height: rowHeight)
+                    .frame(height: m.rowHeight)
             }
             .buttonStyle(ToyButtonStyle(
                 fill: isBest ? AppTheme.mint : .white,
-                radius: 11,
+                radius: m.cellCorner,
                 depth: isBest ? 3 : 0,
-                border: 2
+                border: m.thinBorder
             ))
             .accessibilityLabel("\(category.title), \(points) punten\(isBest ? ", beste zet" : "")")
         } else {
             Text(scored.map { "\($0)" } ?? "–")
-                .font(AppTheme.bodyFont)
+                .font(AppTheme.rounded(m.cellTextSize, .bold))
                 .foregroundStyle(scored == nil ? AppTheme.dim : AppTheme.ink)
                 .frame(maxWidth: .infinity)
-                .frame(height: rowHeight)
-                .toyBlock(fill: AppTheme.sunk, radius: 11, depth: 0, border: 2)
+                .frame(height: m.rowHeight)
+                .toyBlock(fill: AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)
                 .accessibilityLabel("\(category.title), \(scored.map { "\($0) punten" } ?? "leeg")")
         }
     }
@@ -110,29 +109,27 @@ struct ScorecardView: View {
         HStack(spacing: 3) {
             VStack(spacing: 0) {
                 Text("BONUS")
-                    .font(.system(size: 8, weight: .black, design: .rounded))
+                    .font(AppTheme.rounded(m.captionSize * 0.68))
                     .kerning(0.6)
                     .foregroundStyle(AppTheme.soft)
                 Text("+35")
-                    .font(.system(size: 12, weight: .black, design: .rounded))
+                    .font(AppTheme.rounded(m.captionSize))
                     .foregroundStyle(AppTheme.ink)
             }
-            .frame(width: iconWidth, height: rowHeight)
-            .toyBlock(fill: AppTheme.tintStone, radius: 11, depth: 0, border: 2)
+            .frame(width: m.iconWidth, height: m.rowHeight)
+            .toyBlock(fill: AppTheme.tintStone, radius: m.cellCorner, depth: 0, border: m.thinBorder)
 
             ForEach(players) { player in
                 let subtotal = player.scorecard.upperSubtotal
                 let reached = player.scorecard.upperBonus > 0
                 Text(reached ? "+35" : "\(subtotal)/63")
-                    .font(.system(size: 11, weight: .black, design: .rounded))
+                    .font(AppTheme.rounded(m.captionSize * 0.92))
                     .foregroundStyle(reached ? AppTheme.mint : AppTheme.soft)
                     .frame(maxWidth: .infinity)
-                    .frame(height: rowHeight)
-                    .toyBlock(fill: AppTheme.sunk, radius: 11, depth: 0, border: 2)
+                    .frame(height: m.rowHeight)
+                    .toyBlock(fill: AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)
                     .accessibilityLabel(
-                        reached
-                            ? "Bonus behaald, 35 punten"
-                            : "Bonus bij 63, nu \(subtotal)"
+                        reached ? "Bonus behaald, 35 punten" : "Bonus bij 63, nu \(subtotal)"
                     )
             }
         }
@@ -149,33 +146,38 @@ struct ScorecardView: View {
 struct CategoryIcon: View {
     let category: ScoreCategory
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    private var m: AppMetrics { .resolve(sizeClass) }
+
     var body: some View {
         content
             .foregroundStyle(inkColor)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .toyBlock(fill: tint, radius: 11, depth: 0, border: 2)
+            .toyBlock(fill: tint, radius: m.cellCorner, depth: 0, border: m.thinBorder)
             .accessibilityLabel(category.title)
     }
+
+    private var glyphSize: CGFloat { m.iconWidth * 0.36 }
 
     @ViewBuilder
     private var content: some View {
         switch category {
         case .ones, .twos, .threes, .fours, .fives, .sixes:
-            DiePips(value: face, inset: 4)
+            DiePips(value: face, inset: m.iconWidth * 0.11)
         case .threeOfAKind:
-            Text("3×").font(.system(size: 13, weight: .black, design: .rounded))
+            Text("3×").font(AppTheme.rounded(glyphSize))
         case .fourOfAKind:
-            Text("4×").font(.system(size: 13, weight: .black, design: .rounded))
+            Text("4×").font(AppTheme.rounded(glyphSize))
         case .fullHouse:
-            Image(systemName: "house.fill").font(.system(size: 14, weight: .black))
+            Image(systemName: "house.fill").font(.system(size: glyphSize, weight: .black))
         case .smallStraight:
-            StraightGlyph(bars: 4).padding(9)
+            StraightGlyph(bars: 4).padding(m.iconWidth * 0.24)
         case .largeStraight:
-            StraightGlyph(bars: 5).padding(9)
+            StraightGlyph(bars: 5).padding(m.iconWidth * 0.24)
         case .yahtzee:
-            Image(systemName: "star.fill").font(.system(size: 15, weight: .black))
+            Image(systemName: "star.fill").font(.system(size: glyphSize * 1.1, weight: .black))
         case .chance:
-            Text("?").font(.system(size: 15, weight: .black, design: .rounded))
+            Text("?").font(AppTheme.rounded(glyphSize * 1.1))
         }
     }
 
