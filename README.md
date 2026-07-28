@@ -13,21 +13,33 @@ iOS-app voor kinderen: klassiek Yahtzee met profielen, lokale multiplayer en sol
 
 ## Openen in Xcode
 
-Er staat geen `.xcodeproj` in de repo: die wordt gegenereerd uit `project.yml` met
-[XcodeGen](https://github.com/yonaskolb/XcodeGen). Op een Mac, vanuit de **root** van de repo:
+`Yahtzee.xcodeproj` staat in de repo, dus op een Mac volstaat:
 
 ```bash
-brew install xcodegen   # eenmalig, indien nodig
-xcodegen generate       # maakt Yahtzee.xcodeproj aan
 open Yahtzee.xcodeproj
 ```
 
-Kies een simulator of iPhone, druk op Run.
+Kies een simulator of iPhone, druk op Run. Vereisten: Xcode 15+, iOS 17+.
 
-Vereisten: Xcode 15+, iOS 17+.
+Vanaf de terminal bouwen of testen:
 
-Draai `xcodegen generate` opnieuw nadat je bestanden hebt toegevoegd, verwijderd of hernoemd —
-het gegenereerde project staat in `.gitignore` en wordt dus niet meegecommit.
+```bash
+xcodebuild build -project Yahtzee.xcodeproj -scheme Yahtzee \
+  -destination 'platform=iOS Simulator,name=iPhone 16'
+```
+
+### Het project opnieuw genereren
+
+`project.yml` blijft de bron van waarheid voor de projectinstellingen. Voeg je bestanden toe of
+hernoem je ze, dan kan je het project verversen met [XcodeGen](https://github.com/yonaskolb/XcodeGen):
+
+```bash
+brew install xcodegen   # eenmalig
+xcodegen generate       # overschrijft Yahtzee.xcodeproj
+```
+
+Dat is niet verplicht — nieuwe bestanden gewoon in Xcode toevoegen werkt ook. Houd `project.yml`
+dan wel gelijk met wat er in het project staat.
 
 ## App-structuur
 

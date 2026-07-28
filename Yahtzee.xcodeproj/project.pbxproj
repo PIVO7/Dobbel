@@ -1,0 +1,539 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00000000000000000000002B /* YahtzeeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000001 /* YahtzeeApp.swift */; };
+		00000000000000000000002C /* ComputerAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000002 /* ComputerAI.swift */; };
+		00000000000000000000002D /* AvatarBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000003 /* AvatarBadge.swift */; };
+		00000000000000000000002E /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000004 /* DiceView.swift */; };
+		00000000000000000000002F /* ScorecardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000005 /* ScorecardView.swift */; };
+		000000000000000000000030 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000006 /* GameEngine.swift */; };
+		000000000000000000000031 /* GamePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000007 /* GamePlayer.swift */; };
+		000000000000000000000032 /* RollPhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000008 /* RollPhrase.swift */; };
+		000000000000000000000033 /* YahtzeeScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000009 /* YahtzeeScorer.swift */; };
+		000000000000000000000034 /* Die.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000A /* Die.swift */; };
+		000000000000000000000035 /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000B /* GameMode.swift */; };
+		000000000000000000000036 /* PlayerProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000C /* PlayerProfile.swift */; };
+		000000000000000000000037 /* ScoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000D /* ScoreCategory.swift */; };
+		000000000000000000000038 /* Scorecard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000E /* Scorecard.swift */; };
+		000000000000000000000039 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000F /* ProfileStore.swift */; };
+		00000000000000000000003A /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000010 /* GameView.swift */; };
+		00000000000000000000003B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000011 /* HomeView.swift */; };
+		00000000000000000000003C /* ProfilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000012 /* ProfilesView.swift */; };
+		00000000000000000000003D /* GameSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000013 /* GameSetupView.swift */; };
+		00000000000000000000003E /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000014 /* AppTheme.swift */; };
+		00000000000000000000003F /* Assets.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000015 /* Assets.xcassets */; };
+		000000000000000000000040 /* ComputerAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000016 /* ComputerAITests.swift */; };
+		000000000000000000000041 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000017 /* GameEngineTests.swift */; };
+		000000000000000000000042 /* ProfileStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000018 /* ProfileStoreTests.swift */; };
+		000000000000000000000043 /* YahtzeeScorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000019 /* YahtzeeScorerTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		000000000000000000000056 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000053 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000054;
+			remoteInfo = Yahtzee;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		000000000000000000000001 /* YahtzeeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeApp.swift; sourceTree = "<group>"; };
+		000000000000000000000002 /* ComputerAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerAI.swift; sourceTree = "<group>"; };
+		000000000000000000000003 /* AvatarBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarBadge.swift; sourceTree = "<group>"; };
+		000000000000000000000004 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceView.swift; sourceTree = "<group>"; };
+		000000000000000000000005 /* ScorecardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorecardView.swift; sourceTree = "<group>"; };
+		000000000000000000000006 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
+		000000000000000000000007 /* GamePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlayer.swift; sourceTree = "<group>"; };
+		000000000000000000000008 /* RollPhrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollPhrase.swift; sourceTree = "<group>"; };
+		000000000000000000000009 /* YahtzeeScorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeScorer.swift; sourceTree = "<group>"; };
+		00000000000000000000000A /* Die.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Die.swift; sourceTree = "<group>"; };
+		00000000000000000000000B /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
+		00000000000000000000000C /* PlayerProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerProfile.swift; sourceTree = "<group>"; };
+		00000000000000000000000D /* ScoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCategory.swift; sourceTree = "<group>"; };
+		00000000000000000000000E /* Scorecard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scorecard.swift; sourceTree = "<group>"; };
+		00000000000000000000000F /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
+		000000000000000000000010 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		000000000000000000000011 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		000000000000000000000012 /* ProfilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesView.swift; sourceTree = "<group>"; };
+		000000000000000000000013 /* GameSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSetupView.swift; sourceTree = "<group>"; };
+		000000000000000000000014 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		000000000000000000000015 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		000000000000000000000016 /* ComputerAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerAITests.swift; sourceTree = "<group>"; };
+		000000000000000000000017 /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
+		000000000000000000000018 /* ProfileStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStoreTests.swift; sourceTree = "<group>"; };
+		000000000000000000000019 /* YahtzeeScorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeScorerTests.swift; sourceTree = "<group>"; };
+		00000000000000000000001A /* Yahtzee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yahtzee.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00000000000000000000001B /* Yahtzee Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Yahtzee Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		000000000000000000000046 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000048 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00000000000000000000001C /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000002 /* ComputerAI.swift */,
+			);
+			path = AI;
+			sourceTree = "<group>";
+		};
+		00000000000000000000001D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000003 /* AvatarBadge.swift */,
+				000000000000000000000004 /* DiceView.swift */,
+				000000000000000000000005 /* ScorecardView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		00000000000000000000001E /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000006 /* GameEngine.swift */,
+				000000000000000000000007 /* GamePlayer.swift */,
+				000000000000000000000008 /* RollPhrase.swift */,
+				000000000000000000000009 /* YahtzeeScorer.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		00000000000000000000001F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000A /* Die.swift */,
+				00000000000000000000000B /* GameMode.swift */,
+				00000000000000000000000C /* PlayerProfile.swift */,
+				00000000000000000000000D /* ScoreCategory.swift */,
+				00000000000000000000000E /* Scorecard.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		000000000000000000000020 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000F /* ProfileStore.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		000000000000000000000021 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000014 /* AppTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		000000000000000000000022 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000010 /* GameView.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		000000000000000000000023 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000011 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		000000000000000000000024 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000012 /* ProfilesView.swift */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		000000000000000000000025 /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000013 /* GameSetupView.swift */,
+			);
+			path = Setup;
+			sourceTree = "<group>";
+		};
+		000000000000000000000026 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000022 /* Game */,
+				000000000000000000000023 /* Home */,
+				000000000000000000000024 /* Profiles */,
+				000000000000000000000025 /* Setup */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		000000000000000000000027 /* Yahtzee */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000001 /* YahtzeeApp.swift */,
+				00000000000000000000001F /* Models */,
+				00000000000000000000001E /* Game */,
+				00000000000000000000001C /* AI */,
+				000000000000000000000020 /* Persistence */,
+				00000000000000000000001D /* Components */,
+				000000000000000000000026 /* Screens */,
+				000000000000000000000021 /* Theme */,
+				000000000000000000000015 /* Assets.xcassets */,
+			);
+			path = Yahtzee;
+			sourceTree = "<group>";
+		};
+		000000000000000000000028 /* Yahtzee Tests */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000016 /* ComputerAITests.swift */,
+				000000000000000000000017 /* GameEngineTests.swift */,
+				000000000000000000000018 /* ProfileStoreTests.swift */,
+				000000000000000000000019 /* YahtzeeScorerTests.swift */,
+			);
+			path = "Yahtzee Tests";
+			sourceTree = "<group>";
+		};
+		000000000000000000000029 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000001A /* Yahtzee.app */,
+				00000000000000000000001B /* Yahtzee Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00000000000000000000002A /*  */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000027 /* Yahtzee */,
+				000000000000000000000028 /* Yahtzee Tests */,
+				000000000000000000000029 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		000000000000000000000054 /* Yahtzee */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00000000000000000000004F;
+			buildPhases = (
+				000000000000000000000044 /* Sources */,
+				000000000000000000000046 /* Frameworks */,
+				000000000000000000000045 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Yahtzee;
+			productName = Yahtzee;
+			productReference = 00000000000000000000001A /* Yahtzee.app */;
+			productType = "com.apple.product-type.application";
+		};
+		000000000000000000000055 /* Yahtzee Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000052;
+			buildPhases = (
+				000000000000000000000047 /* Sources */,
+				000000000000000000000048 /* Frameworks */,
+				000000000000000000000049 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				000000000000000000000057 /* PBXTargetDependency */,
+			);
+			name = "Yahtzee Tests";
+			productName = "Yahtzee Tests";
+			productReference = 00000000000000000000001B /* Yahtzee Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		000000000000000000000053 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					000000000000000000000054 = {CreatedOnToolsVersion = 15.0;};
+					000000000000000000000055 = {CreatedOnToolsVersion = 15.0; TestTargetID = 000000000000000000000054;};
+				};
+			};
+			buildConfigurationList = 00000000000000000000004C;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = nl;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				nl,
+				Base,
+			);
+			mainGroup = 00000000000000000000002A;
+			productRefGroup = 000000000000000000000029 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				000000000000000000000054 /* Yahtzee */,
+				000000000000000000000055 /* Yahtzee Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		000000000000000000000045 = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000003F /* Assets.xcassets */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000049 = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		000000000000000000000044 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000002B /* YahtzeeApp.swift */,
+				00000000000000000000002C /* ComputerAI.swift */,
+				00000000000000000000002D /* AvatarBadge.swift */,
+				00000000000000000000002E /* DiceView.swift */,
+				00000000000000000000002F /* ScorecardView.swift */,
+				000000000000000000000030 /* GameEngine.swift */,
+				000000000000000000000031 /* GamePlayer.swift */,
+				000000000000000000000032 /* RollPhrase.swift */,
+				000000000000000000000033 /* YahtzeeScorer.swift */,
+				000000000000000000000034 /* Die.swift */,
+				000000000000000000000035 /* GameMode.swift */,
+				000000000000000000000036 /* PlayerProfile.swift */,
+				000000000000000000000037 /* ScoreCategory.swift */,
+				000000000000000000000038 /* Scorecard.swift */,
+				000000000000000000000039 /* ProfileStore.swift */,
+				00000000000000000000003A /* GameView.swift */,
+				00000000000000000000003B /* HomeView.swift */,
+				00000000000000000000003C /* ProfilesView.swift */,
+				00000000000000000000003D /* GameSetupView.swift */,
+				00000000000000000000003E /* AppTheme.swift */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000047 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000040 /* ComputerAITests.swift */,
+				000000000000000000000041 /* GameEngineTests.swift */,
+				000000000000000000000042 /* ProfileStoreTests.swift */,
+				000000000000000000000043 /* YahtzeeScorerTests.swift */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		000000000000000000000057 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000054 /* Yahtzee */;
+			targetProxy = 000000000000000000000056 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		00000000000000000000004A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		00000000000000000000004B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		00000000000000000000004D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Yahtzee;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				PRODUCT_BUNDLE_IDENTIFIER = com.superapp.yahtzee;
+				PRODUCT_NAME = Yahtzee;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		00000000000000000000004E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Yahtzee;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				PRODUCT_BUNDLE_IDENTIFIER = com.superapp.yahtzee;
+				PRODUCT_NAME = Yahtzee;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		000000000000000000000050 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.superapp.yahtzee.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Yahtzee.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Yahtzee";
+			};
+			name = Debug;
+		};
+		000000000000000000000051 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.superapp.yahtzee.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Yahtzee.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Yahtzee";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		00000000000000000000004C /* Build configuration list for PBXProject */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00000000000000000000004A /* Debug */,
+				00000000000000000000004B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00000000000000000000004F /* Build configuration list for PBXNativeTarget "Yahtzee" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00000000000000000000004D /* Debug */,
+				00000000000000000000004E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000052 /* Build configuration list for PBXNativeTarget "Yahtzee Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000050 /* Debug */,
+				000000000000000000000051 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 000000000000000000000053 /* Project object */;
+}
