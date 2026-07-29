@@ -13,9 +13,15 @@ struct ScorecardView: View {
     @Environment(\.metrics) private var m
 
     var body: some View {
-        HStack(alignment: .top, spacing: m.gutter * 0.6) {
-            column(title: "BOVEN", categories: ScoreCategory.upper, showsBonus: true)
-            column(title: "ONDER", categories: ScoreCategory.lower, showsBonus: false)
+        // Eén keer per hertekening rekenen. Als computed property werd de scorer
+        // per vakje opnieuw aangeroepen — dertien keer per kolom, en tijdens de
+        // gooianimatie acht keer per worp.
+        let open = openCategories
+        let best = bestCategory(open: open)
+
+        return HStack(alignment: .top, spacing: m.gutter * 0.6) {
+            column(title: "BOVEN", categories: ScoreCategory.upper, showsBonus: true, open: open, best: best)
+            column(title: "ONDER", categories: ScoreCategory.lower, showsBonus: false, open: open, best: best)
         }
         .padding(m.gutter * 0.8)
         .toyBlock(fill: .white, radius: m.cardCorner, depth: m.depth, border: m.border)
@@ -25,14 +31,24 @@ struct ScorecardView: View {
         players.first { $0.id == currentPlayerID }
     }
 
+    private var openCategories: Set<ScoreCategory> {
+        guard let current else { return [] }
+        return Set(YahtzeeScorer.availableCategories(dice: diceValues, scorecard: current.scorecard))
+    }
+
     /// Advies van de scorer: alleen tonen als er echt gegooid is.
-    private var bestCategory: ScoreCategory? {
-        guard canScore, let current else { return nil }
+    private func bestCategory(open: Set<ScoreCategory>) -> ScoreCategory? {
+        guard canScore, !open.isEmpty, let current else { return nil }
         return YahtzeeScorer.bestCategory(dice: diceValues, scorecard: current.scorecard)
     }
 
-    @ViewBuilder
-    private func column(title: String, categories: [ScoreCategory], showsBonus: Bool) -> some View {
+    private func column(
+        title: String,
+        categories: [ScoreCategory],
+        showsBonus: Bool,
+        open: Set<ScoreCategory>,
+        best: ScoreCategory?
+    ) -> some View {
         VStack(spacing: 4) {
             Text(title)
                 .font(AppTheme.rounded(m.captionSize * 0.9))
@@ -45,7 +61,7 @@ struct ScorecardView: View {
             playerHeader
 
             ForEach(categories) { category in
-                row(for: category)
+                row(for: category, open: open, best: best)
             }
 
             if showsBonus {
@@ -86,6 +102,7 @@ struct ScorecardView: View {
                     depth: 0,
                     border: m.thinBorder
                 )
+                .accessibilityElement(children: .combine)
                 .accessibilityLabel(
                     player.name
                         + (isMine ? ", aan de beurt" : "")
@@ -96,22 +113,31 @@ struct ScorecardView: View {
         }
     }
 
-    private func row(for category: ScoreCategory) -> some View {
+    private func row(
+        for category: ScoreCategory,
+        open: Set<ScoreCategory>,
+        best: ScoreCategory?
+    ) -> some View {
         HStack(spacing: 3) {
             CategoryIcon(category: category)
                 .frame(width: m.iconWidth, height: m.rowHeight)
 
             ForEach(players) { player in
-                cell(for: category, player: player)
+                cell(for: category, player: player, open: open, best: best)
             }
         }
     }
 
     @ViewBuilder
-    private func cell(for category: ScoreCategory, player: GamePlayer) -> some View {
+    private func cell(
+        for category: ScoreCategory,
+        player: GamePlayer,
+        open: Set<ScoreCategory>,
+        best: ScoreCategory?
+    ) -> some View {
         let scored = player.scorecard.scores[category]
         let isMine = player.id == currentPlayerID
-        let selectable = isMine && canScore && openCategories.contains(category)
+        let selectable = isMine && canScore && open.contains(category)
 
         if selectable {
             let points = YahtzeeScorer.pointsForPlacing(
@@ -119,7 +145,7 @@ struct ScorecardView: View {
                 dice: diceValues,
                 scorecard: player.scorecard
             ).score
-            let isBest = category == bestCategory
+            let isBest = category == best
 
             Button {
                 onSelect(category)
@@ -178,10 +204,6 @@ struct ScorecardView: View {
         }
     }
 
-    private var openCategories: [ScoreCategory] {
-        guard let current else { return [] }
-        return YahtzeeScorer.availableCategories(dice: diceValues, scorecard: current.scorecard)
-    }
 }
 
 /// De icoontegel links van elke rij: ogen voor de bovenkant, een symbool voor

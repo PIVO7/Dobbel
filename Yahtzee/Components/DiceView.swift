@@ -18,7 +18,7 @@ struct DiceTrayView: View {
                 } label: {
                     DieView(die: die, isRolling: isRolling && !die.isHeld)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(DieButtonStyle())
                 .disabled(!canInteract)
                 .accessibilityLabel("Dobbelsteen \(die.value)")
                 .accessibilityHint(die.isHeld ? "Vastgehouden, tik om los te laten" : "Tik om vast te houden")
@@ -26,6 +26,15 @@ struct DiceTrayView: View {
             }
         }
         .padding(.vertical, 8)
+    }
+}
+
+/// Een steen ziet er hetzelfde uit of hij nu tikbaar is of niet: het grijs dat
+/// `.plain` op uitgeschakelde knoppen legt, hoort niet bij deze stijl. Of je
+/// mag vasthouden blijkt al uit de beurt zelf.
+private struct DieButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
     }
 }
 
