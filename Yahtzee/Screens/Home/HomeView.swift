@@ -3,10 +3,8 @@ import SwiftUI
 struct HomeView: View {
     @Environment(ProfileStore.self) private var profileStore
     @Environment(GameStore.self) private var gameStore
-    @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.metrics) private var m
     @State private var activeGame: ActiveGame?
-
-    private var m: AppMetrics { .resolve(sizeClass) }
 
     var body: some View {
         NavigationStack {
@@ -76,6 +74,7 @@ struct HomeView: View {
                 }
                 .environment(profileStore)
                 .environment(gameStore)
+                .appMetrics()
             }
         }
         .tint(AppTheme.coral)

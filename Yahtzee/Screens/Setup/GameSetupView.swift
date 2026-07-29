@@ -5,13 +5,13 @@ struct GameSetupView: View {
     @Environment(ProfileStore.self) private var profileStore
     @Environment(GameStore.self) private var gameStore
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.metrics) private var m
     /// Een lijst en geen verzameling: de volgorde van aantikken bepaalt de
     /// beurtvolgorde in het spel.
     @State private var selectedIDs: [UUID] = []
     @State private var activeGame: ActiveGame?
     @State private var showReplaceSavedConfirm = false
 
-    private var m: AppMetrics { .resolve(sizeClass) }
 
     private var columns: [GridItem] {
         let count = sizeClass == .regular ? 2 : 1
@@ -103,6 +103,7 @@ struct GameSetupView: View {
             }
             .environment(profileStore)
             .environment(gameStore)
+            .appMetrics()
         }
         .confirmationDialog(
             "Lopend spel vervangen?",

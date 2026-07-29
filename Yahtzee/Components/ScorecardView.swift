@@ -10,8 +10,7 @@ struct ScorecardView: View {
     let canScore: Bool
     let onSelect: (ScoreCategory) -> Void
 
-    @Environment(\.horizontalSizeClass) private var sizeClass
-    private var m: AppMetrics { .resolve(sizeClass) }
+    @Environment(\.metrics) private var m
 
     var body: some View {
         HStack(alignment: .top, spacing: m.gutter * 0.6) {
@@ -190,8 +189,7 @@ struct ScorecardView: View {
 struct CategoryIcon: View {
     let category: ScoreCategory
 
-    @Environment(\.horizontalSizeClass) private var sizeClass
-    private var m: AppMetrics { .resolve(sizeClass) }
+    @Environment(\.metrics) private var m
 
     var body: some View {
         content

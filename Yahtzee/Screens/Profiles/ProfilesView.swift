@@ -3,12 +3,12 @@ import SwiftUI
 struct ProfilesView: View {
     @Environment(ProfileStore.self) private var profileStore
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.metrics) private var m
     @State private var newName = ""
     @State private var renameTarget: PlayerProfile?
     @State private var renameText = ""
     @State private var deleteTarget: PlayerProfile?
 
-    private var m: AppMetrics { .resolve(sizeClass) }
 
     /// Op een iPad past er een tweede kolom naast; op een iPhone niet.
     private var columns: [GridItem] {
@@ -35,7 +35,7 @@ struct ProfilesView: View {
                                 .font(AppTheme.rounded(m.captionSize, .bold))
                                 .foregroundStyle(canAdd ? .white : AppTheme.offInk)
                                 .padding(.horizontal, 14)
-                                .padding(.vertical, 9)
+                                .frame(minHeight: m.tapTarget)
                                 .toyBlock(
                                     fill: canAdd ? AppTheme.mint : AppTheme.offFill,
                                     radius: m.cellCorner + 1,
@@ -159,7 +159,7 @@ struct ProfilesView: View {
                 Image(systemName: "pencil")
                     .font(.system(size: m.captionSize + 2, weight: .black))
                     .foregroundStyle(AppTheme.ink)
-                    .frame(width: m.avatarSize * 0.78, height: m.avatarSize * 0.78)
+                    .frame(width: m.tapTarget, height: m.tapTarget)
             }
             .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: 3, border: m.thinBorder))
             .accessibilityLabel("\(profile.name) hernoemen")
@@ -170,7 +170,7 @@ struct ProfilesView: View {
                 Image(systemName: "trash")
                     .font(.system(size: m.captionSize + 2, weight: .black))
                     .foregroundStyle(AppTheme.ink)
-                    .frame(width: m.avatarSize * 0.78, height: m.avatarSize * 0.78)
+                    .frame(width: m.tapTarget, height: m.tapTarget)
             }
             .buttonStyle(ToyButtonStyle(fill: AppTheme.tintCoral, radius: m.cellCorner, depth: 3, border: m.thinBorder))
             .accessibilityLabel("\(profile.name) verwijderen")

@@ -6,20 +6,23 @@ struct DiceTrayView: View {
     let canInteract: Bool
     let onToggle: (UUID) -> Void
 
-    @Environment(\.horizontalSizeClass) private var sizeClass
-    private var m: AppMetrics { .resolve(sizeClass) }
+    @Environment(\.metrics) private var m
 
     var body: some View {
         HStack(spacing: m.dieGap) {
             ForEach(dice) { die in
-                DieView(die: die, isRolling: isRolling && !die.isHeld)
-                    .onTapGesture {
-                        guard canInteract else { return }
-                        onToggle(die.id)
-                    }
-                    .accessibilityLabel("Dobbelsteen \(die.value)")
-                    .accessibilityHint(die.isHeld ? "Vastgehouden, tik om los te laten" : "Tik om vast te houden")
-                    .accessibilityAddTraits(die.isHeld ? .isSelected : [])
+                // Een echte knop en geen tikgebaar: anders kan VoiceOver de
+                // steen wel voorlezen maar niet vasthouden.
+                Button {
+                    onToggle(die.id)
+                } label: {
+                    DieView(die: die, isRolling: isRolling && !die.isHeld)
+                }
+                .buttonStyle(.plain)
+                .disabled(!canInteract)
+                .accessibilityLabel("Dobbelsteen \(die.value)")
+                .accessibilityHint(die.isHeld ? "Vastgehouden, tik om los te laten" : "Tik om vast te houden")
+                .accessibilityAddTraits(die.isHeld ? .isSelected : [])
             }
         }
         .padding(.vertical, 8)
@@ -33,8 +36,7 @@ struct DieView: View {
     @State private var spin = 0.0
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.horizontalSizeClass) private var sizeClass
-    private var m: AppMetrics { .resolve(sizeClass) }
+    @Environment(\.metrics) private var m
 
     var body: some View {
         DiePips(value: die.value)

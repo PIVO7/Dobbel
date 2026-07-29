@@ -5,6 +5,7 @@ struct GameView: View {
     @Environment(ProfileStore.self) private var profileStore
     @Environment(GameStore.self) private var gameStore
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.metrics) private var m
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let onClose: () -> Void
 
@@ -18,7 +19,6 @@ struct GameView: View {
     @State private var scorePulse = 0
     @State private var yahtzeePulse = 0
 
-    private var m: AppMetrics { .resolve(sizeClass) }
     private var isWide: Bool { sizeClass == .regular }
 
     var body: some View {
@@ -110,50 +110,60 @@ struct GameView: View {
     // MARK: - Indelingen
 
     private var tallLayout: some View {
-        VStack(spacing: 0) {
-            header
-                .padding(.top, 6)
+        ScrollView {
+            VStack(spacing: 0) {
+                header
+                    .padding(.top, 6)
 
-            roundStrip
-                .padding(.top, m.gutter)
+                roundStrip
+                    .padding(.top, m.gutter)
 
-            DiceTrayView(
-                dice: engine.dice,
-                isRolling: engine.isRolling,
-                canInteract: engine.canScore && engine.rollsRemaining > 0
-            ) { id in
-                engine.toggleHold(dieID: id)
-                holdPulse += 1
-            }
-            .padding(.top, m.gutter * 0.8)
-
-            callout
-                .padding(.top, 4)
-                .padding(.bottom, m.gutter)
-
-            ScorecardView(
-                players: engine.players,
-                currentPlayerID: engine.currentPlayer.id,
-                diceValues: engine.diceValues,
-                canScore: engine.canScore,
-                onSelect: { category in
-                    engine.score(in: category)
-                    scorePulse += 1
-                    if engine.lastYahtzeeBonus > 0 {
-                        celebrateBonus = true
-                        yahtzeePulse += 1
-                    }
+                DiceTrayView(
+                    dice: engine.dice,
+                    isRolling: engine.isRolling,
+                    canInteract: engine.canScore && engine.rollsRemaining > 0
+                ) { id in
+                    engine.toggleHold(dieID: id)
+                    holdPulse += 1
                 }
-            )
+                .padding(.top, m.gutter * 0.8)
 
-            Spacer(minLength: 12)
+                callout
+                    .padding(.top, 4)
+                    .padding(.bottom, m.gutter)
 
-            rollButton
-                .padding(.bottom, m.gutter * 1.5)
+                ScorecardView(
+                    players: engine.players,
+                    currentPlayerID: engine.currentPlayer.id,
+                    diceValues: engine.diceValues,
+                    canScore: engine.canScore,
+                    onSelect: { category in
+                        engine.score(in: category)
+                        scorePulse += 1
+                        if engine.lastYahtzeeBonus > 0 {
+                            celebrateBonus = true
+                            yahtzeePulse += 1
+                        }
+                    }
+                )
+                .padding(.bottom, m.gutter)
+            }
+            .padding(.horizontal, m.gutter)
+            .frame(maxWidth: m.contentMaxWidth)
+            .frame(maxWidth: .infinity)
         }
-        .padding(.horizontal, m.gutter)
-        .frame(maxWidth: m.contentMaxWidth)
-        .frame(maxWidth: .infinity)
+        .scrollBounceBehavior(.basedOnSize)
+        // De gooiknop blijft onderaan staan, ook als het scoreblad bij een
+        // grote tekstinstelling langer wordt dan het scherm.
+        .safeAreaInset(edge: .bottom) {
+            rollButton
+                .padding(.horizontal, m.gutter)
+                .padding(.top, m.gutter * 0.4)
+                .padding(.bottom, m.gutter * 0.6)
+                .frame(maxWidth: m.contentMaxWidth)
+                .frame(maxWidth: .infinity)
+                .background(AppTheme.cream)
+        }
     }
 
     private func wideLayout(width: CGFloat) -> some View {
@@ -186,20 +196,23 @@ struct GameView: View {
                 }
                 .frame(width: max(width * 0.42 - m.gutter, 320))
 
-                ScorecardView(
-                    players: engine.players,
-                    currentPlayerID: engine.currentPlayer.id,
-                    diceValues: engine.diceValues,
-                    canScore: engine.canScore,
-                    onSelect: { category in
-                        engine.score(in: category)
-                        scorePulse += 1
-                        if engine.lastYahtzeeBonus > 0 {
-                            celebrateBonus = true
-                            yahtzeePulse += 1
+                ScrollView {
+                    ScorecardView(
+                        players: engine.players,
+                        currentPlayerID: engine.currentPlayer.id,
+                        diceValues: engine.diceValues,
+                        canScore: engine.canScore,
+                        onSelect: { category in
+                            engine.score(in: category)
+                            scorePulse += 1
+                            if engine.lastYahtzeeBonus > 0 {
+                                celebrateBonus = true
+                                yahtzeePulse += 1
+                            }
                         }
-                    }
-                )
+                    )
+                }
+                .scrollBounceBehavior(.basedOnSize)
                 .frame(maxWidth: .infinity)
             }
             .padding(.top, m.gutter * 0.5)
@@ -240,7 +253,7 @@ struct GameView: View {
                 Image(systemName: "xmark")
                     .font(.system(size: m.captionSize + 2, weight: .black))
                     .foregroundStyle(AppTheme.ink)
-                    .frame(width: m.avatarSize * 0.78, height: m.avatarSize * 0.78)
+                    .frame(width: m.tapTarget, height: m.tapTarget)
             }
             .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cellCorner, depth: 3, border: m.thinBorder))
             .accessibilityLabel("Spel verlaten")

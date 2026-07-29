@@ -57,6 +57,9 @@ struct AppMetrics {
     var contentMaxWidth: CGFloat
     var avatarSize: CGFloat
 
+    /// Apple's ondergrens voor een aanraakvlak. Nooit kleiner maken.
+    var tapTarget: CGFloat
+
     var brandSize: CGFloat
     var titleSize: CGFloat
     var displaySize: CGFloat
@@ -68,9 +71,10 @@ struct AppMetrics {
 
     static let phone = AppMetrics(
         dieSize: 60, dieCorner: 16, dieGap: 9,
-        rowHeight: 38, iconWidth: 38, cellCorner: 11,
+        rowHeight: 44, iconWidth: 38, cellCorner: 11,
         cardCorner: 20, depth: 5, border: 3, thinBorder: 2,
         gutter: 14, contentMaxWidth: .infinity, avatarSize: 44,
+        tapTarget: 44,
         brandSize: 52, titleSize: 40, displaySize: 30,
         bodySize: 17, captionSize: 12, cellTextSize: 17,
         buttonTextSize: 21, buttonHeight: 60
@@ -81,6 +85,7 @@ struct AppMetrics {
         rowHeight: 54, iconWidth: 54, cellCorner: 15,
         cardCorner: 26, depth: 7, border: 4, thinBorder: 2.5,
         gutter: 24, contentMaxWidth: 760, avatarSize: 58,
+        tapTarget: 52,
         brandSize: 78, titleSize: 56, displaySize: 44,
         bodySize: 21, captionSize: 15, cellTextSize: 24,
         buttonTextSize: 28, buttonHeight: 78
@@ -88,6 +93,61 @@ struct AppMetrics {
 
     static func resolve(_ sizeClass: UserInterfaceSizeClass?) -> AppMetrics {
         sizeClass == .regular ? .pad : .phone
+    }
+
+    /// Laat de maten meegroeien met de tekstgrootte van de gebruiker. Drie
+    /// snelheden, want niet alles kan even hard groeien:
+    ///
+    /// - tekst mag ook krimpen als iemand een kleine letter kiest;
+    /// - aanraakvlakken groeien mee maar zakken nooit onder de basismaat;
+    /// - het scoreblad is een vast raster van dertien rijen dat heel in beeld
+    ///   moet blijven, dus dat groeit het traagst.
+    func scaled(by factor: CGFloat) -> AppMetrics {
+        let text = min(factor, 2)
+        let touch = min(max(factor, 1), 2)
+        let grid = min(max(factor, 1), 1.3)
+
+        var copy = self
+        copy.brandSize *= text
+        copy.titleSize *= text
+        copy.displaySize *= text
+        copy.bodySize *= text
+        copy.captionSize *= text
+        copy.buttonTextSize *= text
+
+        copy.tapTarget *= touch
+        copy.buttonHeight *= touch
+        copy.avatarSize *= touch
+
+        copy.cellTextSize *= grid
+        copy.rowHeight *= grid
+        copy.iconWidth *= grid
+        return copy
+    }
+}
+
+extension EnvironmentValues {
+    /// Alle maten komen hierlangs, zodat grootteklasse en tekstgrootte op één
+    /// plek verwerkt worden in plaats van in elke view opnieuw.
+    @Entry var metrics: AppMetrics = .phone
+}
+
+private struct MetricsProvider: ViewModifier {
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    /// Verhouding tussen de gekozen en de standaard tekstgrootte. Onze fonts
+    /// hebben een vaste puntmaat en schalen dus niet vanzelf mee.
+    @ScaledMetric(relativeTo: .body) private var textScale: CGFloat = 1
+
+    func body(content: Content) -> some View {
+        content.environment(\.metrics, AppMetrics.resolve(sizeClass).scaled(by: textScale))
+    }
+}
+
+extension View {
+    /// Zet de maten klaar voor alles hieronder. Hoort op elke schermwortel,
+    /// ook binnen een cover — die erft de omgeving niet altijd.
+    func appMetrics() -> some View {
+        modifier(MetricsProvider())
     }
 }
 

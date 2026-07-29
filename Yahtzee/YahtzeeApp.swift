@@ -10,6 +10,7 @@ struct YahtzeeApp: App {
             HomeView()
                 .environment(profileStore)
                 .environment(gameStore)
+                .appMetrics()
         }
     }
 }
