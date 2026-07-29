@@ -32,6 +32,7 @@ struct DieView: View {
 
     @State private var spin = 0.0
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.horizontalSizeClass) private var sizeClass
     private var m: AppMetrics { .resolve(sizeClass) }
 
@@ -47,11 +48,15 @@ struct DieView: View {
                 border: m.border
             )
             .offset(y: die.isHeld ? m.depth - 2 : 0)
-            .rotationEffect(.degrees(isRolling ? spin : 0))
-            .offset(y: isRolling ? -8 : 0)
-            .animation(.easeInOut(duration: 0.08).repeatCount(6, autoreverses: true), value: isRolling)
+            .rotationEffect(.degrees(isRolling && !reduceMotion ? spin : 0))
+            .offset(y: isRolling && !reduceMotion ? -8 : 0)
+            .animation(
+                reduceMotion ? nil : .easeInOut(duration: 0.08).repeatCount(6, autoreverses: true),
+                value: isRolling
+            )
             .animation(.easeOut(duration: 0.12), value: die.isHeld)
             .onChange(of: isRolling) { _, rolling in
+                guard !reduceMotion else { return }
                 if rolling {
                     spin = Double.random(in: -18...18)
                 } else {

@@ -13,6 +13,12 @@ final class GameEngine {
     private(set) var isFinished: Bool = false
     private(set) var winnerProfileIDs: [UUID] = []
     private(set) var turnMessage: String = ""
+    /// Bumps after meaningful state changes so de UI kan autosaven.
+    private(set) var saveVersion: Int = 0
+    /// Laatste Yahtzee-bonus die zojuist geplaatst werd (voor viering).
+    private(set) var lastYahtzeeBonus: Int = 0
+    /// True kort nadat een speler scoorde — UI toont beurt-wissel.
+    private(set) var turnJustChanged: Bool = false
 
     private var rng: SplitMix64
     private let computerAI: ComputerAI
@@ -29,8 +35,28 @@ final class GameEngine {
         !isFinished && !isRolling && hasRolledThisTurn && !currentPlayer.isComputer
     }
 
+    /// Globale ronde (1…13), stabiel over beurtwissels heen.
+    var roundNumber: Int {
+        let filled = players.reduce(0) { $0 + $1.scorecard.filledCount }
+        let round = filled / max(players.count, 1) + 1
+        return min(max(round, 1), ScoreCategory.allCases.count)
+    }
+
     private var canPerformTurnAction: Bool {
         !isFinished && !isRolling
+    }
+
+    var snapshot: GameSnapshot {
+        GameSnapshot(
+            mode: mode,
+            players: players,
+            currentPlayerIndex: currentPlayerIndex,
+            dice: dice,
+            rollsRemaining: rollsRemaining,
+            hasRolledThisTurn: hasRolledThisTurn,
+            turnMessage: turnMessage,
+            savedAt: .now
+        )
     }
 
     init(
@@ -47,10 +73,27 @@ final class GameEngine {
         self.turnMessage = "\(currentPlayer.name) mag gooien"
     }
 
+    init(snapshot: GameSnapshot, seed: UInt64? = nil, computerAI: ComputerAI = ComputerAI()) {
+        self.mode = snapshot.mode
+        self.players = snapshot.players
+        self.currentPlayerIndex = min(max(snapshot.currentPlayerIndex, 0), max(snapshot.players.count - 1, 0))
+        self.dice = snapshot.dice
+        self.rollsRemaining = snapshot.rollsRemaining
+        self.hasRolledThisTurn = snapshot.hasRolledThisTurn
+        self.turnMessage = snapshot.turnMessage
+        self.computerAI = computerAI
+        self.rng = SplitMix64(seed: seed ?? UInt64.random(in: .min ... .max))
+        self.isFinished = snapshot.players.allSatisfy(\.scorecard.isComplete)
+        if isFinished {
+            finishGame()
+        }
+    }
+
     func toggleHold(dieID: UUID) {
         guard canScore, rollsRemaining > 0 else { return }
         guard let index = dice.firstIndex(where: { $0.id == dieID }) else { return }
         dice[index].isHeld.toggle()
+        markDirty()
     }
 
     @MainActor
@@ -62,6 +105,10 @@ final class GameEngine {
     func score(in category: ScoreCategory) {
         guard canScore else { return }
         placeScore(category)
+    }
+
+    func acknowledgeTurnChange() {
+        turnJustChanged = false
     }
 
     @MainActor
@@ -99,6 +146,7 @@ final class GameEngine {
             for index in dice.indices {
                 dice[index].isHeld = decision.holdMask[index]
             }
+            markDirty()
             await performRoll()
         }
     }
@@ -130,6 +178,7 @@ final class GameEngine {
                 ? "Kies een vakje op het scoreblad"
                 : "Houd dobbelstenen vast of gooi opnieuw"
         }
+        markDirty()
     }
 
     private func placeScore(_ category: ScoreCategory) {
@@ -141,6 +190,7 @@ final class GameEngine {
             dice: diceValues,
             scorecard: currentPlayer.scorecard
         )
+        lastYahtzeeBonus = result.yahtzeeBonus
         players[currentPlayerIndex].scorecard.place(
             category: category,
             score: result.score,
@@ -156,6 +206,7 @@ final class GameEngine {
 
         if players.allSatisfy(\.scorecard.isComplete) {
             finishGame()
+            markDirty()
             return
         }
 
@@ -164,6 +215,8 @@ final class GameEngine {
         } while players[currentPlayerIndex].scorecard.isComplete
 
         turnMessage = "\(currentPlayer.name) is aan de beurt"
+        turnJustChanged = true
+        markDirty()
     }
 
     private func finishGame() {
@@ -176,6 +229,10 @@ final class GameEngine {
         } else {
             turnMessage = "Gelijkspel met \(best) punten!"
         }
+    }
+
+    private func markDirty() {
+        saveVersion += 1
     }
 }
 

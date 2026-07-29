@@ -1,8 +1,27 @@
 import SwiftUI
 
 struct AvatarBadge: View {
-    let profile: PlayerProfile
+    let name: String
+    var colorIndex: Int = 0
     var size: CGFloat = 44
+
+    init(name: String, colorIndex: Int, size: CGFloat = 44) {
+        self.name = name
+        self.colorIndex = colorIndex
+        self.size = size
+    }
+
+    init(profile: PlayerProfile, size: CGFloat = 44) {
+        self.name = profile.name
+        self.colorIndex = profile.avatarColorIndex
+        self.size = size
+    }
+
+    init(player: GamePlayer, size: CGFloat = 44) {
+        self.name = player.name
+        self.colorIndex = player.avatarColorIndex
+        self.size = size
+    }
 
     private var color: Color {
         let palette: [Color] = [
@@ -13,7 +32,7 @@ struct AvatarBadge: View {
             Color(red: 0.78, green: 0.47, blue: 0.90),
             Color(red: 0.98, green: 0.60, blue: 0.35)
         ]
-        return palette[profile.avatarColorIndex % palette.count]
+        return palette[colorIndex % palette.count]
     }
 
     var body: some View {
@@ -33,10 +52,10 @@ struct AvatarBadge: View {
     }
 
     private var initials: String {
-        let parts = profile.name.split(separator: " ")
+        let parts = name.split(separator: " ")
         if parts.count >= 2 {
             return String(parts[0].prefix(1) + parts[1].prefix(1)).uppercased()
         }
-        return String(profile.name.prefix(2)).uppercased()
+        return String(name.prefix(2)).uppercased()
     }
 }

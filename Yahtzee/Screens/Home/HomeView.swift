@@ -2,7 +2,9 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(ProfileStore.self) private var profileStore
+    @Environment(GameStore.self) private var gameStore
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @State private var activeGame: ActiveGame?
 
     private var m: AppMetrics { .resolve(sizeClass) }
 
@@ -26,6 +28,19 @@ struct HomeView: View {
                         .padding(.bottom, m.gutter * 2.4)
 
                         VStack(spacing: m.gutter) {
+                            if let saved = gameStore.savedGame {
+                                Button {
+                                    activeGame = ActiveGame(engine: GameEngine(snapshot: saved))
+                                } label: {
+                                    menuLabel(
+                                        "Verder spelen",
+                                        subtitle: saved.summaryTitle,
+                                        tint: AppTheme.coral,
+                                        face: 5
+                                    )
+                                }
+                            }
+
                             NavigationLink(value: Destination.setup(.versusFriends)) {
                                 menuLabel("Tegen elkaar", subtitle: "2 tot 4 spelers, één toestel",
                                           tint: AppTheme.amber, face: 4)
@@ -55,6 +70,13 @@ struct HomeView: View {
                 }
             }
             .toolbarBackground(.hidden, for: .navigationBar)
+            .fullScreenCover(item: $activeGame) { game in
+                GameView(engine: game.engine) {
+                    activeGame = nil
+                }
+                .environment(profileStore)
+                .environment(gameStore)
+            }
         }
         .tint(AppTheme.coral)
     }
@@ -96,4 +118,11 @@ struct HomeView: View {
 enum Destination: Hashable {
     case profiles
     case setup(GameMode)
+}
+
+/// Gedeeld door het menu en de spelerskeuze: beide kunnen een spel openen —
+/// het menu een bewaard spel, de spelerskeuze een nieuw.
+struct ActiveGame: Identifiable {
+    let id = UUID()
+    let engine: GameEngine
 }

@@ -3,9 +3,13 @@ import SwiftUI
 struct GameSetupView: View {
     let mode: GameMode
     @Environment(ProfileStore.self) private var profileStore
+    @Environment(GameStore.self) private var gameStore
     @Environment(\.horizontalSizeClass) private var sizeClass
-    @State private var selectedIDs: Set<UUID> = []
+    /// Een lijst en geen verzameling: de volgorde van aantikken bepaalt de
+    /// beurtvolgorde in het spel.
+    @State private var selectedIDs: [UUID] = []
     @State private var activeGame: ActiveGame?
+    @State private var showReplaceSavedConfirm = false
 
     private var m: AppMetrics { .resolve(sizeClass) }
 
@@ -32,12 +36,28 @@ struct GameSetupView: View {
                 }
 
                 if profileStore.humanProfiles.isEmpty {
-                    ContentUnavailableView(
-                        "Geen profielen",
-                        systemImage: "person.crop.circle.badge.plus",
-                        description: Text("Maak eerst een profiel aan onder Profielen.")
-                    )
-                    .foregroundStyle(AppTheme.soft)
+                    VStack(spacing: m.gutter) {
+                        ContentUnavailableView(
+                            "Geen profielen",
+                            systemImage: "person.crop.circle.badge.plus",
+                            description: Text("Maak eerst een profiel aan om te spelen.")
+                        )
+                        .foregroundStyle(AppTheme.soft)
+
+                        NavigationLink(value: Destination.profiles) {
+                            Text("Naar profielen")
+                                .font(AppTheme.rounded(m.buttonTextSize * 0.85))
+                                .foregroundStyle(.white)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: m.buttonHeight * 0.9)
+                        }
+                        .buttonStyle(ToyButtonStyle(
+                            fill: AppTheme.mint,
+                            radius: m.cardCorner * 0.8,
+                            depth: m.depth,
+                            border: m.border
+                        ))
+                    }
                 } else {
                     Text(mode == .versusComputer ? "KIES JOUW PROFIEL" : "KIES 2 TOT 4 SPELERS")
                         .font(AppTheme.rounded(m.captionSize * 0.9))
@@ -53,7 +73,7 @@ struct GameSetupView: View {
                         .padding(.vertical, 2)
                     }
 
-                    Button(action: startGame) {
+                    Button(action: requestStart) {
                         Text("Start spel")
                             .font(AppTheme.rounded(m.buttonTextSize))
                             .foregroundStyle(canStart ? .white : AppTheme.offInk)
@@ -82,6 +102,17 @@ struct GameSetupView: View {
                 activeGame = nil
             }
             .environment(profileStore)
+            .environment(gameStore)
+        }
+        .confirmationDialog(
+            "Lopend spel vervangen?",
+            isPresented: $showReplaceSavedConfirm,
+            titleVisibility: .visible
+        ) {
+            Button("Nieuw spel starten", role: .destructive, action: beginNewGame)
+            Button("Annuleer", role: .cancel) {}
+        } message: {
+            Text("Er staat nog een spel klaar om verder te spelen.")
         }
     }
 
@@ -133,25 +164,33 @@ struct GameSetupView: View {
             selectedIDs = [id]
             return
         }
-        if selectedIDs.contains(id) {
-            selectedIDs.remove(id)
+        if let index = selectedIDs.firstIndex(of: id) {
+            selectedIDs.remove(at: index)
         } else if selectedIDs.count < 4 {
-            selectedIDs.insert(id)
+            selectedIDs.append(id)
         }
     }
 
-    private func startGame() {
-        let humans = profileStore.humanProfiles.filter { selectedIDs.contains($0.id) }
+    /// Een nieuw spel gooit een bewaard spel weg, dus dat vragen we eerst.
+    private func requestStart() {
+        guard canStart else { return }
+        if gameStore.hasSavedGame {
+            showReplaceSavedConfirm = true
+        } else {
+            beginNewGame()
+        }
+    }
+
+    private func beginNewGame() {
+        let humans = selectedIDs.compactMap { id in
+            profileStore.humanProfiles.first { $0.id == id }
+        }
         var profiles = humans
         if mode == .versusComputer {
             profiles.append(.computer)
         }
+        gameStore.clear()
         let engine = GameEngine(mode: mode, profiles: profiles)
         activeGame = ActiveGame(engine: engine)
     }
-}
-
-private struct ActiveGame: Identifiable {
-    let id = UUID()
-    let engine: GameEngine
 }
