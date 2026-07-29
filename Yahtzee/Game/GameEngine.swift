@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class GameEngine {
     let mode: GameMode
@@ -33,6 +34,17 @@ final class GameEngine {
 
     var canScore: Bool {
         !isFinished && !isRolling && hasRolledThisTurn && !currentPlayer.isComputer
+    }
+
+    /// De worp in woorden. Staat naast `turnMessage`, zodat het spelscherm
+    /// geen beurtstand hoeft na te rekenen om te weten wat er mag staan.
+    var calloutTitle: String {
+        RollPhrase.callout(
+            dice: diceValues,
+            isRolling: isRolling,
+            hasRolled: hasRolledThisTurn,
+            isComputer: currentPlayer.isComputer
+        )
     }
 
     /// Globale ronde (1…13), stabiel over beurtwissels heen.
@@ -96,7 +108,6 @@ final class GameEngine {
         markDirty()
     }
 
-    @MainActor
     func rollDice() async {
         guard canRoll else { return }
         await performRoll()
@@ -111,7 +122,6 @@ final class GameEngine {
         turnJustChanged = false
     }
 
-    @MainActor
     func playComputerTurnIfNeeded() async {
         while !isFinished, currentPlayer.isComputer {
             await takeComputerTurn()
@@ -119,7 +129,6 @@ final class GameEngine {
         }
     }
 
-    @MainActor
     private func takeComputerTurn() async {
         // First roll of the turn.
         await performRoll()
@@ -151,7 +160,6 @@ final class GameEngine {
         }
     }
 
-    @MainActor
     private func performRoll() async {
         guard canPerformTurnAction, rollsRemaining > 0 else { return }
         isRolling = true

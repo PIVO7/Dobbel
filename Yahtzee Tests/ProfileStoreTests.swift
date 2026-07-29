@@ -1,6 +1,7 @@
 import XCTest
 @testable import Yahtzee
 
+@MainActor
 final class ProfileStoreTests: XCTestCase {
     func testAddAndRecordWins() throws {
         let url = FileManager.default.temporaryDirectory

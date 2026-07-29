@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class ProfileStore {
     private(set) var profiles: [PlayerProfile] = []

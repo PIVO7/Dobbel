@@ -55,6 +55,8 @@ struct AppMetrics {
 
     var gutter: CGFloat
     var contentMaxWidth: CGFloat
+    /// Breedte van het eindscherm; dat blijft een dialoog, geen volle pagina.
+    var overlayMaxWidth: CGFloat
     var avatarSize: CGFloat
 
     /// Apple's ondergrens voor een aanraakvlak. Nooit kleiner maken.
@@ -73,7 +75,7 @@ struct AppMetrics {
         dieSize: 60, dieCorner: 16, dieGap: 9,
         rowHeight: 44, iconWidth: 38, cellCorner: 11,
         cardCorner: 20, depth: 5, border: 3, thinBorder: 2,
-        gutter: 14, contentMaxWidth: .infinity, avatarSize: 44,
+        gutter: 14, contentMaxWidth: .infinity, overlayMaxWidth: 460, avatarSize: 44,
         tapTarget: 44,
         brandSize: 52, titleSize: 40, displaySize: 30,
         bodySize: 17, captionSize: 12, cellTextSize: 17,
@@ -84,7 +86,7 @@ struct AppMetrics {
         dieSize: 88, dieCorner: 23, dieGap: 15,
         rowHeight: 54, iconWidth: 54, cellCorner: 15,
         cardCorner: 26, depth: 7, border: 4, thinBorder: 2.5,
-        gutter: 24, contentMaxWidth: 760, avatarSize: 58,
+        gutter: 24, contentMaxWidth: 760, overlayMaxWidth: 520, avatarSize: 58,
         tapTarget: 52,
         brandSize: 78, titleSize: 56, displaySize: 44,
         bodySize: 21, captionSize: 15, cellTextSize: 24,

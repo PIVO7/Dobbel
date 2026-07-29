@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class GameStore {
     private(set) var savedGame: GameSnapshot?
