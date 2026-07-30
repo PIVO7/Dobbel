@@ -14,6 +14,7 @@ struct GameView: View {
 
     @State private var didRecordResult = false
     @State private var showTurnBanner = false
+    @State private var showExitConfirm = false
     @State private var celebrateYahtzee = false
     @State private var celebrateBonus = false
     @State private var bannerDismissal: Task<Void, Never>?
@@ -31,7 +32,7 @@ struct GameView: View {
             toggleHold: holdDie,
             score: place,
             roll: roll,
-            leave: leave
+            leave: requestLeave
         )
     }
 
@@ -61,7 +62,7 @@ struct GameView: View {
                 }
 
                 if showTurnBanner {
-                    TurnBannerView(player: engine.currentPlayer)
+                    TurnBannerView(player: engine.currentPlayer, title: bannerTitle)
                         .transition(
                             reduceMotion
                                 ? .opacity
@@ -89,6 +90,22 @@ struct GameView: View {
                     )
                     .zIndex(4)
                 }
+
+                if showExitConfirm {
+                    ToyDialog(
+                        title: "Spel verlaten?",
+                        message: "Je voortgang wordt bewaard.",
+                        confirmTitle: "Verlaten",
+                        cancelTitle: "Doorspelen",
+                        onConfirm: leave,
+                        onCancel: {
+                            withAnimation(.easeOut(duration: 0.15)) {
+                                showExitConfirm = false
+                            }
+                        }
+                    )
+                    .zIndex(5)
+                }
             }
         }
         .task(id: engine.currentPlayerIndex) {
@@ -102,6 +119,10 @@ struct GameView: View {
             recordResult()
         }
         .onChange(of: engine.isRolling) { wasRolling, isRolling in
+            // Hier en niet op de knop: zo ratelt het ook als de computer gooit.
+            if !wasRolling, isRolling {
+                SoundPlayer.shared.play(.roll)
+            }
             guard wasRolling, !isRolling else { return }
             rollDidFinish()
         }
@@ -126,6 +147,7 @@ struct GameView: View {
     private func holdDie(_ id: UUID) {
         engine.toggleHold(dieID: id)
         holdPulse += 1
+        SoundPlayer.shared.play(.hold)
     }
 
     private func place(_ category: ScoreCategory) {
@@ -134,6 +156,9 @@ struct GameView: View {
         if engine.lastYahtzeeBonus > 0 {
             celebrateBonus = true
             yahtzeePulse += 1
+            SoundPlayer.shared.play(.fanfare)
+        } else {
+            SoundPlayer.shared.play(.score)
         }
     }
 
@@ -141,9 +166,30 @@ struct GameView: View {
         Task { await engine.rollDice() }
     }
 
+    /// Een afgelopen spel valt niets meer te bewaren, dus dan slaan we de
+    /// bevestiging over.
+    private func requestLeave() {
+        if engine.isFinished {
+            leave()
+        } else {
+            withAnimation(.easeOut(duration: 0.15)) {
+                showExitConfirm = true
+            }
+        }
+    }
+
     private func leave() {
         persistProgress()
         onClose()
+    }
+
+    /// Solo spreekt de banner je aan; met z'n allen aan één toestel noemt hij
+    /// de naam.
+    private var bannerTitle: String? {
+        if engine.mode == .versusComputer, !engine.currentPlayer.isComputer {
+            return "Jij bent aan de beurt"
+        }
+        return nil
     }
 
     // MARK: - Reacties op het spel
@@ -153,6 +199,7 @@ struct GameView: View {
         guard YahtzeeScorer.isYahtzee(engine.diceValues) else { return }
         celebrateYahtzee = true
         yahtzeePulse += 1
+        SoundPlayer.shared.play(.fanfare)
         yahtzeeDismissal?.cancel()
         yahtzeeDismissal = dismissCelebration { celebrateYahtzee = false }
     }
@@ -169,15 +216,11 @@ struct GameView: View {
 
     private func presentTurnBanner() {
         guard !engine.isFinished else { return }
-        // Solo tegen de computer: geen banner voor je eigen beurt na de AI.
-        if engine.mode == .versusComputer, !engine.currentPlayer.isComputer {
-            scorePulse += 1
-            return
-        }
         withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.8)) {
             showTurnBanner = true
         }
         scorePulse += 1
+        SoundPlayer.shared.play(.turn)
         // Bij twee snelle beurtwissels zou de timer van de eerste de banner
         // van de tweede verbergen; annuleren voorkomt dat.
         bannerDismissal?.cancel()

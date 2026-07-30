@@ -9,6 +9,9 @@ import SwiftUI
 /// sneller herkent dan zijn naam.
 struct TurnBannerView: View {
     let player: GamePlayer
+    /// De tekst staat los van de speler: solo zegt de banner "Jij bent aan de
+    /// beurt" in plaats van je eigen naam.
+    var title: String?
 
     @Environment(\.metrics) private var m
 
@@ -17,15 +20,15 @@ struct TurnBannerView: View {
             HStack(spacing: m.gutter * 0.6) {
                 AvatarBadge(player: player, size: m.avatarSize * 0.62)
 
-                Text("\(player.name) is aan de beurt")
+                Text(title ?? "\(player.name) is aan de beurt")
                     .font(AppTheme.rounded(m.bodySize))
                     .foregroundStyle(.white)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
             }
-            .padding(.leading, m.gutter * 0.5)
-            .padding(.trailing, m.gutter)
-            .padding(.vertical, m.gutter * 0.4)
+            .padding(.leading, m.gutter * 0.6)
+            .padding(.trailing, m.gutter * 1.1)
+            .padding(.vertical, m.gutter * 0.6)
             .toyBlock(
                 fill: AppTheme.coral,
                 radius: m.cardCorner * 0.8,

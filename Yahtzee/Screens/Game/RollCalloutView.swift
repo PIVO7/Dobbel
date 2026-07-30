@@ -13,18 +13,20 @@ struct RollCalloutView: View {
         VStack(spacing: 4) {
             Text(title)
                 .font(AppTheme.rounded(m.displaySize))
-                .foregroundStyle(title == RollPhrase.yahtzee ? AppTheme.coral : AppTheme.ink)
+                .foregroundStyle(title == RollPhrase.yahtzee ? AppTheme.coral : AppTheme.headline)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.7)
                 .contentTransition(.opacity)
                 .scaleEffect(isCelebrating && !reduceMotion ? 1.08 : 1)
 
-            Text(message)
-                .font(AppTheme.rounded(m.captionSize, .bold))
-                .foregroundStyle(AppTheme.soft)
-                .multilineTextAlignment(.center)
+            if !message.isEmpty {
+                Text(message)
+                    .font(AppTheme.rounded(m.captionSize, .bold))
+                    .foregroundStyle(AppTheme.soft)
+                    .multilineTextAlignment(.center)
+            }
         }
-        .frame(minHeight: m.displaySize * 2.1)
+        .frame(minHeight: m.displaySize * 1.8)
         .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.6), value: isCelebrating)
     }
 }

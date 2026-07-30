@@ -29,10 +29,12 @@ struct ScoreCellView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
             }
+            // Diepte op élk open vakje: zo zie je in één oogopslag wat nog te
+            // kiezen valt, en zakt het vakje voelbaar in bij het tikken.
             .buttonStyle(ToyButtonStyle(
                 fill: isAdvised ? AppTheme.mint : .white,
                 radius: m.cellCorner,
-                depth: isAdvised ? 3 : 0,
+                depth: 3,
                 border: m.thinBorder
             ))
             .accessibilityLabel("\(category.title), \(points) punten\(isAdvised ? ", tip" : "")")

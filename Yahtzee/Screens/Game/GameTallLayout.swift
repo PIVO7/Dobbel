@@ -16,6 +16,20 @@ struct GameTallLayout: View {
         sizeClass == .regular ? base.roomier() : base
     }
 
+    /// Op hogere iPhones gaat het overgebleven wit naar het scoreblad: de
+    /// rijen groeien tot twaalf procent mee met de schermhoogte. Kleine
+    /// schermen blijven op de basismaat en scrollen zoals voorheen.
+    private func boosted(for height: CGFloat) -> AppMetrics {
+        guard sizeClass != .regular else { return m }
+        let factor = min(max(1 + (height - 700) / 1500, 1), 1.12)
+        guard factor > 1 else { return base }
+        var copy = base
+        copy.rowHeight *= factor
+        copy.iconWidth *= factor
+        copy.cellTextSize *= factor
+        return copy
+    }
+
     var body: some View {
         GeometryReader { geo in
             ScrollView {
@@ -23,7 +37,6 @@ struct GameTallLayout: View {
                     GameHeaderView(
                         players: engine.players,
                         currentPlayerID: engine.currentPlayer.id,
-                        isFinished: engine.isFinished,
                         onLeave: actions.leave
                     )
                     .padding(.top, 6)
@@ -68,6 +81,7 @@ struct GameTallLayout: View {
                 .frame(maxWidth: m.contentMaxWidth)
                 .frame(maxWidth: .infinity)
                 .frame(minHeight: geo.size.height)
+                .environment(\.metrics, boosted(for: geo.size.height))
             }
             .scrollBounceBehavior(.basedOnSize)
         }

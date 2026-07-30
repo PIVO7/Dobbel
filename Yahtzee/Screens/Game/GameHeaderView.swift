@@ -1,40 +1,28 @@
 import SwiftUI
 
-/// De stand van alle spelers op één regel, met de sluitknop ernaast.
+/// De stand van alle spelers op één regel, met de sluitknop ernaast. Wie aan
+/// de beurt is krijgt een gekleurde chip met zijn bolletje — een kleurtje in
+/// de naam alleen bleek te subtiel.
 struct GameHeaderView: View {
     let players: [GamePlayer]
     let currentPlayerID: UUID
-    /// Een afgelopen spel valt niets meer te bewaren, dus dan slaan we de
-    /// bevestiging over.
-    let isFinished: Bool
     let onLeave: () -> Void
 
     @Environment(\.metrics) private var m
-    @State private var showExitConfirm = false
 
     var body: some View {
         HStack(spacing: 8) {
-            HStack(spacing: 8) {
-                ForEach(Array(players.enumerated()), id: \.element.id) { index, player in
-                    if index > 0 {
-                        Text("·")
-                            .font(AppTheme.rounded(m.captionSize, .bold))
-                            .foregroundStyle(AppTheme.dim)
-                    }
-                    Text("\(player.name) \(player.scorecard.total)")
-                        .font(AppTheme.rounded(m.captionSize, .bold))
-                        .foregroundStyle(player.id == currentPlayerID ? AppTheme.coral : AppTheme.ink)
-                        .lineLimit(1)
+            HStack(spacing: 4) {
+                ForEach(players) { player in
+                    chip(for: player)
                 }
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, m.gutter * 0.5)
+            .padding(.horizontal, 8)
+            .padding(.vertical, m.gutter * 0.32)
             .frame(maxWidth: .infinity)
             .toyBlock(fill: .white, radius: m.cellCorner + 3, depth: 3, border: m.thinBorder + 0.5)
 
-            Button(action: requestClose) {
-                // Een Label en geen kale Image: de titel voedt VoiceOver én
-                // Voice Control, ook al toont de knop alleen het icoon.
+            Button(action: onLeave) {
                 Label("Spel verlaten", systemImage: "xmark")
                     .labelStyle(.iconOnly)
                     .font(.system(size: m.captionSize + 2, weight: .black))
@@ -42,22 +30,34 @@ struct GameHeaderView: View {
                     .frame(width: m.tapTarget, height: m.tapTarget)
             }
             .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cellCorner, depth: 3, border: m.thinBorder))
-            // Aan de sluitknop zelf, zodat de dialoog daarvandaan opent.
-            .confirmationDialog("Spel verlaten?", isPresented: $showExitConfirm, titleVisibility: .visible) {
-                Button("Verlaten", role: .destructive, action: onLeave)
-                Button("Doorspelen", role: .cancel) {}
-            } message: {
-                Text("Je voortgang wordt bewaard.")
-            }
         }
     }
 
-    private func requestClose() {
-        if isFinished {
-            onLeave()
-        } else {
-            showExitConfirm = true
+    private func chip(for player: GamePlayer) -> some View {
+        let isMine = player.id == currentPlayerID
+        return HStack(spacing: 5) {
+            AvatarBadge(player: player, size: m.captionSize * 1.8)
+            Text("\(player.name) \(player.scorecard.total)")
+                .font(AppTheme.rounded(m.captionSize, .bold))
+                .foregroundStyle(AppTheme.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.65)
         }
+        .padding(.horizontal, 7)
+        .padding(.vertical, 4)
+        .background(
+            RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
+                .fill(isMine ? AppTheme.tintCoral : .clear)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
+                .strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: m.thinBorder)
+        )
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            "\(player.name), \(player.scorecard.total) punten" + (isMine ? ", aan de beurt" : "")
+        )
     }
 }
 
@@ -65,7 +65,8 @@ struct GameHeaderView: View {
     let lene = GamePlayer(profile: PlayerProfile(name: "Lene", avatarColorIndex: 0))
     let ellis = GamePlayer(profile: PlayerProfile(name: "Ellis", avatarColorIndex: 1))
 
-    GameHeaderView(players: [lene, ellis], currentPlayerID: lene.id, isFinished: false, onLeave: {})
+    GameHeaderView(players: [lene, ellis], currentPlayerID: lene.id, onLeave: {})
         .padding()
         .background(AppTheme.cream)
+        .appMetrics()
 }

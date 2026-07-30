@@ -15,7 +15,6 @@ struct GameWideLayout: View {
             GameHeaderView(
                 players: engine.players,
                 currentPlayerID: engine.currentPlayer.id,
-                isFinished: engine.isFinished,
                 onLeave: actions.leave
             )
             .padding(.top, 6)

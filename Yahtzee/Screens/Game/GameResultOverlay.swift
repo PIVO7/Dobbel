@@ -16,6 +16,22 @@ struct GameResultOverlay: View {
             AppTheme.ink.opacity(0.5).ignoresSafeArea()
 
             VStack(spacing: m.gutter) {
+                // De winnaar groot in beeld, met een kroontje: het sterretje
+                // naast de score bleek te zoeken.
+                if hasSingleWinner,
+                   let winner = players.first(where: { winnerProfileIDs.contains($0.profileID) }) {
+                    AvatarBadge(player: winner, size: m.avatarSize * 1.5)
+                        .overlay(alignment: .top) {
+                            Image(systemName: "crown.fill")
+                                .font(.system(size: m.avatarSize * 0.52, weight: .black))
+                                .foregroundStyle(AppTheme.amber)
+                                .rotationEffect(.degrees(14))
+                                .offset(x: m.avatarSize * 0.52, y: -m.avatarSize * 0.4)
+                        }
+                        .padding(.top, m.gutter * 0.4)
+                        .accessibilityHidden(true)
+                }
+
                 Text(hasSingleWinner ? "Gewonnen!" : "Klaar!")
                     .font(AppTheme.rounded(m.titleSize))
                     .foregroundStyle(AppTheme.ink)
@@ -75,8 +91,8 @@ struct GameResultOverlay: View {
         .toyBlock(
             fill: isWinner ? AppTheme.tintAmber : AppTheme.sunk,
             radius: m.cellCorner + 1,
-            depth: 0,
-            border: m.thinBorder
+            depth: isWinner ? 3 : 0,
+            border: isWinner ? m.border : m.thinBorder
         )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(

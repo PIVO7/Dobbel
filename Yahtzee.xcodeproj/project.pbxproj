@@ -62,6 +62,7 @@
 		CB1E1B5892BE9B0C8FD5B01E /* Die.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF487EC304E6D9D611B98B /* Die.swift */; };
 		CCBC380FF3FCA4F567628E26 /* GameTallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97BC2DB763DCC3E5A8EDE58 /* GameTallLayout.swift */; };
 		CE4CEB1651D6098CEF4495D2 /* Scorecard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF678AE43CFE51DF7CC3EF9 /* Scorecard.swift */; };
+		D012F3B21085B23B10CA3061 /* ToyDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A2E76878588BB3739407E7 /* ToyDialog.swift */; };
 		D08A3F0F434AEC9C21C730C7 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D679AAD93CDFBC8574FAFD /* AppTheme.swift */; };
 		D0E0EDAB74AB57E69155434B /* StraightGlyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7838AC9AD2142A7BD7A3F /* StraightGlyph.swift */; };
 		D60633C12F873678F5C69D27 /* GameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCF4F19D03D2D396A148AF8 /* GameHeaderView.swift */; };
@@ -105,6 +106,7 @@
 		4C39C91C23897A54F3E30916 /* ComputerDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerDecision.swift; sourceTree = "<group>"; };
 		4C9C0DAC31D7658923CFA860 /* ToyButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyButtonStyle.swift; sourceTree = "<group>"; };
 		53ECA4D176E447222DBE3ABE /* RoundStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundStripView.swift; sourceTree = "<group>"; };
+		55A2E76878588BB3739407E7 /* ToyDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyDialog.swift; sourceTree = "<group>"; };
 		5715CAFD3870A9D31BC09DAC /* ToyBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyBlock.swift; sourceTree = "<group>"; };
 		5BF58ADE0558AABA7F6FF61F /* ScoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCategory.swift; sourceTree = "<group>"; };
 		68918AF5B5585DAB009B168A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */,
 				2D34CD4C6CE682F960180174 /* ScoreCellView.swift */,
 				04F7838AC9AD2142A7BD7A3F /* StraightGlyph.swift */,
+				55A2E76878588BB3739407E7 /* ToyDialog.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				C3E2448389E16094225DAAE2 /* ThemeStore.swift in Sources */,
 				721537ED0932F1E87ED63F15 /* ToyBlock.swift in Sources */,
 				0850B3E2D4DEEA234ECB7823 /* ToyButtonStyle.swift in Sources */,
+				D012F3B21085B23B10CA3061 /* ToyDialog.swift in Sources */,
 				B27AF48579CF1F6ABF8F4FD6 /* TurnBannerView.swift in Sources */,
 				767B02B74C9BA50FFA2E1B3F /* YahtzeeApp.swift in Sources */,
 				2A93A05B1ED555AF435D9A1D /* YahtzeeScorer.swift in Sources */,

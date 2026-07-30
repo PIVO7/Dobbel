@@ -9,6 +9,7 @@ struct GameSetupView: View {
     /// Een lijst en geen verzameling: de volgorde van aantikken bepaalt de
     /// beurtvolgorde in het spel.
     @State private var selectedIDs: [UUID] = []
+    @State private var opponentLevel: ComputerLevel = .medium
     @State private var activeGame: ActiveGame?
     @State private var showReplaceSavedConfirm = false
 
@@ -26,7 +27,7 @@ struct GameSetupView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(mode.title)
                         .font(AppTheme.rounded(m.titleSize))
-                        .foregroundStyle(AppTheme.ink)
+                        .foregroundStyle(AppTheme.headline)
                         .minimumScaleFactor(0.7)
                         .lineLimit(1)
 
@@ -73,6 +74,19 @@ struct GameSetupView: View {
                         .padding(.vertical, 2)
                     }
 
+                    if mode == .versusComputer {
+                        Text("KIES JE TEGENSTANDER")
+                            .font(AppTheme.rounded(m.captionSize * 0.9))
+                            .kerning(1.4)
+                            .foregroundStyle(AppTheme.faint)
+
+                        HStack(spacing: m.gutter * 0.75) {
+                            ForEach(ComputerLevel.allCases) { level in
+                                opponentButton(level)
+                            }
+                        }
+                    }
+
                     Button(action: requestStart) {
                         Text("Start spel")
                             .font(AppTheme.rounded(m.buttonTextSize))
@@ -87,18 +101,6 @@ struct GameSetupView: View {
                         border: m.border
                     ))
                     .disabled(!canStart)
-                    // Aan de knop en niet aan het scherm, zodat de dialoog
-                    // vanaf de juiste plek opent.
-                    .confirmationDialog(
-                        "Lopend spel vervangen?",
-                        isPresented: $showReplaceSavedConfirm,
-                        titleVisibility: .visible
-                    ) {
-                        Button("Nieuw spel starten", role: .destructive, action: beginNewGame)
-                        Button("Annuleer", role: .cancel) {}
-                    } message: {
-                        Text("Er staat nog een spel klaar om verder te spelen.")
-                    }
                     .padding(.bottom, 6)
                 }
             }
@@ -107,6 +109,26 @@ struct GameSetupView: View {
             .padding(.bottom, m.gutter)
             .frame(maxWidth: m.contentMaxWidth)
             .frame(maxWidth: .infinity)
+
+            // Eigen dialoog in de speelgoedstijl in plaats van het grijze
+            // systeempaneel.
+            if showReplaceSavedConfirm {
+                ToyDialog(
+                    title: "Lopend spel vervangen?",
+                    message: "Er staat nog een spel klaar om verder te spelen.",
+                    confirmTitle: "Nieuw spel starten",
+                    cancelTitle: "Annuleer",
+                    onConfirm: {
+                        showReplaceSavedConfirm = false
+                        beginNewGame()
+                    },
+                    onCancel: {
+                        withAnimation(.easeOut(duration: 0.15)) {
+                            showReplaceSavedConfirm = false
+                        }
+                    }
+                )
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(item: $activeGame) { game in
@@ -153,6 +175,39 @@ struct GameSetupView: View {
         .accessibilityAddTraits(picked ? .isSelected : [])
     }
 
+    /// De drie computertegenstanders naast elkaar; wie gekozen is, kleurt.
+    private func opponentButton(_ level: ComputerLevel) -> some View {
+        let picked = opponentLevel == level
+        return Button {
+            opponentLevel = level
+        } label: {
+            VStack(spacing: 6) {
+                AvatarBadge(name: level.personaName, colorIndex: level.avatarColorIndex, size: m.avatarSize * 0.9)
+                Text(level.personaName)
+                    .font(AppTheme.rounded(m.captionSize, .bold))
+                    .foregroundStyle(AppTheme.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Text(level.subtitle)
+                    .font(AppTheme.rounded(m.captionSize * 0.82, .bold))
+                    .foregroundStyle(AppTheme.soft)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, m.gutter * 0.7)
+            .padding(.horizontal, 4)
+        }
+        .buttonStyle(ToyButtonStyle(
+            fill: picked ? AppTheme.tintCoral : .white,
+            radius: m.cardCorner * 0.9,
+            depth: picked ? m.depth : 3,
+            border: m.border
+        ))
+        .accessibilityLabel("\(level.personaName), \(level.subtitle)")
+        .accessibilityAddTraits(picked ? .isSelected : [])
+    }
+
     private var canStart: Bool {
         switch mode {
         case .versusComputer:
@@ -178,7 +233,9 @@ struct GameSetupView: View {
     private func requestStart() {
         guard canStart else { return }
         if gameStore.hasSavedGame {
-            showReplaceSavedConfirm = true
+            withAnimation(.easeOut(duration: 0.15)) {
+                showReplaceSavedConfirm = true
+            }
         } else {
             beginNewGame()
         }
@@ -190,7 +247,7 @@ struct GameSetupView: View {
         }
         var profiles = humans
         if mode == .versusComputer {
-            profiles.append(.computer)
+            profiles.append(.computer(level: opponentLevel))
         }
         gameStore.clear()
         let engine = GameEngine(mode: mode, profiles: profiles)

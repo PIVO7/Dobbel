@@ -20,8 +20,8 @@ struct ScorecardView: View {
         let advice = adviceCategory(open: openList)
 
         return HStack(alignment: .top, spacing: m.gutter * 0.6) {
-            column(title: "BOVEN", categories: ScoreCategory.upper, showsBonus: true, open: open, advice: advice)
-            column(title: "ONDER", categories: ScoreCategory.lower, showsBonus: false, open: open, advice: advice)
+            column(categories: ScoreCategory.upper, showsBonus: true, open: open, advice: advice)
+            column(categories: ScoreCategory.lower, showsBonus: false, open: open, advice: advice)
         }
         .padding(m.gutter * 0.8)
         .toyBlock(fill: .white, radius: m.cardCorner, depth: m.depth, border: m.border)
@@ -43,22 +43,15 @@ struct ScorecardView: View {
         return YahtzeeScorer.adviceCategory(dice: diceValues, scorecard: current.scorecard, open: open)
     }
 
+    // Zonder BOVEN/ONDER-kopjes: die zeiden een kind niets en de bonusrij
+    // markeert het verschil al. De gewonnen ruimte gaat naar het raster.
     private func column(
-        title: String,
         categories: [ScoreCategory],
         showsBonus: Bool,
         open: Set<ScoreCategory>,
         advice: ScoreCategory?
     ) -> some View {
         VStack(spacing: m.cellGap) {
-            Text(title)
-                .font(AppTheme.rounded(m.captionSize * 0.9))
-                .kerning(1.4)
-                .foregroundStyle(AppTheme.faint)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 3)
-                .padding(.bottom, 2)
-
             PlayerHeaderView(players: players, currentPlayerID: currentPlayerID)
 
             ForEach(categories) { category in

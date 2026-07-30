@@ -36,9 +36,6 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         .hard: UUID(uuidString: "00000000-0000-0000-0000-0000000000C2")!
     ]
 
-    /// Overgang: het setup-scherm kiest verderop expliciet een niveau.
-    static var computer: PlayerProfile { computer(level: .medium) }
-
     static func computer(level: ComputerLevel) -> PlayerProfile {
         PlayerProfile(
             id: computerIDs[level]!,
