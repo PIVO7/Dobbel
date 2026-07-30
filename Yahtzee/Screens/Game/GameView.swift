@@ -14,11 +14,19 @@ struct GameView: View {
     @Environment(GameStore.self) private var gameStore
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.metrics) private var m
+
+    /// De eerste-keer-uitleg: drie hints die elk op hun moment verschijnen.
+    private enum CoachStep {
+        case none, roll, hold, score
+    }
 
     @State private var didRecordResult = false
     @State private var showTurnBanner = false
     @State private var showExitConfirm = false
     @State private var tipExplanation: String?
+    @State private var coachStep: CoachStep = .none
+    @State private var coachVisible = false
     @State private var celebrateYahtzee = false
     @State private var celebrateBonus = false
     @State private var bannerDismissal: Task<Void, Never>?
@@ -64,6 +72,11 @@ struct GameView: View {
                         actions: actions,
                         isCelebrating: celebrateYahtzee
                     )
+                }
+
+                if coachVisible {
+                    coachOverlay
+                        .zIndex(3)
                 }
 
                 if showTurnBanner {
@@ -128,6 +141,7 @@ struct GameView: View {
         .task(id: engine.currentPlayerIndex) {
             await engine.playComputerTurnIfNeeded()
         }
+        .onAppear(perform: startCoachingIfNeeded)
         .onChange(of: engine.saveVersion) { _, _ in
             persistProgress()
         }
@@ -140,7 +154,11 @@ struct GameView: View {
             if !wasRolling, isRolling {
                 SoundPlayer.shared.play(.roll)
             }
-            guard wasRolling, !isRolling else { return }
+        }
+        .onChange(of: engine.isSettling) { wasSettling, isSettling in
+            // Pas als de stenen zijn uitgeveerd; anders barst de viering los
+            // terwijl de laatste steen nog beweegt.
+            guard wasSettling, !isSettling else { return }
             rollDidFinish()
         }
         .onChange(of: engine.turnJustChanged) { _, changed in
@@ -165,11 +183,17 @@ struct GameView: View {
         engine.toggleHold(dieID: id)
         holdPulse += 1
         SoundPlayer.shared.play(.hold)
+        if coachStep == .hold {
+            advanceCoach(to: .score)
+        }
     }
 
     private func place(_ category: ScoreCategory) {
         engine.score(in: category)
         scorePulse += 1
+        if coachStep != .none {
+            finishCoaching()
+        }
         if engine.lastYahtzeeBonus > 0 {
             celebrateBonus = true
             yahtzeePulse += 1
@@ -198,6 +222,73 @@ struct GameView: View {
     private func leave() {
         persistProgress()
         onClose()
+    }
+
+    // MARK: - Eerste-keer-uitleg
+
+    /// Alleen bij een allereerste, vers spel met een mens aan zet.
+    private func startCoachingIfNeeded() {
+        guard !CoachTour.seen,
+              !engine.hasRolledThisTurn,
+              !engine.isFinished,
+              !engine.currentPlayer.isComputer else { return }
+        advanceCoach(to: .roll)
+    }
+
+    private func advanceCoach(to step: CoachStep) {
+        coachStep = step
+        withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.8)) {
+            coachVisible = true
+        }
+    }
+
+    private func hideCoachBubble() {
+        withAnimation(.easeOut(duration: 0.15)) {
+            coachVisible = false
+        }
+    }
+
+    private func finishCoaching() {
+        CoachTour.seen = true
+        coachStep = .none
+        withAnimation(.easeOut(duration: 0.15)) {
+            coachVisible = false
+        }
+    }
+
+    @ViewBuilder
+    private var coachOverlay: some View {
+        VStack(spacing: 0) {
+            switch coachStep {
+            case .hold:
+                CoachBubbleView(
+                    text: "Tik op een steen om hem vast te houden. Met het handje gooit hij niet mee.",
+                    icon: "hand.raised.fill",
+                    onDismiss: hideCoachBubble
+                )
+                .padding(.top, m.tapTarget + m.gutter * 4)
+                Spacer(minLength: 0)
+            case .score:
+                Spacer(minLength: 0)
+                CoachBubbleView(
+                    text: "Kies een vakje op het scoreblad voor je punten. Het groene vakje is de tip!",
+                    icon: "checkmark.circle.fill",
+                    onDismiss: hideCoachBubble
+                )
+                Spacer(minLength: 0)
+            case .roll:
+                Spacer(minLength: 0)
+                CoachBubbleView(
+                    text: "Tik op Gooien om te dobbelen!",
+                    icon: "hand.tap.fill",
+                    onDismiss: hideCoachBubble
+                )
+                .padding(.bottom, m.buttonHeight + m.gutter * 2)
+            case .none:
+                EmptyView()
+            }
+        }
+        .padding(.horizontal, 24)
     }
 
     private func explainTip(_ category: ScoreCategory) {
@@ -229,6 +320,22 @@ struct GameView: View {
 
     private func rollDidFinish() {
         rollPulse += 1
+        // De worp in woorden ook uitspreken; visueel staat hij al in beeld.
+        var announcement = engine.calloutTitle
+        if !engine.turnMessage.isEmpty {
+            announcement += ". \(engine.turnMessage)"
+        }
+        AccessibilityNotification.Announcement(announcement).post()
+        switch coachStep {
+        case .roll:
+            advanceCoach(to: .hold)
+        case .hold where !coachVisible:
+            // De hint was al weggetikt en er is opnieuw gegooid: door naar
+            // de laatste stap.
+            advanceCoach(to: .score)
+        default:
+            break
+        }
         guard YahtzeeScorer.isYahtzee(engine.diceValues) else { return }
         celebrateYahtzee = true
         yahtzeePulse += 1
@@ -254,6 +361,9 @@ struct GameView: View {
         }
         scorePulse += 1
         SoundPlayer.shared.play(.turn)
+        AccessibilityNotification.Announcement(
+            bannerTitle ?? "\(engine.currentPlayer.name) is aan de beurt"
+        ).post()
         // Bij twee snelle beurtwissels zou de timer van de eerste de banner
         // van de tweede verbergen; annuleren voorkomt dat.
         bannerDismissal?.cancel()

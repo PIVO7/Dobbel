@@ -7,6 +7,7 @@ struct SettingsView: View {
     @Environment(\.metrics) private var m
 
     @State private var soundOn = SoundPlayer.shared.isEnabled
+    @State private var coachReset = false
 
     private var themeStore: ThemeStore { .shared }
 
@@ -59,6 +60,26 @@ struct SettingsView: View {
                                 SoundPlayer.shared.play(.hold)
                             }
                         }
+                    }
+
+                    section("UITLEG") {
+                        Button {
+                            CoachTour.seen = false
+                            coachReset = true
+                        } label: {
+                            HStack {
+                                Text(coachReset ? "De uitleg verschijnt weer bij het volgende potje" : "Uitleg opnieuw tonen")
+                                    .font(AppTheme.rounded(m.bodySize, .bold))
+                                    .foregroundStyle(coachReset ? AppTheme.soft : AppTheme.ink)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Image(systemName: coachReset ? "checkmark.circle.fill" : "questionmark.bubble.fill")
+                                    .font(.system(size: m.bodySize, weight: .black))
+                                    .foregroundStyle(coachReset ? AppTheme.mint : AppTheme.coral)
+                            }
+                            .padding(m.gutter)
+                        }
+                        .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border))
+                        .disabled(coachReset)
                     }
                 }
                 .padding(.horizontal, m.gutter * 1.3)

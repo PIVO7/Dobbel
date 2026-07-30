@@ -76,6 +76,7 @@
 		F03C47B145FF31F56EABFBCD /* AdviceExplainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF764EDDE5B883845E982465 /* AdviceExplainerTests.swift */; };
 		F4654E1D7277FEE06DAEA7CD /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C7CEC0415B7437354CA4D /* Destination.swift */; };
 		FA0BB258B6915CDA1FE0B0C9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68918AF5B5585DAB009B168A /* SettingsView.swift */; };
+		FA4E7B8D8128A24931E28953 /* CoachBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254ECA536BAD8073EBF81C84 /* CoachBubbleView.swift */; };
 		FF37D4D3676F84ADE49FD64C /* GameActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D58AEC42CD316BD09D45AC /* GameActions.swift */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +98,7 @@
 		140C02D33A6AED897584ACA5 /* AvatarBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarBadge.swift; sourceTree = "<group>"; };
 		1B0A42FABE126185936A4457 /* YahtzeeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeApp.swift; sourceTree = "<group>"; };
 		1D1495CF5A08CE4FE46D5744 /* fanfare.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fanfare.wav; sourceTree = "<group>"; };
+		254ECA536BAD8073EBF81C84 /* CoachBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachBubbleView.swift; sourceTree = "<group>"; };
 		29523F1BA2D06F74D488BA27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D34CD4C6CE682F960180174 /* ScoreCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCellView.swift; sourceTree = "<group>"; };
 		2E760F0309B9C4D8CE661A98 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				B4106C2B985977A5F087D6B2 /* CelebrationBurstView.swift */,
+				254ECA536BAD8073EBF81C84 /* CoachBubbleView.swift */,
 				F1D58AEC42CD316BD09D45AC /* GameActions.swift */,
 				7DCF4F19D03D2D396A148AF8 /* GameHeaderView.swift */,
 				76EF818C857F3C3D5867F896 /* GameResultOverlay.swift */,
@@ -509,6 +512,7 @@
 				69F4CE35DFC06EFDB252D3C5 /* AvatarBadge.swift in Sources */,
 				52C0AA87696749F7DDABDCFB /* CategoryIcon.swift in Sources */,
 				0C2D8C963D1F6E8DF99B7C21 /* CelebrationBurstView.swift in Sources */,
+				FA4E7B8D8128A24931E28953 /* CoachBubbleView.swift in Sources */,
 				49AF095BCE1EC2ED740429F1 /* ComputerAI.swift in Sources */,
 				7C0C0B8B2B6D94FDF0C9721F /* ComputerDecision.swift in Sources */,
 				DA7BE6DBF31DD2EDE1281FC3 /* ComputerLevel.swift in Sources */,
