@@ -6,6 +6,9 @@ options:
 
 settings:
   base:
+    # Nodig om op een echt toestel te bouwen; de simulator vraagt er niet om.
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: VB6FS3N78T
     SWIFT_VERSION: 6.0
     MARKETING_VERSION: 1.0
     CURRENT_PROJECT_VERSION: 1
