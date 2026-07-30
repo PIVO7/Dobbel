@@ -3,7 +3,7 @@ import XCTest
 
 @MainActor
 final class GameStoreTests: XCTestCase {
-    func testSaveLoadAndClear() throws {
+    func testSaveLoadAndClear() async throws {
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("yahtzee-saved-\(UUID().uuidString).json")
         defer { try? FileManager.default.removeItem(at: url) }
@@ -20,6 +20,9 @@ final class GameStoreTests: XCTestCase {
         XCTAssertTrue(store.hasSavedGame)
         XCTAssertEqual(store.savedGame?.players[0].scorecard.scores[.ones], 3)
 
+        // Schrijven gebeurt naast de main actor; wacht tot het op schijf staat.
+        await store.flush()
+
         let reloaded = GameStore(fileURL: url)
         XCTAssertEqual(reloaded.savedGame?.summaryTitle, "Mila · Noah")
         XCTAssertEqual(reloaded.savedGame?.currentPlayerIndex, 1)
@@ -29,6 +32,7 @@ final class GameStoreTests: XCTestCase {
         XCTAssertEqual(resumed.currentPlayerIndex, 1)
 
         reloaded.clear()
+        await reloaded.flush()
         XCTAssertFalse(reloaded.hasSavedGame)
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.path))
     }

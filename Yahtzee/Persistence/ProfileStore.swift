@@ -11,9 +11,7 @@ final class ProfileStore {
     private let decoder = JSONDecoder()
 
     init(filename: String = "yahtzee-profiles.json") {
-        let folder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-            ?? URL(fileURLWithPath: NSTemporaryDirectory())
-        self.fileURL = folder.appendingPathComponent(filename)
+        self.fileURL = URL.documentsDirectory.appending(path: filename)
         load()
     }
 

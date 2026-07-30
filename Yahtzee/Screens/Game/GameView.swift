@@ -16,6 +16,9 @@ struct GameView: View {
     @State private var showTurnBanner = false
     @State private var celebrateYahtzee = false
     @State private var celebrateBonus = false
+    @State private var bannerDismissal: Task<Void, Never>?
+    @State private var yahtzeeDismissal: Task<Void, Never>?
+    @State private var bonusDismissal: Task<Void, Never>?
     @State private var rollPulse = 0
     @State private var holdPulse = 0
     @State private var scorePulse = 0
@@ -108,7 +111,9 @@ struct GameView: View {
             engine.acknowledgeTurnChange()
         }
         .onChange(of: celebrateBonus) { _, show in
-            if show { dismissCelebration { celebrateBonus = false } }
+            guard show else { return }
+            bonusDismissal?.cancel()
+            bonusDismissal = dismissCelebration { celebrateBonus = false }
         }
         .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.85), trigger: rollPulse)
         .sensoryFeedback(.selection, trigger: holdPulse)
@@ -145,10 +150,11 @@ struct GameView: View {
 
     private func rollDidFinish() {
         rollPulse += 1
-        guard RollPhrase.describe(engine.diceValues) == RollPhrase.yahtzee else { return }
+        guard YahtzeeScorer.isYahtzee(engine.diceValues) else { return }
         celebrateYahtzee = true
         yahtzeePulse += 1
-        dismissCelebration { celebrateYahtzee = false }
+        yahtzeeDismissal?.cancel()
+        yahtzeeDismissal = dismissCelebration { celebrateYahtzee = false }
     }
 
     private func recordResult() {
@@ -172,17 +178,22 @@ struct GameView: View {
             showTurnBanner = true
         }
         scorePulse += 1
-        Task {
+        // Bij twee snelle beurtwissels zou de timer van de eerste de banner
+        // van de tweede verbergen; annuleren voorkomt dat.
+        bannerDismissal?.cancel()
+        bannerDismissal = Task {
             try? await Task.sleep(for: .milliseconds(reduceMotion ? 700 : 1100))
+            guard !Task.isCancelled else { return }
             withAnimation(.easeOut(duration: 0.2)) {
                 showTurnBanner = false
             }
         }
     }
 
-    private func dismissCelebration(_ update: @escaping () -> Void) {
+    private func dismissCelebration(_ update: @escaping () -> Void) -> Task<Void, Never> {
         Task {
             try? await Task.sleep(for: .milliseconds(reduceMotion ? 600 : 1100))
+            guard !Task.isCancelled else { return }
             withAnimation(.easeOut(duration: 0.2)) {
                 update()
             }

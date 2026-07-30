@@ -10,6 +10,9 @@ struct DiceTrayView: View {
 
     var body: some View {
         HStack(spacing: m.dieGap) {
+            // De Array-omweg blijft nodig zolang het doel iOS 17 is: ForEach
+            // over enumerated() zelf vraagt de collection-conformance van
+            // iOS 26.
             ForEach(Array(dice.enumerated()), id: \.element.id) { index, die in
                 // Een echte knop en geen tikgebaar: anders kan VoiceOver de
                 // steen wel voorlezen maar niet vasthouden.

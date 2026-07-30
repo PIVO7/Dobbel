@@ -7,13 +7,13 @@ final class GameStore {
     private(set) var savedGame: GameSnapshot?
 
     private let fileURL: URL
-    private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
+    /// De laatste schrijfactie; elke volgende wacht hierop, zodat een oudere
+    /// worp nooit ná een nieuwere op schijf kan landen.
+    private var pendingWrite: Task<Void, Never>?
 
     init(filename: String = "yahtzee-saved-game.json") {
-        let folder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-            ?? URL(fileURLWithPath: NSTemporaryDirectory())
-        self.fileURL = folder.appendingPathComponent(filename)
+        self.fileURL = URL.documentsDirectory.appending(path: filename)
         load()
     }
 
@@ -28,12 +28,31 @@ final class GameStore {
     func save(_ snapshot: GameSnapshot) {
         guard !snapshot.players.isEmpty else { return }
         savedGame = snapshot
-        persist()
+        // Elke zet komt hierlangs, tot het vasthouden van één steen aan toe.
+        // Schrijven gebeurt daarom naast de main actor, in volgorde.
+        let url = fileURL
+        let previous = pendingWrite
+        pendingWrite = Task.detached(priority: .utility) {
+            await previous?.value
+            // Lokale kids-app; stil falen zoals ProfileStore.
+            try? JSONEncoder().encode(snapshot).write(to: url, options: [.atomic])
+        }
     }
 
     func clear() {
         savedGame = nil
-        try? FileManager.default.removeItem(at: fileURL)
+        let url = fileURL
+        let previous = pendingWrite
+        pendingWrite = Task.detached(priority: .utility) {
+            await previous?.value
+            try? FileManager.default.removeItem(at: url)
+        }
+    }
+
+    /// Wacht tot alle schrijfacties op schijf staan. Voor tests, die meteen
+    /// na een `save` of `clear` het bestand willen inspecteren.
+    func flush() async {
+        await pendingWrite?.value
     }
 
     private func load() {
@@ -54,16 +73,6 @@ final class GameStore {
             savedGame = snapshot
         } catch {
             savedGame = nil
-        }
-    }
-
-    private func persist() {
-        guard let savedGame else { return }
-        do {
-            let data = try encoder.encode(savedGame)
-            try data.write(to: fileURL, options: [.atomic])
-        } catch {
-            // Lokale kids-app; stil falen zoals ProfileStore.
         }
     }
 }
