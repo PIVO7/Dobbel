@@ -13,11 +13,13 @@ struct ToyButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         // Bij depth 0 valt er niets in te zakken; dan blijft de knop stilstaan.
+        // Anders zakt de knop helemaal tot op de grond: schaduw plat, en de
+        // volle diepte naar beneden — ook een ondiep scorevakje geeft zo een
+        // voelbare klik.
         let sunk = configuration.isPressed && depth > 0
-        let drop = max(depth - 2, 0)
         return configuration.label
-            .toyBlock(fill: fill, radius: radius, depth: sunk ? 2 : depth, border: border, borderColor: borderColor)
-            .offset(y: sunk ? drop : 0)
+            .toyBlock(fill: fill, radius: radius, depth: sunk ? 0 : depth, border: border, borderColor: borderColor)
+            .offset(y: sunk ? depth : 0)
             .animation(.easeOut(duration: 0.08), value: sunk)
     }
 }
