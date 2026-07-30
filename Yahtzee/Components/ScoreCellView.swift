@@ -6,6 +6,9 @@ struct ScoreCellView: View {
     let category: ScoreCategory
     let player: GamePlayer
     let diceValues: [Int]
+    /// De kolom van wie aan de beurt is kleurt zacht mee, zodat je in het
+    /// raster meteen ziet wiens beurt het is.
+    let isMine: Bool
     let selectable: Bool
     let isAdvised: Bool
     let onSelect: (ScoreCategory) -> Void
@@ -45,7 +48,7 @@ struct ScoreCellView: View {
                 .foregroundStyle(scored == nil ? AppTheme.dim : AppTheme.ink)
                 .frame(maxWidth: .infinity)
                 .frame(height: m.rowHeight)
-                .toyBlock(fill: AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)
+                .toyBlock(fill: isMine ? AppTheme.tintCoral : AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)
                 .accessibilityLabel("\(category.title), \(scored.map { "\($0) punten" } ?? "leeg")")
         }
     }
@@ -57,15 +60,15 @@ struct ScoreCellView: View {
     HStack(spacing: 8) {
         ScoreCellView(
             category: .threes, player: lene, diceValues: [3, 3, 3, 5, 2],
-            selectable: true, isAdvised: true, onSelect: { _ in }
+            isMine: true, selectable: true, isAdvised: true, onSelect: { _ in }
         )
         ScoreCellView(
             category: .chance, player: lene, diceValues: [3, 3, 3, 5, 2],
-            selectable: true, isAdvised: false, onSelect: { _ in }
+            isMine: true, selectable: true, isAdvised: false, onSelect: { _ in }
         )
         ScoreCellView(
             category: .yahtzee, player: lene, diceValues: [3, 3, 3, 5, 2],
-            selectable: false, isAdvised: false, onSelect: { _ in }
+            isMine: false, selectable: false, isAdvised: false, onSelect: { _ in }
         )
     }
     .padding()

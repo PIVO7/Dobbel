@@ -12,13 +12,13 @@ struct GameHeaderView: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            HStack(spacing: 4) {
+            HStack(spacing: 6) {
                 ForEach(players) { player in
                     chip(for: player)
                 }
             }
-            .padding(.horizontal, 8)
-            .padding(.vertical, m.gutter * 0.32)
+            .padding(.horizontal, 10)
+            .padding(.vertical, m.gutter * 0.45)
             .frame(maxWidth: .infinity)
             .toyBlock(fill: .white, radius: m.cellCorner + 3, depth: 3, border: m.thinBorder + 0.5)
 
@@ -43,8 +43,8 @@ struct GameHeaderView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.65)
         }
-        .padding(.horizontal, 7)
-        .padding(.vertical, 4)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
         .background(
             RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
                 .fill(isMine ? AppTheme.tintCoral : .clear)

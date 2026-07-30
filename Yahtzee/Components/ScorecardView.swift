@@ -69,16 +69,18 @@ struct ScorecardView: View {
         open: Set<ScoreCategory>,
         advice: ScoreCategory?
     ) -> some View {
-        HStack(spacing: m.cellGap * 0.75) {
+        HStack(spacing: m.cellGap) {
             CategoryIcon(category: category)
                 .frame(width: m.iconWidth, height: m.rowHeight)
 
             ForEach(players) { player in
-                let selectable = player.id == currentPlayerID && canScore && open.contains(category)
+                let isMine = player.id == currentPlayerID
+                let selectable = isMine && canScore && open.contains(category)
                 ScoreCellView(
                     category: category,
                     player: player,
                     diceValues: diceValues,
+                    isMine: isMine,
                     selectable: selectable,
                     isAdvised: selectable && category == advice,
                     onSelect: onSelect
@@ -88,7 +90,7 @@ struct ScorecardView: View {
     }
 
     private var bonusRow: some View {
-        HStack(spacing: m.cellGap * 0.75) {
+        HStack(spacing: m.cellGap) {
             VStack(spacing: 0) {
                 Text("BONUS")
                     .font(AppTheme.rounded(m.captionSize * 0.68))

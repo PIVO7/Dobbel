@@ -40,7 +40,7 @@ struct AppMetrics {
 
     static let phone = AppMetrics(
         dieSize: 60, dieCorner: 16, dieGap: 9,
-        rowHeight: 44, iconWidth: 38, cellCorner: 11, cellGap: 4,
+        rowHeight: 44, iconWidth: 44, cellCorner: 11, cellGap: 4,
         cardCorner: 20, depth: 5, border: 3, thinBorder: 2,
         gutter: 14, contentMaxWidth: .infinity, overlayMaxWidth: 460, avatarSize: 44,
         tapTarget: 44,

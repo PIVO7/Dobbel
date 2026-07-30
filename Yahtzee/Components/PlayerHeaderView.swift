@@ -16,14 +16,24 @@ struct PlayerHeaderView: View {
     }
 
     var body: some View {
-        HStack(spacing: m.cellGap * 0.75) {
+        HStack(spacing: m.cellGap) {
             Color.clear
-                .frame(width: m.iconWidth, height: avatarSize + 4)
+                .frame(width: m.iconWidth, height: avatarSize + 10)
 
             ForEach(players) { player in
                 let isMine = player.id == currentPlayerID
                 let bonus = player.scorecard.yahtzeeBonusTotal
                 AvatarBadge(player: player, size: avatarSize)
+                    .opacity(isMine ? 1 : 0.55)
+                    // Een koraalring om wie aan de beurt is: dimmen alleen
+                    // bleek te subtiel.
+                    .padding(3)
+                    .background(
+                        Circle().fill(isMine ? AppTheme.tintCoral : .clear)
+                    )
+                    .overlay(
+                        Circle().strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: 2.5)
+                    )
                     .overlay(alignment: .topTrailing) {
                         if bonus > 0 {
                             Image(systemName: "star.fill")
@@ -32,7 +42,6 @@ struct PlayerHeaderView: View {
                                 .offset(x: 3, y: -3)
                         }
                     }
-                    .opacity(isMine ? 1 : 0.55)
                     .frame(maxWidth: .infinity)
                     .accessibilityElement()
                     .accessibilityLabel(
