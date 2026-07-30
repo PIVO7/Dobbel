@@ -65,6 +65,8 @@ struct ToyDialog: View {
             .toyBlock(fill: AppTheme.cream, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
             .frame(maxWidth: m.overlayMaxWidth * 0.82)
             .padding(m.gutter * 2)
+            // Modaal voor VoiceOver: de spelknoppen eronder zijn even weg.
+            .accessibilityAddTraits(.isModal)
         }
         .transition(.opacity.combined(with: .scale(scale: 0.94)))
     }

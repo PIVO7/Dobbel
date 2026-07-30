@@ -26,10 +26,21 @@ enum AdviceExplainer {
         case .fourOfAKind:
             return "Vier dezelfde! Dan mag je álle ogen optellen: \(score) punten."
         case .fullHouse:
+            // Via de jokerregel kan een tweede Dobbel hier terecht; dan ligt
+            // er natuurlijk geen echt vol huis.
+            if YahtzeeScorer.canUseJoker(dice: dice, scorecard: scorecard) {
+                return "Nog eens vijf dezelfde! De jokerregel laat die als vol huis tellen: 25 punten."
+            }
             return "Twee én drie dezelfde — een vol huis! Dat is altijd 25 punten."
         case .smallStraight:
+            if YahtzeeScorer.canUseJoker(dice: dice, scorecard: scorecard) {
+                return "Nog eens vijf dezelfde! De jokerregel laat die als kleine straat tellen: 30 punten."
+            }
             return "Vier stenen op een rij — een kleine straat, goed voor 30 punten."
         case .largeStraight:
+            if YahtzeeScorer.canUseJoker(dice: dice, scorecard: scorecard) {
+                return "Nog eens vijf dezelfde! De jokerregel laat die als grote straat tellen: 40 punten."
+            }
             return "Vijf stenen op een rij — een grote straat! De volle 40 punten."
         case .yahtzee:
             return "Vijf dezelfde — DOBBEL! Het duurste vakje van het blad: 50 punten."

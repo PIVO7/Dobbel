@@ -93,10 +93,12 @@ struct HomeView: View {
                 GameView(
                     engine: game.engine,
                     onRematch: {
-                        activeGame = ActiveGame(engine: GameEngine(
+                        let engine = GameEngine(
                             mode: game.engine.mode,
                             profiles: game.engine.rematchProfiles()
-                        ))
+                        )
+                        gameStore.save(engine.snapshot)
+                        activeGame = ActiveGame(engine: engine)
                     },
                     onClose: { activeGame = nil }
                 )

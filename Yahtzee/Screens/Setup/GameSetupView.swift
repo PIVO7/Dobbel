@@ -153,10 +153,12 @@ struct GameSetupView: View {
             GameView(
                 engine: game.engine,
                 onRematch: {
-                    activeGame = ActiveGame(engine: GameEngine(
+                    let engine = GameEngine(
                         mode: game.engine.mode,
                         profiles: game.engine.rematchProfiles()
-                    ))
+                    )
+                    gameStore.save(engine.snapshot)
+                    activeGame = ActiveGame(engine: engine)
                 },
                 onClose: { activeGame = nil }
             )
@@ -284,7 +286,9 @@ struct GameSetupView: View {
             profiles.append(.computer(level: opponentLevel))
         }
         gameStore.clear()
-        activeGame = ActiveGame(engine: GameEngine(mode: mode, profiles: profiles))
+        let engine = GameEngine(mode: mode, profiles: profiles)
+        gameStore.save(engine.snapshot)
+        activeGame = ActiveGame(engine: engine)
     }
 
     private func beginNewGame() {
@@ -297,6 +301,9 @@ struct GameSetupView: View {
         }
         gameStore.clear()
         let engine = GameEngine(mode: mode, profiles: profiles)
+        // Meteen de verse stand wegschrijven: sluit je de app direct af,
+        // dan komt anders het oude bewaarde spel weer boven.
+        gameStore.save(engine.snapshot)
         activeGame = ActiveGame(engine: engine)
     }
 }

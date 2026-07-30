@@ -73,9 +73,9 @@ extension ThemePalette {
         tintSky: Color(red: 0.89, green: 0.96, blue: 1.00),
         tintCoral: Color(red: 1.00, green: 0.87, blue: 0.83),
         tintStone: Color(red: 0.93, green: 0.89, blue: 0.82),
-        faint: Color(red: 0.71, green: 0.64, blue: 0.55),
-        soft: Color(red: 0.65, green: 0.58, blue: 0.49),
-        dim: Color(red: 0.78, green: 0.73, blue: 0.64),
+        faint: Color(red: 0.49, green: 0.43, blue: 0.35),
+        soft: Color(red: 0.45, green: 0.39, blue: 0.31),
+        dim: Color(red: 0.66, green: 0.60, blue: 0.51),
         offFill: Color(red: 0.86, green: 0.83, blue: 0.76),
         offInk: Color(red: 0.70, green: 0.66, blue: 0.59)
     )
@@ -93,9 +93,9 @@ extension ThemePalette {
         tintSky: Color(red: 0.95, green: 0.90, blue: 1.00),
         tintCoral: Color(red: 1.00, green: 0.85, blue: 0.91),
         tintStone: Color(red: 0.95, green: 0.89, blue: 0.93),
-        faint: Color(red: 0.79, green: 0.64, blue: 0.72),
-        soft: Color(red: 0.73, green: 0.57, blue: 0.65),
-        dim: Color(red: 0.83, green: 0.71, blue: 0.78),
+        faint: Color(red: 0.52, green: 0.36, blue: 0.45),
+        soft: Color(red: 0.51, green: 0.35, blue: 0.44),
+        dim: Color(red: 0.68, green: 0.54, blue: 0.62),
         offFill: Color(red: 0.89, green: 0.83, blue: 0.86),
         offInk: Color(red: 0.69, green: 0.59, blue: 0.64)
     )
@@ -113,9 +113,9 @@ extension ThemePalette {
         tintSky: Color(red: 0.87, green: 0.95, blue: 0.99),
         tintCoral: Color(red: 1.00, green: 0.88, blue: 0.84),
         tintStone: Color(red: 0.89, green: 0.93, blue: 0.92),
-        faint: Color(red: 0.57, green: 0.68, blue: 0.71),
-        soft: Color(red: 0.50, green: 0.63, blue: 0.66),
-        dim: Color(red: 0.66, green: 0.76, blue: 0.78),
+        faint: Color(red: 0.31, green: 0.43, blue: 0.47),
+        soft: Color(red: 0.29, green: 0.42, blue: 0.46),
+        dim: Color(red: 0.48, green: 0.59, blue: 0.62),
         offFill: Color(red: 0.84, green: 0.89, blue: 0.88),
         offInk: Color(red: 0.58, green: 0.66, blue: 0.66)
     )
@@ -136,9 +136,9 @@ extension ThemePalette {
         tintSky: Color(red: 0.89, green: 0.96, blue: 1.00),
         tintCoral: Color(red: 1.00, green: 0.87, blue: 0.83),
         tintStone: Color(red: 0.93, green: 0.89, blue: 0.82),
-        faint: Color(red: 0.53, green: 0.57, blue: 0.68),
-        soft: Color(red: 0.63, green: 0.67, blue: 0.77),
-        dim: Color(red: 0.44, green: 0.48, blue: 0.58),
+        faint: Color(red: 0.62, green: 0.66, blue: 0.77),
+        soft: Color(red: 0.72, green: 0.76, blue: 0.85),
+        dim: Color(red: 0.52, green: 0.56, blue: 0.67),
         offFill: Color(red: 0.29, green: 0.32, blue: 0.41),
         offInk: Color(red: 0.55, green: 0.58, blue: 0.68)
     )

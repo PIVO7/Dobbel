@@ -83,6 +83,8 @@ struct GameResultOverlay: View {
             .toyBlock(fill: .white, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
             .frame(maxWidth: m.overlayMaxWidth)
             .padding(m.gutter * 2)
+            // Modaal voor VoiceOver: het spelbord eronder is voorbij.
+            .accessibilityAddTraits(.isModal)
         }
         .transition(.opacity.combined(with: .scale))
     }

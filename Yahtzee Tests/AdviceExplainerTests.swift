@@ -23,6 +23,17 @@ final class AdviceExplainerTests: XCTestCase {
         XCTAssertFalse(text.contains("bonus"))
     }
 
+    /// Bij een tweede Dobbel via de jokerregel mag de uitleg niet doen alsof
+    /// er een echt vol huis ligt.
+    func testJokerExplanationForFullHouse() {
+        var card = Scorecard()
+        card.place(category: .yahtzee, score: 50, yahtzeeBonus: 0)
+        card.place(category: .fours, score: 16, yahtzeeBonus: 0)
+        let text = AdviceExplainer.explain(category: .fullHouse, dice: [4, 4, 4, 4, 4], scorecard: card)
+        XCTAssertTrue(text.contains("jokerregel"))
+        XCTAssertFalse(text.contains("Twee én drie"))
+    }
+
     func testFixedCategories() {
         XCTAssertTrue(
             AdviceExplainer.explain(category: .largeStraight, dice: [1, 2, 3, 4, 5], scorecard: Scorecard())

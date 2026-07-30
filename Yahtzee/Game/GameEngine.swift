@@ -136,17 +136,23 @@ final class GameEngine {
     }
 
     func playComputerTurnIfNeeded() async {
-        while !isFinished, currentPlayer.isComputer {
+        // Expliciet annuleerbaar: als het spel dichtgaat stopt de lus, in
+        // plaats van in de achtergrond razendsnel het potje uit te spelen.
+        while !Task.isCancelled, !isFinished, currentPlayer.isComputer {
             await takeComputerTurn()
             try? await Task.sleep(for: .milliseconds(400))
         }
     }
 
     private func takeComputerTurn() async {
-        // First roll of the turn.
-        await performRoll()
+        // De eerste worp van de beurt — behalve als een hervat spel al
+        // midden in de computerbeurt zat: dan eerst gewoon beslissen, anders
+        // gooit hij een klaarliggende Dobbel zomaar opnieuw.
+        if !hasRolledThisTurn {
+            await performRoll()
+        }
 
-        while !isFinished, currentPlayer.isComputer {
+        while !Task.isCancelled, !isFinished, currentPlayer.isComputer {
             let decision = computerAI.decide(
                 dice: dice,
                 rollsRemaining: rollsRemaining,
