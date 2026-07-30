@@ -40,14 +40,7 @@ struct CategoryIcon: View {
     }
 
     private var face: Int {
-        switch category {
-        case .ones: return 1
-        case .twos: return 2
-        case .threes: return 3
-        case .fours: return 4
-        case .fives: return 5
-        default: return 6
-        }
+        category.faceValue ?? 6
     }
 
     private var tint: Color {

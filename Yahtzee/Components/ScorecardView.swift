@@ -17,11 +17,11 @@ struct ScorecardView: View {
         // per vakje opnieuw aangeroepen — dertien keer per kolom, en tijdens de
         // gooianimatie acht keer per worp.
         let open = openCategories
-        let best = bestCategory(open: open)
+        let advice = adviceCategory(open: open)
 
         return HStack(alignment: .top, spacing: m.gutter * 0.6) {
-            column(title: "BOVEN", categories: ScoreCategory.upper, showsBonus: true, open: open, best: best)
-            column(title: "ONDER", categories: ScoreCategory.lower, showsBonus: false, open: open, best: best)
+            column(title: "BOVEN", categories: ScoreCategory.upper, showsBonus: true, open: open, advice: advice)
+            column(title: "ONDER", categories: ScoreCategory.lower, showsBonus: false, open: open, advice: advice)
         }
         .padding(m.gutter * 0.8)
         .toyBlock(fill: .white, radius: m.cardCorner, depth: m.depth, border: m.border)
@@ -36,13 +36,11 @@ struct ScorecardView: View {
         return Set(YahtzeeScorer.availableCategories(dice: diceValues, scorecard: current.scorecard))
     }
 
-    /// Het vakje dat nú de meeste punten oplevert; alleen tonen als er echt
-    /// gegooid is. Nadrukkelijk geen strategie-advies — soms is een lager
-    /// vakje de slimmere zet (bovenin scoren telt mee voor de bonus) en die
-    /// afweging laten we bij de speler.
-    private func bestCategory(open: Set<ScoreCategory>) -> ScoreCategory? {
+    /// De tip van de scorer; alleen tonen als er echt gegooid is. Weegt de
+    /// bonus bovenin mee, maar blijft een vuistregel — kiezen doet de speler.
+    private func adviceCategory(open: Set<ScoreCategory>) -> ScoreCategory? {
         guard canScore, !open.isEmpty, let current else { return nil }
-        return YahtzeeScorer.bestCategory(dice: diceValues, scorecard: current.scorecard)
+        return YahtzeeScorer.adviceCategory(dice: diceValues, scorecard: current.scorecard)
     }
 
     private func column(
@@ -50,7 +48,7 @@ struct ScorecardView: View {
         categories: [ScoreCategory],
         showsBonus: Bool,
         open: Set<ScoreCategory>,
-        best: ScoreCategory?
+        advice: ScoreCategory?
     ) -> some View {
         VStack(spacing: 4) {
             Text(title)
@@ -64,7 +62,7 @@ struct ScorecardView: View {
             playerHeader
 
             ForEach(categories) { category in
-                row(for: category, open: open, best: best)
+                row(for: category, open: open, advice: advice)
             }
 
             if showsBonus {
@@ -119,14 +117,14 @@ struct ScorecardView: View {
     private func row(
         for category: ScoreCategory,
         open: Set<ScoreCategory>,
-        best: ScoreCategory?
+        advice: ScoreCategory?
     ) -> some View {
         HStack(spacing: 3) {
             CategoryIcon(category: category)
                 .frame(width: m.iconWidth, height: m.rowHeight)
 
             ForEach(players) { player in
-                cell(for: category, player: player, open: open, best: best)
+                cell(for: category, player: player, open: open, advice: advice)
             }
         }
     }
@@ -136,7 +134,7 @@ struct ScorecardView: View {
         for category: ScoreCategory,
         player: GamePlayer,
         open: Set<ScoreCategory>,
-        best: ScoreCategory?
+        advice: ScoreCategory?
     ) -> some View {
         let scored = player.scorecard.scores[category]
         let isMine = player.id == currentPlayerID
@@ -148,24 +146,24 @@ struct ScorecardView: View {
                 dice: diceValues,
                 scorecard: player.scorecard
             ).score
-            let isBest = category == best
+            let isAdvised = category == advice
 
             Button {
                 onSelect(category)
             } label: {
                 Text("\(points)")
                     .font(AppTheme.rounded(m.cellTextSize, .bold))
-                    .foregroundStyle(isBest ? .white : AppTheme.coral)
+                    .foregroundStyle(isAdvised ? .white : AppTheme.coral)
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
             }
             .buttonStyle(ToyButtonStyle(
-                fill: isBest ? AppTheme.mint : .white,
+                fill: isAdvised ? AppTheme.mint : .white,
                 radius: m.cellCorner,
-                depth: isBest ? 3 : 0,
+                depth: isAdvised ? 3 : 0,
                 border: m.thinBorder
             ))
-            .accessibilityLabel("\(category.title), \(points) punten\(isBest ? ", meeste punten" : "")")
+            .accessibilityLabel("\(category.title), \(points) punten\(isAdvised ? ", tip" : "")")
         } else {
             Text(scored.map { "\($0)" } ?? "–")
                 .font(AppTheme.rounded(m.cellTextSize, .bold))

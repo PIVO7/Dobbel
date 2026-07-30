@@ -44,6 +44,19 @@ enum ScoreCategory: String, CaseIterable, Codable, Identifiable, Hashable {
         }
     }
 
+    /// Het oog dat bij een vakje bovenin hoort; `nil` voor de onderkant.
+    var faceValue: Int? {
+        switch self {
+        case .ones: return 1
+        case .twos: return 2
+        case .threes: return 3
+        case .fours: return 4
+        case .fives: return 5
+        case .sixes: return 6
+        default: return nil
+        }
+    }
+
     static let upper: [ScoreCategory] = [.ones, .twos, .threes, .fours, .fives, .sixes]
     static let lower: [ScoreCategory] = [
         .threeOfAKind, .fourOfAKind, .fullHouse, .smallStraight, .largeStraight, .yahtzee, .chance

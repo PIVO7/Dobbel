@@ -79,20 +79,10 @@ enum YahtzeeScorer {
 
     static func availableCategories(dice: [Int], scorecard: Scorecard) -> [ScoreCategory] {
         let open = ScoreCategory.allCases.filter { scorecard.scores[$0] == nil }
-        guard canUseJoker(dice: dice, scorecard: scorecard), let face = dice.first else {
+        guard canUseJoker(dice: dice, scorecard: scorecard), let face = dice.first,
+              let upperForFace = ScoreCategory.upper.first(where: { $0.faceValue == face }) else {
             return open
         }
-
-        let upperForFace: ScoreCategory = {
-            switch face {
-            case 1: return .ones
-            case 2: return .twos
-            case 3: return .threes
-            case 4: return .fours
-            case 5: return .fives
-            default: return .sixes
-            }
-        }()
 
         if open.contains(upperForFace) {
             return [upperForFace]
@@ -116,15 +106,40 @@ enum YahtzeeScorer {
         return (score, bonus)
     }
 
-    /// De hoogst scorende open categorie voor deze worp, of `nil` als elke open
-    /// categorie nul oplevert. Puur advies — de speler mag altijd iets anders kiezen.
-    static func bestCategory(dice: [Int], scorecard: Scorecard) -> ScoreCategory? {
+    /// Nog waar om voor te spelen: de bonus is niet binnen, maar met de open
+    /// vakjes bovenin valt de drempel nog te halen.
+    static func upperBonusStillPossible(scorecard: Scorecard) -> Bool {
+        guard scorecard.upperBonus == 0 else { return false }
+        let openMaximum = ScoreCategory.upper
+            .filter { scorecard.scores[$0] == nil }
+            .compactMap(\.faceValue)
+            .reduce(0) { $0 + 5 * $1 }
+        return scorecard.upperSubtotal + openMaximum >= upperBonusThreshold
+    }
+
+    /// De tip voor de speler, of `nil` als elke open categorie nul oplevert.
+    ///
+    /// Niet simpelweg de hoogste opbrengst: zolang de bonus haalbaar is telt
+    /// elk punt bovenin ongeveer 35/63e extra mee, want het brengt de +35
+    /// dichterbij. Drie vijven wijzen dan naar de vijven, ook al levert
+    /// "3 dezelfde" nu een paar punten meer op. Het blijft een vuistregel —
+    /// de speler mag altijd iets anders kiezen.
+    static func adviceCategory(dice: [Int], scorecard: Scorecard) -> ScoreCategory? {
         let open = availableCategories(dice: dice, scorecard: scorecard)
-        var best: (category: ScoreCategory, score: Int)?
+        let bonusWeight = upperBonusStillPossible(scorecard: scorecard)
+            ? Double(upperBonusPoints) / Double(upperBonusThreshold)
+            : 0
+
+        var best: (category: ScoreCategory, value: Double)?
         for category in open {
             let score = pointsForPlacing(category: category, dice: dice, scorecard: scorecard).score
-            if score > (best?.score ?? 0) {
-                best = (category, score)
+            guard score > 0 else { continue }
+            var value = Double(score)
+            if category.isUpper {
+                value += Double(score) * bonusWeight
+            }
+            if value > (best?.value ?? 0) {
+                best = (category, value)
             }
         }
         return best?.category
