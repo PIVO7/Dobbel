@@ -15,6 +15,7 @@ struct GameView: View {
     @State private var didRecordResult = false
     @State private var showTurnBanner = false
     @State private var showExitConfirm = false
+    @State private var tipExplanation: String?
     @State private var celebrateYahtzee = false
     @State private var celebrateBonus = false
     @State private var bannerDismissal: Task<Void, Never>?
@@ -32,7 +33,8 @@ struct GameView: View {
             toggleHold: holdDie,
             score: place,
             roll: roll,
-            leave: requestLeave
+            leave: requestLeave,
+            explainTip: explainTip
         )
     }
 
@@ -103,6 +105,17 @@ struct GameView: View {
                                 showExitConfirm = false
                             }
                         }
+                    )
+                    .zIndex(5)
+                }
+
+                if let tipExplanation {
+                    ToyDialog(
+                        title: "Daarom!",
+                        message: tipExplanation,
+                        confirmTitle: "Snap ik!",
+                        onConfirm: dismissTip,
+                        onCancel: dismissTip
                     )
                     .zIndex(5)
                 }
@@ -183,6 +196,22 @@ struct GameView: View {
         onClose()
     }
 
+    private func explainTip(_ category: ScoreCategory) {
+        withAnimation(.easeOut(duration: 0.15)) {
+            tipExplanation = AdviceExplainer.explain(
+                category: category,
+                dice: engine.diceValues,
+                scorecard: engine.currentPlayer.scorecard
+            )
+        }
+    }
+
+    private func dismissTip() {
+        withAnimation(.easeOut(duration: 0.15)) {
+            tipExplanation = nil
+        }
+    }
+
     /// Solo spreekt de banner je aan; met z'n allen aan één toestel noemt hij
     /// de naam.
     private var bannerTitle: String? {
@@ -209,8 +238,8 @@ struct GameView: View {
         didRecordResult = true
         gameStore.clear()
         profileStore.recordGameResult(
-            winnerProfileIDs: engine.winnerProfileIDs,
-            participantProfileIDs: engine.players.map(\.profileID)
+            players: engine.players,
+            winnerProfileIDs: engine.winnerProfileIDs
         )
     }
 

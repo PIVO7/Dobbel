@@ -66,6 +66,8 @@ struct GameTallLayout: View {
                     )
                     .padding(.top, m.gutter * 0.4)
 
+                    TipButtonView(engine: engine, onExplain: actions.explainTip)
+
                     Spacer(minLength: m.gutter)
 
                     ScorecardView(

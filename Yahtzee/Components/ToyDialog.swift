@@ -6,7 +6,8 @@ struct ToyDialog: View {
     let title: String
     let message: String
     let confirmTitle: String
-    let cancelTitle: String
+    /// Zonder annuleerknop wordt het een mededeling met één knop.
+    var cancelTitle: String?
     let onConfirm: () -> Void
     let onCancel: () -> Void
 
@@ -44,19 +45,21 @@ struct ToyDialog: View {
                 ))
                 .padding(.top, 4)
 
-                Button(action: onCancel) {
-                    Text(cancelTitle)
-                        .font(AppTheme.rounded(m.buttonTextSize * 0.8))
-                        .foregroundStyle(AppTheme.ink)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: m.buttonHeight * 0.82)
+                if let cancelTitle {
+                    Button(action: onCancel) {
+                        Text(cancelTitle)
+                            .font(AppTheme.rounded(m.buttonTextSize * 0.8))
+                            .foregroundStyle(AppTheme.ink)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: m.buttonHeight * 0.82)
+                    }
+                    .buttonStyle(ToyButtonStyle(
+                        fill: .white,
+                        radius: m.cardCorner * 0.8,
+                        depth: m.depth,
+                        border: m.border
+                    ))
                 }
-                .buttonStyle(ToyButtonStyle(
-                    fill: .white,
-                    radius: m.cardCorner * 0.8,
-                    depth: m.depth,
-                    border: m.border
-                ))
             }
             .padding(m.gutter * 1.4)
             .toyBlock(fill: AppTheme.cream, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)

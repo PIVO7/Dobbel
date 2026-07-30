@@ -47,19 +47,6 @@ final class ProfileStore {
         save()
     }
 
-    /// Overgang: het spelscherm stapt in de volgende commit over op de
-    /// variant met volledige spelersdata.
-    func recordGameResult(winnerProfileIDs: [UUID], participantProfileIDs: [UUID]) {
-        for id in participantProfileIDs where !PlayerProfile.computerIDs.values.contains(id) {
-            guard let index = profiles.firstIndex(where: { $0.id == id }) else { continue }
-            profiles[index].gamesPlayed += 1
-            if winnerProfileIDs.contains(id), winnerProfileIDs.count == 1 {
-                profiles[index].wins += 1
-            }
-        }
-        save()
-    }
-
     /// Werkt na een afgerond spel de statistieken van alle menselijke
     /// deelnemers bij: potjes, winst, hoogste en totale score, Dobbels en de
     /// bonus bovenin.

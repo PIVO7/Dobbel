@@ -65,6 +65,8 @@ struct GameWideLayout: View {
             )
             .padding(.top, 4)
 
+            TipButtonView(engine: engine, onExplain: actions.explainTip)
+
             Spacer(minLength: 8)
 
             RollButtonView(
