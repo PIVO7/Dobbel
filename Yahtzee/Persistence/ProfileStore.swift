@@ -65,6 +65,10 @@ final class ProfileStore {
             }
             if winnerProfileIDs.contains(player.profileID), winnerProfileIDs.count == 1 {
                 profiles[index].wins += 1
+                profiles[index].currentStreak += 1
+                profiles[index].bestStreak = max(profiles[index].bestStreak, profiles[index].currentStreak)
+            } else {
+                profiles[index].currentStreak = 0
             }
         }
         save()

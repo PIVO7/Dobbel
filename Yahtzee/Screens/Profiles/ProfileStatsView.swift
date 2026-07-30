@@ -37,6 +37,13 @@ struct ProfileStatsView: View {
                             statRow("Hoogste score", "\(profile.bestScore)", icon: "arrow.up.circle.fill")
                             statRow("Gemiddeld", average.map { "\($0)" } ?? "–", icon: "equal.circle.fill")
                             statRow("Dobbels", "\(profile.dobbelCount)", icon: "star.fill")
+                            statRow(
+                                "Winreeks",
+                                profile.currentStreak > 0
+                                    ? "\(profile.currentStreak) op rij · beste \(profile.bestStreak)"
+                                    : "beste \(profile.bestStreak)",
+                                icon: "flame.fill"
+                            )
                             statRow("Bonus gehaald", "\(profile.bonusCount) van \(profile.gamesPlayed)", icon: "plus.circle.fill")
                         }
                         .padding(.top, m.gutter * 0.5)

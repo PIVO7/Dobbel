@@ -33,6 +33,9 @@ final class ProfileStoreTests: XCTestCase {
         XCTAssertEqual(updatedMila.totalPoints, 53)
         XCTAssertEqual(updatedMila.dobbelCount, 1)
         XCTAssertEqual(updatedMila.bonusCount, 0)
+        XCTAssertEqual(updatedMila.currentStreak, 1)
+        XCTAssertEqual(updatedMila.bestStreak, 1)
+        XCTAssertEqual(updatedNoah.currentStreak, 0)
         XCTAssertEqual(updatedNoah.wins, 0)
         XCTAssertEqual(updatedNoah.gamesPlayed, 1)
 

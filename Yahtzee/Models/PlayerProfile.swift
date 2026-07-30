@@ -15,6 +15,8 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
     var totalPoints: Int
     var dobbelCount: Int
     var bonusCount: Int
+    var currentStreak: Int
+    var bestStreak: Int
 
     init(
         id: UUID = UUID(),
@@ -27,7 +29,9 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         bestScore: Int = 0,
         totalPoints: Int = 0,
         dobbelCount: Int = 0,
-        bonusCount: Int = 0
+        bonusCount: Int = 0,
+        currentStreak: Int = 0,
+        bestStreak: Int = 0
     ) {
         self.id = id
         self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -40,6 +44,8 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         self.totalPoints = totalPoints
         self.dobbelCount = dobbelCount
         self.bonusCount = bonusCount
+        self.currentStreak = currentStreak
+        self.bestStreak = bestStreak
     }
 
     /// Met de hand, zodat oudere profielbestanden zonder de statistiekvelden
@@ -57,6 +63,8 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         totalPoints = try container.decodeIfPresent(Int.self, forKey: .totalPoints) ?? 0
         dobbelCount = try container.decodeIfPresent(Int.self, forKey: .dobbelCount) ?? 0
         bonusCount = try container.decodeIfPresent(Int.self, forKey: .bonusCount) ?? 0
+        currentStreak = try container.decodeIfPresent(Int.self, forKey: .currentStreak) ?? 0
+        bestStreak = try container.decodeIfPresent(Int.self, forKey: .bestStreak) ?? 0
     }
 
     /// Vaste id's, zodat een bewaard spel na een herstart dezelfde

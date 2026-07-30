@@ -32,6 +32,21 @@ struct DieView: View {
                 .offset(y: die.isHeld ? 2 : m.depth)
         )
         .offset(y: die.isHeld ? m.depth - 2 : 0)
+        // Een handje op de hoek: het zakken alleen was voor kleuters te
+        // subtiel om te zien welke stenen meegaan.
+        .overlay(alignment: .topTrailing) {
+            if die.isHeld {
+                Image(systemName: "hand.raised.fill")
+                    .font(.system(size: m.dieSize * 0.18, weight: .black))
+                    .foregroundStyle(AppTheme.ink)
+                    .padding(m.dieSize * 0.07)
+                    .background(Circle().fill(AppTheme.amber))
+                    .overlay(Circle().strokeBorder(AppTheme.ink, lineWidth: m.thinBorder))
+                    .offset(x: m.dieSize * 0.06, y: -m.dieSize * 0.06)
+                    .transition(.scale.combined(with: .opacity))
+                    .accessibilityHidden(true)
+            }
+        }
         .animation(.easeOut(duration: 0.12), value: die.isHeld)
         .onChange(of: isRolling) { _, rolling in
             if rolling { startTumble() }
