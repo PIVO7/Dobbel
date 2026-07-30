@@ -8,6 +8,7 @@ struct SettingsView: View {
 
     @State private var soundOn = SoundPlayer.shared.isEnabled
     @State private var coachReset = false
+    @State private var showRules = false
 
     private var themeStore: ThemeStore { .shared }
 
@@ -63,6 +64,26 @@ struct SettingsView: View {
                     }
 
                     section("UITLEG") {
+                        Button {
+                            showRules = true
+                        } label: {
+                            HStack {
+                                Text("Hoe werkt Dobbel?")
+                                    .font(AppTheme.rounded(m.bodySize, .bold))
+                                    .foregroundStyle(AppTheme.ink)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Image(systemName: "book.fill")
+                                    .font(.system(size: m.bodySize, weight: .black))
+                                    .foregroundStyle(AppTheme.sky)
+                            }
+                            .padding(m.gutter)
+                        }
+                        .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border))
+                        .sheet(isPresented: $showRules) {
+                            RulesView()
+                                .appMetrics()
+                        }
+
                         Button {
                             CoachTour.seen = false
                             coachReset = true

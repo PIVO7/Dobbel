@@ -11,6 +11,7 @@ struct GameSetupView: View {
     @State private var selectedIDs: [UUID] = []
     @State private var opponentLevel: ComputerLevel = .medium
     @State private var activeGame: ActiveGame?
+    @State private var showRules = false
     /// De start die nog op bevestiging wacht omdat er een bewaard spel is.
     @State private var pendingStart: (() -> Void)?
 
@@ -25,16 +26,35 @@ struct GameSetupView: View {
             AppTheme.cream.ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: m.gutter) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(mode.title)
-                        .font(AppTheme.rounded(m.titleSize))
-                        .foregroundStyle(AppTheme.headline)
-                        .minimumScaleFactor(0.7)
-                        .lineLimit(1)
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(mode.title)
+                            .font(AppTheme.rounded(m.titleSize))
+                            .foregroundStyle(AppTheme.headline)
+                            .minimumScaleFactor(0.7)
+                            .lineLimit(1)
 
-                    Text(mode.subtitle)
-                        .font(AppTheme.rounded(m.bodySize, .bold))
-                        .foregroundStyle(AppTheme.soft)
+                        Text(mode.subtitle)
+                            .font(AppTheme.rounded(m.bodySize, .bold))
+                            .foregroundStyle(AppTheme.soft)
+                    }
+
+                    Spacer()
+
+                    Button {
+                        showRules = true
+                    } label: {
+                        Label("Hoe werkt Dobbel?", systemImage: "book.fill")
+                            .labelStyle(.iconOnly)
+                            .font(.system(size: m.captionSize + 2, weight: .black))
+                            .foregroundStyle(AppTheme.ink)
+                            .frame(width: m.tapTarget, height: m.tapTarget)
+                    }
+                    .buttonStyle(ToyButtonStyle(fill: AppTheme.tintSky, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+                    .sheet(isPresented: $showRules) {
+                        RulesView()
+                            .appMetrics()
+                    }
                 }
 
                 if profileStore.humanProfiles.isEmpty {

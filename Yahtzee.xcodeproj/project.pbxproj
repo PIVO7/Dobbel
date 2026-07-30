@@ -27,6 +27,7 @@
 		40A2B87631E4888C3561D841 /* ding.wav in Resources */ = {isa = PBXBuildFile; fileRef = CE5446247067453F5E6691B1 /* ding.wav */; };
 		42827553B5EA7B97B9D7FDAF /* AdviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C787B257B616D2DB3084E38 /* AdviceTests.swift */; };
 		481845BC951477A9D0B71C91 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E760F0309B9C4D8CE661A98 /* ProfileStore.swift */; };
+		492DDD3CAD998558346BBF2E /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62419F01E86C06DFF98636F9 /* RulesView.swift */; };
 		49AF095BCE1EC2ED740429F1 /* ComputerAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E50AF1BC7504156E2FAF0 /* ComputerAI.swift */; };
 		52C0AA87696749F7DDABDCFB /* CategoryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA031A0050389C7AFDC085E /* CategoryIcon.swift */; };
 		5492C01EA728726351BB7FC3 /* ScorecardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */; };
@@ -117,6 +118,7 @@
 		55A2E76878588BB3739407E7 /* ToyDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyDialog.swift; sourceTree = "<group>"; };
 		5715CAFD3870A9D31BC09DAC /* ToyBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyBlock.swift; sourceTree = "<group>"; };
 		5BF58ADE0558AABA7F6FF61F /* ScoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCategory.swift; sourceTree = "<group>"; };
+		62419F01E86C06DFF98636F9 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
 		68918AF5B5585DAB009B168A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6B9EE9E317DAB2739473E5CC /* ThemePalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePalette.swift; sourceTree = "<group>"; };
 		76EF818C857F3C3D5867F896 /* GameResultOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResultOverlay.swift; sourceTree = "<group>"; };
@@ -167,6 +169,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		0B269698835988239546D036 /* Rules */ = {
+			isa = PBXGroup;
+			children = (
+				62419F01E86C06DFF98636F9 /* RulesView.swift */,
+			);
+			path = Rules;
+			sourceTree = "<group>";
+		};
 		11506B46F8908B1E576257B5 /* Yahtzee Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,6 +380,7 @@
 				C87A2A2743F85922E3D111F0 /* Game */,
 				17AFE392D03E5CAD402ADEDF /* Home */,
 				8D2CF9FF65377E18472E0AA9 /* Profiles */,
+				0B269698835988239546D036 /* Rules */,
 				3CD1CA1E4AFBA0EF672B7B20 /* Settings */,
 				3329536E00BA0C03148B632A /* Setup */,
 			);
@@ -544,6 +555,7 @@
 				936E881E59299AEE24FC5291 /* RollCalloutView.swift in Sources */,
 				A97E08433C1FB3B34E2EE6A4 /* RollPhrase.swift in Sources */,
 				CA4617ED466FEF9CF198A801 /* RoundStripView.swift in Sources */,
+				492DDD3CAD998558346BBF2E /* RulesView.swift in Sources */,
 				3FA61241D48BC1BD332FF223 /* ScoreCategory.swift in Sources */,
 				C405BAD4D45993B1B3A149C3 /* ScoreCellView.swift in Sources */,
 				CE4CEB1651D6098CEF4495D2 /* Scorecard.swift in Sources */,

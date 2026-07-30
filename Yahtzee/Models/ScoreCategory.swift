@@ -27,11 +27,11 @@ enum ScoreCategory: String, CaseIterable, Codable, Identifiable, Hashable {
         case .sixes: return "Zessen"
         case .threeOfAKind: return "3 dezelfde"
         case .fourOfAKind: return "4 dezelfde"
-        case .fullHouse: return "Full house"
+        case .fullHouse: return "Vol huis"
         case .smallStraight: return "Kleine straat"
         case .largeStraight: return "Grote straat"
         case .yahtzee: return "Dobbel"
-        case .chance: return "Chance"
+        case .chance: return "Kans"
         }
     }
 
