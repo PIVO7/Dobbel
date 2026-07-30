@@ -5,6 +5,7 @@ struct HomeView: View {
     @Environment(GameStore.self) private var gameStore
     @Environment(\.metrics) private var m
     @State private var activeGame: ActiveGame?
+    @State private var showSettings = false
 
     var body: some View {
         NavigationStack {
@@ -14,9 +15,9 @@ struct HomeView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         VStack(spacing: 8) {
-                            Text("Yahtzee")
+                            Text("Dobbel!")
                                 .font(AppTheme.rounded(m.brandSize))
-                                .foregroundStyle(AppTheme.ink)
+                                .foregroundStyle(AppTheme.headline)
 
                             Text("Gooi, reken en win samen")
                                 .font(AppTheme.rounded(m.bodySize, .bold))
@@ -68,6 +69,26 @@ struct HomeView: View {
                 }
             }
             .toolbarBackground(.hidden, for: .navigationBar)
+            // Rechtsboven, buiten de meeloop van de menutegels: instellingen
+            // zijn voor de ouders, niet voor het spel.
+            .overlay(alignment: .topTrailing) {
+                Button {
+                    showSettings = true
+                } label: {
+                    Label("Instellingen", systemImage: "gearshape.fill")
+                        .labelStyle(.iconOnly)
+                        .font(.system(size: m.captionSize + 3, weight: .black))
+                        .foregroundStyle(AppTheme.ink)
+                        .frame(width: m.tapTarget, height: m.tapTarget)
+                }
+                .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+                .padding(.trailing, m.gutter * 1.5)
+                .padding(.top, m.gutter * 0.5)
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
+                    .appMetrics()
+            }
             .fullScreenCover(item: $activeGame) { game in
                 GameView(engine: game.engine) {
                     activeGame = nil

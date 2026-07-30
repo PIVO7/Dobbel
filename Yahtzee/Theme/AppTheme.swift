@@ -2,32 +2,40 @@ import SwiftUI
 
 /// Speelgoed-stijl: dikke inktranden, harde slagschaduwen zonder vervaging,
 /// verzadigde kleuren. Alles moet eruitzien alsof je het kan indrukken.
+///
+/// De kleuren komen uit het gekozen thema in `ThemeStore`; de namen hier
+/// blijven de vaste woordenschat van de app.
 enum AppTheme {
+    @MainActor private static var palette: ThemePalette { ThemeStore.shared.palette }
+
     // Grond en inkt
-    static let cream = Color(red: 1.00, green: 0.98, blue: 0.95)   // #FFFBF2
-    static let ink = Color(red: 0.13, green: 0.13, blue: 0.11)     // #22201C
-    static let sunk = Color(red: 0.97, green: 0.95, blue: 0.89)    // #F7F1E4
+    @MainActor static var cream: Color { palette.cream }
+    @MainActor static var ink: Color { palette.ink }
+    /// Voor tekst die rechtstreeks op de achtergrond staat; wijkt alleen in
+    /// het nachtthema af van `ink`.
+    @MainActor static var headline: Color { palette.headline }
+    @MainActor static var sunk: Color { palette.sunk }
 
     // Accenten
-    static let amber = Color(red: 1.00, green: 0.79, blue: 0.24)   // #FFC93D
-    static let coral = Color(red: 1.00, green: 0.42, blue: 0.29)   // #FF6B4A
-    static let mint = Color(red: 0.24, green: 0.84, blue: 0.55)    // #3DD68C
-    static let sky = Color(red: 0.29, green: 0.62, blue: 1.00)     // #4A9EFF
+    @MainActor static var amber: Color { palette.amber }
+    @MainActor static var coral: Color { palette.coral }
+    @MainActor static var mint: Color { palette.mint }
+    @MainActor static var sky: Color { palette.sky }
 
     // Zachte vlakken achter iconen
-    static let tintAmber = Color(red: 1.00, green: 0.95, blue: 0.81) // #FFF1CE
-    static let tintSky = Color(red: 0.89, green: 0.96, blue: 1.00)   // #E4F4FF
-    static let tintCoral = Color(red: 1.00, green: 0.87, blue: 0.83) // #FFDDD4
-    static let tintStone = Color(red: 0.93, green: 0.89, blue: 0.82) // #EDE4D2
+    @MainActor static var tintAmber: Color { palette.tintAmber }
+    @MainActor static var tintSky: Color { palette.tintSky }
+    @MainActor static var tintCoral: Color { palette.tintCoral }
+    @MainActor static var tintStone: Color { palette.tintStone }
 
     // Tekst
-    static let faint = Color(red: 0.71, green: 0.64, blue: 0.55)   // #B5A48C
-    static let soft = Color(red: 0.65, green: 0.58, blue: 0.49)    // #A6957D
-    static let dim = Color(red: 0.78, green: 0.73, blue: 0.64)     // #C7BAA3
+    @MainActor static var faint: Color { palette.faint }
+    @MainActor static var soft: Color { palette.soft }
+    @MainActor static var dim: Color { palette.dim }
 
     // Uitgeschakeld
-    static let offFill = Color(red: 0.86, green: 0.83, blue: 0.76) // #DCD3C2
-    static let offInk = Color(red: 0.70, green: 0.66, blue: 0.59)  // #B3A896
+    @MainActor static var offFill: Color { palette.offFill }
+    @MainActor static var offInk: Color { palette.offInk }
 
     /// Alle tekst in de app komt hier langs; de maat komt uit `AppMetrics`,
     /// zodat een iPad grotere letters krijgt zonder aparte fontconstanten.

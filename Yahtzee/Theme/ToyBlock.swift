@@ -3,6 +3,8 @@ import SwiftUI
 /// Het kenmerk van deze stijl: een gevuld blok met een inktrand, en daarachter
 /// hetzelfde blok een paar punten lager. Geen vervaging — dat leest als dikte
 /// in plaats van als schaduw.
+// MainActor omdat de standaardwaarden uit het (MainActor-)thema komen.
+@MainActor
 struct ToyBlock: ViewModifier {
     var fill: Color
     var radius: CGFloat = 16
@@ -30,6 +32,7 @@ struct ToyBlock: ViewModifier {
 }
 
 extension View {
+    @MainActor
     func toyBlock(
         fill: Color,
         radius: CGFloat = 16,
