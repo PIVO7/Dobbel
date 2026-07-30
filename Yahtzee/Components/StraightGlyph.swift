@@ -1,29 +1,34 @@
 import SwiftUI
 
-/// Oplopende staafjes voor de straten: vier voor de kleine, vijf voor de grote.
+/// Een waaier van kaartjes, als een handje opeenvolgende stenen: vier voor de
+/// kleine straat, vijf voor de grote. De grote waaiert breder uit, zodat het
+/// verschil ook zonder tellen te zien is. Wit met een rand in de tintkleur,
+/// zodat de kaartjes elkaar kunnen overlappen zonder tot één vlek te
+/// versmelten.
 struct StraightGlyph: View {
     let bars: Int
 
     var body: some View {
-        // Een Canvas en geen GeometryReader met rechthoeken: puur tekenwerk,
-        // zonder deelname aan layout.
         Canvas { context, size in
-            let gap = size.width * 0.09
-            let barWidth = (size.width - gap * CGFloat(bars - 1)) / CGFloat(bars)
+            let plateWidth = size.width * (bars == 4 ? 0.40 : 0.36)
+            let plateHeight = size.height * 0.92
+            let spread: Double = bars == 4 ? 27 : 32
+            let lineWidth = max(plateWidth * 0.16, 1.2)
 
             for index in 0..<bars {
-                let fraction = 0.42 + 0.58 * (CGFloat(index) / CGFloat(bars - 1))
-                let height = size.height * fraction
+                let angle = -spread + 2 * spread * Double(index) / Double(bars - 1)
+                var ctx = context
+                ctx.translateBy(x: size.width / 2, y: size.height * 1.05)
+                ctx.rotate(by: .degrees(angle))
                 let rect = CGRect(
-                    x: (barWidth + gap) * CGFloat(index),
-                    y: size.height - height,
-                    width: barWidth,
-                    height: height
+                    x: -plateWidth / 2,
+                    y: -size.height * 1.02,
+                    width: plateWidth,
+                    height: plateHeight
                 )
-                context.fill(
-                    Path(roundedRect: rect, cornerRadius: barWidth * 0.35, style: .continuous),
-                    with: .foreground
-                )
+                let path = Path(roundedRect: rect, cornerRadius: plateWidth * 0.3, style: .continuous)
+                ctx.fill(path, with: .color(.white))
+                ctx.stroke(path, with: .foreground, lineWidth: lineWidth)
             }
         }
     }
