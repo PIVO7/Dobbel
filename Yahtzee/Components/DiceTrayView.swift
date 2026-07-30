@@ -10,13 +10,17 @@ struct DiceTrayView: View {
 
     var body: some View {
         HStack(spacing: m.dieGap) {
-            ForEach(dice) { die in
+            ForEach(Array(dice.enumerated()), id: \.element.id) { index, die in
                 // Een echte knop en geen tikgebaar: anders kan VoiceOver de
                 // steen wel voorlezen maar niet vasthouden.
                 Button {
                     onToggle(die.id)
                 } label: {
-                    DieView(die: die, isRolling: isRolling && !die.isHeld)
+                    DieView(
+                        die: die,
+                        isRolling: isRolling && !die.isHeld,
+                        settleDelay: Double(index) * 0.04
+                    )
                 }
                 .buttonStyle(DieButtonStyle())
                 .disabled(!canInteract)

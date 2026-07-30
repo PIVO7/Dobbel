@@ -36,7 +36,10 @@ struct ScorecardView: View {
         return Set(YahtzeeScorer.availableCategories(dice: diceValues, scorecard: current.scorecard))
     }
 
-    /// Advies van de scorer: alleen tonen als er echt gegooid is.
+    /// Het vakje dat nú de meeste punten oplevert; alleen tonen als er echt
+    /// gegooid is. Nadrukkelijk geen strategie-advies — soms is een lager
+    /// vakje de slimmere zet (bovenin scoren telt mee voor de bonus) en die
+    /// afweging laten we bij de speler.
     private func bestCategory(open: Set<ScoreCategory>) -> ScoreCategory? {
         guard canScore, !open.isEmpty, let current else { return nil }
         return YahtzeeScorer.bestCategory(dice: diceValues, scorecard: current.scorecard)
@@ -162,7 +165,7 @@ struct ScorecardView: View {
                 depth: isBest ? 3 : 0,
                 border: m.thinBorder
             ))
-            .accessibilityLabel("\(category.title), \(points) punten\(isBest ? ", beste zet" : "")")
+            .accessibilityLabel("\(category.title), \(points) punten\(isBest ? ", meeste punten" : "")")
         } else {
             Text(scored.map { "\($0)" } ?? "–")
                 .font(AppTheme.rounded(m.cellTextSize, .bold))

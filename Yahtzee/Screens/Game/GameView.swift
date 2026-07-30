@@ -58,8 +58,12 @@ struct GameView: View {
                 }
 
                 if showTurnBanner {
-                    TurnBannerView(playerName: engine.currentPlayer.name, isWide: isWide)
-                        .transition(.opacity.combined(with: .scale(scale: 0.92)))
+                    TurnBannerView(player: engine.currentPlayer)
+                        .transition(
+                            reduceMotion
+                                ? .opacity
+                                : .move(edge: .top).combined(with: .opacity)
+                        )
                         .zIndex(2)
                 }
 

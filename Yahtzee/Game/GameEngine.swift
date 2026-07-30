@@ -11,6 +11,10 @@ final class GameEngine {
     private(set) var rollsRemaining: Int = 3
     private(set) var hasRolledThisTurn: Bool = false
     private(set) var isRolling: Bool = false
+    /// De stenen hebben hun waarde al, maar veren nog na. Zolang dit waar is
+    /// blijft het scoreblad dicht — anders staan de punten er al terwijl de
+    /// stenen nog rollen.
+    private(set) var isSettling: Bool = false
     private(set) var isFinished: Bool = false
     private(set) var winnerProfileIDs: [UUID] = []
     private(set) var turnMessage: String = ""
@@ -29,11 +33,11 @@ final class GameEngine {
     var diceValues: [Int] { dice.map(\.value) }
 
     var canRoll: Bool {
-        !isFinished && !isRolling && rollsRemaining > 0 && !currentPlayer.isComputer
+        !isFinished && !isRolling && !isSettling && rollsRemaining > 0 && !currentPlayer.isComputer
     }
 
     var canScore: Bool {
-        !isFinished && !isRolling && hasRolledThisTurn && !currentPlayer.isComputer
+        !isFinished && !isRolling && !isSettling && hasRolledThisTurn && !currentPlayer.isComputer
     }
 
     /// De worp in woorden. Staat naast `turnMessage`, zodat het spelscherm
@@ -55,7 +59,7 @@ final class GameEngine {
     }
 
     private var canPerformTurnAction: Bool {
-        !isFinished && !isRolling
+        !isFinished && !isRolling && !isSettling
     }
 
     var snapshot: GameSnapshot {
@@ -179,6 +183,13 @@ final class GameEngine {
         rollsRemaining -= 1
         hasRolledThisTurn = true
         isRolling = false
+
+        // De stenen zijn uitgeteld maar veren nog na; pas daarna gaat het
+        // scoreblad open.
+        isSettling = true
+        try? await Task.sleep(for: .milliseconds(Self.settleDuration))
+        isSettling = false
+
         if currentPlayer.isComputer {
             turnMessage = "\(currentPlayer.name) denkt na…"
         } else {
@@ -238,6 +249,9 @@ final class GameEngine {
             turnMessage = "Gelijkspel met \(best) punten!"
         }
     }
+
+    /// Even lang als de landing van de laatste dobbelsteen in `DieView`.
+    static let settleDuration = 360
 
     private func markDirty() {
         saveVersion += 1
