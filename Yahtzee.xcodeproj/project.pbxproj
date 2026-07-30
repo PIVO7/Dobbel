@@ -65,6 +65,7 @@
 		D012F3B21085B23B10CA3061 /* ToyDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A2E76878588BB3739407E7 /* ToyDialog.swift */; };
 		D08A3F0F434AEC9C21C730C7 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D679AAD93CDFBC8574FAFD /* AppTheme.swift */; };
 		D0E0EDAB74AB57E69155434B /* StraightGlyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7838AC9AD2142A7BD7A3F /* StraightGlyph.swift */; };
+		D4E86C377774E8E4B862A829 /* ProfileStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103B4B773BB381BB998F8FA0 /* ProfileStatsView.swift */; };
 		D60633C12F873678F5C69D27 /* GameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCF4F19D03D2D396A148AF8 /* GameHeaderView.swift */; };
 		DA7BE6DBF31DD2EDE1281FC3 /* ComputerLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E82DA8D203741690A3A61 /* ComputerLevel.swift */; };
 		DDADFFE85F3A9DB75697B99C /* SoundPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD21D48ADB1B8BE26E2E9764 /* SoundPlayerTests.swift */; };
@@ -89,6 +90,7 @@
 		04F7838AC9AD2142A7BD7A3F /* StraightGlyph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightGlyph.swift; sourceTree = "<group>"; };
 		08EBD587280B6E954755F2F5 /* plop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = plop.wav; sourceTree = "<group>"; };
 		0D7BDB4CB3470410D8D57D94 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
+		103B4B773BB381BB998F8FA0 /* ProfileStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStatsView.swift; sourceTree = "<group>"; };
 		140C02D33A6AED897584ACA5 /* AvatarBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarBadge.swift; sourceTree = "<group>"; };
 		1B0A42FABE126185936A4457 /* YahtzeeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeApp.swift; sourceTree = "<group>"; };
 		1D1495CF5A08CE4FE46D5744 /* fanfare.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fanfare.wav; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				D467679E91E4BB018C34FAB3 /* ProfileRowView.swift */,
+				103B4B773BB381BB998F8FA0 /* ProfileStatsView.swift */,
 				9DDCD07E864A07331F04EE9F /* ProfilesView.swift */,
 			);
 			path = Profiles;
@@ -519,6 +522,7 @@
 				1476C3AA2E25387C26411FC0 /* PlayerHeaderView.swift in Sources */,
 				E178DCBAD43AA8CA0431E65B /* PlayerProfile.swift in Sources */,
 				C70D3580E17554575DACA2FF /* ProfileRowView.swift in Sources */,
+				D4E86C377774E8E4B862A829 /* ProfileStatsView.swift in Sources */,
 				481845BC951477A9D0B71C91 /* ProfileStore.swift in Sources */,
 				9AA2D70DB9339D9F70C0E870 /* ProfilesView.swift in Sources */,
 				5D207723B91545974B637C78 /* RollButtonView.swift in Sources */,

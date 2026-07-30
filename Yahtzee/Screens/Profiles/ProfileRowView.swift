@@ -12,22 +12,36 @@ struct ProfileRowView: View {
     @State private var renameText = ""
     @State private var isRenaming = false
     @State private var isDeleting = false
+    @State private var showStats = false
 
     var body: some View {
         HStack(spacing: m.gutter * 0.9) {
-            AvatarBadge(profile: profile, size: m.avatarSize)
+            // Tik op naam of bolletje en je krijgt de statistieken.
+            Button {
+                showStats = true
+            } label: {
+                HStack(spacing: m.gutter * 0.9) {
+                    AvatarBadge(profile: profile, size: m.avatarSize)
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(profile.name)
-                    .font(AppTheme.rounded(m.bodySize + 2))
-                    .foregroundStyle(AppTheme.ink)
-                    .lineLimit(1)
-                Text("\(profile.wins)× gewonnen · \(profile.gamesPlayed) gespeeld")
-                    .font(AppTheme.rounded(m.captionSize, .bold))
-                    .foregroundStyle(AppTheme.soft)
-                    .lineLimit(1)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(profile.name)
+                            .font(AppTheme.rounded(m.bodySize + 2))
+                            .foregroundStyle(AppTheme.ink)
+                            .lineLimit(1)
+                        Text("\(profile.wins)× gewonnen · \(profile.gamesPlayed) gespeeld")
+                            .font(AppTheme.rounded(m.captionSize, .bold))
+                            .foregroundStyle(AppTheme.soft)
+                            .lineLimit(1)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .buttonStyle(.plain)
+            .accessibilityHint("Toont de statistieken")
+            .sheet(isPresented: $showStats) {
+                ProfileStatsView(profile: profile)
+                    .appMetrics()
+            }
 
             renameButton
             deleteButton

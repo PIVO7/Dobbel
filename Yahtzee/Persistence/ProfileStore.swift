@@ -47,11 +47,36 @@ final class ProfileStore {
         save()
     }
 
+    /// Overgang: het spelscherm stapt in de volgende commit over op de
+    /// variant met volledige spelersdata.
     func recordGameResult(winnerProfileIDs: [UUID], participantProfileIDs: [UUID]) {
         for id in participantProfileIDs where !PlayerProfile.computerIDs.values.contains(id) {
             guard let index = profiles.firstIndex(where: { $0.id == id }) else { continue }
             profiles[index].gamesPlayed += 1
             if winnerProfileIDs.contains(id), winnerProfileIDs.count == 1 {
+                profiles[index].wins += 1
+            }
+        }
+        save()
+    }
+
+    /// Werkt na een afgerond spel de statistieken van alle menselijke
+    /// deelnemers bij: potjes, winst, hoogste en totale score, Dobbels en de
+    /// bonus bovenin.
+    func recordGameResult(players: [GamePlayer], winnerProfileIDs: [UUID]) {
+        for player in players where !player.isComputer {
+            guard let index = profiles.firstIndex(where: { $0.id == player.profileID }) else { continue }
+            let card = player.scorecard
+            profiles[index].gamesPlayed += 1
+            profiles[index].totalPoints += card.total
+            profiles[index].bestScore = max(profiles[index].bestScore, card.total)
+            profiles[index].dobbelCount +=
+                (card.scores[.yahtzee] == YahtzeeScorer.yahtzeePoints ? 1 : 0)
+                + card.yahtzeeBonusTotal / YahtzeeScorer.yahtzeeBonusPoints
+            if card.upperBonus > 0 {
+                profiles[index].bonusCount += 1
+            }
+            if winnerProfileIDs.contains(player.profileID), winnerProfileIDs.count == 1 {
                 profiles[index].wins += 1
             }
         }
