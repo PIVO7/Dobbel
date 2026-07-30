@@ -71,45 +71,40 @@ struct ScorecardView: View {
         }
     }
 
-    /// Boven elke kolom staat wie hem vult; zonder dat raak je bij drie of vier
-    /// spelers het spoor bijster welke kolom van jou is.
+    /// Boven elke kolom staat wie hem vult; zonder dat raak je bij drie of
+    /// vier spelers het spoor bijster welke kolom van jou is. Alleen het
+    /// bolletje — naam en kader erbij propten te veel in een celbreedte. Wie
+    /// niet aan de beurt is, dimt; de kleur blijft genoeg om je kolom terug
+    /// te vinden.
+    private var headerAvatarSize: CGFloat {
+        min(m.iconWidth - 2, m.avatarSize * 0.72)
+    }
+
     private var playerHeader: some View {
         HStack(spacing: 3) {
             Color.clear
-                .frame(width: m.iconWidth, height: max(m.rowHeight - 4, 28))
+                .frame(width: m.iconWidth, height: headerAvatarSize + 4)
 
             ForEach(players) { player in
                 let isMine = player.id == currentPlayerID
-                VStack(spacing: 2) {
-                    AvatarBadge(player: player, size: min(m.iconWidth - 4, m.avatarSize * 0.6))
-                    if players.count <= 2 {
-                        Text(player.name)
-                            .font(AppTheme.rounded(m.captionSize * 0.75))
-                            .foregroundStyle(isMine ? AppTheme.coral : AppTheme.soft)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.7)
+                let bonus = player.scorecard.yahtzeeBonusTotal
+                AvatarBadge(player: player, size: headerAvatarSize)
+                    .overlay(alignment: .topTrailing) {
+                        if bonus > 0 {
+                            Image(systemName: "star.fill")
+                                .font(.system(size: headerAvatarSize * 0.3, weight: .black))
+                                .foregroundStyle(AppTheme.amber)
+                                .offset(x: 3, y: -3)
+                        }
                     }
-                    if player.scorecard.yahtzeeBonusTotal > 0 {
-                        Text("★\(player.scorecard.yahtzeeBonusTotal)")
-                            .font(AppTheme.rounded(m.captionSize * 0.68))
-                            .foregroundStyle(AppTheme.coral)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 2)
-                .toyBlock(
-                    fill: isMine ? AppTheme.tintCoral : AppTheme.sunk,
-                    radius: m.cellCorner,
-                    depth: 0,
-                    border: m.thinBorder
-                )
-                .accessibilityElement(children: .combine)
-                .accessibilityLabel(
-                    player.name
-                        + (isMine ? ", aan de beurt" : "")
-                        + (player.scorecard.yahtzeeBonusTotal > 0
-                           ? ", Yahtzee-bonus \(player.scorecard.yahtzeeBonusTotal)" : "")
-                )
+                    .opacity(isMine ? 1 : 0.55)
+                    .frame(maxWidth: .infinity)
+                    .accessibilityElement()
+                    .accessibilityLabel(
+                        player.name
+                            + (isMine ? ", aan de beurt" : "")
+                            + (bonus > 0 ? ", Yahtzee-bonus \(bonus)" : "")
+                    )
             }
         }
     }
