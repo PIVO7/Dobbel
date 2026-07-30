@@ -5,6 +5,7 @@ struct GameResultOverlay: View {
     let players: [GamePlayer]
     let winnerProfileIDs: [UUID]
     let message: String
+    let onRematch: () -> Void
     let onClose: () -> Void
 
     @Environment(\.metrics) private var m
@@ -47,20 +48,36 @@ struct GameResultOverlay: View {
                     }
                 }
 
-                Button(action: onClose) {
-                    Text("Terug naar menu")
+                // De meest gemiste knop: meteen nog een potje met dezelfde
+                // spelers en hetzelfde computerniveau.
+                Button(action: onRematch) {
+                    Text("Nog een keer!")
                         .font(AppTheme.rounded(m.buttonTextSize * 0.85))
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: m.buttonHeight * 0.9)
                 }
                 .buttonStyle(ToyButtonStyle(
-                    fill: AppTheme.coral,
+                    fill: AppTheme.mint,
                     radius: m.cardCorner * 0.8,
                     depth: m.depth,
                     border: m.border
                 ))
                 .padding(.top, 4)
+
+                Button(action: onClose) {
+                    Text("Terug naar menu")
+                        .font(AppTheme.rounded(m.buttonTextSize * 0.85))
+                        .foregroundStyle(AppTheme.ink)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: m.buttonHeight * 0.9)
+                }
+                .buttonStyle(ToyButtonStyle(
+                    fill: .white,
+                    radius: m.cardCorner * 0.8,
+                    depth: m.depth,
+                    border: m.border
+                ))
             }
             .padding(m.gutter * 1.5)
             .toyBlock(fill: .white, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
@@ -110,6 +127,7 @@ struct GameResultOverlay: View {
         players: [lene, ellis],
         winnerProfileIDs: [lene.profileID],
         message: "Lene wint met 212 punten!",
+        onRematch: {},
         onClose: {}
     )
     .background(AppTheme.cream)

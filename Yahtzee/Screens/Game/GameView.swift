@@ -5,6 +5,9 @@ import SwiftUI
 /// zit in de losse views hiernaast.
 struct GameView: View {
     let engine: GameEngine
+    /// Vervangt het spel door een vers potje met dezelfde deelnemers; de
+    /// eigenaar van de cover wisselt de engine.
+    let onRematch: () -> Void
     let onClose: () -> Void
 
     @Environment(ProfileStore.self) private var profileStore
@@ -88,6 +91,7 @@ struct GameView: View {
                         players: engine.players,
                         winnerProfileIDs: engine.winnerProfileIDs,
                         message: engine.turnMessage,
+                        onRematch: onRematch,
                         onClose: onClose
                     )
                     .zIndex(4)

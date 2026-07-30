@@ -90,9 +90,16 @@ struct HomeView: View {
                     .appMetrics()
             }
             .fullScreenCover(item: $activeGame) { game in
-                GameView(engine: game.engine) {
-                    activeGame = nil
-                }
+                GameView(
+                    engine: game.engine,
+                    onRematch: {
+                        activeGame = ActiveGame(engine: GameEngine(
+                            mode: game.engine.mode,
+                            profiles: game.engine.rematchProfiles()
+                        ))
+                    },
+                    onClose: { activeGame = nil }
+                )
                 .environment(profileStore)
                 .environment(gameStore)
                 .appMetrics()

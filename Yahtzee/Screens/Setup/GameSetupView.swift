@@ -11,7 +11,8 @@ struct GameSetupView: View {
     @State private var selectedIDs: [UUID] = []
     @State private var opponentLevel: ComputerLevel = .medium
     @State private var activeGame: ActiveGame?
-    @State private var showReplaceSavedConfirm = false
+    /// De start die nog op bevestiging wacht omdat er een bewaard spel is.
+    @State private var pendingStart: (() -> Void)?
 
 
     private var columns: [GridItem] {
@@ -54,6 +55,22 @@ struct GameSetupView: View {
                         }
                         .buttonStyle(ToyButtonStyle(
                             fill: AppTheme.mint,
+                            radius: m.cardCorner * 0.8,
+                            depth: m.depth,
+                            border: m.border
+                        ))
+
+                        // Meteen kunnen spelen zonder eerst een profiel aan
+                        // te maken; gasten worden niet bewaard.
+                        Button(action: requestGuestStart) {
+                            Text(mode == .versusComputer ? "Of speel als gast" : "Of speel met twee gasten")
+                                .font(AppTheme.rounded(m.buttonTextSize * 0.75))
+                                .foregroundStyle(AppTheme.ink)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: m.buttonHeight * 0.82)
+                        }
+                        .buttonStyle(ToyButtonStyle(
+                            fill: .white,
                             radius: m.cardCorner * 0.8,
                             depth: m.depth,
                             border: m.border
@@ -112,19 +129,20 @@ struct GameSetupView: View {
 
             // Eigen dialoog in de speelgoedstijl in plaats van het grijze
             // systeempaneel.
-            if showReplaceSavedConfirm {
+            if pendingStart != nil {
                 ToyDialog(
                     title: "Lopend spel vervangen?",
                     message: "Er staat nog een spel klaar om verder te spelen.",
                     confirmTitle: "Nieuw spel starten",
                     cancelTitle: "Annuleer",
                     onConfirm: {
-                        showReplaceSavedConfirm = false
-                        beginNewGame()
+                        let start = pendingStart
+                        pendingStart = nil
+                        start?()
                     },
                     onCancel: {
                         withAnimation(.easeOut(duration: 0.15)) {
-                            showReplaceSavedConfirm = false
+                            pendingStart = nil
                         }
                     }
                 )
@@ -132,9 +150,16 @@ struct GameSetupView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(item: $activeGame) { game in
-            GameView(engine: game.engine) {
-                activeGame = nil
-            }
+            GameView(
+                engine: game.engine,
+                onRematch: {
+                    activeGame = ActiveGame(engine: GameEngine(
+                        mode: game.engine.mode,
+                        profiles: game.engine.rematchProfiles()
+                    ))
+                },
+                onClose: { activeGame = nil }
+            )
             .environment(profileStore)
             .environment(gameStore)
             .appMetrics()
@@ -232,13 +257,34 @@ struct GameSetupView: View {
     /// Een nieuw spel gooit een bewaard spel weg, dus dat vragen we eerst.
     private func requestStart() {
         guard canStart else { return }
+        request(beginNewGame)
+    }
+
+    private func requestGuestStart() {
+        request(beginGuestGame)
+    }
+
+    private func request(_ start: @escaping () -> Void) {
         if gameStore.hasSavedGame {
             withAnimation(.easeOut(duration: 0.15)) {
-                showReplaceSavedConfirm = true
+                pendingStart = start
             }
         } else {
-            beginNewGame()
+            start()
         }
+    }
+
+    /// Spelen zonder profiel: gasten doen gewoon mee maar worden nergens
+    /// bewaard en tellen niet mee in de statistieken.
+    private func beginGuestGame() {
+        var profiles = mode == .versusFriends
+            ? [PlayerProfile(name: "Gast 1"), PlayerProfile(name: "Gast 2", avatarColorIndex: 1)]
+            : [PlayerProfile(name: "Gast")]
+        if mode == .versusComputer {
+            profiles.append(.computer(level: opponentLevel))
+        }
+        gameStore.clear()
+        activeGame = ActiveGame(engine: GameEngine(mode: mode, profiles: profiles))
     }
 
     private func beginNewGame() {

@@ -266,6 +266,19 @@ final class GameEngine {
         }
     }
 
+    /// De deelnemers van dit spel als profielen, voor een rematch met
+    /// dezelfde spelers en hetzelfde computerniveau.
+    func rematchProfiles() -> [PlayerProfile] {
+        players.map { player in
+            PlayerProfile(
+                id: player.profileID,
+                name: player.name,
+                avatarColorIndex: player.avatarColorIndex,
+                computerLevel: player.computerLevel
+            )
+        }
+    }
+
     /// Even lang als de landing van de laatste dobbelsteen in `DieView`.
     static let settleDuration = 360
 
