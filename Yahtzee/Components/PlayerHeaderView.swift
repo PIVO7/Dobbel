@@ -38,7 +38,7 @@ struct PlayerHeaderView: View {
                     .accessibilityLabel(
                         player.name
                             + (isMine ? ", aan de beurt" : "")
-                            + (bonus > 0 ? ", Yahtzee-bonus \(bonus)" : "")
+                            + (bonus > 0 ? ", Dobbel-bonus \(bonus)" : "")
                     )
             }
         }

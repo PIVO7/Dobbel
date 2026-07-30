@@ -1,6 +1,6 @@
 name: Yahtzee
 options:
-  bundleIdPrefix: com.superapp
+  bundleIdPrefix: com.pivo7
   developmentLanguage: nl
   createIntermediateGroups: true
 
@@ -25,10 +25,12 @@ targets:
     deploymentTarget: '17.0'
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.superapp.yahtzee
+        # "Yahtzee" is een merk van Hasbro; de app heet naar buiten "Dobbel!".
+        # Interne namen (mappen, target, schema) blijven Yahtzee.
+        PRODUCT_BUNDLE_IDENTIFIER: com.pivo7.dobbel
         PRODUCT_NAME: Yahtzee
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_CFBundleDisplayName: Yahtzee
+        INFOPLIST_KEY_CFBundleDisplayName: Dobbel!
         INFOPLIST_KEY_LSRequiresIPhoneOS: YES
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
@@ -48,7 +50,7 @@ targets:
       - target: Yahtzee
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.superapp.yahtzee.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.pivo7.dobbel.tests
         GENERATE_INFOPLIST_FILE: YES
 
 schemes:

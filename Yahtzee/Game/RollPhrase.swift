@@ -5,7 +5,7 @@ import Foundation
 enum RollPhrase {
     /// De enige zin die het spelscherm apart behandelt — hij kleurt mee en
     /// zet een viering in gang, dus staat hij hier in plaats van los in de UI.
-    static let yahtzee = "YAHTZEE!"
+    static let yahtzee = "DOBBEL!"
 
     private static let faceNames = [
         1: "enen", 2: "tweeën", 3: "drieën", 4: "vieren", 5: "vijven", 6: "zessen"
@@ -15,7 +15,7 @@ enum RollPhrase {
     ]
 
     /// Wat er boven het scoreblad staat. Aan het begin van een beurt liggen de
-    /// stenen op 1-1-1-1-1; dat is geen worp en mag dus niet als "YAHTZEE!"
+    /// stenen op 1-1-1-1-1; dat is geen worp en mag dus niet als "DOBBEL!"
     /// worden voorgelezen.
     static func callout(dice: [Int], isRolling: Bool, hasRolled: Bool, isComputer: Bool) -> String {
         if isRolling { return "…" }
