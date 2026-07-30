@@ -4,9 +4,13 @@ import SwiftUI
 struct GameHeaderView: View {
     let players: [GamePlayer]
     let currentPlayerID: UUID
-    let onClose: () -> Void
+    /// Een afgelopen spel valt niets meer te bewaren, dus dan slaan we de
+    /// bevestiging over.
+    let isFinished: Bool
+    let onLeave: () -> Void
 
     @Environment(\.metrics) private var m
+    @State private var showExitConfirm = false
 
     var body: some View {
         HStack(spacing: 8) {
@@ -28,7 +32,7 @@ struct GameHeaderView: View {
             .frame(maxWidth: .infinity)
             .toyBlock(fill: .white, radius: m.cellCorner + 3, depth: 3, border: m.thinBorder + 0.5)
 
-            Button(action: onClose) {
+            Button(action: requestClose) {
                 Image(systemName: "xmark")
                     .font(.system(size: m.captionSize + 2, weight: .black))
                     .foregroundStyle(AppTheme.ink)
@@ -36,6 +40,21 @@ struct GameHeaderView: View {
             }
             .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cellCorner, depth: 3, border: m.thinBorder))
             .accessibilityLabel("Spel verlaten")
+            // Aan de sluitknop zelf, zodat de dialoog daarvandaan opent.
+            .confirmationDialog("Spel verlaten?", isPresented: $showExitConfirm, titleVisibility: .visible) {
+                Button("Verlaten", role: .destructive, action: onLeave)
+                Button("Doorspelen", role: .cancel) {}
+            } message: {
+                Text("Je voortgang wordt bewaard.")
+            }
+        }
+    }
+
+    private func requestClose() {
+        if isFinished {
+            onLeave()
+        } else {
+            showExitConfirm = true
         }
     }
 }
@@ -44,7 +63,7 @@ struct GameHeaderView: View {
     let lene = GamePlayer(profile: PlayerProfile(name: "Lene", avatarColorIndex: 0))
     let ellis = GamePlayer(profile: PlayerProfile(name: "Ellis", avatarColorIndex: 1))
 
-    GameHeaderView(players: [lene, ellis], currentPlayerID: lene.id, onClose: {})
+    GameHeaderView(players: [lene, ellis], currentPlayerID: lene.id, isFinished: false, onLeave: {})
         .padding()
         .background(AppTheme.cream)
 }

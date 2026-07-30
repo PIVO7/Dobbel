@@ -87,6 +87,18 @@ struct GameSetupView: View {
                         border: m.border
                     ))
                     .disabled(!canStart)
+                    // Aan de knop en niet aan het scherm, zodat de dialoog
+                    // vanaf de juiste plek opent.
+                    .confirmationDialog(
+                        "Lopend spel vervangen?",
+                        isPresented: $showReplaceSavedConfirm,
+                        titleVisibility: .visible
+                    ) {
+                        Button("Nieuw spel starten", role: .destructive, action: beginNewGame)
+                        Button("Annuleer", role: .cancel) {}
+                    } message: {
+                        Text("Er staat nog een spel klaar om verder te spelen.")
+                    }
                     .padding(.bottom, 6)
                 }
             }
@@ -104,16 +116,6 @@ struct GameSetupView: View {
             .environment(profileStore)
             .environment(gameStore)
             .appMetrics()
-        }
-        .confirmationDialog(
-            "Lopend spel vervangen?",
-            isPresented: $showReplaceSavedConfirm,
-            titleVisibility: .visible
-        ) {
-            Button("Nieuw spel starten", role: .destructive, action: beginNewGame)
-            Button("Annuleer", role: .cancel) {}
-        } message: {
-            Text("Er staat nog een spel klaar om verder te spelen.")
         }
     }
 

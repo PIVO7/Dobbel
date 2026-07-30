@@ -6,5 +6,5 @@ struct GameActions {
     var toggleHold: (UUID) -> Void
     var score: (ScoreCategory) -> Void
     var roll: () -> Void
-    var requestClose: () -> Void
+    var leave: () -> Void
 }

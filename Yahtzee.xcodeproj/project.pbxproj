@@ -9,24 +9,32 @@
 /* Begin PBXBuildFile section */
 		013A9411EA07AABA538F7669 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791EFB62323913A0870D317F /* GameView.swift */; };
 		07A4470AA51F8008DFEDFB5C /* GameStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94051449D6FACE628BB5F6C3 /* GameStoreTests.swift */; };
+		0850B3E2D4DEEA234ECB7823 /* ToyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C0DAC31D7658923CFA860 /* ToyButtonStyle.swift */; };
 		0ADC4A4BA2B71D63B38F9833 /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC527C430E0ECE7DA206B2BD /* GameMode.swift */; };
 		0C2D8C963D1F6E8DF99B7C21 /* CelebrationBurstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4106C2B985977A5F087D6B2 /* CelebrationBurstView.swift */; };
 		19C50DA86151A37B68242004 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29523F1BA2D06F74D488BA27 /* Assets.xcassets */; };
 		1DC38851CC10561EAF648C55 /* GameWideLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068493FA00825E0C2F9EBA0 /* GameWideLayout.swift */; };
 		1FBE75C0F7DD1DCB590FA761 /* GameResultOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF818C857F3C3D5867F896 /* GameResultOverlay.swift */; };
+		215AB712E5CD9806FA4040FB /* DieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E28DB6DB2B44405D5584A0 /* DieView.swift */; };
 		2214B3D91CCC950B6DB39FCC /* RollPhraseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6B60723C0645454FB6A29 /* RollPhraseTests.swift */; };
 		28769D4080C3869C6BBAC0E3 /* GameSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E21BE644BCDE8F469A2C2 /* GameSnapshot.swift */; };
 		2A93A05B1ED555AF435D9A1D /* YahtzeeScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E38F075F5C620D40249354 /* YahtzeeScorer.swift */; };
 		2DFD0111D8450C091B4BB993 /* GameSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A102392252D9BBF0EFA79C48 /* GameSetupView.swift */; };
+		3E484D14B7E6F23552A7B292 /* DiceTrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457DC96132EBA03821A4C43F /* DiceTrayView.swift */; };
 		3FA61241D48BC1BD332FF223 /* ScoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF58ADE0558AABA7F6FF61F /* ScoreCategory.swift */; };
 		481845BC951477A9D0B71C91 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E760F0309B9C4D8CE661A98 /* ProfileStore.swift */; };
 		49AF095BCE1EC2ED740429F1 /* ComputerAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9E50AF1BC7504156E2FAF0 /* ComputerAI.swift */; };
-		4C3BB285EDF794865012F2D8 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0F278AF19E54A32B094A02 /* DiceView.swift */; };
+		52C0AA87696749F7DDABDCFB /* CategoryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA031A0050389C7AFDC085E /* CategoryIcon.swift */; };
 		5492C01EA728726351BB7FC3 /* ScorecardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */; };
+		54A59FD47CA1BE54945B2F36 /* SplitMix64.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8348FF0337C91FE0353105B /* SplitMix64.swift */; };
 		5D207723B91545974B637C78 /* RollButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F0C9DBD4CD175E1C97178 /* RollButtonView.swift */; };
 		646B569EA87C987FAA4BF3FD /* YahtzeeScorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E449E4980AE76BDCCB6160 /* YahtzeeScorerTests.swift */; };
+		69BF7C1F37A60D4B5ED36AD0 /* DiePips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F108A028507411656E8EA7 /* DiePips.swift */; };
 		69F4CE35DFC06EFDB252D3C5 /* AvatarBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C02D33A6AED897584ACA5 /* AvatarBadge.swift */; };
+		721537ED0932F1E87ED63F15 /* ToyBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5715CAFD3870A9D31BC09DAC /* ToyBlock.swift */; };
 		767B02B74C9BA50FFA2E1B3F /* YahtzeeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0A42FABE126185936A4457 /* YahtzeeApp.swift */; };
+		7C0C0B8B2B6D94FDF0C9721F /* ComputerDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C39C91C23897A54F3E30916 /* ComputerDecision.swift */; };
+		7C18D64545F06BBA6E29F63C /* ActiveGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF42C9580E17CC0C5F8999A /* ActiveGame.swift */; };
 		8C8215BC239C330A8FD95BB1 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D243EE79706EC95516389 /* GameEngineTests.swift */; };
 		8D24BDF9582B82774CB741BA /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BDB4CB3470410D8D57D94 /* GameEngine.swift */; };
 		936E881E59299AEE24FC5291 /* RollCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC710E333FBE5D667208B9 /* RollCalloutView.swift */; };
@@ -36,15 +44,19 @@
 		B27AF48579CF1F6ABF8F4FD6 /* TurnBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC56DB7E3019793D4CA0B66C /* TurnBannerView.swift */; };
 		C1949D6432016F7F94D86F6F /* ComputerAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E6D38C9E3667E19C7BD909 /* ComputerAITests.swift */; };
 		C2D1D4BD713CF7E30B44D258 /* ProfileStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E590AA927AA37E715FD7CEFA /* ProfileStoreTests.swift */; };
+		C3D563E1DD7E3FE1769AF219 /* AppMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57A0A98A8EA6AC270FD2BF7 /* AppMetrics.swift */; };
+		C70D3580E17554575DACA2FF /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467679E91E4BB018C34FAB3 /* ProfileRowView.swift */; };
 		C87BE4FCA2BFB637F962D337 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA2EC36B1EC50B75337D071 /* HomeView.swift */; };
 		CA4617ED466FEF9CF198A801 /* RoundStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ECA4D176E447222DBE3ABE /* RoundStripView.swift */; };
 		CB1E1B5892BE9B0C8FD5B01E /* Die.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF487EC304E6D9D611B98B /* Die.swift */; };
 		CCBC380FF3FCA4F567628E26 /* GameTallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97BC2DB763DCC3E5A8EDE58 /* GameTallLayout.swift */; };
 		CE4CEB1651D6098CEF4495D2 /* Scorecard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF678AE43CFE51DF7CC3EF9 /* Scorecard.swift */; };
 		D08A3F0F434AEC9C21C730C7 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D679AAD93CDFBC8574FAFD /* AppTheme.swift */; };
+		D0E0EDAB74AB57E69155434B /* StraightGlyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7838AC9AD2142A7BD7A3F /* StraightGlyph.swift */; };
 		D60633C12F873678F5C69D27 /* GameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCF4F19D03D2D396A148AF8 /* GameHeaderView.swift */; };
 		E126FC6778CE3B96E676705A /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FABA3B8C6BF0BC93C60C15 /* GameStore.swift */; };
 		E178DCBAD43AA8CA0431E65B /* PlayerProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD11B45827DBEE55EC3F78D /* PlayerProfile.swift */; };
+		F4654E1D7277FEE06DAEA7CD /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C7CEC0415B7437354CA4D /* Destination.swift */; };
 		FF37D4D3676F84ADE49FD64C /* GameActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D58AEC42CD316BD09D45AC /* GameActions.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,35 +71,46 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04F7838AC9AD2142A7BD7A3F /* StraightGlyph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightGlyph.swift; sourceTree = "<group>"; };
 		0D7BDB4CB3470410D8D57D94 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		140C02D33A6AED897584ACA5 /* AvatarBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarBadge.swift; sourceTree = "<group>"; };
 		1B0A42FABE126185936A4457 /* YahtzeeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeApp.swift; sourceTree = "<group>"; };
 		29523F1BA2D06F74D488BA27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2E0F278AF19E54A32B094A02 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceView.swift; sourceTree = "<group>"; };
 		2E760F0309B9C4D8CE661A98 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
 		2FBF487EC304E6D9D611B98B /* Die.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Die.swift; sourceTree = "<group>"; };
+		38F108A028507411656E8EA7 /* DiePips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiePips.swift; sourceTree = "<group>"; };
 		39E38F075F5C620D40249354 /* YahtzeeScorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeScorer.swift; sourceTree = "<group>"; };
+		457DC96132EBA03821A4C43F /* DiceTrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceTrayView.swift; sourceTree = "<group>"; };
 		491D243EE79706EC95516389 /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
 		4A2F0C9DBD4CD175E1C97178 /* RollButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollButtonView.swift; sourceTree = "<group>"; };
+		4C39C91C23897A54F3E30916 /* ComputerDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerDecision.swift; sourceTree = "<group>"; };
+		4C9C0DAC31D7658923CFA860 /* ToyButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyButtonStyle.swift; sourceTree = "<group>"; };
 		53ECA4D176E447222DBE3ABE /* RoundStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundStripView.swift; sourceTree = "<group>"; };
+		5715CAFD3870A9D31BC09DAC /* ToyBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyBlock.swift; sourceTree = "<group>"; };
 		5BF58ADE0558AABA7F6FF61F /* ScoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCategory.swift; sourceTree = "<group>"; };
 		76EF818C857F3C3D5867F896 /* GameResultOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResultOverlay.swift; sourceTree = "<group>"; };
 		791EFB62323913A0870D317F /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorecardView.swift; sourceTree = "<group>"; };
 		7DA2EC36B1EC50B75337D071 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7DCF4F19D03D2D396A148AF8 /* GameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHeaderView.swift; sourceTree = "<group>"; };
+		87E28DB6DB2B44405D5584A0 /* DieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DieView.swift; sourceTree = "<group>"; };
 		90E6D38C9E3667E19C7BD909 /* ComputerAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerAITests.swift; sourceTree = "<group>"; };
 		94051449D6FACE628BB5F6C3 /* GameStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStoreTests.swift; sourceTree = "<group>"; };
 		9DDCD07E864A07331F04EE9F /* ProfilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesView.swift; sourceTree = "<group>"; };
+		A06C7CEC0415B7437354CA4D /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
 		A102392252D9BBF0EFA79C48 /* GameSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSetupView.swift; sourceTree = "<group>"; };
 		A4AC710E333FBE5D667208B9 /* RollCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollCalloutView.swift; sourceTree = "<group>"; };
+		ABA031A0050389C7AFDC085E /* CategoryIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIcon.swift; sourceTree = "<group>"; };
 		ACE6B60723C0645454FB6A29 /* RollPhraseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollPhraseTests.swift; sourceTree = "<group>"; };
 		B4106C2B985977A5F087D6B2 /* CelebrationBurstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationBurstView.swift; sourceTree = "<group>"; };
 		B5FABA3B8C6BF0BC93C60C15 /* GameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
+		B8348FF0337C91FE0353105B /* SplitMix64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitMix64.swift; sourceTree = "<group>"; };
 		BF75799455F5E109298500CF /* RollPhrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollPhrase.swift; sourceTree = "<group>"; };
 		C068493FA00825E0C2F9EBA0 /* GameWideLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWideLayout.swift; sourceTree = "<group>"; };
+		C57A0A98A8EA6AC270FD2BF7 /* AppMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetrics.swift; sourceTree = "<group>"; };
 		CB3CA5A62BF774B17B8FEBBD /* Yahtzee Tests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = "Yahtzee Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFD17F6471C46A602F31423E /* Yahtzee.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Yahtzee.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D467679E91E4BB018C34FAB3 /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
 		D97BC2DB763DCC3E5A8EDE58 /* GameTallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTallLayout.swift; sourceTree = "<group>"; };
 		DC527C430E0ECE7DA206B2BD /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
 		DC56DB7E3019793D4CA0B66C /* TurnBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnBannerView.swift; sourceTree = "<group>"; };
@@ -95,6 +118,7 @@
 		E13E21BE644BCDE8F469A2C2 /* GameSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSnapshot.swift; sourceTree = "<group>"; };
 		E590AA927AA37E715FD7CEFA /* ProfileStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStoreTests.swift; sourceTree = "<group>"; };
 		EA9E50AF1BC7504156E2FAF0 /* ComputerAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerAI.swift; sourceTree = "<group>"; };
+		EEF42C9580E17CC0C5F8999A /* ActiveGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveGame.swift; sourceTree = "<group>"; };
 		F1780A662CAC6FD50B58B826 /* GamePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlayer.swift; sourceTree = "<group>"; };
 		F1D58AEC42CD316BD09D45AC /* GameActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameActions.swift; sourceTree = "<group>"; };
 		F4D679AAD93CDFBC8574FAFD /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -135,6 +159,8 @@
 		17AFE392D03E5CAD402ADEDF /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				EEF42C9580E17CC0C5F8999A /* ActiveGame.swift */,
+				A06C7CEC0415B7437354CA4D /* Destination.swift */,
 				7DA2EC36B1EC50B75337D071 /* HomeView.swift */,
 			);
 			path = Home;
@@ -169,7 +195,10 @@
 		8A488F39939DDD1279D995F9 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
+				C57A0A98A8EA6AC270FD2BF7 /* AppMetrics.swift */,
 				F4D679AAD93CDFBC8574FAFD /* AppTheme.swift */,
+				5715CAFD3870A9D31BC09DAC /* ToyBlock.swift */,
+				4C9C0DAC31D7658923CFA860 /* ToyButtonStyle.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -177,6 +206,7 @@
 		8D2CF9FF65377E18472E0AA9 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
+				D467679E91E4BB018C34FAB3 /* ProfileRowView.swift */,
 				9DDCD07E864A07331F04EE9F /* ProfilesView.swift */,
 			);
 			path = Profiles;
@@ -186,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				EA9E50AF1BC7504156E2FAF0 /* ComputerAI.swift */,
+				4C39C91C23897A54F3E30916 /* ComputerDecision.swift */,
 			);
 			path = AI;
 			sourceTree = "<group>";
@@ -206,8 +237,12 @@
 			isa = PBXGroup;
 			children = (
 				140C02D33A6AED897584ACA5 /* AvatarBadge.swift */,
-				2E0F278AF19E54A32B094A02 /* DiceView.swift */,
+				ABA031A0050389C7AFDC085E /* CategoryIcon.swift */,
+				457DC96132EBA03821A4C43F /* DiceTrayView.swift */,
+				38F108A028507411656E8EA7 /* DiePips.swift */,
+				87E28DB6DB2B44405D5584A0 /* DieView.swift */,
 				7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */,
+				04F7838AC9AD2142A7BD7A3F /* StraightGlyph.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -257,6 +292,7 @@
 				F1780A662CAC6FD50B58B826 /* GamePlayer.swift */,
 				E13E21BE644BCDE8F469A2C2 /* GameSnapshot.swift */,
 				BF75799455F5E109298500CF /* RollPhrase.swift */,
+				B8348FF0337C91FE0353105B /* SplitMix64.swift */,
 				39E38F075F5C620D40249354 /* YahtzeeScorer.swift */,
 			);
 			path = Game;
@@ -361,12 +397,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C18D64545F06BBA6E29F63C /* ActiveGame.swift in Sources */,
+				C3D563E1DD7E3FE1769AF219 /* AppMetrics.swift in Sources */,
 				D08A3F0F434AEC9C21C730C7 /* AppTheme.swift in Sources */,
 				69F4CE35DFC06EFDB252D3C5 /* AvatarBadge.swift in Sources */,
+				52C0AA87696749F7DDABDCFB /* CategoryIcon.swift in Sources */,
 				0C2D8C963D1F6E8DF99B7C21 /* CelebrationBurstView.swift in Sources */,
 				49AF095BCE1EC2ED740429F1 /* ComputerAI.swift in Sources */,
-				4C3BB285EDF794865012F2D8 /* DiceView.swift in Sources */,
+				7C0C0B8B2B6D94FDF0C9721F /* ComputerDecision.swift in Sources */,
+				F4654E1D7277FEE06DAEA7CD /* Destination.swift in Sources */,
+				3E484D14B7E6F23552A7B292 /* DiceTrayView.swift in Sources */,
 				CB1E1B5892BE9B0C8FD5B01E /* Die.swift in Sources */,
+				69BF7C1F37A60D4B5ED36AD0 /* DiePips.swift in Sources */,
+				215AB712E5CD9806FA4040FB /* DieView.swift in Sources */,
 				FF37D4D3676F84ADE49FD64C /* GameActions.swift in Sources */,
 				8D24BDF9582B82774CB741BA /* GameEngine.swift in Sources */,
 				D60633C12F873678F5C69D27 /* GameHeaderView.swift in Sources */,
@@ -381,6 +424,7 @@
 				1DC38851CC10561EAF648C55 /* GameWideLayout.swift in Sources */,
 				C87BE4FCA2BFB637F962D337 /* HomeView.swift in Sources */,
 				E178DCBAD43AA8CA0431E65B /* PlayerProfile.swift in Sources */,
+				C70D3580E17554575DACA2FF /* ProfileRowView.swift in Sources */,
 				481845BC951477A9D0B71C91 /* ProfileStore.swift in Sources */,
 				9AA2D70DB9339D9F70C0E870 /* ProfilesView.swift in Sources */,
 				5D207723B91545974B637C78 /* RollButtonView.swift in Sources */,
@@ -390,6 +434,10 @@
 				3FA61241D48BC1BD332FF223 /* ScoreCategory.swift in Sources */,
 				CE4CEB1651D6098CEF4495D2 /* Scorecard.swift in Sources */,
 				5492C01EA728726351BB7FC3 /* ScorecardView.swift in Sources */,
+				54A59FD47CA1BE54945B2F36 /* SplitMix64.swift in Sources */,
+				D0E0EDAB74AB57E69155434B /* StraightGlyph.swift in Sources */,
+				721537ED0932F1E87ED63F15 /* ToyBlock.swift in Sources */,
+				0850B3E2D4DEEA234ECB7823 /* ToyButtonStyle.swift in Sources */,
 				B27AF48579CF1F6ABF8F4FD6 /* TurnBannerView.swift in Sources */,
 				767B02B74C9BA50FFA2E1B3F /* YahtzeeApp.swift in Sources */,
 				2A93A05B1ED555AF435D9A1D /* YahtzeeScorer.swift in Sources */,

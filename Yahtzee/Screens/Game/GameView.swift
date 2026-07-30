@@ -13,7 +13,6 @@ struct GameView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var didRecordResult = false
-    @State private var showExitConfirm = false
     @State private var showTurnBanner = false
     @State private var celebrateYahtzee = false
     @State private var celebrateBonus = false
@@ -29,7 +28,7 @@ struct GameView: View {
             toggleHold: holdDie,
             score: place,
             roll: roll,
-            requestClose: requestClose
+            leave: leave
         )
     }
 
@@ -111,12 +110,6 @@ struct GameView: View {
         .sensoryFeedback(.selection, trigger: holdPulse)
         .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: scorePulse)
         .sensoryFeedback(.success, trigger: yahtzeePulse)
-        .confirmationDialog("Spel verlaten?", isPresented: $showExitConfirm, titleVisibility: .visible) {
-            Button("Verlaten", role: .destructive, action: leave)
-            Button("Doorspelen", role: .cancel) {}
-        } message: {
-            Text("Je voortgang wordt bewaard.")
-        }
     }
 
     // MARK: - Zetten
@@ -137,14 +130,6 @@ struct GameView: View {
 
     private func roll() {
         Task { await engine.rollDice() }
-    }
-
-    private func requestClose() {
-        if engine.isFinished {
-            onClose()
-        } else {
-            showExitConfirm = true
-        }
     }
 
     private func leave() {

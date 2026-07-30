@@ -1,11 +1,5 @@
 import Foundation
 
-struct ComputerDecision: Equatable {
-    var holdMask: [Bool]
-    var shouldScore: Bool
-    var category: ScoreCategory?
-}
-
 struct ComputerAI {
     func decide(dice: [Die], rollsRemaining: Int, scorecard: Scorecard) -> ComputerDecision {
         let values = dice.map(\.value)

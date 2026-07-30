@@ -5,10 +5,6 @@ struct ProfilesView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.metrics) private var m
     @State private var newName = ""
-    @State private var renameTarget: PlayerProfile?
-    @State private var renameText = ""
-    @State private var deleteTarget: PlayerProfile?
-
 
     /// Op een iPad past er een tweede kolom naast; op een iPhone niet.
     private var columns: [GridItem] {
@@ -61,7 +57,11 @@ struct ProfilesView: View {
                         } else {
                             LazyVGrid(columns: columns, spacing: m.gutter) {
                                 ForEach(profileStore.humanProfiles) { profile in
-                                    profileRow(profile)
+                                    ProfileRowView(
+                                        profile: profile,
+                                        onRename: { profileStore.renameProfile(id: profile.id, to: $0) },
+                                        onDelete: { profileStore.deleteProfile(id: profile.id) }
+                                    )
                                 }
                             }
                         }
@@ -76,39 +76,6 @@ struct ProfilesView: View {
         }
         .navigationTitle("Profielen")
         .navigationBarTitleDisplayMode(.inline)
-        .alert("Naam wijzigen", isPresented: Binding(
-            get: { renameTarget != nil },
-            set: { if !$0 { renameTarget = nil } }
-        )) {
-            TextField("Naam", text: $renameText)
-            Button("Bewaar") {
-                if let id = renameTarget?.id {
-                    profileStore.renameProfile(id: id, to: renameText)
-                }
-                renameTarget = nil
-            }
-            Button("Annuleer", role: .cancel) {
-                renameTarget = nil
-            }
-        }
-        .confirmationDialog(
-            deleteTarget.map { "\($0.name) verwijderen?" } ?? "Verwijderen?",
-            isPresented: Binding(
-                get: { deleteTarget != nil },
-                set: { if !$0 { deleteTarget = nil } }
-            ),
-            titleVisibility: .visible
-        ) {
-            Button("Verwijderen", role: .destructive) {
-                if let id = deleteTarget?.id {
-                    profileStore.deleteProfile(id: id)
-                }
-                deleteTarget = nil
-            }
-            Button("Annuleer", role: .cancel) { deleteTarget = nil }
-        } message: {
-            Text("De overwinningen van dit profiel gaan verloren.")
-        }
     }
 
     private var canAdd: Bool {
@@ -134,48 +101,5 @@ struct ProfilesView: View {
                 .padding(.leading, 4)
             content()
         }
-    }
-
-    private func profileRow(_ profile: PlayerProfile) -> some View {
-        HStack(spacing: m.gutter * 0.9) {
-            AvatarBadge(profile: profile, size: m.avatarSize)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(profile.name)
-                    .font(AppTheme.rounded(m.bodySize + 2))
-                    .foregroundStyle(AppTheme.ink)
-                    .lineLimit(1)
-                Text("\(profile.wins)× gewonnen · \(profile.gamesPlayed) gespeeld")
-                    .font(AppTheme.rounded(m.captionSize, .bold))
-                    .foregroundStyle(AppTheme.soft)
-                    .lineLimit(1)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            Button {
-                renameTarget = profile
-                renameText = profile.name
-            } label: {
-                Image(systemName: "pencil")
-                    .font(.system(size: m.captionSize + 2, weight: .black))
-                    .foregroundStyle(AppTheme.ink)
-                    .frame(width: m.tapTarget, height: m.tapTarget)
-            }
-            .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: 3, border: m.thinBorder))
-            .accessibilityLabel("\(profile.name) hernoemen")
-
-            Button {
-                deleteTarget = profile
-            } label: {
-                Image(systemName: "trash")
-                    .font(.system(size: m.captionSize + 2, weight: .black))
-                    .foregroundStyle(AppTheme.ink)
-                    .frame(width: m.tapTarget, height: m.tapTarget)
-            }
-            .buttonStyle(ToyButtonStyle(fill: AppTheme.tintCoral, radius: m.cellCorner, depth: 3, border: m.thinBorder))
-            .accessibilityLabel("\(profile.name) verwijderen")
-        }
-        .padding(m.gutter * 0.9)
-        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
     }
 }
