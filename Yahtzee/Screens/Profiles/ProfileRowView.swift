@@ -7,22 +7,35 @@ struct ProfileRowView: View {
     let profile: PlayerProfile
     let onRename: (String) -> Void
     let onDelete: () -> Void
+    let onAvatarChange: (Int, String?) -> Void
 
     @Environment(\.metrics) private var m
     @State private var renameText = ""
     @State private var isRenaming = false
     @State private var isDeleting = false
     @State private var showStats = false
+    @State private var showAvatarPicker = false
 
     var body: some View {
         HStack(spacing: m.gutter * 0.9) {
-            // Tik op naam of bolletje en je krijgt de statistieken.
+            // Tik op het bolletje om het aan te passen; op de naam voor de
+            // statistieken.
+            Button {
+                showAvatarPicker = true
+            } label: {
+                AvatarBadge(profile: profile, size: m.avatarSize)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Avatar van \(profile.name) aanpassen")
+            .sheet(isPresented: $showAvatarPicker) {
+                AvatarPickerView(profile: profile, onSave: onAvatarChange)
+                    .appMetrics()
+            }
+
             Button {
                 showStats = true
             } label: {
                 HStack(spacing: m.gutter * 0.9) {
-                    AvatarBadge(profile: profile, size: m.avatarSize)
-
                     VStack(alignment: .leading, spacing: 2) {
                         Text(profile.name)
                             .font(AppTheme.rounded(m.bodySize + 2))
@@ -105,7 +118,8 @@ struct ProfileRowView: View {
     ProfileRowView(
         profile: PlayerProfile(name: "Lene", wins: 3, gamesPlayed: 7),
         onRename: { _ in },
-        onDelete: {}
+        onDelete: {},
+        onAvatarChange: { _, _ in }
     )
     .padding()
     .background(AppTheme.cream)

@@ -229,7 +229,7 @@ struct GameSetupView: View {
             opponentLevel = level
         } label: {
             VStack(spacing: 6) {
-                AvatarBadge(name: level.personaName, colorIndex: level.avatarColorIndex, size: m.avatarSize * 0.9)
+                AvatarBadge(name: level.personaName, colorIndex: level.avatarColorIndex, symbol: level.avatarSymbol, size: m.avatarSize * 0.9)
                 Text(level.personaName)
                     .font(AppTheme.rounded(m.captionSize, .bold))
                     .foregroundStyle(AppTheme.ink)

@@ -10,6 +10,8 @@ struct GamePlayer: Identifiable, Equatable, Codable {
     /// spellen betekent het gewone niveau.
     var computerLevel: ComputerLevel?
     var avatarColorIndex: Int
+    /// SF Symbol op het bolletje; `nil` toont de initialen.
+    var avatarSymbol: String?
     var scorecard: Scorecard
 
     init(profile: PlayerProfile) {
@@ -19,6 +21,7 @@ struct GamePlayer: Identifiable, Equatable, Codable {
         self.isComputer = profile.isComputer
         self.computerLevel = profile.computerLevel
         self.avatarColorIndex = profile.avatarColorIndex
+        self.avatarSymbol = profile.avatarSymbol
         self.scorecard = Scorecard()
     }
 }

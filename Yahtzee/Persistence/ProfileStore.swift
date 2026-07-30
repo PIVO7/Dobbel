@@ -42,6 +42,13 @@ final class ProfileStore {
         save()
     }
 
+    func updateAvatar(id: UUID, colorIndex: Int, symbol: String?) {
+        guard let index = profiles.firstIndex(where: { $0.id == id && !$0.isComputer }) else { return }
+        profiles[index].avatarColorIndex = colorIndex
+        profiles[index].avatarSymbol = symbol
+        save()
+    }
+
     func deleteProfile(id: UUID) {
         profiles.removeAll { $0.id == id && !$0.isComputer }
         save()

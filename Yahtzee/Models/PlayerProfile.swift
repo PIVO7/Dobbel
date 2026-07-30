@@ -6,6 +6,8 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
     var wins: Int
     var gamesPlayed: Int
     var avatarColorIndex: Int
+    /// SF Symbol op het bolletje; `nil` toont de initialen.
+    var avatarSymbol: String?
     var createdAt: Date
     /// Alleen gezet voor computertegenstanders; `nil` betekent een mens.
     var computerLevel: ComputerLevel?
@@ -24,6 +26,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         wins: Int = 0,
         gamesPlayed: Int = 0,
         avatarColorIndex: Int = 0,
+        avatarSymbol: String? = nil,
         createdAt: Date = .now,
         computerLevel: ComputerLevel? = nil,
         bestScore: Int = 0,
@@ -38,6 +41,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         self.wins = wins
         self.gamesPlayed = gamesPlayed
         self.avatarColorIndex = avatarColorIndex
+        self.avatarSymbol = avatarSymbol
         self.createdAt = createdAt
         self.computerLevel = computerLevel
         self.bestScore = bestScore
@@ -57,6 +61,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         wins = try container.decode(Int.self, forKey: .wins)
         gamesPlayed = try container.decode(Int.self, forKey: .gamesPlayed)
         avatarColorIndex = try container.decode(Int.self, forKey: .avatarColorIndex)
+        avatarSymbol = try container.decodeIfPresent(String.self, forKey: .avatarSymbol)
         createdAt = try container.decode(Date.self, forKey: .createdAt)
         computerLevel = try container.decodeIfPresent(ComputerLevel.self, forKey: .computerLevel)
         bestScore = try container.decodeIfPresent(Int.self, forKey: .bestScore) ?? 0
@@ -80,6 +85,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
             id: computerIDs[level]!,
             name: level.personaName,
             avatarColorIndex: level.avatarColorIndex,
+            avatarSymbol: level.avatarSymbol,
             computerLevel: level
         )
     }

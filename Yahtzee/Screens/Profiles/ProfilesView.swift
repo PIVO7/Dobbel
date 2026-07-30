@@ -60,7 +60,8 @@ struct ProfilesView: View {
                                     ProfileRowView(
                                         profile: profile,
                                         onRename: { profileStore.renameProfile(id: profile.id, to: $0) },
-                                        onDelete: { profileStore.deleteProfile(id: profile.id) }
+                                        onDelete: { profileStore.deleteProfile(id: profile.id) },
+                                        onAvatarChange: { profileStore.updateAvatar(id: profile.id, colorIndex: $0, symbol: $1) }
                                     )
                                 }
                             }

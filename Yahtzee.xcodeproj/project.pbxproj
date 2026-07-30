@@ -22,6 +22,7 @@
 		28769D4080C3869C6BBAC0E3 /* GameSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E21BE644BCDE8F469A2C2 /* GameSnapshot.swift */; };
 		2A93A05B1ED555AF435D9A1D /* YahtzeeScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E38F075F5C620D40249354 /* YahtzeeScorer.swift */; };
 		2DFD0111D8450C091B4BB993 /* GameSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A102392252D9BBF0EFA79C48 /* GameSetupView.swift */; };
+		34A1FD50A0F36255F1F91A0F /* AvatarPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A6BDC45AB9A32F4EE971CC /* AvatarPickerView.swift */; };
 		3E484D14B7E6F23552A7B292 /* DiceTrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457DC96132EBA03821A4C43F /* DiceTrayView.swift */; };
 		3FA61241D48BC1BD332FF223 /* ScoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF58ADE0558AABA7F6FF61F /* ScoreCategory.swift */; };
 		40A2B87631E4888C3561D841 /* ding.wav in Resources */ = {isa = PBXBuildFile; fileRef = CE5446247067453F5E6691B1 /* ding.wav */; };
@@ -166,6 +167,7 @@
 		F1D58AEC42CD316BD09D45AC /* GameActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameActions.swift; sourceTree = "<group>"; };
 		F4D679AAD93CDFBC8574FAFD /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		F4E449E4980AE76BDCCB6160 /* YahtzeeScorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeScorerTests.swift; sourceTree = "<group>"; };
+		F8A6BDC45AB9A32F4EE971CC /* AvatarPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickerView.swift; sourceTree = "<group>"; };
 		FAD11B45827DBEE55EC3F78D /* PlayerProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerProfile.swift; sourceTree = "<group>"; };
 		FFAC35E2CA800C6B0B4D749C /* ThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -273,6 +275,7 @@
 		8D2CF9FF65377E18472E0AA9 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
+				F8A6BDC45AB9A32F4EE971CC /* AvatarPickerView.swift */,
 				D467679E91E4BB018C34FAB3 /* ProfileRowView.swift */,
 				103B4B773BB381BB998F8FA0 /* ProfileStatsView.swift */,
 				9DDCD07E864A07331F04EE9F /* ProfilesView.swift */,
@@ -524,6 +527,7 @@
 				C3D563E1DD7E3FE1769AF219 /* AppMetrics.swift in Sources */,
 				D08A3F0F434AEC9C21C730C7 /* AppTheme.swift in Sources */,
 				69F4CE35DFC06EFDB252D3C5 /* AvatarBadge.swift in Sources */,
+				34A1FD50A0F36255F1F91A0F /* AvatarPickerView.swift in Sources */,
 				52C0AA87696749F7DDABDCFB /* CategoryIcon.swift in Sources */,
 				0C2D8C963D1F6E8DF99B7C21 /* CelebrationBurstView.swift in Sources */,
 				FA4E7B8D8128A24931E28953 /* CoachBubbleView.swift in Sources */,

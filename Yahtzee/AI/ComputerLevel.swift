@@ -33,4 +33,13 @@ enum ComputerLevel: String, Codable, CaseIterable, Identifiable {
         case .hard: return 4
         }
     }
+
+    /// Elk persona een eigen gezichtje op het bolletje.
+    var avatarSymbol: String {
+        switch self {
+        case .easy: return "tortoise.fill"
+        case .medium: return "gamecontroller.fill"
+        case .hard: return "graduationcap.fill"
+        }
+    }
 }
