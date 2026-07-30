@@ -64,7 +64,8 @@ struct GameView: View {
                         engine: engine,
                         actions: actions,
                         isCelebrating: celebrateYahtzee,
-                        availableWidth: proxy.size.width
+                        availableWidth: proxy.size.width,
+                        availableHeight: proxy.size.height
                     )
                 } else {
                     GameTallLayout(

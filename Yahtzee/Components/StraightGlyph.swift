@@ -10,10 +10,12 @@ struct StraightGlyph: View {
 
     var body: some View {
         Canvas { context, size in
-            let plateWidth = size.width * (bars == 4 ? 0.40 : 0.36)
+            // Brede kaartjes en een stevige lijn: dunner werd het op de
+            // getinte tegels een vage vlek.
+            let plateWidth = size.width * (bars == 4 ? 0.46 : 0.40)
             let plateHeight = size.height * 0.92
-            let spread: Double = bars == 4 ? 27 : 32
-            let lineWidth = max(plateWidth * 0.16, 1.2)
+            let spread: Double = bars == 4 ? 30 : 38
+            let lineWidth = max(plateWidth * 0.19, 1.6)
 
             for index in 0..<bars {
                 let angle = -spread + 2 * spread * Double(index) / Double(bars - 1)

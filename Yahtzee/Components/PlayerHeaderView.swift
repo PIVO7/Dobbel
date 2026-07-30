@@ -26,14 +26,16 @@ struct PlayerHeaderView: View {
                 AvatarBadge(player: player, size: avatarSize)
                     .opacity(isMine ? 1 : 0.55)
                     // Een koraalring om wie aan de beurt is: dimmen alleen
-                    // bleek te subtiel.
-                    .padding(3)
-                    .background(
-                        Circle().fill(isMine ? AppTheme.tintCoral : .clear)
-                    )
-                    .overlay(
-                        Circle().strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: 2.5)
-                    )
+                    // bleek te subtiel. De ring sluit strak aan op de rand
+                    // van het bolletje — met een kier ertussen leek het een
+                    // wit lijntje.
+                    .overlay {
+                        if isMine {
+                            Circle()
+                                .strokeBorder(AppTheme.coral, lineWidth: 3)
+                                .frame(width: avatarSize + 6, height: avatarSize + 6)
+                        }
+                    }
                     .overlay(alignment: .topTrailing) {
                         if bonus > 0 {
                             Image(systemName: "star.fill")

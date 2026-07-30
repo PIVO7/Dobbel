@@ -7,8 +7,24 @@ struct GameWideLayout: View {
     let actions: GameActions
     let isCelebrating: Bool
     let availableWidth: CGFloat
+    let availableHeight: CGFloat
 
     @Environment(\.metrics) private var m
+
+    /// Het scoreblad groeit mee met de schermhoogte: op een liggende iPad
+    /// bleef er anders een halve lege pagina onder over.
+    private var boardMetrics: AppMetrics {
+        let naturalHeight: CGFloat = 7 * (m.rowHeight + m.cellGap) + 100
+        let room = availableHeight - 170
+        let factor = min(max(room / naturalHeight, 1), 1.5)
+        guard factor > 1 else { return m }
+        var copy = m
+        copy.rowHeight *= factor
+        copy.iconWidth *= factor
+        copy.cellTextSize *= factor
+        copy.cellGap *= factor
+        return copy
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -31,6 +47,7 @@ struct GameWideLayout: View {
                         canScore: engine.canScore,
                         onSelect: actions.score
                     )
+                    .environment(\.metrics, boardMetrics)
                 }
                 .scrollBounceBehavior(.basedOnSize)
                 .frame(maxWidth: .infinity)

@@ -80,19 +80,21 @@ extension ThemePalette {
         offInk: Color(red: 0.70, green: 0.66, blue: 0.59)
     )
 
+    /// Snoepwinkel: roze als basis, maar met geel en lila ertussen — anders
+    /// versmelt alles tot één roze vlak.
     static let snoep = ThemePalette(
         cream: Color(red: 0.99, green: 0.94, blue: 0.97),
         ink: Color(red: 0.17, green: 0.12, blue: 0.15),
         headline: Color(red: 0.17, green: 0.12, blue: 0.15),
-        sunk: Color(red: 0.98, green: 0.93, blue: 0.95),
-        amber: Color(red: 1.00, green: 0.62, blue: 0.80),
+        sunk: Color(red: 0.95, green: 0.93, blue: 0.89),
+        amber: Color(red: 1.00, green: 0.76, blue: 0.30),
         coral: Color(red: 0.94, green: 0.34, blue: 0.61),
         mint: Color(red: 0.27, green: 0.84, blue: 0.65),
         sky: Color(red: 0.69, green: 0.42, blue: 0.91),
-        tintAmber: Color(red: 1.00, green: 0.89, blue: 0.94),
-        tintSky: Color(red: 0.95, green: 0.90, blue: 1.00),
-        tintCoral: Color(red: 1.00, green: 0.85, blue: 0.91),
-        tintStone: Color(red: 0.95, green: 0.89, blue: 0.93),
+        tintAmber: Color(red: 1.00, green: 0.93, blue: 0.76),
+        tintSky: Color(red: 0.93, green: 0.88, blue: 1.00),
+        tintCoral: Color(red: 1.00, green: 0.80, blue: 0.88),
+        tintStone: Color(red: 0.93, green: 0.89, blue: 0.84),
         faint: Color(red: 0.52, green: 0.36, blue: 0.45),
         soft: Color(red: 0.51, green: 0.35, blue: 0.44),
         dim: Color(red: 0.68, green: 0.54, blue: 0.62),

@@ -229,6 +229,11 @@ struct GameSetupView: View {
             opponentLevel = level
         } label: {
             VStack(spacing: 6) {
+                // Zelfde vinkje als bij de spelerkeuze, zodat de gekozen
+                // tegenstander net zo duidelijk is als de gekozen speler.
+                Image(systemName: picked ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: m.bodySize * 1.1, weight: .black))
+                    .foregroundStyle(picked ? AppTheme.coral : AppTheme.dim)
                 AvatarBadge(name: level.personaName, colorIndex: level.avatarColorIndex, symbol: level.avatarSymbol, size: m.avatarSize * 0.9)
                 Text(level.personaName)
                     .font(AppTheme.rounded(m.captionSize, .bold))
