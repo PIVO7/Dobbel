@@ -62,6 +62,15 @@ final class GameEngine {
         !isFinished && !isRolling && !isSettling
     }
 
+    /// Het vakje bovenin dat de jokerregel afdwingt bij een tweede Yahtzee,
+    /// of `nil` als de speler vrij mag kiezen.
+    private var jokerForcedCategory: ScoreCategory? {
+        guard YahtzeeScorer.canUseJoker(dice: diceValues, scorecard: currentPlayer.scorecard),
+              let upper = ScoreCategory.upper.first(where: { $0.faceValue == diceValues.first }),
+              currentPlayer.scorecard.scores[upper] == nil else { return nil }
+        return upper
+    }
+
     var snapshot: GameSnapshot {
         GameSnapshot(
             mode: mode,
@@ -192,6 +201,10 @@ final class GameEngine {
 
         if currentPlayer.isComputer {
             turnMessage = "\(currentPlayer.name) denkt na…"
+        } else if let forced = jokerForcedCategory {
+            // De jokerregel sluit alle andere vakjes; zonder uitleg ziet dat
+            // eruit alsof het scoreblad kapot is.
+            turnMessage = "Tweede Yahtzee! Die moet bovenin, bij \(forced.title.lowercased())"
         } else {
             turnMessage = rollsRemaining == 0
                 ? "Kies een vakje op het scoreblad"

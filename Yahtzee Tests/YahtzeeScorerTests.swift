@@ -67,4 +67,22 @@ final class YahtzeeScorerTests: XCTestCase {
         XCTAssertEqual(card.upperSubtotal, 63)
         XCTAssertEqual(card.upperBonus, 35)
     }
+
+    /// Regressie voor "ik kon Chance niet kiezen": zolang Chance leeg is,
+    /// hoort hij open te staan — met één uitzondering, de jokerregel, die bij
+    /// een tweede Yahtzee eerst het eigen vakje bovenin afdwingt.
+    func testChanceStaysAvailableUntilFilled() {
+        var scorecard = Scorecard()
+        scorecard.place(category: .fullHouse, score: 25, yahtzeeBonus: 0)
+        scorecard.place(category: .largeStraight, score: 40, yahtzeeBonus: 0)
+        scorecard.place(category: .fours, score: 16, yahtzeeBonus: 0)
+
+        let open = YahtzeeScorer.availableCategories(dice: [2, 3, 4, 6, 6], scorecard: scorecard)
+        XCTAssertTrue(open.contains(.chance))
+
+        scorecard.place(category: .chance, score: 21, yahtzeeBonus: 0)
+        let after = YahtzeeScorer.availableCategories(dice: [2, 3, 4, 6, 6], scorecard: scorecard)
+        XCTAssertFalse(after.contains(.chance))
+    }
 }
+
