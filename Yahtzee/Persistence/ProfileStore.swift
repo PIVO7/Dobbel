@@ -48,7 +48,7 @@ final class ProfileStore {
     }
 
     func recordGameResult(winnerProfileIDs: [UUID], participantProfileIDs: [UUID]) {
-        for id in participantProfileIDs where id != PlayerProfile.computerID {
+        for id in participantProfileIDs where !PlayerProfile.computerIDs.values.contains(id) {
             guard let index = profiles.firstIndex(where: { $0.id == id }) else { continue }
             profiles[index].gamesPlayed += 1
             if winnerProfileIDs.contains(id), winnerProfileIDs.count == 1 {

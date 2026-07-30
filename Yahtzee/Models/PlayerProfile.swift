@@ -7,6 +7,8 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
     var gamesPlayed: Int
     var avatarColorIndex: Int
     var createdAt: Date
+    /// Alleen gezet voor computertegenstanders; `nil` betekent een mens.
+    var computerLevel: ComputerLevel?
 
     init(
         id: UUID = UUID(),
@@ -14,7 +16,8 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         wins: Int = 0,
         gamesPlayed: Int = 0,
         avatarColorIndex: Int = 0,
-        createdAt: Date = .now
+        createdAt: Date = .now,
+        computerLevel: ComputerLevel? = nil
     ) {
         self.id = id
         self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -22,19 +25,31 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         self.gamesPlayed = gamesPlayed
         self.avatarColorIndex = avatarColorIndex
         self.createdAt = createdAt
+        self.computerLevel = computerLevel
     }
 
-    static let computerID = UUID(uuidString: "00000000-0000-0000-0000-0000000000C0")!
+    /// Vaste id's, zodat een bewaard spel na een herstart dezelfde
+    /// tegenstander terugvindt.
+    static let computerIDs: [ComputerLevel: UUID] = [
+        .easy: UUID(uuidString: "00000000-0000-0000-0000-0000000000C1")!,
+        .medium: UUID(uuidString: "00000000-0000-0000-0000-0000000000C0")!,
+        .hard: UUID(uuidString: "00000000-0000-0000-0000-0000000000C2")!
+    ]
 
-    static var computer: PlayerProfile {
+    /// Overgang: het setup-scherm kiest verderop expliciet een niveau.
+    static var computer: PlayerProfile { computer(level: .medium) }
+
+    static func computer(level: ComputerLevel) -> PlayerProfile {
         PlayerProfile(
-            id: computerID,
-            name: "Computer",
-            wins: 0,
-            gamesPlayed: 0,
-            avatarColorIndex: 5
+            id: computerIDs[level]!,
+            name: level.personaName,
+            avatarColorIndex: level.avatarColorIndex,
+            computerLevel: level
         )
     }
 
-    var isComputer: Bool { id == Self.computerID }
+    var isComputer: Bool {
+        // Op id én op niveau: oude bewaarde spellen kennen alleen het id.
+        computerLevel != nil || Self.computerIDs.values.contains(id)
+    }
 }

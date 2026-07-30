@@ -6,7 +6,7 @@ final class GameEngineTests: XCTestCase {
     func testHumanCanRollAndScore() async throws {
         let profiles = [
             PlayerProfile(name: "Kind"),
-            PlayerProfile.computer
+            PlayerProfile.computer(level: .medium)
         ]
         let engine = GameEngine(mode: .versusComputer, profiles: profiles, seed: 42)
 

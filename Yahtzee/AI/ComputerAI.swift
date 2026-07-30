@@ -1,15 +1,24 @@
 import Foundation
 
 struct ComputerAI {
-    func decide(dice: [Die], rollsRemaining: Int, scorecard: Scorecard) -> ComputerDecision {
+    func decide(
+        dice: [Die],
+        rollsRemaining: Int,
+        scorecard: Scorecard,
+        level: ComputerLevel = .medium
+    ) -> ComputerDecision {
         let values = dice.map(\.value)
         let open = YahtzeeScorer.availableCategories(dice: values, scorecard: scorecard)
+
+        if level == .easy {
+            return decideEasy(values: values, open: open, rollsRemaining: rollsRemaining, scorecard: scorecard)
+        }
 
         if rollsRemaining == 0 {
             return ComputerDecision(
                 holdMask: dice.map(\.isHeld),
                 shouldScore: true,
-                category: bestCategory(values: values, open: open, scorecard: scorecard)
+                category: bestCategory(values: values, open: open, scorecard: scorecard, level: level)
             )
         }
 
@@ -18,7 +27,7 @@ struct ComputerAI {
             return ComputerDecision(
                 holdMask: Array(repeating: true, count: 5),
                 shouldScore: true,
-                category: bestCategory(values: values, open: open, scorecard: scorecard)
+                category: bestCategory(values: values, open: open, scorecard: scorecard, level: level)
             )
         }
 
@@ -32,10 +41,11 @@ struct ComputerAI {
         }
 
         if rollsRemaining == 1 {
-            let best = bestCategory(values: values, open: open, scorecard: scorecard)
+            let best = bestCategory(values: values, open: open, scorecard: scorecard, level: level)
             let expected = best.map { YahtzeeScorer.pointsForPlacing(category: $0, dice: values, scorecard: scorecard).score } ?? 0
             // Keep rolling only if current best is weak and we still have a roll.
-            if expected >= 20 {
+            // De professor legt de lat hoger en gokt vaker op de laatste worp.
+            if expected >= (level == .hard ? 25 : 20) {
                 return ComputerDecision(holdMask: holdMaskFor(values: values), shouldScore: true, category: best)
             }
         }
@@ -45,6 +55,41 @@ struct ComputerAI {
             shouldScore: false,
             category: nil
         )
+    }
+
+    /// Dommel: houdt alleen drie-of-meer dezelfde vast, ziet geen straten of
+    /// paren, en kiest op het eind gewoon wat nu het meest oplevert — zonder
+    /// dure vakjes te beschermen. Eén uitzondering: een Dobbel pakt hij wel,
+    /// anders wordt het gênant.
+    private func decideEasy(
+        values: [Int],
+        open: [ScoreCategory],
+        rollsRemaining: Int,
+        scorecard: Scorecard
+    ) -> ComputerDecision {
+        if YahtzeeScorer.isYahtzee(values), open.contains(.yahtzee) {
+            return ComputerDecision(
+                holdMask: Array(repeating: true, count: 5),
+                shouldScore: true,
+                category: .yahtzee
+            )
+        }
+
+        if rollsRemaining == 0 {
+            let category = open.max { lhs, rhs in
+                let l = YahtzeeScorer.pointsForPlacing(category: lhs, dice: values, scorecard: scorecard).score
+                let r = YahtzeeScorer.pointsForPlacing(category: rhs, dice: values, scorecard: scorecard).score
+                if l == r { return categoryPriority(lhs) > categoryPriority(rhs) }
+                return l < r
+            }
+            return ComputerDecision(holdMask: values.map { _ in false }, shouldScore: true, category: category)
+        }
+
+        let counts = YahtzeeScorer.counts(for: values)
+        if let (face, count) = counts.max(by: { $0.value < $1.value }), count >= 3 {
+            return ComputerDecision(holdMask: values.map { $0 == face }, shouldScore: false, category: nil)
+        }
+        return ComputerDecision(holdMask: values.map { _ in false }, shouldScore: false, category: nil)
     }
 
     private func holdMaskFor(values: [Int]) -> [Bool] {
@@ -87,13 +132,14 @@ struct ComputerAI {
     private func bestCategory(
         values: [Int],
         open: [ScoreCategory],
-        scorecard: Scorecard
+        scorecard: Scorecard,
+        level: ComputerLevel = .medium
     ) -> ScoreCategory? {
         guard !open.isEmpty else { return nil }
 
         return open.max { lhs, rhs in
-            let l = utility(category: lhs, values: values, scorecard: scorecard)
-            let r = utility(category: rhs, values: values, scorecard: scorecard)
+            let l = utility(category: lhs, values: values, scorecard: scorecard, level: level)
+            let r = utility(category: rhs, values: values, scorecard: scorecard, level: level)
             if l == r {
                 // Prefer dumping zeros into chance last; prefer upper when equal.
                 return categoryPriority(lhs) < categoryPriority(rhs)
@@ -102,13 +148,25 @@ struct ComputerAI {
         }
     }
 
-    private func utility(category: ScoreCategory, values: [Int], scorecard: Scorecard) -> Double {
+    private func utility(
+        category: ScoreCategory,
+        values: [Int],
+        scorecard: Scorecard,
+        level: ComputerLevel = .medium
+    ) -> Double {
         let result = YahtzeeScorer.pointsForPlacing(category: category, dice: values, scorecard: scorecard)
         var score = Double(result.score + result.yahtzeeBonus)
 
         // Prefer scoring meaningful upper faces toward the bonus.
         if category.isUpper, result.score > 0 {
             score += 2
+        }
+
+        // De professor rekent de bonus bovenin mee, net als de tip voor de
+        // speler: elk punt bovenin telt extra zolang de +35 haalbaar is.
+        if level == .hard, category.isUpper, result.score > 0,
+           YahtzeeScorer.upperBonusStillPossible(scorecard: scorecard) {
+            score += Double(result.score) * Double(YahtzeeScorer.upperBonusPoints) / Double(YahtzeeScorer.upperBonusThreshold)
         }
 
         // Avoid wasting Yahtzee box on zero when alternatives exist.

@@ -150,7 +150,8 @@ final class GameEngine {
             let decision = computerAI.decide(
                 dice: dice,
                 rollsRemaining: rollsRemaining,
-                scorecard: currentPlayer.scorecard
+                scorecard: currentPlayer.scorecard,
+                level: currentPlayer.computerLevel ?? .medium
             )
 
             if decision.shouldScore || rollsRemaining == 0 {
@@ -204,11 +205,13 @@ final class GameEngine {
         } else if let forced = jokerForcedCategory {
             // De jokerregel sluit alle andere vakjes; zonder uitleg ziet dat
             // eruit alsof het scoreblad kapot is.
-            turnMessage = "Tweede Yahtzee! Die moet bovenin, bij \(forced.title.lowercased())"
+            turnMessage = "Tweede Dobbel! Die moet bovenin, bij \(forced.title.lowercased())"
         } else {
+            // Midden in de beurt geen staande instructie: de worp in woorden
+            // is genoeg, en het scherm blijft rustig.
             turnMessage = rollsRemaining == 0
                 ? "Kies een vakje op het scoreblad"
-                : "Houd dobbelstenen vast of gooi opnieuw"
+                : ""
         }
         markDirty()
     }
