@@ -5,7 +5,7 @@ final class ComputerAITests: XCTestCase {
     func testScoresYahtzeeWhenAvailable() {
         let ai = ComputerAI()
         let dice = (0..<5).map { _ in Die(value: 6) }
-        var card = Scorecard()
+        let card = Scorecard()
 
         let decision = ai.decide(dice: dice, rollsRemaining: 2, scorecard: card)
         XCTAssertTrue(decision.shouldScore)

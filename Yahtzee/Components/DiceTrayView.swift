@@ -45,3 +45,15 @@ private struct DieButtonStyle: ButtonStyle {
         configuration.label
     }
 }
+
+#Preview {
+    DiceTrayView(
+        dice: [Die(value: 5), Die(value: 3, isHeld: true), Die(value: 1), Die(value: 6), Die(value: 2)],
+        isRolling: false,
+        canInteract: true,
+        onToggle: { _ in }
+    )
+    .padding()
+    .background(AppTheme.cream)
+    .appMetrics()
+}

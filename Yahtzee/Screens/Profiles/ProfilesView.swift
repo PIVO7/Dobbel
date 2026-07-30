@@ -103,3 +103,16 @@ struct ProfilesView: View {
         }
     }
 }
+
+#Preview {
+    // Tijdelijk bestand, zodat de preview nooit aan echte spelersdata komt.
+    let profiles = ProfileStore(fileURL: URL.temporaryDirectory.appending(path: "preview-\(UUID()).json"))
+    let _ = profiles.addProfile(name: "Lene")
+    let _ = profiles.addProfile(name: "Ellis")
+
+    NavigationStack {
+        ProfilesView()
+    }
+    .environment(profiles)
+    .appMetrics()
+}

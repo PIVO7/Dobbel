@@ -125,7 +125,20 @@ enum YahtzeeScorer {
     /// "3 dezelfde" nu een paar punten meer op. Het blijft een vuistregel —
     /// de speler mag altijd iets anders kiezen.
     static func adviceCategory(dice: [Int], scorecard: Scorecard) -> ScoreCategory? {
-        let open = availableCategories(dice: dice, scorecard: scorecard)
+        adviceCategory(
+            dice: dice,
+            scorecard: scorecard,
+            open: availableCategories(dice: dice, scorecard: scorecard)
+        )
+    }
+
+    /// Dezelfde tip, voor een aanroeper die de open vakjes al berekend heeft
+    /// en de scorer niet nogmaals wil laten draaien.
+    static func adviceCategory(
+        dice: [Int],
+        scorecard: Scorecard,
+        open: [ScoreCategory]
+    ) -> ScoreCategory? {
         let bonusWeight = upperBonusStillPossible(scorecard: scorecard)
             ? Double(upperBonusPoints) / Double(upperBonusThreshold)
             : 0

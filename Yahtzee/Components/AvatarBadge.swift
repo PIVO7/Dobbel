@@ -59,3 +59,13 @@ struct AvatarBadge: View {
         return String(name.prefix(2)).uppercased()
     }
 }
+
+#Preview {
+    HStack(spacing: 12) {
+        AvatarBadge(name: "Lene Wauters", colorIndex: 0)
+        AvatarBadge(name: "Ellis", colorIndex: 1)
+        AvatarBadge(name: "Noah", colorIndex: 2, size: 64)
+    }
+    .padding()
+    .background(AppTheme.cream)
+}

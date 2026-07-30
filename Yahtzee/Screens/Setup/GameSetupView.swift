@@ -197,3 +197,18 @@ struct GameSetupView: View {
         activeGame = ActiveGame(engine: engine)
     }
 }
+
+#Preview {
+    // Tijdelijke bestanden, zodat de preview nooit aan echte spelersdata komt.
+    let profiles = ProfileStore(fileURL: URL.temporaryDirectory.appending(path: "preview-\(UUID()).json"))
+    let _ = profiles.addProfile(name: "Lene")
+    let _ = profiles.addProfile(name: "Ellis")
+    let _ = profiles.addProfile(name: "Noah")
+
+    NavigationStack {
+        GameSetupView(mode: .versusFriends)
+    }
+    .environment(profiles)
+    .environment(GameStore(fileURL: URL.temporaryDirectory.appending(path: "preview-\(UUID()).json")))
+    .appMetrics()
+}

@@ -38,13 +38,15 @@ struct ProfileRowView: View {
 
     private var renameButton: some View {
         Button(action: beginRename) {
-            Image(systemName: "pencil")
+            // Een Label en geen kale Image: de titel voedt VoiceOver én
+            // Voice Control, ook al toont de knop alleen het icoon.
+            Label("\(profile.name) hernoemen", systemImage: "pencil")
+                .labelStyle(.iconOnly)
                 .font(.system(size: m.captionSize + 2, weight: .black))
                 .foregroundStyle(AppTheme.ink)
                 .frame(width: m.tapTarget, height: m.tapTarget)
         }
         .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: 3, border: m.thinBorder))
-        .accessibilityLabel("\(profile.name) hernoemen")
         // De dialoog hangt aan de knop die hem opent, niet aan het scherm,
         // zodat de animatie vanaf de juiste plek vertrekt.
         .alert("Naam wijzigen", isPresented: $isRenaming) {
@@ -56,13 +58,13 @@ struct ProfileRowView: View {
 
     private var deleteButton: some View {
         Button(action: beginDelete) {
-            Image(systemName: "trash")
+            Label("\(profile.name) verwijderen", systemImage: "trash")
+                .labelStyle(.iconOnly)
                 .font(.system(size: m.captionSize + 2, weight: .black))
                 .foregroundStyle(AppTheme.ink)
                 .frame(width: m.tapTarget, height: m.tapTarget)
         }
         .buttonStyle(ToyButtonStyle(fill: AppTheme.tintCoral, radius: m.cellCorner, depth: 3, border: m.thinBorder))
-        .accessibilityLabel("\(profile.name) verwijderen")
         .confirmationDialog(
             "\(profile.name) verwijderen?",
             isPresented: $isDeleting,

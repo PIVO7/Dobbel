@@ -12,6 +12,7 @@
 		0850B3E2D4DEEA234ECB7823 /* ToyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C0DAC31D7658923CFA860 /* ToyButtonStyle.swift */; };
 		0ADC4A4BA2B71D63B38F9833 /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC527C430E0ECE7DA206B2BD /* GameMode.swift */; };
 		0C2D8C963D1F6E8DF99B7C21 /* CelebrationBurstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4106C2B985977A5F087D6B2 /* CelebrationBurstView.swift */; };
+		1476C3AA2E25387C26411FC0 /* PlayerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC372715627D12D6B31994 /* PlayerHeaderView.swift */; };
 		19C50DA86151A37B68242004 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29523F1BA2D06F74D488BA27 /* Assets.xcassets */; };
 		1DC38851CC10561EAF648C55 /* GameWideLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068493FA00825E0C2F9EBA0 /* GameWideLayout.swift */; };
 		1FBE75C0F7DD1DCB590FA761 /* GameResultOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF818C857F3C3D5867F896 /* GameResultOverlay.swift */; };
@@ -46,6 +47,7 @@
 		C1949D6432016F7F94D86F6F /* ComputerAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E6D38C9E3667E19C7BD909 /* ComputerAITests.swift */; };
 		C2D1D4BD713CF7E30B44D258 /* ProfileStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E590AA927AA37E715FD7CEFA /* ProfileStoreTests.swift */; };
 		C3D563E1DD7E3FE1769AF219 /* AppMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57A0A98A8EA6AC270FD2BF7 /* AppMetrics.swift */; };
+		C405BAD4D45993B1B3A149C3 /* ScoreCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D34CD4C6CE682F960180174 /* ScoreCellView.swift */; };
 		C70D3580E17554575DACA2FF /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467679E91E4BB018C34FAB3 /* ProfileRowView.swift */; };
 		C87BE4FCA2BFB637F962D337 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA2EC36B1EC50B75337D071 /* HomeView.swift */; };
 		CA4617ED466FEF9CF198A801 /* RoundStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ECA4D176E447222DBE3ABE /* RoundStripView.swift */; };
@@ -77,6 +79,7 @@
 		140C02D33A6AED897584ACA5 /* AvatarBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarBadge.swift; sourceTree = "<group>"; };
 		1B0A42FABE126185936A4457 /* YahtzeeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeApp.swift; sourceTree = "<group>"; };
 		29523F1BA2D06F74D488BA27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2D34CD4C6CE682F960180174 /* ScoreCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCellView.swift; sourceTree = "<group>"; };
 		2E760F0309B9C4D8CE661A98 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
 		2FBF487EC304E6D9D611B98B /* Die.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Die.swift; sourceTree = "<group>"; };
 		38F108A028507411656E8EA7 /* DiePips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiePips.swift; sourceTree = "<group>"; };
@@ -94,6 +97,7 @@
 		7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorecardView.swift; sourceTree = "<group>"; };
 		7DA2EC36B1EC50B75337D071 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7DCF4F19D03D2D396A148AF8 /* GameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHeaderView.swift; sourceTree = "<group>"; };
+		7FEC372715627D12D6B31994 /* PlayerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHeaderView.swift; sourceTree = "<group>"; };
 		87E28DB6DB2B44405D5584A0 /* DieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DieView.swift; sourceTree = "<group>"; };
 		8C787B257B616D2DB3084E38 /* AdviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceTests.swift; sourceTree = "<group>"; };
 		90E6D38C9E3667E19C7BD909 /* ComputerAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerAITests.swift; sourceTree = "<group>"; };
@@ -244,7 +248,9 @@
 				457DC96132EBA03821A4C43F /* DiceTrayView.swift */,
 				38F108A028507411656E8EA7 /* DiePips.swift */,
 				87E28DB6DB2B44405D5584A0 /* DieView.swift */,
+				7FEC372715627D12D6B31994 /* PlayerHeaderView.swift */,
 				7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */,
+				2D34CD4C6CE682F960180174 /* ScoreCellView.swift */,
 				04F7838AC9AD2142A7BD7A3F /* StraightGlyph.swift */,
 			);
 			path = Components;
@@ -427,6 +433,7 @@
 				013A9411EA07AABA538F7669 /* GameView.swift in Sources */,
 				1DC38851CC10561EAF648C55 /* GameWideLayout.swift in Sources */,
 				C87BE4FCA2BFB637F962D337 /* HomeView.swift in Sources */,
+				1476C3AA2E25387C26411FC0 /* PlayerHeaderView.swift in Sources */,
 				E178DCBAD43AA8CA0431E65B /* PlayerProfile.swift in Sources */,
 				C70D3580E17554575DACA2FF /* ProfileRowView.swift in Sources */,
 				481845BC951477A9D0B71C91 /* ProfileStore.swift in Sources */,
@@ -436,6 +443,7 @@
 				A97E08433C1FB3B34E2EE6A4 /* RollPhrase.swift in Sources */,
 				CA4617ED466FEF9CF198A801 /* RoundStripView.swift in Sources */,
 				3FA61241D48BC1BD332FF223 /* ScoreCategory.swift in Sources */,
+				C405BAD4D45993B1B3A149C3 /* ScoreCellView.swift in Sources */,
 				CE4CEB1651D6098CEF4495D2 /* Scorecard.swift in Sources */,
 				5492C01EA728726351BB7FC3 /* ScorecardView.swift in Sources */,
 				54A59FD47CA1BE54945B2F36 /* SplitMix64.swift in Sources */,
@@ -555,7 +563,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -565,7 +572,6 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -662,7 +668,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -671,7 +676,6 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

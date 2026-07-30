@@ -13,11 +13,11 @@ struct ScorecardView: View {
     @Environment(\.metrics) private var m
 
     var body: some View {
-        // Eén keer per hertekening rekenen. Als computed property werd de scorer
-        // per vakje opnieuw aangeroepen — dertien keer per kolom, en tijdens de
-        // gooianimatie acht keer per worp.
-        let open = openCategories
-        let advice = adviceCategory(open: open)
+        // Eén keer per hertekening rekenen: de lijst voedt zowel de open-check
+        // als de tip, zodat de scorer niet per vakje — of dubbel — draait.
+        let openList = openCategories
+        let open = Set(openList)
+        let advice = adviceCategory(open: openList)
 
         return HStack(alignment: .top, spacing: m.gutter * 0.6) {
             column(title: "BOVEN", categories: ScoreCategory.upper, showsBonus: true, open: open, advice: advice)
@@ -31,16 +31,16 @@ struct ScorecardView: View {
         players.first { $0.id == currentPlayerID }
     }
 
-    private var openCategories: Set<ScoreCategory> {
+    private var openCategories: [ScoreCategory] {
         guard let current else { return [] }
-        return Set(YahtzeeScorer.availableCategories(dice: diceValues, scorecard: current.scorecard))
+        return YahtzeeScorer.availableCategories(dice: diceValues, scorecard: current.scorecard)
     }
 
     /// De tip van de scorer; alleen tonen als er echt gegooid is. Weegt de
     /// bonus bovenin mee, maar blijft een vuistregel — kiezen doet de speler.
-    private func adviceCategory(open: Set<ScoreCategory>) -> ScoreCategory? {
+    private func adviceCategory(open: [ScoreCategory]) -> ScoreCategory? {
         guard canScore, !open.isEmpty, let current else { return nil }
-        return YahtzeeScorer.adviceCategory(dice: diceValues, scorecard: current.scorecard)
+        return YahtzeeScorer.adviceCategory(dice: diceValues, scorecard: current.scorecard, open: open)
     }
 
     private func column(
@@ -59,7 +59,7 @@ struct ScorecardView: View {
                 .padding(.leading, 3)
                 .padding(.bottom, 2)
 
-            playerHeader
+            PlayerHeaderView(players: players, currentPlayerID: currentPlayerID)
 
             ForEach(categories) { category in
                 row(for: category, open: open, advice: advice)
@@ -67,44 +67,6 @@ struct ScorecardView: View {
 
             if showsBonus {
                 bonusRow
-            }
-        }
-    }
-
-    /// Boven elke kolom staat wie hem vult; zonder dat raak je bij drie of
-    /// vier spelers het spoor bijster welke kolom van jou is. Alleen het
-    /// bolletje — naam en kader erbij propten te veel in een celbreedte. Wie
-    /// niet aan de beurt is, dimt; de kleur blijft genoeg om je kolom terug
-    /// te vinden.
-    private var headerAvatarSize: CGFloat {
-        min(m.iconWidth - 2, m.avatarSize * 0.72)
-    }
-
-    private var playerHeader: some View {
-        HStack(spacing: m.cellGap * 0.75) {
-            Color.clear
-                .frame(width: m.iconWidth, height: headerAvatarSize + 4)
-
-            ForEach(players) { player in
-                let isMine = player.id == currentPlayerID
-                let bonus = player.scorecard.yahtzeeBonusTotal
-                AvatarBadge(player: player, size: headerAvatarSize)
-                    .overlay(alignment: .topTrailing) {
-                        if bonus > 0 {
-                            Image(systemName: "star.fill")
-                                .font(.system(size: headerAvatarSize * 0.3, weight: .black))
-                                .foregroundStyle(AppTheme.amber)
-                                .offset(x: 3, y: -3)
-                        }
-                    }
-                    .opacity(isMine ? 1 : 0.55)
-                    .frame(maxWidth: .infinity)
-                    .accessibilityElement()
-                    .accessibilityLabel(
-                        player.name
-                            + (isMine ? ", aan de beurt" : "")
-                            + (bonus > 0 ? ", Yahtzee-bonus \(bonus)" : "")
-                    )
             }
         }
     }
@@ -119,54 +81,16 @@ struct ScorecardView: View {
                 .frame(width: m.iconWidth, height: m.rowHeight)
 
             ForEach(players) { player in
-                cell(for: category, player: player, open: open, advice: advice)
+                let selectable = player.id == currentPlayerID && canScore && open.contains(category)
+                ScoreCellView(
+                    category: category,
+                    player: player,
+                    diceValues: diceValues,
+                    selectable: selectable,
+                    isAdvised: selectable && category == advice,
+                    onSelect: onSelect
+                )
             }
-        }
-    }
-
-    @ViewBuilder
-    private func cell(
-        for category: ScoreCategory,
-        player: GamePlayer,
-        open: Set<ScoreCategory>,
-        advice: ScoreCategory?
-    ) -> some View {
-        let scored = player.scorecard.scores[category]
-        let isMine = player.id == currentPlayerID
-        let selectable = isMine && canScore && open.contains(category)
-
-        if selectable {
-            let points = YahtzeeScorer.pointsForPlacing(
-                category: category,
-                dice: diceValues,
-                scorecard: player.scorecard
-            ).score
-            let isAdvised = category == advice
-
-            Button {
-                onSelect(category)
-            } label: {
-                Text("\(points)")
-                    .font(AppTheme.rounded(m.cellTextSize, .bold))
-                    .foregroundStyle(isAdvised ? .white : AppTheme.coral)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: m.rowHeight)
-            }
-            .buttonStyle(ToyButtonStyle(
-                fill: isAdvised ? AppTheme.mint : .white,
-                radius: m.cellCorner,
-                depth: isAdvised ? 3 : 0,
-                border: m.thinBorder
-            ))
-            .accessibilityLabel("\(category.title), \(points) punten\(isAdvised ? ", tip" : "")")
-        } else {
-            Text(scored.map { "\($0)" } ?? "–")
-                .font(AppTheme.rounded(m.cellTextSize, .bold))
-                .foregroundStyle(scored == nil ? AppTheme.dim : AppTheme.ink)
-                .frame(maxWidth: .infinity)
-                .frame(height: m.rowHeight)
-                .toyBlock(fill: AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)
-                .accessibilityLabel("\(category.title), \(scored.map { "\($0) punten" } ?? "leeg")")
         }
     }
 
@@ -200,4 +124,20 @@ struct ScorecardView: View {
         }
     }
 
+}
+
+#Preview {
+    let lene = GamePlayer(profile: PlayerProfile(name: "Lene", avatarColorIndex: 0))
+    let ellis = GamePlayer(profile: PlayerProfile(name: "Ellis", avatarColorIndex: 1))
+
+    ScorecardView(
+        players: [lene, ellis],
+        currentPlayerID: lene.id,
+        diceValues: [3, 3, 3, 5, 2],
+        canScore: true,
+        onSelect: { _ in }
+    )
+    .padding()
+    .background(AppTheme.cream)
+    .appMetrics()
 }

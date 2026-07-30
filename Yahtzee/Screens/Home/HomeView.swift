@@ -113,3 +113,15 @@ struct HomeView: View {
         .toyBlock(fill: .white, radius: m.cardCorner, depth: m.depth, border: m.border)
     }
 }
+
+#Preview {
+    // Tijdelijke bestanden, zodat de preview nooit aan echte spelersdata komt.
+    let profiles = ProfileStore(fileURL: URL.temporaryDirectory.appending(path: "preview-\(UUID()).json"))
+    let _ = profiles.addProfile(name: "Lene")
+    let _ = profiles.addProfile(name: "Ellis")
+
+    HomeView()
+        .environment(profiles)
+        .environment(GameStore(fileURL: URL.temporaryDirectory.appending(path: "preview-\(UUID()).json")))
+        .appMetrics()
+}

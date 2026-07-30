@@ -33,13 +33,15 @@ struct GameHeaderView: View {
             .toyBlock(fill: .white, radius: m.cellCorner + 3, depth: 3, border: m.thinBorder + 0.5)
 
             Button(action: requestClose) {
-                Image(systemName: "xmark")
+                // Een Label en geen kale Image: de titel voedt VoiceOver én
+                // Voice Control, ook al toont de knop alleen het icoon.
+                Label("Spel verlaten", systemImage: "xmark")
+                    .labelStyle(.iconOnly)
                     .font(.system(size: m.captionSize + 2, weight: .black))
                     .foregroundStyle(AppTheme.ink)
                     .frame(width: m.tapTarget, height: m.tapTarget)
             }
             .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cellCorner, depth: 3, border: m.thinBorder))
-            .accessibilityLabel("Spel verlaten")
             // Aan de sluitknop zelf, zodat de dialoog daarvandaan opent.
             .confirmationDialog("Spel verlaten?", isPresented: $showExitConfirm, titleVisibility: .visible) {
                 Button("Verlaten", role: .destructive, action: onLeave)
