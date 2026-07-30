@@ -50,7 +50,7 @@ struct ScorecardView: View {
         open: Set<ScoreCategory>,
         advice: ScoreCategory?
     ) -> some View {
-        VStack(spacing: 4) {
+        VStack(spacing: m.cellGap) {
             Text(title)
                 .font(AppTheme.rounded(m.captionSize * 0.9))
                 .kerning(1.4)
@@ -81,7 +81,7 @@ struct ScorecardView: View {
     }
 
     private var playerHeader: some View {
-        HStack(spacing: 3) {
+        HStack(spacing: m.cellGap * 0.75) {
             Color.clear
                 .frame(width: m.iconWidth, height: headerAvatarSize + 4)
 
@@ -114,7 +114,7 @@ struct ScorecardView: View {
         open: Set<ScoreCategory>,
         advice: ScoreCategory?
     ) -> some View {
-        HStack(spacing: 3) {
+        HStack(spacing: m.cellGap * 0.75) {
             CategoryIcon(category: category)
                 .frame(width: m.iconWidth, height: m.rowHeight)
 
@@ -171,7 +171,7 @@ struct ScorecardView: View {
     }
 
     private var bonusRow: some View {
-        HStack(spacing: 3) {
+        HStack(spacing: m.cellGap * 0.75) {
             VStack(spacing: 0) {
                 Text("BONUS")
                     .font(AppTheme.rounded(m.captionSize * 0.68))

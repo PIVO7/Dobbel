@@ -11,6 +11,9 @@ struct AppMetrics {
     var rowHeight: CGFloat
     var iconWidth: CGFloat
     var cellCorner: CGFloat
+    /// Lucht tussen de rijen van het scoreblad; de vakjes op een rij krijgen
+    /// driekwart hiervan.
+    var cellGap: CGFloat
 
     var cardCorner: CGFloat
     var depth: CGFloat
@@ -37,7 +40,7 @@ struct AppMetrics {
 
     static let phone = AppMetrics(
         dieSize: 60, dieCorner: 16, dieGap: 9,
-        rowHeight: 44, iconWidth: 38, cellCorner: 11,
+        rowHeight: 44, iconWidth: 38, cellCorner: 11, cellGap: 4,
         cardCorner: 20, depth: 5, border: 3, thinBorder: 2,
         gutter: 14, contentMaxWidth: .infinity, overlayMaxWidth: 460, avatarSize: 44,
         tapTarget: 44,
@@ -48,7 +51,7 @@ struct AppMetrics {
 
     static let pad = AppMetrics(
         dieSize: 88, dieCorner: 23, dieGap: 15,
-        rowHeight: 54, iconWidth: 54, cellCorner: 15,
+        rowHeight: 54, iconWidth: 54, cellCorner: 15, cellGap: 5,
         cardCorner: 26, depth: 7, border: 4, thinBorder: 2.5,
         gutter: 24, contentMaxWidth: 760, overlayMaxWidth: 520, avatarSize: 58,
         tapTarget: 52,
@@ -59,6 +62,24 @@ struct AppMetrics {
 
     static func resolve(_ sizeClass: UserInterfaceSizeClass?) -> AppMetrics {
         sizeClass == .regular ? .pad : .phone
+    }
+
+    /// Ruimere maten voor een iPad die rechtop staat. Eén kolom op een groot
+    /// scherm mag best wat royaler: vooral de stenen, en een breder scoreblad.
+    /// De liggende stand blijft op de gewone maten — daar is de hoogte schaars.
+    func roomier() -> AppMetrics {
+        var copy = self
+        copy.dieSize *= 1.25
+        copy.dieCorner *= 1.25
+        copy.dieGap *= 1.25
+        copy.rowHeight *= 1.33
+        copy.iconWidth *= 1.33
+        copy.cellTextSize *= 1.25
+        copy.cellGap = 10
+        copy.displaySize *= 1.12
+        copy.avatarSize *= 1.12
+        copy.contentMaxWidth = 920
+        return copy
     }
 
     /// Laat de maten meegroeien met de tekstgrootte van de gebruiker. Drie
@@ -88,6 +109,7 @@ struct AppMetrics {
         copy.cellTextSize *= grid
         copy.rowHeight *= grid
         copy.iconWidth *= grid
+        copy.cellGap *= grid
         return copy
     }
 }
