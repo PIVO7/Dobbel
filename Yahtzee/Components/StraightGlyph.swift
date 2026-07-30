@@ -5,21 +5,37 @@ struct StraightGlyph: View {
     let bars: Int
 
     var body: some View {
-        GeometryReader { geo in
-            let w = geo.size.width
-            let h = geo.size.height
-            let gap = w * 0.09
-            let barWidth = (w - gap * CGFloat(bars - 1)) / CGFloat(bars)
+        // Een Canvas en geen GeometryReader met rechthoeken: puur tekenwerk,
+        // zonder deelname aan layout.
+        Canvas { context, size in
+            let gap = size.width * 0.09
+            let barWidth = (size.width - gap * CGFloat(bars - 1)) / CGFloat(bars)
 
-            ZStack(alignment: .bottomLeading) {
-                ForEach(0..<bars, id: \.self) { index in
-                    let fraction = 0.42 + 0.58 * (CGFloat(index) / CGFloat(bars - 1))
-                    RoundedRectangle(cornerRadius: barWidth * 0.35, style: .continuous)
-                        .frame(width: barWidth, height: h * fraction)
-                        .offset(x: (barWidth + gap) * CGFloat(index))
-                }
+            for index in 0..<bars {
+                let fraction = 0.42 + 0.58 * (CGFloat(index) / CGFloat(bars - 1))
+                let height = size.height * fraction
+                let rect = CGRect(
+                    x: (barWidth + gap) * CGFloat(index),
+                    y: size.height - height,
+                    width: barWidth,
+                    height: height
+                )
+                context.fill(
+                    Path(roundedRect: rect, cornerRadius: barWidth * 0.35, style: .continuous),
+                    with: .foreground
+                )
             }
-            .frame(width: w, height: h, alignment: .bottomLeading)
         }
     }
+}
+
+#Preview {
+    HStack(spacing: 16) {
+        StraightGlyph(bars: 4)
+        StraightGlyph(bars: 5)
+    }
+    .foregroundStyle(AppTheme.sky)
+    .frame(height: 32)
+    .padding()
+    .background(AppTheme.cream)
 }

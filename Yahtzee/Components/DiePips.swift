@@ -5,20 +5,21 @@ struct DiePips: View {
     var inset: CGFloat = 6
 
     var body: some View {
-        GeometryReader { geo in
-            let s = min(geo.size.width, geo.size.height)
+        // Een Canvas en geen GeometryReader met Circles: dit staat elf keer
+        // per scherm en hoeft niet aan layout deel te nemen, alleen te tekenen.
+        Canvas { context, size in
+            let s = min(size.width, size.height)
             let pad = s * 0.22
-            let positions = DiePips.positions(for: value)
+            let pip = s * 0.16
 
-            ZStack {
-                ForEach(Array(positions.enumerated()), id: \.offset) { _, point in
-                    Circle()
-                        .frame(width: s * 0.16, height: s * 0.16)
-                        .position(
-                            x: pad + point.x * (s - pad * 2),
-                            y: pad + point.y * (s - pad * 2)
-                        )
-                }
+            for point in Self.positions(for: value) {
+                let rect = CGRect(
+                    x: pad + point.x * (s - pad * 2) - pip / 2,
+                    y: pad + point.y * (s - pad * 2) - pip / 2,
+                    width: pip,
+                    height: pip
+                )
+                context.fill(Circle().path(in: rect), with: .foreground)
             }
         }
         .padding(inset)
@@ -45,4 +46,17 @@ struct DiePips: View {
         ]
         }
     }
+}
+
+#Preview {
+    HStack(spacing: 8) {
+        ForEach(1...6, id: \.self) { value in
+            DiePips(value: value)
+                .foregroundStyle(AppTheme.ink)
+                .frame(width: 44, height: 44)
+                .background(.white)
+        }
+    }
+    .padding()
+    .background(AppTheme.cream)
 }
