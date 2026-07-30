@@ -7,6 +7,7 @@ struct SettingsView: View {
     @Environment(\.metrics) private var m
 
     @State private var soundOn = SoundPlayer.shared.isEnabled
+    @State private var shakeOn = ShakeToRoll.isEnabled
     @State private var coachReset = false
     @State private var showRules = false
 
@@ -60,6 +61,25 @@ struct SettingsView: View {
                             if isOn {
                                 SoundPlayer.shared.play(.hold)
                             }
+                        }
+                    }
+
+                    section("BESTUREN") {
+                        Toggle(isOn: $shakeOn) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Schudden om te gooien")
+                                    .font(AppTheme.rounded(m.bodySize, .bold))
+                                    .foregroundStyle(AppTheme.ink)
+                                Text("Schud het toestel en de stenen rollen")
+                                    .font(AppTheme.rounded(m.captionSize, .bold))
+                                    .foregroundStyle(AppTheme.soft)
+                            }
+                        }
+                        .tint(AppTheme.mint)
+                        .padding(m.gutter)
+                        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
+                        .onChange(of: shakeOn) { _, isOn in
+                            ShakeToRoll.isEnabled = isOn
                         }
                     }
 

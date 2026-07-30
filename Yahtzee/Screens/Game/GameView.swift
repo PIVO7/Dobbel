@@ -142,6 +142,7 @@ struct GameView: View {
             await engine.playComputerTurnIfNeeded()
         }
         .onAppear(perform: startCoachingIfNeeded)
+        .onShake(perform: shakeToRoll)
         .onChange(of: engine.saveVersion) { _, _ in
             persistProgress()
         }
@@ -205,6 +206,16 @@ struct GameView: View {
 
     private func roll() {
         Task { await engine.rollDice() }
+    }
+
+    /// Schudden voelt bij dobbelen vanzelfsprekend; de knop blijft gewoon
+    /// werken en in Instellingen kan het uit.
+    private func shakeToRoll() {
+        guard ShakeToRoll.isEnabled,
+              engine.canRoll,
+              !showExitConfirm,
+              tipExplanation == nil else { return }
+        roll()
     }
 
     /// Een afgelopen spel valt niets meer te bewaren, dus dan slaan we de

@@ -39,6 +39,7 @@
 		6CCE3013B261115DC213DB84 /* plop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08EBD587280B6E954755F2F5 /* plop.wav */; };
 		6D11181504726FA6EA2B7DD1 /* ThemePalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9EE9E317DAB2739473E5CC /* ThemePalette.swift */; };
 		721537ED0932F1E87ED63F15 /* ToyBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5715CAFD3870A9D31BC09DAC /* ToyBlock.swift */; };
+		74918919968B8FF599274058 /* ShakeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BE3285D458FEEA3160D888 /* ShakeDetection.swift */; };
 		767B02B74C9BA50FFA2E1B3F /* YahtzeeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0A42FABE126185936A4457 /* YahtzeeApp.swift */; };
 		779A1C811E6A3565B1017FD4 /* wissel.wav in Resources */ = {isa = PBXBuildFile; fileRef = DA02E7AB2EF71EDD1EB2DD0D /* wissel.wav */; };
 		780992BCEEBEBEE08339AF53 /* rol.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4919C37682A252524C3AD3E8 /* rol.wav */; };
@@ -119,6 +120,7 @@
 		5715CAFD3870A9D31BC09DAC /* ToyBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyBlock.swift; sourceTree = "<group>"; };
 		5BF58ADE0558AABA7F6FF61F /* ScoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCategory.swift; sourceTree = "<group>"; };
 		62419F01E86C06DFF98636F9 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
+		62BE3285D458FEEA3160D888 /* ShakeDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeDetection.swift; sourceTree = "<group>"; };
 		68918AF5B5585DAB009B168A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6B9EE9E317DAB2739473E5CC /* ThemePalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePalette.swift; sourceTree = "<group>"; };
 		76EF818C857F3C3D5867F896 /* GameResultOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResultOverlay.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				7FEC372715627D12D6B31994 /* PlayerHeaderView.swift */,
 				7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */,
 				2D34CD4C6CE682F960180174 /* ScoreCellView.swift */,
+				62BE3285D458FEEA3160D888 /* ShakeDetection.swift */,
 				04F7838AC9AD2142A7BD7A3F /* StraightGlyph.swift */,
 				55A2E76878588BB3739407E7 /* ToyDialog.swift */,
 			);
@@ -561,6 +564,7 @@
 				CE4CEB1651D6098CEF4495D2 /* Scorecard.swift in Sources */,
 				5492C01EA728726351BB7FC3 /* ScorecardView.swift in Sources */,
 				FA0BB258B6915CDA1FE0B0C9 /* SettingsView.swift in Sources */,
+				74918919968B8FF599274058 /* ShakeDetection.swift in Sources */,
 				7CB09006368A1B7281CC343B /* SoundPlayer.swift in Sources */,
 				54A59FD47CA1BE54945B2F36 /* SplitMix64.swift in Sources */,
 				D0E0EDAB74AB57E69155434B /* StraightGlyph.swift in Sources */,
