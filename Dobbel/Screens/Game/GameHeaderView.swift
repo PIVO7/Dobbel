@@ -49,10 +49,10 @@ struct GameHeaderView: View {
             RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
                 .fill(isMine ? AppTheme.tintCoral : .clear)
         )
-        .overlay(
+        .overlay {
             RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
                 .strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: m.thinBorder)
-        )
+        }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(

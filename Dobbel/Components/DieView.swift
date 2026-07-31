@@ -41,7 +41,7 @@ struct DieView: View {
                     .foregroundStyle(AppTheme.ink)
                     .padding(m.dieSize * 0.07)
                     .background(Circle().fill(AppTheme.amber))
-                    .overlay(Circle().strokeBorder(AppTheme.ink, lineWidth: m.thinBorder))
+                    .overlay { Circle().strokeBorder(AppTheme.ink, lineWidth: m.thinBorder) }
                     .offset(x: m.dieSize * 0.06, y: -m.dieSize * 0.06)
                     .transition(.scale.combined(with: .opacity))
                     .accessibilityHidden(true)
@@ -128,10 +128,10 @@ struct DieView: View {
                 RoundedRectangle(cornerRadius: m.dieCorner, style: .continuous)
                     .fill(die.isHeld ? AppTheme.amber : .white)
             )
-            .overlay(
+            .overlay {
                 RoundedRectangle(cornerRadius: m.dieCorner, style: .continuous)
                     .strokeBorder(AppTheme.ink, lineWidth: m.border)
-            )
+            }
     }
 }
 

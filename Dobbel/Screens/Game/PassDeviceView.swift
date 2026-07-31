@@ -25,9 +25,12 @@ struct PassDeviceView: View {
 
     var body: some View {
         ZStack {
+            // Tikken om door te gaan is een extraatje voor ziende gebruikers;
+            // VoiceOver krijgt de knoppen op de kaart, niet dit vlak.
             AppTheme.ink.opacity(0.5)
                 .ignoresSafeArea()
                 .onTapGesture(perform: onReady)
+                .accessibilityHidden(true)
 
             VStack(spacing: m.gutter) {
                 AvatarBadge(player: player, size: m.avatarSize * 1.5)

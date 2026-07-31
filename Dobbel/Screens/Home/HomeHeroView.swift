@@ -33,10 +33,10 @@ struct HomeHeroView: View {
                 RoundedRectangle(cornerRadius: m.dieCorner * 1.15, style: .continuous)
                     .fill(fill)
             )
-            .overlay(
+            .overlay {
                 RoundedRectangle(cornerRadius: m.dieCorner * 1.15, style: .continuous)
                     .strokeBorder(AppTheme.ink, lineWidth: m.border)
-            )
+            }
             .background(
                 RoundedRectangle(cornerRadius: m.dieCorner * 1.15, style: .continuous)
                     .fill(AppTheme.ink)
