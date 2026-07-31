@@ -1,4 +1,4 @@
-name: Yahtzee
+name: Dobbel
 options:
   bundleIdPrefix: com.pivo7
   developmentLanguage: nl
@@ -19,16 +19,16 @@ settings:
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
 
 targets:
-  Yahtzee:
+  Dobbel:
     type: application
     platform: iOS
     deploymentTarget: '17.0'
     settings:
       base:
-        # "Yahtzee" is een merk van Hasbro; de app heet naar buiten "Dobbel!".
-        # Interne namen (mappen, target, schema) blijven Yahtzee.
+        # "Yahtzee" is een merk van Hasbro; alles heet hier Dobbel. Alleen de
+        # datbestanden op bestaande toestellen houden hun oude yahtzee-naam
+        # (zie GameStore/ProfileStore) en de bundle-id was altijd al dobbel.
         PRODUCT_BUNDLE_IDENTIFIER: com.pivo7.dobbel
-        PRODUCT_NAME: Yahtzee
         # Meertaligheid: de compiler schrijft alle localiseerbare teksten weg
         # (stringsdata), zodat de String Catalog compleet te houden is.
         SWIFT_EMIT_LOC_STRINGS: YES
@@ -42,30 +42,30 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: 'UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight'
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
     sources:
-      - path: Yahtzee
+      - path: Dobbel
 
-  Yahtzee Tests:
+  Dobbel Tests:
     type: bundle.unit-test
     platform: iOS
     deploymentTarget: '17.0'
     sources:
-      - path: Yahtzee Tests
+      - path: Dobbel Tests
     dependencies:
-      - target: Yahtzee
+      - target: Dobbel
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.pivo7.dobbel.tests
         GENERATE_INFOPLIST_FILE: YES
 
 schemes:
-  Yahtzee:
+  Dobbel:
     build:
       targets:
-        Yahtzee: all
-        Yahtzee Tests: [test]
+        Dobbel: all
+        Dobbel Tests: [test]
     test:
       targets:
-        - Yahtzee Tests
+        - Dobbel Tests
       # De tests vergelijken Nederlandse zinnen; sinds de app meertalig is
       # moet de testtaal dus vastliggen, wat de simulatortaal ook is.
       language: nl

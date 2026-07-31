@@ -1,6 +1,6 @@
-# Yahtzee (SwiftUI)
+# Dobbel (SwiftUI)
 
-iOS-app voor kinderen: klassiek Yahtzee met profielen, lokale multiplayer en solo tegen de computer.
+iOS-app voor kinderen: klassiek Dobbel met profielen, lokale multiplayer en solo tegen de computer.
 
 ## Features
 
@@ -8,15 +8,15 @@ iOS-app voor kinderen: klassiek Yahtzee met profielen, lokale multiplayer en sol
 - **Tegen elkaar** — 2–4 spelers, beurten op één apparaat
 - **Tegen de computer** — 1 kind + eenvoudige AI
 - **Klassiek scoreblad** — bovenkant (1–6 + bonus 35 bij ≥63), onderkant, Chance
-- **Yahtzee-bonus** — 100 punten voor elke extra Yahtzee nadat de Yahtzee-rij op 50 staat (met joker-regel)
+- **Dobbel-bonus** — 100 punten voor elke extra Dobbel nadat de Dobbel-rij op 50 staat (met joker-regel)
 - **Dobbelanimatie** — korte roll-animatie bij gooien; tik om dobbelstenen vast te houden
 
 ## Openen in Xcode
 
-`Yahtzee.xcodeproj` staat in de repo, dus op een Mac volstaat:
+`Dobbel.xcodeproj` staat in de repo, dus op een Mac volstaat:
 
 ```bash
-open Yahtzee.xcodeproj
+open Dobbel.xcodeproj
 ```
 
 Kies een simulator of iPhone, druk op Run. Vereisten: Xcode 15+, iOS 17+.
@@ -24,7 +24,7 @@ Kies een simulator of iPhone, druk op Run. Vereisten: Xcode 15+, iOS 17+.
 Vanaf de terminal bouwen of testen:
 
 ```bash
-xcodebuild build -project Yahtzee.xcodeproj -scheme Yahtzee \
+xcodebuild build -project Dobbel.xcodeproj -scheme Dobbel \
   -destination 'platform=iOS Simulator,name=iPhone 16'
 ```
 
@@ -35,7 +35,7 @@ hernoem je ze, dan kan je het project verversen met [XcodeGen](https://github.co
 
 ```bash
 brew install xcodegen   # eenmalig
-xcodegen generate       # overschrijft Yahtzee.xcodeproj
+xcodegen generate       # overschrijft Dobbel.xcodeproj
 ```
 
 Dat is niet verplicht — nieuwe bestanden gewoon in Xcode toevoegen werkt ook. Houd `project.yml`
@@ -45,16 +45,16 @@ dan wel gelijk met wat er in het project staat.
 
 ```
 project.yml                 # XcodeGen-definitie (repo-root)
-Yahtzee/
-  YahtzeeApp.swift
+Dobbel/
+  DobbelApp.swift
   Models/                   # Dobbelsteen, scorecategorieën, profiel, scoreblad
-  Game/                     # GameEngine + YahtzeeScorer
+  Game/                     # GameEngine + DobbelScorer
   AI/                       # ComputerAI
   Persistence/              # ProfileStore (JSON in Documents)
   Components/               # Dice, scoreblad, avatar
   Screens/                  # Home, Profiles, Setup, Game
   Theme/
-Yahtzee Tests/              # Scoring, AI, profielen, engine
+Dobbel Tests/              # Scoring, AI, profielen, engine
 ```
 
 ## Spelregels (kort)
@@ -62,7 +62,7 @@ Yahtzee Tests/              # Scoring, AI, profielen, engine
 1. Maximaal **3 worpen** per beurt; dobbelstenen mogen vastgehouden worden.
 2. Na de beurt moet één **leeg** vakje gekozen worden (ook met 0 punten).
 3. **Bovenbonus**: 35 punten als enen…zessen samen ≥ 63.
-4. **Yahtzee**: 50 punten. Elke volgende Yahtzee (terwijl Yahtzee=50) geeft **+100 Yahtzee-bonus** en mag als joker in een ander vak.
+4. **Dobbel**: 50 punten. Elke volgende Dobbel (terwijl Dobbel=50) geeft **+100 Dobbel-bonus** en mag als joker in een ander vak.
 
 ## Ontwerpkeuzes
 
@@ -78,5 +78,5 @@ Yahtzee Tests/              # Scoring, AI, profielen, engine
 In Xcode: `⌘U`, of:
 
 ```bash
-xcodebuild test -project Yahtzee.xcodeproj -scheme Yahtzee -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild test -project Dobbel.xcodeproj -scheme Dobbel -destination 'platform=iOS Simulator,name=iPhone 16'
 ```
