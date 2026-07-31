@@ -28,7 +28,9 @@ struct DiceTrayView: View {
                 .buttonStyle(DieButtonStyle())
                 .disabled(!canInteract)
                 .accessibilityLabel("Dobbelsteen \(die.value)")
-                .accessibilityHint(die.isHeld ? "Vastgehouden, tik om los te laten" : "Tik om vast te houden")
+                .accessibilityHint(die.isHeld
+                    ? LocalizedStringKey("Vastgehouden, tik om los te laten")
+                    : LocalizedStringKey("Tik om vast te houden"))
                 .accessibilityAddTraits(die.isHeld ? .isSelected : [])
             }
         }

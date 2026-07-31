@@ -135,10 +135,10 @@ struct GameView: View {
 
                 if showExitConfirm {
                     ToyDialog(
-                        title: "Spel verlaten?",
-                        message: "Je voortgang wordt bewaard.",
-                        confirmTitle: "Verlaten",
-                        cancelTitle: "Doorspelen",
+                        title: String(localized: "Spel verlaten?"),
+                        message: String(localized: "Je voortgang wordt bewaard."),
+                        confirmTitle: String(localized: "Verlaten"),
+                        cancelTitle: String(localized: "Doorspelen"),
                         onConfirm: leave,
                         onCancel: {
                             withAnimation(.easeOut(duration: 0.15)) {
@@ -151,9 +151,9 @@ struct GameView: View {
 
                 if let tipExplanation {
                     ToyDialog(
-                        title: "Daarom!",
+                        title: String(localized: "Daarom!"),
                         message: tipExplanation,
-                        confirmTitle: "Snap ik!",
+                        confirmTitle: String(localized: "Snap ik!"),
                         onConfirm: dismissTip,
                         onCancel: dismissTip
                     )
@@ -296,7 +296,7 @@ struct GameView: View {
             switch coachStep {
             case .hold:
                 CoachBubbleView(
-                    text: "Tik op een steen om hem vast te houden. Met het handje gooit hij niet mee.",
+                    text: String(localized: "Tik op een steen om hem vast te houden. Met het handje gooit hij niet mee."),
                     icon: "hand.raised.fill",
                     onDismiss: hideCoachBubble
                 )
@@ -305,7 +305,7 @@ struct GameView: View {
             case .score:
                 Spacer(minLength: 0)
                 CoachBubbleView(
-                    text: "Kies een vakje op het scoreblad voor je punten. Het groene vakje is de tip!",
+                    text: String(localized: "Kies een vakje op het scoreblad voor je punten. Het groene vakje is de tip!"),
                     icon: "checkmark.circle.fill",
                     onDismiss: hideCoachBubble
                 )
@@ -313,7 +313,7 @@ struct GameView: View {
             case .roll:
                 Spacer(minLength: 0)
                 CoachBubbleView(
-                    text: "Tik op Gooien om te dobbelen!",
+                    text: String(localized: "Tik op Gooien om te dobbelen!"),
                     icon: "hand.tap.fill",
                     onDismiss: hideCoachBubble
                 )
@@ -339,7 +339,9 @@ struct GameView: View {
         engine.undoLastScore()
         holdPulse += 1
         SoundPlayer.shared.play(.hold)
-        AccessibilityNotification.Announcement("Zet teruggezet. \(engine.currentPlayer.name) is weer aan de beurt.").post()
+        AccessibilityNotification.Announcement(
+            String(localized: "Zet teruggezet. \(engine.currentPlayer.name) is weer aan de beurt.")
+        ).post()
     }
 
     private func dismissTip() {
@@ -352,7 +354,7 @@ struct GameView: View {
     /// de naam.
     private var bannerTitle: String? {
         if engine.mode == .versusComputer, !engine.currentPlayer.isComputer {
-            return "Jij bent aan de beurt"
+            return String(localized: "Jij bent aan de beurt")
         }
         return nil
     }
@@ -410,7 +412,7 @@ struct GameView: View {
         scorePulse += 1
         SoundPlayer.shared.play(.turn)
         AccessibilityNotification.Announcement(
-            bannerTitle ?? "\(engine.currentPlayer.name) is aan de beurt"
+            bannerTitle ?? String(localized: "\(engine.currentPlayer.name) is aan de beurt")
         ).post()
 
         // Met z'n allen aan één toestel pauzeert het spel tot de volgende

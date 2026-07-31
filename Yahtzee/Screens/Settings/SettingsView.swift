@@ -134,7 +134,9 @@ struct SettingsView: View {
                             coachReset = true
                         } label: {
                             HStack {
-                                Text(coachReset ? "De uitleg verschijnt weer bij het volgende potje" : "Uitleg opnieuw tonen")
+                                Text(coachReset
+                                 ? LocalizedStringKey("De uitleg verschijnt weer bij het volgende potje")
+                                 : LocalizedStringKey("Uitleg opnieuw tonen"))
                                     .font(AppTheme.rounded(m.bodySize, .bold))
                                     .foregroundStyle(coachReset ? AppTheme.soft : AppTheme.ink)
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -201,13 +203,17 @@ struct SettingsView: View {
             border: picked ? m.border + 1 : m.border,
             borderColor: picked ? AppTheme.coral : AppTheme.ink
         ))
-        .accessibilityLabel("Thema \(theme.title)" + (locked ? ", Gezinsversie nodig" : ""))
+        .accessibilityLabel(
+            locked
+                ? String(localized: "Thema \(theme.title), Gezinsversie nodig")
+                : String(localized: "Thema \(theme.title)")
+        )
         .accessibilityAddTraits(picked ? .isSelected : [])
     }
 
     @ViewBuilder
     private func section<Content: View>(
-        _ title: String,
+        _ title: LocalizedStringKey,
         @ViewBuilder content: () -> Content
     ) -> some View {
         VStack(alignment: .leading, spacing: 10) {

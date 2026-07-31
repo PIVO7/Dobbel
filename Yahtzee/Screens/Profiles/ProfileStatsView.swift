@@ -32,19 +32,19 @@ struct ProfileStatsView: View {
                             .padding(.top, m.gutter)
                     } else {
                         VStack(spacing: m.cellGap * 2) {
-                            statRow("Gespeeld", "\(profile.gamesPlayed)", icon: "die.face.5.fill")
-                            statRow("Gewonnen", "\(profile.wins)", icon: "crown.fill")
-                            statRow("Hoogste score", "\(profile.bestScore)", icon: "arrow.up.circle.fill")
-                            statRow("Gemiddeld", average.map { "\($0)" } ?? "–", icon: "equal.circle.fill")
-                            statRow("Dobbels", "\(profile.dobbelCount)", icon: "star.fill")
+                            statRow(String(localized: "Gespeeld"), "\(profile.gamesPlayed)", icon: "die.face.5.fill")
+                            statRow(String(localized: "Gewonnen"), "\(profile.wins)", icon: "crown.fill")
+                            statRow(String(localized: "Hoogste score"), "\(profile.bestScore)", icon: "arrow.up.circle.fill")
+                            statRow(String(localized: "Gemiddeld"), average.map { "\($0)" } ?? "–", icon: "equal.circle.fill")
+                            statRow(String(localized: "Dobbels"), "\(profile.dobbelCount)", icon: "star.fill")
                             statRow(
-                                "Winreeks",
+                                String(localized: "Winreeks"),
                                 profile.currentStreak > 0
-                                    ? "\(profile.currentStreak) op rij · beste \(profile.bestStreak)"
-                                    : "beste \(profile.bestStreak)",
+                                    ? String(localized: "\(profile.currentStreak) op rij · beste \(profile.bestStreak)")
+                                    : String(localized: "beste \(profile.bestStreak)"),
                                 icon: "flame.fill"
                             )
-                            statRow("Bonus gehaald", "\(profile.bonusCount) van \(profile.gamesPlayed)", icon: "plus.circle.fill")
+                            statRow(String(localized: "Bonus gehaald"), String(localized: "\(profile.bonusCount) van \(profile.gamesPlayed)"), icon: "plus.circle.fill")
                         }
                         .padding(.top, m.gutter * 0.5)
                     }

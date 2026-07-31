@@ -29,6 +29,10 @@ targets:
         # Interne namen (mappen, target, schema) blijven Yahtzee.
         PRODUCT_BUNDLE_IDENTIFIER: com.pivo7.dobbel
         PRODUCT_NAME: Yahtzee
+        # Meertaligheid: de compiler schrijft alle localiseerbare teksten weg
+        # (stringsdata), zodat de String Catalog compleet te houden is.
+        SWIFT_EMIT_LOC_STRINGS: YES
+        LOCALIZATION_PREFERS_STRING_CATALOGS: YES
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Dobbel!
         INFOPLIST_KEY_LSRequiresIPhoneOS: YES
@@ -62,6 +66,10 @@ schemes:
     test:
       targets:
         - Yahtzee Tests
+      # De tests vergelijken Nederlandse zinnen; sinds de app meertalig is
+      # moet de testtaal dus vastliggen, wat de simulatortaal ook is.
+      language: nl
+      region: BE
     run:
       config: Debug
       storeKitConfiguration: Dobbel.storekit

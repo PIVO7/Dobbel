@@ -42,10 +42,10 @@ enum ThemeID: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .klassiek: return "Klassiek"
-        case .snoep: return "Snoep"
-        case .oceaan: return "Oceaan"
-        case .nacht: return "Nacht"
+        case .klassiek: return String(localized: "Klassiek")
+        case .snoep: return String(localized: "Snoep")
+        case .oceaan: return String(localized: "Oceaan")
+        case .nacht: return String(localized: "Nacht")
         }
     }
 

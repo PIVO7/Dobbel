@@ -15,7 +15,7 @@ struct GameSnapshot: Codable, Equatable {
         let names = players.filter { !$0.isComputer }.map(\.name)
         switch mode {
         case .versusComputer:
-            return names.first.map { "\($0) vs Computer" } ?? mode.title
+            return names.first.map { String(localized: "\($0) vs Computer") } ?? mode.title
         case .versusFriends:
             return names.joined(separator: " · ")
         }

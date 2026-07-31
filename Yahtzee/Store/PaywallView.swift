@@ -108,7 +108,7 @@ struct PaywallView: View {
         .interactiveDismissDisabled(isBusy)
     }
 
-    private func feature(_ icon: String, _ text: String) -> some View {
+    private func feature(_ icon: String, _ text: LocalizedStringKey) -> some View {
         HStack(alignment: .top, spacing: m.gutter * 0.6) {
             Image(systemName: icon)
                 .font(.system(size: m.bodySize, weight: .black))

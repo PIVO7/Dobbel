@@ -40,7 +40,7 @@ struct GameResultOverlay: View {
                         .accessibilityHidden(true)
                 }
 
-                Text(hasSingleWinner ? "Gewonnen!" : "Klaar!")
+                Text(hasSingleWinner ? LocalizedStringKey("Gewonnen!") : LocalizedStringKey("Klaar!"))
                     .font(AppTheme.rounded(m.titleSize))
                     .foregroundStyle(AppTheme.ink)
 
@@ -131,8 +131,9 @@ struct GameResultOverlay: View {
         )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            "\(player.name), \(player.scorecard.total) punten"
-                + (isWinner && hasSingleWinner ? ", winnaar" : "")
+            isWinner && hasSingleWinner
+                ? String(localized: "\(player.name), \(player.scorecard.total) punten, winnaar")
+                : String(localized: "\(player.name), \(player.scorecard.total) punten")
         )
     }
 }

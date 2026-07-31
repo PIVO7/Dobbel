@@ -89,7 +89,12 @@ struct GameSetupView: View {
                         // Meteen kunnen spelen zonder eerst een profiel aan
                         // te maken; gasten worden niet bewaard.
                         Button(action: requestGuestStart) {
-                            Text(mode == .versusComputer ? "Of speel als gast" : "Of speel met twee gasten")
+                            // Expliciet LocalizedStringKey: een ternary van twee
+                            // letterlijke strings wordt anders een gewone String
+                            // en die vertaalt Text niet.
+                            Text(mode == .versusComputer
+                                 ? LocalizedStringKey("Of speel als gast")
+                                 : LocalizedStringKey("Of speel met twee gasten"))
                                 .font(AppTheme.rounded(m.buttonTextSize * 0.75))
                                 .foregroundStyle(AppTheme.ink)
                                 .frame(maxWidth: .infinity)
@@ -103,7 +108,9 @@ struct GameSetupView: View {
                         ))
                     }
                 } else {
-                    Text(mode == .versusComputer ? "KIES JOUW PROFIEL" : "KIES 2 TOT 4 SPELERS")
+                    Text(mode == .versusComputer
+                         ? LocalizedStringKey("KIES JOUW PROFIEL")
+                         : LocalizedStringKey("KIES 2 TOT 4 SPELERS"))
                         .font(AppTheme.rounded(m.captionSize * 0.9))
                         .kerning(1.4)
                         .foregroundStyle(AppTheme.faint)
@@ -157,10 +164,10 @@ struct GameSetupView: View {
             // systeempaneel.
             if pendingStart != nil {
                 ToyDialog(
-                    title: "Lopend spel vervangen?",
-                    message: "Er staat nog een spel klaar om verder te spelen.",
-                    confirmTitle: "Nieuw spel starten",
-                    cancelTitle: "Annuleer",
+                    title: String(localized: "Lopend spel vervangen?"),
+                    message: String(localized: "Er staat nog een spel klaar om verder te spelen."),
+                    confirmTitle: String(localized: "Nieuw spel starten"),
+                    cancelTitle: String(localized: "Annuleer"),
                     onConfirm: {
                         let start = pendingStart
                         pendingStart = nil
@@ -269,7 +276,11 @@ struct GameSetupView: View {
             depth: picked ? m.depth : 3,
             border: m.border
         ))
-        .accessibilityLabel("\(level.personaName), \(level.subtitle)" + (locked ? ", Gezinsversie nodig" : ""))
+        .accessibilityLabel(
+            locked
+                ? String(localized: "\(level.personaName), \(level.subtitle), Gezinsversie nodig")
+                : "\(level.personaName), \(level.subtitle)"
+        )
         .accessibilityAddTraits(picked ? .isSelected : [])
     }
 
@@ -323,8 +334,11 @@ struct GameSetupView: View {
     /// bewaard en tellen niet mee in de statistieken.
     private func beginGuestGame() {
         var profiles = mode == .versusFriends
-            ? [PlayerProfile(name: "Gast 1"), PlayerProfile(name: "Gast 2", avatarColorIndex: 1)]
-            : [PlayerProfile(name: "Gast")]
+            ? [
+                PlayerProfile(name: String(localized: "Gast 1")),
+                PlayerProfile(name: String(localized: "Gast 2"), avatarColorIndex: 1)
+            ]
+            : [PlayerProfile(name: String(localized: "Gast"))]
         if mode == .versusComputer {
             profiles.append(.computer(level: opponentLevel))
         }

@@ -40,7 +40,11 @@ struct ScoreCellView: View {
                 depth: 3,
                 border: m.thinBorder
             ))
-            .accessibilityLabel("\(category.title), \(points) punten\(isAdvised ? ", tip" : "")")
+            .accessibilityLabel(
+                isAdvised
+                    ? String(localized: "\(category.title), \(points) punten, tip")
+                    : String(localized: "\(category.title), \(points) punten")
+            )
         } else {
             let scored = player.scorecard.scores[category]
             Text(scored.map { "\($0)" } ?? "–")
@@ -49,7 +53,10 @@ struct ScoreCellView: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: m.rowHeight)
                 .toyBlock(fill: isMine ? AppTheme.tintCoral : AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)
-                .accessibilityLabel("\(category.title), \(scored.map { "\($0) punten" } ?? "leeg")")
+                .accessibilityLabel(
+                    scored.map { String(localized: "\(category.title), \($0) punten") }
+                        ?? String(localized: "\(category.title), leeg")
+                )
         }
     }
 }

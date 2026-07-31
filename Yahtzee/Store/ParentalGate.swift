@@ -21,7 +21,7 @@ struct ParentalGateQuestion: Equatable {
             }
         }
         let options = ([answer] + wrong).shuffled(using: &generator)
-        return ParentalGateQuestion(text: "Hoeveel is \(a) × \(b)?", answer: answer, options: options)
+        return ParentalGateQuestion(text: String(localized: "Hoeveel is \(a) × \(b)?"), answer: answer, options: options)
     }
 
     static func make() -> ParentalGateQuestion {

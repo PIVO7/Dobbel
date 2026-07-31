@@ -58,6 +58,7 @@
 		98338AC54E6C32C3266B7494 /* EntitlementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDE3DFCF21F2B54151D5927 /* EntitlementStore.swift */; };
 		9AA2D70DB9339D9F70C0E870 /* ProfilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD07E864A07331F04EE9F /* ProfilesView.swift */; };
 		9E904BD8430C76D90DB4290A /* GamePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1780A662CAC6FD50B58B826 /* GamePlayer.swift */; };
+		A1518FB0D24F83E1DEEF65AC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 318E961960C7B338D40BE40E /* Localizable.xcstrings */; };
 		A350B6D1F6FC8C2257BEA4AD /* GameCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00624F2B92C0CDD3CB60134 /* GameCoverView.swift */; };
 		A97E08433C1FB3B34E2EE6A4 /* RollPhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF75799455F5E109298500CF /* RollPhrase.swift */; };
 		B27AF48579CF1F6ABF8F4FD6 /* TurnBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC56DB7E3019793D4CA0B66C /* TurnBannerView.swift */; };
@@ -115,6 +116,7 @@
 		2D34CD4C6CE682F960180174 /* ScoreCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCellView.swift; sourceTree = "<group>"; };
 		2E760F0309B9C4D8CE661A98 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
 		2FBF487EC304E6D9D611B98B /* Die.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Die.swift; sourceTree = "<group>"; };
+		318E961960C7B338D40BE40E /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		35BA779993F60EA30679299F /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		38F108A028507411656E8EA7 /* DiePips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiePips.swift; sourceTree = "<group>"; };
 		39E38F075F5C620D40249354 /* YahtzeeScorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahtzeeScorer.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				29523F1BA2D06F74D488BA27 /* Assets.xcassets */,
+				318E961960C7B338D40BE40E /* Localizable.xcstrings */,
 				1B0A42FABE126185936A4457 /* YahtzeeApp.swift */,
 				974D37983874F5C0E0476C26 /* AI */,
 				B0F580BC0760CC0E98C5F436 /* Components */,
@@ -505,6 +508,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				en,
+				fr,
 				nl,
 			);
 			mainGroup = 2AC17301BE671174D12140C4;
@@ -526,6 +531,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19C50DA86151A37B68242004 /* Assets.xcassets in Resources */,
+				A1518FB0D24F83E1DEEF65AC /* Localizable.xcstrings in Resources */,
 				40A2B87631E4888C3561D841 /* ding.wav in Resources */,
 				246745CF081489E2EFDF3432 /* fanfare.wav in Resources */,
 				6CCE3013B261115DC213DB84 /* plop.wav in Resources */,
@@ -657,9 +663,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pivo7.dobbel;
 				PRODUCT_NAME = Yahtzee;
 				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -788,9 +796,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pivo7.dobbel;
 				PRODUCT_NAME = Yahtzee;
 				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

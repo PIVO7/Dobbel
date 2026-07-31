@@ -33,10 +33,10 @@ struct RulesView: View {
 
                     section("ZO SPEEL JE") {
                         card {
-                            bullet("die.face.5.fill", "Gooi de vijf stenen. Je mag tot drie keer gooien per beurt.")
-                            bullet("hand.raised.fill", "Tik op stenen om ze vast te houden; die gooien niet mee.")
-                            bullet("checkmark.circle.fill", "Kies daarna een vakje voor je punten. Elk vakje kan maar één keer.")
-                            bullet("flag.checkered", "Na dertien beurten is het blad vol. De meeste punten wint!")
+                            bullet("die.face.5.fill", String(localized: "Gooi de vijf stenen. Je mag tot drie keer gooien per beurt."))
+                            bullet("hand.raised.fill", String(localized: "Tik op stenen om ze vast te houden; die gooien niet mee."))
+                            bullet("checkmark.circle.fill", String(localized: "Kies daarna een vakje voor je punten. Elk vakje kan maar één keer."))
+                            bullet("flag.checkered", String(localized: "Na dertien beurten is het blad vol. De meeste punten wint!"))
                         }
                     }
 
@@ -65,20 +65,20 @@ struct RulesView: View {
 
                     section("ONDERIN") {
                         card {
-                            categoryRow(.threeOfAKind, "Drie dezelfde ogen.", points: "alle ogen")
-                            categoryRow(.fourOfAKind, "Vier dezelfde ogen.", points: "alle ogen")
-                            categoryRow(.fullHouse, "Twee én drie dezelfde samen.", points: "25")
-                            categoryRow(.smallStraight, "Vier stenen op een rij.", points: "30")
-                            categoryRow(.largeStraight, "Vijf stenen op een rij.", points: "40")
-                            categoryRow(.yahtzee, "Vijf dezelfde: DOBBEL!", points: "50")
-                            categoryRow(.chance, "Alles mag; tel alle ogen op.", points: "alle ogen")
+                            categoryRow(.threeOfAKind, String(localized: "Drie dezelfde ogen."), points: String(localized: "alle ogen"))
+                            categoryRow(.fourOfAKind, String(localized: "Vier dezelfde ogen."), points: String(localized: "alle ogen"))
+                            categoryRow(.fullHouse, String(localized: "Twee én drie dezelfde samen."), points: "25")
+                            categoryRow(.smallStraight, String(localized: "Vier stenen op een rij."), points: "30")
+                            categoryRow(.largeStraight, String(localized: "Vijf stenen op een rij."), points: "40")
+                            categoryRow(.yahtzee, String(localized: "Vijf dezelfde: DOBBEL!"), points: "50")
+                            categoryRow(.chance, String(localized: "Alles mag; tel alle ogen op."), points: String(localized: "alle ogen"))
                         }
                     }
 
                     section("NOG EEN DOBBEL?") {
                         card {
-                            bullet("star.fill", "Gooi je nóg eens vijf dezelfde terwijl je Dobbel-vakje al vol is? Dan krijg je er 100 punten bij!")
-                            bullet("arrow.uturn.up", "De worp zelf zet je bovenin bij dat getal. Is dat vakje al vol, dan mag hij als joker in een vakje onderin.")
+                            bullet("star.fill", String(localized: "Gooi je nóg eens vijf dezelfde terwijl je Dobbel-vakje al vol is? Dan krijg je er 100 punten bij!"))
+                            bullet("arrow.uturn.up", String(localized: "De worp zelf zet je bovenin bij dat getal. Is dat vakje al vol, dan mag hij als joker in een vakje onderin."))
                         }
                     }
                 }
@@ -141,7 +141,7 @@ struct RulesView: View {
 
     @ViewBuilder
     private func section<Content: View>(
-        _ title: String,
+        _ title: LocalizedStringKey,
         @ViewBuilder content: () -> Content
     ) -> some View {
         VStack(alignment: .leading, spacing: 10) {

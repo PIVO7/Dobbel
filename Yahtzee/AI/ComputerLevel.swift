@@ -12,17 +12,17 @@ enum ComputerLevel: String, Codable, CaseIterable, Identifiable {
 
     var personaName: String {
         switch self {
-        case .easy: return "Dommel"
-        case .medium: return "Robbie"
-        case .hard: return "Professor Punt"
+        case .easy: return String(localized: "Dommel")
+        case .medium: return String(localized: "Robbie")
+        case .hard: return String(localized: "Professor Punt")
         }
     }
 
     var subtitle: String {
         switch self {
-        case .easy: return "gooit maar wat"
-        case .medium: return "speelt lekker mee"
-        case .hard: return "rekent alles uit"
+        case .easy: return String(localized: "gooit maar wat")
+        case .medium: return String(localized: "speelt lekker mee")
+        case .hard: return String(localized: "rekent alles uit")
         }
     }
 

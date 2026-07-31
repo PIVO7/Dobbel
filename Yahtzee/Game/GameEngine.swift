@@ -131,7 +131,7 @@ final class GameEngine {
         self.dice = (0..<5).map { _ in Die(value: 1) }
         self.computerAI = computerAI
         self.rng = SplitMix64(seed: seed ?? UInt64.random(in: .min ... .max))
-        self.turnMessage = "\(currentPlayer.name) mag gooien"
+        self.turnMessage = String(localized: "\(currentPlayer.name) mag gooien")
     }
 
     init(snapshot: GameSnapshot, seed: UInt64? = nil, computerAI: ComputerAI = ComputerAI()) {
@@ -230,7 +230,7 @@ final class GameEngine {
     private func performRoll() async {
         guard canPerformTurnAction, rollsRemaining > 0 else { return }
         isRolling = true
-        turnMessage = "\(currentPlayer.name) gooit…"
+        turnMessage = String(localized: "\(currentPlayer.name) gooit…")
 
         for _ in 0..<8 {
             for index in dice.indices where !dice[index].isHeld {
@@ -254,16 +254,16 @@ final class GameEngine {
         isSettling = false
 
         if currentPlayer.isComputer {
-            turnMessage = "\(currentPlayer.name) denkt na…"
+            turnMessage = String(localized: "\(currentPlayer.name) denkt na…")
         } else if let forced = jokerForcedCategory {
             // De jokerregel sluit alle andere vakjes; zonder uitleg ziet dat
             // eruit alsof het scoreblad kapot is.
-            turnMessage = "Tweede Dobbel! Die moet bovenin, bij \(forced.title.lowercased())"
+            turnMessage = String(localized: "Tweede Dobbel! Die moet bovenin, bij \(forced.title.lowercased())")
         } else {
             // Midden in de beurt geen staande instructie: de worp in woorden
             // is genoeg, en het scherm blijft rustig.
             turnMessage = rollsRemaining == 0
-                ? "Kies een vakje op het scoreblad"
+                ? String(localized: "Kies een vakje op het scoreblad")
                 : ""
         }
         markDirty()
@@ -304,7 +304,7 @@ final class GameEngine {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.count
         } while players[currentPlayerIndex].scorecard.isComplete
 
-        turnMessage = "\(currentPlayer.name) is aan de beurt"
+        turnMessage = String(localized: "\(currentPlayer.name) is aan de beurt")
         turnJustChanged = true
         markDirty()
     }
@@ -315,9 +315,9 @@ final class GameEngine {
         winnerProfileIDs = players.filter { $0.scorecard.total == best }.map(\.profileID)
         if winnerProfileIDs.count == 1,
            let winner = players.first(where: { $0.profileID == winnerProfileIDs[0] }) {
-            turnMessage = "\(winner.name) wint met \(best) punten!"
+            turnMessage = String(localized: "\(winner.name) wint met \(best) punten!")
         } else {
-            turnMessage = "Gelijkspel met \(best) punten!"
+            turnMessage = String(localized: "Gelijkspel met \(best) punten!")
         }
     }
 

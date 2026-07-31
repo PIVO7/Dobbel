@@ -20,7 +20,7 @@ struct TurnBannerView: View {
             HStack(spacing: m.gutter * 0.6) {
                 AvatarBadge(player: player, size: m.avatarSize * 0.62)
 
-                Text(title ?? "\(player.name) is aan de beurt")
+                Text(title ?? String(localized: "\(player.name) is aan de beurt"))
                     .font(AppTheme.rounded(m.bodySize))
                     .foregroundStyle(.white)
                     .lineLimit(1)

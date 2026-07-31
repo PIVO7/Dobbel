@@ -91,7 +91,7 @@ struct ProfilesView: View {
 
     @ViewBuilder
     private func section<Content: View>(
-        _ title: String,
+        _ title: LocalizedStringKey,
         @ViewBuilder content: () -> Content
     ) -> some View {
         VStack(alignment: .leading, spacing: 10) {

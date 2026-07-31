@@ -36,7 +36,7 @@ struct HomeView: View {
                                     activeGame = ActiveGame(engine: GameEngine(snapshot: saved))
                                 } label: {
                                     menuLabel(
-                                        "Verder spelen",
+                                        String(localized: "Verder spelen"),
                                         subtitle: saved.summaryTitle,
                                         tint: AppTheme.coral,
                                         face: 5
@@ -45,15 +45,17 @@ struct HomeView: View {
                             }
 
                             NavigationLink(value: Destination.setup(.versusFriends)) {
-                                menuLabel("Tegen elkaar", subtitle: "2 tot 4 spelers, één toestel",
+                                menuLabel(GameMode.versusFriends.title,
+                                          subtitle: String(localized: "2 tot 4 spelers, één toestel"),
                                           tint: AppTheme.amber, face: 4)
                             }
                             NavigationLink(value: Destination.setup(.versusComputer)) {
-                                menuLabel("Tegen de computer", subtitle: "Solo uitdaging",
+                                menuLabel(GameMode.versusComputer.title,
+                                          subtitle: String(localized: "Solo uitdaging"),
                                           tint: AppTheme.sky, face: 1)
                             }
                             NavigationLink(value: Destination.profiles) {
-                                menuLabel("Profielen", subtitle: winsSubtitle,
+                                menuLabel(String(localized: "Profielen"), subtitle: winsSubtitle,
                                           tint: AppTheme.mint, face: 6)
                             }
                         }
@@ -108,9 +110,9 @@ struct HomeView: View {
     private var winsSubtitle: String {
         let total = profileStore.humanProfiles.reduce(0) { $0 + $1.wins }
         if profileStore.humanProfiles.isEmpty {
-            return "Maak eerst een speler aan"
+            return String(localized: "Maak eerst een speler aan")
         }
-        return "\(profileStore.humanProfiles.count) spelers · \(total) overwinningen"
+        return String(localized: "\(profileStore.humanProfiles.count) spelers · \(total) overwinningen")
     }
 
     private func menuLabel(_ title: String, subtitle: String, tint: Color, face: Int) -> some View {

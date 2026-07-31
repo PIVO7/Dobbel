@@ -35,13 +35,17 @@ struct RollButtonView: View {
             border: m.border
         ))
         .disabled(!canRoll)
-        .accessibilityLabel(rollsRemaining > 0 ? "\(title), nog \(rollsRemaining) worpen" : title)
+        .accessibilityLabel(
+            rollsRemaining > 0
+                ? String(localized: "\(title), nog \(rollsRemaining) worpen")
+                : title
+        )
     }
 
     private var title: String {
-        if isRolling { return "Bezig…" }
-        if rollsRemaining == 0 { return "Kies een vakje" }
-        return "Gooien"
+        if isRolling { return String(localized: "Bezig…") }
+        if rollsRemaining == 0 { return String(localized: "Kies een vakje") }
+        return String(localized: "Gooien")
     }
 }
 

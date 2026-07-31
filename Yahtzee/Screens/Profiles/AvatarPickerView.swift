@@ -15,17 +15,20 @@ struct AvatarPickerView: View {
     /// Kindvriendelijke symbolen met een uitspreekbare naam; de eerste keuze
     /// is "gewoon je letters".
     static let symbols: [(name: String, label: String)] = [
-        ("cat.fill", "Kat"), ("dog.fill", "Hond"),
-        ("hare.fill", "Haas"), ("tortoise.fill", "Schildpad"),
-        ("bird.fill", "Vogel"), ("fish.fill", "Vis"),
-        ("ladybug.fill", "Lieveheersbeestje"), ("pawprint.fill", "Pootafdruk"),
-        ("star.fill", "Ster"), ("heart.fill", "Hart"),
-        ("bolt.fill", "Bliksem"), ("crown.fill", "Kroon"),
-        ("sun.max.fill", "Zon"), ("moon.stars.fill", "Maan"),
-        ("flame.fill", "Vlam"), ("leaf.fill", "Blad")
+        ("cat.fill", String(localized: "Kat")), ("dog.fill", String(localized: "Hond")),
+        ("hare.fill", String(localized: "Haas")), ("tortoise.fill", String(localized: "Schildpad")),
+        ("bird.fill", String(localized: "Vogel")), ("fish.fill", String(localized: "Vis")),
+        ("ladybug.fill", String(localized: "Lieveheersbeestje")), ("pawprint.fill", String(localized: "Pootafdruk")),
+        ("star.fill", String(localized: "Ster")), ("heart.fill", String(localized: "Hart")),
+        ("bolt.fill", String(localized: "Bliksem")), ("crown.fill", String(localized: "Kroon")),
+        ("sun.max.fill", String(localized: "Zon")), ("moon.stars.fill", String(localized: "Maan")),
+        ("flame.fill", String(localized: "Vlam")), ("leaf.fill", String(localized: "Blad"))
     ]
 
-    private static let colorNames = ["Koraal", "Blauw", "Geel", "Mint", "Paars", "Oranje"]
+    private static let colorNames = [
+        String(localized: "Koraal"), String(localized: "Blauw"), String(localized: "Geel"),
+        String(localized: "Mint"), String(localized: "Paars"), String(localized: "Oranje")
+    ]
 
     init(profile: PlayerProfile, onSave: @escaping (Int, String?) -> Void) {
         self.profile = profile
@@ -69,7 +72,7 @@ struct AvatarPickerView: View {
                         }
                         .buttonStyle(.plain)
                         .animation(.easeOut(duration: 0.12), value: colorIndex)
-                        .accessibilityLabel("Kleur \(Self.colorNames[index % Self.colorNames.count])")
+                        .accessibilityLabel(String(localized: "Kleur \(Self.colorNames[index % Self.colorNames.count])"))
                         .accessibilityAddTraits(colorIndex == index ? .isSelected : [])
                     }
                 }
@@ -79,7 +82,7 @@ struct AvatarPickerView: View {
                     columns: Array(repeating: GridItem(.flexible(), spacing: m.cellGap * 2), count: 6),
                     spacing: m.cellGap * 2
                 ) {
-                    symbolCell(nil, label: "Initialen")
+                    symbolCell(nil, label: String(localized: "Initialen"))
                     ForEach(Self.symbols, id: \.name) { symbol in
                         symbolCell(symbol.name, label: symbol.label)
                     }
@@ -139,7 +142,7 @@ struct AvatarPickerView: View {
         .accessibilityAddTraits(picked ? .isSelected : [])
     }
 
-    private func sectionTitle(_ title: String) -> some View {
+    private func sectionTitle(_ title: LocalizedStringKey) -> some View {
         Text(title)
             .font(AppTheme.rounded(m.captionSize * 0.9))
             .kerning(1.4)

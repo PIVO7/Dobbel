@@ -19,19 +19,19 @@ enum ScoreCategory: String, CaseIterable, Codable, Identifiable, Hashable {
 
     var title: String {
         switch self {
-        case .ones: return "Enen"
-        case .twos: return "Tweeën"
-        case .threes: return "Drieën"
-        case .fours: return "Vieren"
-        case .fives: return "Vijven"
-        case .sixes: return "Zessen"
-        case .threeOfAKind: return "3 dezelfde"
-        case .fourOfAKind: return "4 dezelfde"
-        case .fullHouse: return "Vol huis"
-        case .smallStraight: return "Kleine straat"
-        case .largeStraight: return "Grote straat"
-        case .yahtzee: return "Dobbel"
-        case .chance: return "Kans"
+        case .ones: return String(localized: "Enen")
+        case .twos: return String(localized: "Tweeën")
+        case .threes: return String(localized: "Drieën")
+        case .fours: return String(localized: "Vieren")
+        case .fives: return String(localized: "Vijven")
+        case .sixes: return String(localized: "Zessen")
+        case .threeOfAKind: return String(localized: "3 dezelfde")
+        case .fourOfAKind: return String(localized: "4 dezelfde")
+        case .fullHouse: return String(localized: "Vol huis")
+        case .smallStraight: return String(localized: "Kleine straat")
+        case .largeStraight: return String(localized: "Grote straat")
+        case .yahtzee: return String(localized: "Dobbel")
+        case .chance: return String(localized: "Kans")
         }
     }
 

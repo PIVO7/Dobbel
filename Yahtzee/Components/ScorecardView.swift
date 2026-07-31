@@ -113,7 +113,9 @@ struct ScorecardView: View {
                     .frame(height: m.rowHeight)
                     .toyBlock(fill: AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)
                     .accessibilityLabel(
-                        reached ? "Bonus behaald, 35 punten" : "Bonus bij 63, nu \(subtotal)"
+                        reached
+                            ? String(localized: "Bonus behaald, 35 punten")
+                            : String(localized: "Bonus bij 63, nu \(subtotal)")
                     )
             }
         }

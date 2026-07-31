@@ -8,15 +8,15 @@ enum GameMode: String, CaseIterable, Identifiable, Codable {
 
     var title: String {
         switch self {
-        case .versusFriends: return "Tegen elkaar"
-        case .versusComputer: return "Tegen de computer"
+        case .versusFriends: return String(localized: "Tegen elkaar")
+        case .versusComputer: return String(localized: "Tegen de computer")
         }
     }
 
     var subtitle: String {
         switch self {
-        case .versusFriends: return "Beurten doorgeven op één apparaat"
-        case .versusComputer: return "Solo tegen een slimme tegenstander"
+        case .versusFriends: return String(localized: "Beurten doorgeven op één apparaat")
+        case .versusComputer: return String(localized: "Solo tegen een slimme tegenstander")
         }
     }
 }
