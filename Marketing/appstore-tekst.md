@@ -1,6 +1,10 @@
 # App Store-tekst — Dobbel!
 
 Alle velden voor App Store Connect, binnen de tekenlimieten. Kopieer per veld.
+De app is meertalig; de Engelse en Franse metadata staan in
+[appstore-tekst-en.md](appstore-tekst-en.md) en [appstore-tekst-fr.md](appstore-tekst-fr.md).
+Stel Nederlands in als primaire taal van de app, en voeg English (U.S.) en
+French (France) als extra lokalisaties toe.
 
 ---
 
