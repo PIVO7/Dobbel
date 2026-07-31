@@ -1,12 +1,13 @@
 import SwiftUI
 
 /// Aan of uit voor het doorgeefscherm tussen beurten; instelbaar in het
-/// instellingenscherm.
+/// instellingenscherm. Standaard uit: aan tafel ziet iedereen elkaars blad
+/// toch, en de pauze tussen beurten stoort dan alleen maar.
 enum PassAndPlay {
     private static let key = "doorgeefscherm-aan"
 
     static var isEnabled: Bool {
-        get { UserDefaults.standard.object(forKey: key) as? Bool ?? true }
+        get { UserDefaults.standard.object(forKey: key) as? Bool ?? false }
         set { UserDefaults.standard.set(newValue, forKey: key) }
     }
 }

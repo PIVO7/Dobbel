@@ -135,8 +135,8 @@ struct SettingsView: View {
                         } label: {
                             HStack {
                                 Text(coachReset
-                                 ? LocalizedStringKey("De uitleg verschijnt weer bij het volgende potje")
-                                 : LocalizedStringKey("Uitleg opnieuw tonen"))
+                                 ? LocalizedStringKey("Bij het volgende potje bieden we de uitleg weer aan")
+                                 : LocalizedStringKey("Uitleg opnieuw aanbieden"))
                                     .font(AppTheme.rounded(m.bodySize, .bold))
                                     .foregroundStyle(coachReset ? AppTheme.soft : AppTheme.ink)
                                     .frame(maxWidth: .infinity, alignment: .leading)

@@ -610,6 +610,22 @@
         }
       }
     },
+    "Bij het volgende potje bieden we de uitleg weer aan": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next game we'll offer the tips again"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À la prochaine partie, on te proposera à nouveau les explications"
+          }
+        }
+      }
+    },
     "Bij het vraagteken tellen alle ogen gewoon op: %lld punten. Handig als er niets beters past.": {
       "localizations": {
         "en": {
@@ -750,22 +766,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les victoires de ce profil seront perdues."
-          }
-        }
-      }
-    },
-    "De uitleg verschijnt weer bij het volgende potje": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The tips will appear again next game"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les explications reviendront à la prochaine partie"
           }
         }
       }
@@ -935,6 +935,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Déjà acheté ? Restaurer"
+          }
+        }
+      }
+    },
+    "Eerste keer Dobbel?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First time playing Dobbel?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Première partie de Dobbel ?"
           }
         }
       }
@@ -1515,6 +1531,22 @@
         }
       }
     },
+    "Ja, leg uit!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yes, show me!"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oui, explique-moi !"
+          }
+        }
+      }
+    },
     "Je hebt %lld %@: samen %lld punten.": {
       "localizations": {
         "en": {
@@ -2087,6 +2119,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nuit"
+          }
+        }
+      }
+    },
+    "Nee, ik kan het al": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No, I've got this"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non, je sais déjà jouer"
           }
         }
       }
@@ -3067,18 +3115,18 @@
         }
       }
     },
-    "Uitleg opnieuw tonen": {
+    "Uitleg opnieuw aanbieden": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Show the tips again"
+            "value": "Offer the tips again"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Revoir les explications"
+            "value": "Proposer à nouveau les explications"
           }
         }
       }
@@ -3479,6 +3527,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "On continue !"
+          }
+        }
+      }
+    },
+    "Wil je tijdens het spelen korte uitleg krijgen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Would you like short tips while you play?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veux-tu quelques explications pendant la partie ?"
           }
         }
       }

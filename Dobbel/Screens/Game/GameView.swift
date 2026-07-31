@@ -23,6 +23,8 @@ struct GameView: View {
 
     @State private var didRecordResult = false
     @State private var isNewRecord = false
+    /// De uitleg wordt aangeboden, niet opgedrongen: dit is de vraag vooraf.
+    @State private var showCoachOffer = false
     @State private var showTurnBanner = false
     @State private var showExitConfirm = false
     @State private var showPassScreen = false
@@ -149,6 +151,18 @@ struct GameView: View {
                     .zIndex(5)
                 }
 
+                if showCoachOffer {
+                    ToyDialog(
+                        title: String(localized: "Eerste keer Dobbel?"),
+                        message: String(localized: "Wil je tijdens het spelen korte uitleg krijgen?"),
+                        confirmTitle: String(localized: "Ja, leg uit!"),
+                        cancelTitle: String(localized: "Nee, ik kan het al"),
+                        onConfirm: acceptCoaching,
+                        onCancel: declineCoaching
+                    )
+                    .zIndex(5)
+                }
+
                 if let tipExplanation {
                     ToyDialog(
                         title: String(localized: "Daarom!"),
@@ -237,6 +251,7 @@ struct GameView: View {
         guard ShakeToRoll.isEnabled,
               engine.canRoll,
               !showExitConfirm,
+              !showCoachOffer,
               tipExplanation == nil else { return }
         roll()
     }
@@ -260,13 +275,32 @@ struct GameView: View {
 
     // MARK: - Eerste-keer-uitleg
 
-    /// Alleen bij een allereerste, vers spel met een mens aan zet.
+    /// Alleen bij een allereerste, vers spel met een mens aan zet — en dan
+    /// nog als vraag, want ongevraagde uitleg is vervelend voor wie het spel
+    /// al kent.
     private func startCoachingIfNeeded() {
         guard !CoachTour.seen,
               !engine.hasRolledThisTurn,
               !engine.isFinished,
               !engine.currentPlayer.isComputer else { return }
+        withAnimation(.easeOut(duration: 0.15)) {
+            showCoachOffer = true
+        }
+    }
+
+    private func acceptCoaching() {
+        withAnimation(.easeOut(duration: 0.15)) {
+            showCoachOffer = false
+        }
         advanceCoach(to: .roll)
+    }
+
+    private func declineCoaching() {
+        // Niet meer vragen: wie het al kan, kan het volgende potje ook al.
+        CoachTour.seen = true
+        withAnimation(.easeOut(duration: 0.15)) {
+            showCoachOffer = false
+        }
     }
 
     private func advanceCoach(to step: CoachStep) {
