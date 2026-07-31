@@ -22,6 +22,7 @@ struct GameView: View {
     }
 
     @State private var didRecordResult = false
+    @State private var isNewRecord = false
     @State private var showTurnBanner = false
     @State private var showExitConfirm = false
     @State private var showPassScreen = false
@@ -125,6 +126,7 @@ struct GameView: View {
                         players: engine.players,
                         winnerProfileIDs: engine.winnerProfileIDs,
                         message: engine.turnMessage,
+                        isNewRecord: isNewRecord,
                         onRematch: onRematch,
                         onClose: onClose
                     )
@@ -386,6 +388,16 @@ struct GameView: View {
     private func recordResult() {
         guard !didRecordResult else { return }
         didRecordResult = true
+        SoundPlayer.shared.play(.fanfare)
+        // Record checken vóór de statistieken worden bijgewerkt; het eerste
+        // potje ooit telt niet als record.
+        if engine.winnerProfileIDs.count == 1,
+           let winner = engine.players.first(where: { engine.winnerProfileIDs.contains($0.profileID) }),
+           let profile = profileStore.humanProfiles.first(where: { $0.id == winner.profileID }),
+           profile.gamesPlayed > 0,
+           winner.scorecard.total > profile.bestScore {
+            isNewRecord = true
+        }
         gameStore.clear()
         profileStore.recordGameResult(
             players: engine.players,
@@ -427,7 +439,8 @@ struct GameView: View {
 
     private func dismissCelebration(_ update: @escaping () -> Void) -> Task<Void, Never> {
         Task {
-            try? await Task.sleep(for: .milliseconds(reduceMotion ? 600 : 1100))
+            // Een Dobbel verdient een langer feestje dan een banner.
+            try? await Task.sleep(for: .milliseconds(reduceMotion ? 600 : 1800))
             guard !Task.isCancelled else { return }
             withAnimation(.easeOut(duration: 0.2)) {
                 update()

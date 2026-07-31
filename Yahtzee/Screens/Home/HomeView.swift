@@ -15,6 +15,9 @@ struct HomeView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         VStack(spacing: 8) {
+                            HomeHeroView()
+                                .padding(.bottom, m.gutter)
+
                             Text("Dobbel!")
                                 .font(AppTheme.rounded(m.brandSize))
                                 .foregroundStyle(AppTheme.headline)
@@ -23,8 +26,8 @@ struct HomeView: View {
                                 .font(AppTheme.rounded(m.bodySize, .bold))
                                 .foregroundStyle(AppTheme.soft)
                         }
-                        .padding(.top, m.gutter * 2)
-                        .padding(.bottom, m.gutter * 2.4)
+                        .padding(.top, m.gutter * 1.6)
+                        .padding(.bottom, m.gutter * 2)
 
                         VStack(spacing: m.gutter) {
                             if let saved = gameStore.savedGame {

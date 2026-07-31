@@ -10,15 +10,20 @@ struct CelebrationBurstView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        Text(title)
-            .font(AppTheme.rounded(m.displaySize * 1.4))
-            .foregroundStyle(.white)
-            .padding(.horizontal, m.gutter * 2)
-            .padding(.vertical, m.gutter * 1.3)
-            .toyBlock(fill: tint, radius: m.cardCorner, depth: m.depth + 1, border: m.border)
-            .scaleEffect(reduceMotion ? 1 : 1.05)
-            .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.8)))
-            .allowsHitTesting(false)
+        ZStack {
+            ConfettiView()
+                .ignoresSafeArea()
+
+            Text(title)
+                .font(AppTheme.rounded(m.displaySize * 1.4))
+                .foregroundStyle(.white)
+                .padding(.horizontal, m.gutter * 2)
+                .padding(.vertical, m.gutter * 1.3)
+                .toyBlock(fill: tint, radius: m.cardCorner, depth: m.depth + 1, border: m.border)
+                .scaleEffect(reduceMotion ? 1 : 1.05)
+        }
+        .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.9)))
+        .allowsHitTesting(false)
     }
 }
 

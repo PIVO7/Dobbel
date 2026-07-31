@@ -5,6 +5,8 @@ struct GameResultOverlay: View {
     let players: [GamePlayer]
     let winnerProfileIDs: [UUID]
     let message: String
+    /// Hoger dan de beste score van de winnaar ooit: extra feest.
+    var isNewRecord = false
     let onRematch: () -> Void
     let onClose: () -> Void
 
@@ -15,6 +17,11 @@ struct GameResultOverlay: View {
     var body: some View {
         ZStack {
             AppTheme.ink.opacity(0.5).ignoresSafeArea()
+
+            if hasSingleWinner {
+                ConfettiView(particleCount: isNewRecord ? 44 : 28)
+                    .ignoresSafeArea()
+            }
 
             VStack(spacing: m.gutter) {
                 // De winnaar groot in beeld, met een kroontje: het sterretje
@@ -36,6 +43,15 @@ struct GameResultOverlay: View {
                 Text(hasSingleWinner ? "Gewonnen!" : "Klaar!")
                     .font(AppTheme.rounded(m.titleSize))
                     .foregroundStyle(AppTheme.ink)
+
+                if isNewRecord {
+                    Label("Nieuw record!", systemImage: "sparkles")
+                        .font(AppTheme.rounded(m.captionSize + 2))
+                        .foregroundStyle(AppTheme.ink)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .toyBlock(fill: AppTheme.amber, radius: m.cellCorner + 2, depth: 3, border: m.thinBorder)
+                }
 
                 Text(message)
                     .font(AppTheme.rounded(m.bodySize, .bold))
@@ -129,6 +145,7 @@ struct GameResultOverlay: View {
         players: [lene, ellis],
         winnerProfileIDs: [lene.profileID],
         message: "Lene wint met 212 punten!",
+        isNewRecord: true,
         onRematch: {},
         onClose: {}
     )
