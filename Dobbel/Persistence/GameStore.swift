@@ -1,5 +1,10 @@
 import Foundation
 import Observation
+import OSLog
+
+/// Buiten de actor, zodat de losgekoppelde schrijftaken hem ook mogen
+/// gebruiken; `Logger` is Sendable.
+private let opslagLogger = Logger(subsystem: "com.pivo7.dobbel", category: "spelstand")
 
 @MainActor
 @Observable
@@ -36,8 +41,13 @@ final class GameStore {
         let previous = pendingWrite
         pendingWrite = Task.detached(priority: .utility) {
             await previous?.value
-            // Lokale kids-app; stil falen zoals ProfileStore.
-            try? JSONEncoder().encode(snapshot).write(to: url, options: [.atomic])
+            do {
+                try JSONEncoder().encode(snapshot).write(to: url, options: [.atomic])
+            } catch {
+                // Geen dialoog voor een kind, wel een spoor voor de
+                // ontwikkelaar.
+                opslagLogger.error("Spelstand bewaren mislukt: \(error.localizedDescription, privacy: .public)")
+            }
         }
     }
 
@@ -57,6 +67,22 @@ final class GameStore {
         await pendingWrite?.value
     }
 
+    /// Schrijft de huidige stand meteen en synchroon weg. Voor het moment dat
+    /// de app naar de achtergrond gaat: wie direct daarna geforceerd afsluit,
+    /// geeft de asynchrone schrijfrij geen kans meer. De rij zelf mag daarna
+    /// gewoon aflopen — de laatste taak schrijft dezelfde stand nog eens.
+    func persistNow() {
+        if let savedGame {
+            do {
+                try JSONEncoder().encode(savedGame).write(to: fileURL, options: [.atomic])
+            } catch {
+                opslagLogger.error("Spelstand bewaren mislukt: \(error.localizedDescription, privacy: .public)")
+            }
+        } else {
+            try? FileManager.default.removeItem(at: fileURL)
+        }
+    }
+
     private func load() {
         guard FileManager.default.fileExists(atPath: fileURL.path) else {
             savedGame = nil
@@ -74,6 +100,7 @@ final class GameStore {
             }
             savedGame = snapshot
         } catch {
+            opslagLogger.error("Spelstand laden mislukt: \(error.localizedDescription, privacy: .public)")
             savedGame = nil
         }
     }

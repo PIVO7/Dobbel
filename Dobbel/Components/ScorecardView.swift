@@ -11,6 +11,16 @@ struct ScorecardView: View {
     let onSelect: (ScoreCategory) -> Void
 
     @Environment(\.metrics) private var m
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
+    /// Bij drie of vier spelers op een smal scherm worden de vakjes te smal
+    /// om te raken (ver onder de 44 punten). Dan toont het blad alleen de
+    /// kolom van wie aan de beurt is; de scores van de anderen staan al
+    /// bovenin het spelscherm.
+    private var visiblePlayers: [GamePlayer] {
+        guard sizeClass == .compact, players.count > 2 else { return players }
+        return players.filter { $0.id == currentPlayerID }
+    }
 
     var body: some View {
         // Eén keer per hertekening rekenen: de lijst voedt zowel de open-check
@@ -52,7 +62,11 @@ struct ScorecardView: View {
         advice: ScoreCategory?
     ) -> some View {
         VStack(spacing: m.cellGap) {
-            PlayerHeaderView(players: players, currentPlayerID: currentPlayerID)
+            PlayerHeaderView(
+                players: visiblePlayers,
+                currentPlayerID: currentPlayerID,
+                showsName: showsBonus
+            )
 
             ForEach(categories) { category in
                 row(for: category, open: open, advice: advice)
@@ -73,7 +87,7 @@ struct ScorecardView: View {
             CategoryIcon(category: category)
                 .frame(width: m.iconWidth, height: m.rowHeight)
 
-            ForEach(players) { player in
+            ForEach(visiblePlayers) { player in
                 let isMine = player.id == currentPlayerID
                 let selectable = isMine && canScore && open.contains(category)
                 ScoreCellView(
@@ -93,9 +107,9 @@ struct ScorecardView: View {
         HStack(spacing: m.cellGap) {
             VStack(spacing: 0) {
                 Text("BONUS")
-                    .font(AppTheme.rounded(m.captionSize * 0.68))
+                    .font(AppTheme.rounded(m.captionSize * 0.82))
                     .kerning(0.6)
-                    .foregroundStyle(AppTheme.soft)
+                    .foregroundStyle(AppTheme.ink)
                 Text("+35")
                     .font(AppTheme.rounded(m.captionSize))
                     .foregroundStyle(AppTheme.ink)
@@ -103,12 +117,12 @@ struct ScorecardView: View {
             .frame(width: m.iconWidth, height: m.rowHeight)
             .toyBlock(fill: AppTheme.tintStone, radius: m.cellCorner, depth: 0, border: m.thinBorder)
 
-            ForEach(players) { player in
+            ForEach(visiblePlayers) { player in
                 let subtotal = player.scorecard.upperSubtotal
                 let reached = player.scorecard.upperBonus > 0
                 Text(reached ? "+35" : "\(subtotal)/63")
-                    .font(AppTheme.rounded(m.captionSize * 0.92))
-                    .foregroundStyle(reached ? AppTheme.mint : AppTheme.soft)
+                    .font(AppTheme.rounded(m.captionSize))
+                    .foregroundStyle(reached ? AppTheme.mint : AppTheme.ink)
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
                     .toyBlock(fill: AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)

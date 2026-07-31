@@ -16,7 +16,7 @@ struct CelebrationBurstView: View {
 
             Text(title)
                 .font(AppTheme.rounded(m.displaySize * 1.4))
-                .foregroundStyle(.white)
+                .foregroundStyle(AppTheme.ink)
                 .padding(.horizontal, m.gutter * 2)
                 .padding(.vertical, m.gutter * 1.3)
                 .toyBlock(fill: tint, radius: m.cardCorner, depth: m.depth + 1, border: m.border)

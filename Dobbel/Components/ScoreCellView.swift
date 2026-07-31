@@ -28,7 +28,7 @@ struct ScoreCellView: View {
             } label: {
                 Text("\(points)")
                     .font(AppTheme.rounded(m.cellTextSize, .bold))
-                    .foregroundStyle(isAdvised ? .white : AppTheme.coral)
+                    .foregroundStyle(isAdvised ? AppTheme.ink : AppTheme.coral)
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
             }

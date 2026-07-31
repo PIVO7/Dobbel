@@ -5,6 +5,7 @@ struct DobbelApp: App {
     @State private var profileStore = ProfileStore()
     @State private var gameStore = GameStore()
     @State private var entitlements = EntitlementStore()
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
@@ -13,6 +14,26 @@ struct DobbelApp: App {
                 .environment(gameStore)
                 .environment(entitlements)
                 .appMetrics()
+                .task {
+                    // Bij de start opnieuw toetsen: na een terugbetaling mag
+                    // een premiumthema niet blijven hangen.
+                    await entitlements.load()
+                    if !entitlements.isFamilyUnlocked {
+                        ThemeStore.shared.enforceFreeTheme()
+                    }
+                }
+                .onChange(of: entitlements.isFamilyUnlocked) { _, unlocked in
+                    if !unlocked {
+                        ThemeStore.shared.enforceFreeTheme()
+                    }
+                }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            // Meteen naar schijf zodra de app uit beeld raakt: een kind dat
+            // direct daarna de app wegveegt, raakt anders de laatste zet kwijt.
+            if phase == .background || phase == .inactive {
+                gameStore.persistNow()
+            }
         }
     }
 }

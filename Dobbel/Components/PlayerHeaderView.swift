@@ -8,6 +8,8 @@ import SwiftUI
 struct PlayerHeaderView: View {
     let players: [GamePlayer]
     let currentPlayerID: UUID
+    /// Alleen de linkerkolom toont de naam; anders staat hij er twee keer.
+    var showsName = true
 
     @Environment(\.metrics) private var m
 
@@ -23,7 +25,28 @@ struct PlayerHeaderView: View {
             ForEach(players) { player in
                 let isMine = player.id == currentPlayerID
                 let bonus = player.scorecard.dobbelBonusTotal
-                AvatarBadge(player: player, size: avatarSize)
+                HStack(spacing: 6) {
+                    avatar(for: player, isMine: isMine, bonus: bonus)
+                    // Alleen bij één brede kolom (3-4 spelers op een smal
+                    // scherm) is er plaats voor de naam; bij twee of meer
+                    // kolommen zegt het bolletje genoeg.
+                    if players.count == 1, showsName {
+                        Text(player.name)
+                            .font(AppTheme.rounded(m.captionSize + 1))
+                            .foregroundStyle(AppTheme.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .accessibilityElement()
+                .accessibilityLabel(accessibilityText(for: player, isMine: isMine, bonus: bonus))
+            }
+        }
+    }
+
+    private func avatar(for player: GamePlayer, isMine: Bool, bonus: Int) -> some View {
+        AvatarBadge(player: player, size: avatarSize)
                     .opacity(isMine ? 1 : 0.55)
                     // Een koraalring om wie aan de beurt is: dimmen alleen
                     // bleek te subtiel. De ring sluit strak aan op de rand
@@ -44,15 +67,17 @@ struct PlayerHeaderView: View {
                                 .offset(x: 3, y: -3)
                         }
                     }
-                    .frame(maxWidth: .infinity)
-                    .accessibilityElement()
-                    .accessibilityLabel(
-                        player.name
-                            + (isMine ? ", aan de beurt" : "")
-                            + (bonus > 0 ? ", Dobbel-bonus \(bonus)" : "")
-                    )
-            }
+    }
+
+    private func accessibilityText(for player: GamePlayer, isMine: Bool, bonus: Int) -> String {
+        var label = player.name
+        if isMine {
+            label += ", " + String(localized: "aan de beurt")
         }
+        if bonus > 0 {
+            label += ", " + String(localized: "Dobbel-bonus \(bonus)")
+        }
+        return label
     }
 }
 

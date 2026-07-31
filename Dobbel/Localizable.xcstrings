@@ -754,6 +754,22 @@
         }
       }
     },
+    "De aankoop is niet gelukt. Controleer de internetverbinding en probeer het opnieuw.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The purchase didn't go through. Check the internet connection and try again."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'achat n'a pas abouti. Vérifie la connexion internet et réessaie."
+          }
+        }
+      }
+    },
     "De overwinningen van dit profiel gaan verloren.": {
       "localizations": {
         "en": {
@@ -791,6 +807,22 @@
     },
     "Dobbel!": {
       "shouldTranslate": false
+    },
+    "Dobbel-bonus %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dobbel bonus %lld"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bonus Dobbel %lld"
+          }
+        }
+      }
     },
     "Dobbels": {
       "shouldTranslate": false
@@ -983,6 +1015,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les 1"
+          }
+        }
+      }
+    },
+    "Er is geen eerdere aankoop gevonden voor dit Apple-account.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No earlier purchase was found for this Apple Account."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun achat antérieur n'a été trouvé pour ce compte Apple."
           }
         }
       }
@@ -2859,6 +2907,22 @@
         }
       }
     },
+    "Terugzetten is niet gelukt. Controleer de internetverbinding en probeer het opnieuw.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restoring didn't work. Check the internet connection and try again."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La restauration n'a pas fonctionné. Vérifie la connexion internet et réessaie."
+          }
+        }
+      }
+    },
     "Thema %@": {
       "localizations": {
         "en": {
@@ -3639,6 +3703,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Soleil"
+          }
+        }
+      }
+    },
+    "aan de beurt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "their turn"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "à son tour"
           }
         }
       }

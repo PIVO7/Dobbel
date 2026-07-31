@@ -49,25 +49,47 @@ final class EntitlementStore {
         UserDefaults.standard.set(unlocked, forKey: Self.cacheKey)
     }
 
-    /// Meldt of de aankoop gelukt is.
-    func purchaseFamily() async -> Bool {
+    enum PurchaseOutcome {
+        case success
+        /// De ouder tikte zelf op annuleren; daar hoort geen foutmelding bij.
+        case cancelled
+        case failed
+    }
+
+    func purchaseFamily() async -> PurchaseOutcome {
         if familyProduct == nil {
             await load()
         }
         guard let product = familyProduct,
-              let result = try? await product.purchase() else { return false }
+              let result = try? await product.purchase() else { return .failed }
 
-        if case .success(let verification) = result,
-           case .verified(let transaction) = verification {
+        switch result {
+        case .success(let verification):
+            guard case .verified(let transaction) = verification else { return .failed }
             await transaction.finish()
             await refreshEntitlements()
-            return true
+            return .success
+        case .userCancelled:
+            return .cancelled
+        case .pending:
+            // Bijvoorbeeld "vraag om te kopen": de ouder moet nog goedkeuren.
+            // Transaction.updates rondt het straks vanzelf af.
+            return .cancelled
+        @unknown default:
+            return .failed
         }
-        return false
     }
 
-    func restorePurchases() async {
-        try? await AppStore.sync()
+    /// Meldt of het herstellen technisch gelukt is; of er ook echt een
+    /// aankoop gevonden is, staat daarna in `isFamilyUnlocked`.
+    @discardableResult
+    func restorePurchases() async -> Bool {
+        do {
+            try await AppStore.sync()
+        } catch {
+            return false
+        }
         await refreshEntitlements()
+        return true
     }
 }

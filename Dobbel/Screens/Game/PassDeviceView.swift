@@ -22,12 +22,15 @@ struct PassDeviceView: View {
     let onUndo: (() -> Void)?
 
     @Environment(\.metrics) private var m
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
-            // Tikken om door te gaan is een extraatje voor ziende gebruikers;
-            // VoiceOver krijgt de knoppen op de kaart, niet dit vlak.
-            AppTheme.ink.opacity(0.5)
+            // Volledig dekkend: dit scherm bestaat juist om het blad even te
+            // verbergen tot de volgende speler het toestel heeft. Tikken om
+            // door te gaan is een extraatje voor ziende gebruikers; VoiceOver
+            // krijgt de knoppen op de kaart, niet dit vlak.
+            AppTheme.cream
                 .ignoresSafeArea()
                 .onTapGesture(perform: onReady)
                 .accessibilityHidden(true)
@@ -45,7 +48,7 @@ struct PassDeviceView: View {
                 Button(action: onReady) {
                     Text("We spelen door!")
                         .font(AppTheme.rounded(m.buttonTextSize * 0.8))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(AppTheme.ink)
                         .frame(maxWidth: .infinity)
                         .frame(height: m.buttonHeight * 0.85)
                 }
@@ -61,7 +64,9 @@ struct PassDeviceView: View {
                     Button(action: onUndo) {
                         Label("Oeps — zet de vorige zet terug", systemImage: "arrow.uturn.backward")
                             .font(AppTheme.rounded(m.captionSize, .bold))
-                            .foregroundStyle(AppTheme.soft)
+                            // Gedempte inkt en niet `soft`: de kaart is altijd
+                            // wit, maar soft is in het nachtthema licht.
+                            .foregroundStyle(AppTheme.ink.opacity(0.65))
                             .frame(minHeight: m.tapTarget)
                             .contentShape(.rect)
                     }
@@ -69,12 +74,14 @@ struct PassDeviceView: View {
                 }
             }
             .padding(m.gutter * 1.4)
-            .toyBlock(fill: AppTheme.cream, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
+            // Wit en niet cream: in het nachtthema is cream donker en zou de
+            // donkere inkt onleesbaar worden.
+            .toyBlock(fill: .white, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
             .frame(maxWidth: m.overlayMaxWidth * 0.82)
             .padding(m.gutter * 2)
             .accessibilityAddTraits(.isModal)
         }
-        .transition(.opacity.combined(with: .scale(scale: 0.94)))
+        .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.94)))
     }
 }
 

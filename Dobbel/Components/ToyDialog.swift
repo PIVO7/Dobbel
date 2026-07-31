@@ -12,6 +12,7 @@ struct ToyDialog: View {
     let onCancel: () -> Void
 
     @Environment(\.metrics) private var m
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -30,13 +31,15 @@ struct ToyDialog: View {
 
                 Text(message)
                     .font(AppTheme.rounded(m.bodySize * 0.94, .bold))
-                    .foregroundStyle(AppTheme.soft)
+                    // Gedempte inkt en niet `soft`: de kaart is altijd wit,
+                    // maar soft is in het nachtthema licht.
+                    .foregroundStyle(AppTheme.ink.opacity(0.65))
                     .multilineTextAlignment(.center)
 
                 Button(action: onConfirm) {
                     Text(confirmTitle)
                         .font(AppTheme.rounded(m.buttonTextSize * 0.8))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(AppTheme.ink)
                         .frame(maxWidth: .infinity)
                         .frame(height: m.buttonHeight * 0.82)
                 }
@@ -65,13 +68,15 @@ struct ToyDialog: View {
                 }
             }
             .padding(m.gutter * 1.4)
-            .toyBlock(fill: AppTheme.cream, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
+            // Wit en niet cream: in het nachtthema is cream donker en zou de
+            // donkere inkt onleesbaar worden.
+            .toyBlock(fill: .white, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
             .frame(maxWidth: m.overlayMaxWidth * 0.82)
             .padding(m.gutter * 2)
             // Modaal voor VoiceOver: de spelknoppen eronder zijn even weg.
             .accessibilityAddTraits(.isModal)
         }
-        .transition(.opacity.combined(with: .scale(scale: 0.94)))
+        .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.94)))
     }
 }
 

@@ -11,6 +11,7 @@ struct GameResultOverlay: View {
     let onClose: () -> Void
 
     @Environment(\.metrics) private var m
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private var hasSingleWinner: Bool { winnerProfileIDs.count == 1 }
 
@@ -69,7 +70,7 @@ struct GameResultOverlay: View {
                 Button(action: onRematch) {
                     Text("Nog een keer!")
                         .font(AppTheme.rounded(m.buttonTextSize * 0.85))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(AppTheme.ink)
                         .frame(maxWidth: .infinity)
                         .frame(height: m.buttonHeight * 0.9)
                 }
@@ -102,7 +103,7 @@ struct GameResultOverlay: View {
             // Modaal voor VoiceOver: het spelbord eronder is voorbij.
             .accessibilityAddTraits(.isModal)
         }
-        .transition(.opacity.combined(with: .scale))
+        .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale))
     }
 
     private func row(for player: GamePlayer) -> some View {

@@ -24,7 +24,7 @@ struct RollButtonView: View {
                         )
                 }
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(canRoll ? AppTheme.ink : AppTheme.offInk)
             .frame(maxWidth: .infinity)
             .frame(height: m.buttonHeight)
         }

@@ -11,6 +11,9 @@ struct PaywallView: View {
     @State private var gateQuestion: ParentalGateQuestion?
     @State private var pendingAction: (() async -> Void)?
     @State private var isBusy = false
+    /// StoreKit-fouten mogen niet stil verdwijnen: de ouder staat bij de
+    /// kassa en moet weten waaróm er niets gebeurt.
+    @State private var errorText: String?
 
     private var priceText: String {
         entitlements.familyProduct?.displayPrice ?? "…"
@@ -68,7 +71,7 @@ struct PaywallView: View {
                         } label: {
                             Text("Ontgrendel voor \(priceText)")
                                 .font(AppTheme.rounded(m.buttonTextSize * 0.8))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(AppTheme.ink)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: m.buttonHeight * 0.85)
                         }
@@ -81,7 +84,7 @@ struct PaywallView: View {
                         .disabled(isBusy)
 
                         Button {
-                            askParent { await entitlements.restorePurchases() }
+                            askParent { await restore() }
                         } label: {
                             Text("Eerder gekocht? Zet terug")
                                 .font(AppTheme.rounded(m.captionSize, .bold))
@@ -91,6 +94,16 @@ struct PaywallView: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(isBusy)
+
+                        if let errorText {
+                            Label(errorText, systemImage: "exclamationmark.triangle.fill")
+                                .font(AppTheme.rounded(m.captionSize, .bold))
+                                .foregroundStyle(AppTheme.coral)
+                                .multilineTextAlignment(.leading)
+                                .padding(m.gutter * 0.8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .toyBlock(fill: .white, radius: m.cardCorner * 0.8, depth: 3, border: m.thinBorder)
+                        }
                     }
                 }
                 .padding(.horizontal, m.gutter * 1.4)
@@ -106,6 +119,13 @@ struct PaywallView: View {
             }
         }
         .interactiveDismissDisabled(isBusy)
+        // De prijs kan bij het openen nog ontbreken (geen netwerk bij de
+        // start); hier krijgt hij een tweede kans.
+        .task {
+            if entitlements.familyProduct == nil {
+                await entitlements.load()
+            }
+        }
     }
 
     private func feature(_ icon: String, _ text: LocalizedStringKey) -> some View {
@@ -157,7 +177,9 @@ struct PaywallView: View {
                 }
             }
             .padding(m.gutter * 1.4)
-            .toyBlock(fill: AppTheme.cream, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
+            // Wit en niet cream: in het nachtthema is cream donker en zou de
+            // donkere inkt onleesbaar worden.
+            .toyBlock(fill: .white, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
             .frame(maxWidth: m.overlayMaxWidth * 0.82)
             .padding(m.gutter * 2)
             .accessibilityAddTraits(.isModal)
@@ -166,6 +188,7 @@ struct PaywallView: View {
     }
 
     private func askParent(_ action: @escaping () async -> Void) {
+        errorText = nil
         pendingAction = action
         withAnimation(.easeOut(duration: 0.15)) {
             gateQuestion = .make()
@@ -195,7 +218,21 @@ struct PaywallView: View {
     }
 
     private func purchase() async {
-        _ = await entitlements.purchaseFamily()
+        switch await entitlements.purchaseFamily() {
+        case .success, .cancelled:
+            break
+        case .failed:
+            errorText = String(localized: "De aankoop is niet gelukt. Controleer de internetverbinding en probeer het opnieuw.")
+        }
+    }
+
+    private func restore() async {
+        let synced = await entitlements.restorePurchases()
+        if !synced {
+            errorText = String(localized: "Terugzetten is niet gelukt. Controleer de internetverbinding en probeer het opnieuw.")
+        } else if !entitlements.isFamilyUnlocked {
+            errorText = String(localized: "Er is geen eerdere aankoop gevonden voor dit Apple-account.")
+        }
     }
 }
 
