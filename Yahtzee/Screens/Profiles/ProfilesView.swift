@@ -115,5 +115,6 @@ struct ProfilesView: View {
         ProfilesView()
     }
     .environment(profiles)
+    .environment(EntitlementStore(previewUnlocked: true))
     .appMetrics()
 }

@@ -10,10 +10,12 @@ struct ProfileRowView: View {
     let onAvatarChange: (Int, String?) -> Void
 
     @Environment(\.metrics) private var m
+    @Environment(EntitlementStore.self) private var entitlements
     @State private var renameText = ""
     @State private var isRenaming = false
     @State private var isDeleting = false
     @State private var showStats = false
+    @State private var showPaywall = false
     @State private var showAvatarPicker = false
 
     var body: some View {
@@ -33,7 +35,11 @@ struct ProfileRowView: View {
             }
 
             Button {
-                showStats = true
+                if entitlements.isFamilyUnlocked {
+                    showStats = true
+                } else {
+                    showPaywall = true
+                }
             } label: {
                 HStack(spacing: m.gutter * 0.9) {
                     VStack(alignment: .leading, spacing: 2) {
@@ -53,6 +59,10 @@ struct ProfileRowView: View {
             .accessibilityHint("Toont de statistieken")
             .sheet(isPresented: $showStats) {
                 ProfileStatsView(profile: profile)
+                    .appMetrics()
+            }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView(entitlements: entitlements)
                     .appMetrics()
             }
 
@@ -121,6 +131,7 @@ struct ProfileRowView: View {
         onDelete: {},
         onAvatarChange: { _, _ in }
     )
+    .environment(EntitlementStore(previewUnlocked: true))
     .padding()
     .background(AppTheme.cream)
 }

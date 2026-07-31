@@ -4,6 +4,7 @@ struct GameSetupView: View {
     let mode: GameMode
     @Environment(ProfileStore.self) private var profileStore
     @Environment(GameStore.self) private var gameStore
+    @Environment(EntitlementStore.self) private var entitlements
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.metrics) private var m
     /// Een lijst en geen verzameling: de volgorde van aantikken bepaalt de
@@ -12,6 +13,7 @@ struct GameSetupView: View {
     @State private var opponentLevel: ComputerLevel = .medium
     @State private var activeGame: ActiveGame?
     @State private var showRules = false
+    @State private var showPaywall = false
     /// De start die nog op bevestiging wacht omdat er een bewaard spel is.
     @State private var pendingStart: (() -> Void)?
 
@@ -53,6 +55,10 @@ struct GameSetupView: View {
                     .buttonStyle(ToyButtonStyle(fill: AppTheme.tintSky, radius: m.cellCorner, depth: 3, border: m.thinBorder))
                     .sheet(isPresented: $showRules) {
                         RulesView()
+                            .appMetrics()
+                    }
+                    .sheet(isPresented: $showPaywall) {
+                        PaywallView(entitlements: entitlements)
                             .appMetrics()
                     }
                 }
@@ -214,10 +220,16 @@ struct GameSetupView: View {
     }
 
     /// De drie computertegenstanders naast elkaar; wie gekozen is, kleurt.
+    /// Dommel en de professor horen bij de Gezinsversie.
     private func opponentButton(_ level: ComputerLevel) -> some View {
         let picked = opponentLevel == level
+        let locked = level != .medium && !entitlements.isFamilyUnlocked
         return Button {
-            opponentLevel = level
+            if locked {
+                showPaywall = true
+            } else {
+                opponentLevel = level
+            }
         } label: {
             VStack(spacing: 6) {
                 // Zelfde vinkje als bij de spelerkeuze, zodat de gekozen
@@ -226,6 +238,16 @@ struct GameSetupView: View {
                     .font(.system(size: m.bodySize * 1.1, weight: .black))
                     .foregroundStyle(picked ? AppTheme.coral : AppTheme.dim)
                 AvatarBadge(name: level.personaName, colorIndex: level.avatarColorIndex, symbol: level.avatarSymbol, size: m.avatarSize * 0.9)
+                    .overlay(alignment: .bottomTrailing) {
+                        if locked {
+                            Image(systemName: "lock.fill")
+                                .font(.system(size: m.captionSize, weight: .black))
+                                .foregroundStyle(.white)
+                                .padding(4)
+                                .background(Circle().fill(AppTheme.ink))
+                                .offset(x: 5, y: 5)
+                        }
+                    }
                 Text(level.personaName)
                     .font(AppTheme.rounded(m.captionSize, .bold))
                     .foregroundStyle(AppTheme.ink)
@@ -247,7 +269,7 @@ struct GameSetupView: View {
             depth: picked ? m.depth : 3,
             border: m.border
         ))
-        .accessibilityLabel("\(level.personaName), \(level.subtitle)")
+        .accessibilityLabel("\(level.personaName), \(level.subtitle)" + (locked ? ", Gezinsversie nodig" : ""))
         .accessibilityAddTraits(picked ? .isSelected : [])
     }
 
@@ -268,6 +290,11 @@ struct GameSetupView: View {
         if let index = selectedIDs.firstIndex(of: id) {
             selectedIDs.remove(at: index)
         } else if selectedIDs.count < 4 {
+            // Meer dan twee spelers hoort bij de Gezinsversie.
+            if selectedIDs.count >= 2, !entitlements.isFamilyUnlocked {
+                showPaywall = true
+                return
+            }
             selectedIDs.append(id)
         }
     }
@@ -336,5 +363,6 @@ struct GameSetupView: View {
     }
     .environment(profiles)
     .environment(GameStore(fileURL: URL.temporaryDirectory.appending(path: "preview-\(UUID()).json")))
+    .environment(EntitlementStore(previewUnlocked: false))
     .appMetrics()
 }

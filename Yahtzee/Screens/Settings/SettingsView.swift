@@ -3,6 +3,8 @@ import SwiftUI
 /// Instellingen: het thema en het geluid. Bewust klein gehouden — een
 /// kinderapp hoort weinig knoppen te hebben.
 struct SettingsView: View {
+    let entitlements: EntitlementStore
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.metrics) private var m
 
@@ -11,6 +13,7 @@ struct SettingsView: View {
     @State private var passOn = PassAndPlay.isEnabled
     @State private var coachReset = false
     @State private var showRules = false
+    @State private var showPaywall = false
 
     private var themeStore: ThemeStore { .shared }
 
@@ -121,6 +124,10 @@ struct SettingsView: View {
                             RulesView()
                                 .appMetrics()
                         }
+                        .sheet(isPresented: $showPaywall) {
+                            PaywallView(entitlements: entitlements)
+                                .appMetrics()
+                        }
 
                         Button {
                             CoachTour.seen = false
@@ -155,9 +162,14 @@ struct SettingsView: View {
     private func themeCard(_ theme: ThemeID) -> some View {
         let palette = theme.palette
         let picked = themeStore.themeID == theme
+        let locked = theme != .klassiek && !entitlements.isFamilyUnlocked
 
         return Button {
-            themeStore.select(theme)
+            if locked {
+                showPaywall = true
+            } else {
+                themeStore.select(theme)
+            }
         } label: {
             VStack(spacing: 8) {
                 HStack(spacing: 6) {
@@ -169,9 +181,15 @@ struct SettingsView: View {
                     }
                 }
 
-                Text(theme.title)
-                    .font(AppTheme.rounded(m.captionSize + 1, .bold))
-                    .foregroundStyle(theme == .nacht ? palette.headline : palette.ink)
+                Group {
+                    if locked {
+                        Label(theme.title, systemImage: "lock.fill")
+                    } else {
+                        Text(theme.title)
+                    }
+                }
+                .font(AppTheme.rounded(m.captionSize + 1, .bold))
+                .foregroundStyle(theme == .nacht ? palette.headline : palette.ink)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, m.gutter * 0.9)
@@ -183,7 +201,7 @@ struct SettingsView: View {
             border: picked ? m.border + 1 : m.border,
             borderColor: picked ? AppTheme.coral : AppTheme.ink
         ))
-        .accessibilityLabel("Thema \(theme.title)")
+        .accessibilityLabel("Thema \(theme.title)" + (locked ? ", Gezinsversie nodig" : ""))
         .accessibilityAddTraits(picked ? .isSelected : [])
     }
 
@@ -204,6 +222,6 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(entitlements: EntitlementStore(previewUnlocked: false))
         .appMetrics()
 }

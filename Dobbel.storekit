@@ -1,0 +1,38 @@
+{
+  "identifier" : "F0D0B8E1-0000-4000-8000-D0BBE1000001",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : true,
+      "internalID" : "F0D0B8E1-0000-4000-8000-D0BBE1000002",
+      "localizations" : [
+        {
+          "description" : "3-4 spelers, alle tegenstanders, alle thema's en statistieken.",
+          "displayName" : "Gezinsversie",
+          "locale" : "nl_NL"
+        }
+      ],
+      "productID" : "com.pivo7.dobbel.gezin",
+      "referenceName" : "Gezinsversie",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "nl_NL",
+    "_storefront" : "BEL",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

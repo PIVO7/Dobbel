@@ -64,5 +64,6 @@ schemes:
         - Yahtzee Tests
     run:
       config: Debug
+      storeKitConfiguration: Dobbel.storekit
     archive:
       config: Release

@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeView: View {
     @Environment(ProfileStore.self) private var profileStore
     @Environment(GameStore.self) private var gameStore
+    @Environment(EntitlementStore.self) private var entitlements
     @Environment(\.metrics) private var m
     @State private var activeGame: ActiveGame?
     @State private var showSettings = false
@@ -89,7 +90,7 @@ struct HomeView: View {
                 .padding(.top, m.gutter * 0.5)
             }
             .sheet(isPresented: $showSettings) {
-                SettingsView()
+                SettingsView(entitlements: entitlements)
                     .appMetrics()
             }
             .fullScreenCover(item: $activeGame) { game in
@@ -147,5 +148,6 @@ struct HomeView: View {
     HomeView()
         .environment(profiles)
         .environment(GameStore(fileURL: URL.temporaryDirectory.appending(path: "preview-\(UUID()).json")))
+        .environment(EntitlementStore(previewUnlocked: false))
         .appMetrics()
 }
