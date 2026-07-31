@@ -29,7 +29,7 @@ enum RollPhrase {
         if YahtzeeScorer.isYahtzee(dice) { return yahtzee }
         if YahtzeeScorer.score(category: .largeStraight, dice: dice) > 0 { return "Grote straat!" }
         if YahtzeeScorer.score(category: .smallStraight, dice: dice) > 0 { return "Kleine straat!" }
-        if YahtzeeScorer.score(category: .fullHouse, dice: dice) > 0 { return "Full house!" }
+        if YahtzeeScorer.score(category: .fullHouse, dice: dice) > 0 { return "Vol huis!" }
 
         let tally = YahtzeeScorer.counts(for: dice)
         // Bij gelijk aantal wint het hoogste oog: "Twee zessen" boven "Twee enen".
