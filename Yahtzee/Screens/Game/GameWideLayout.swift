@@ -84,6 +84,10 @@ struct GameWideLayout: View {
 
             TipButtonView(advice: engine.adviceCategory, onExplain: actions.explainTip)
 
+            if engine.canUndoScore {
+                UndoButtonView(onUndo: actions.undo)
+            }
+
             Spacer(minLength: 8)
 
             RollButtonView(

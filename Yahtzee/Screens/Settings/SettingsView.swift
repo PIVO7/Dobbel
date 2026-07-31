@@ -8,6 +8,7 @@ struct SettingsView: View {
 
     @State private var soundOn = SoundPlayer.shared.isEnabled
     @State private var shakeOn = ShakeToRoll.isEnabled
+    @State private var passOn = PassAndPlay.isEnabled
     @State private var coachReset = false
     @State private var showRules = false
 
@@ -80,6 +81,23 @@ struct SettingsView: View {
                         .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
                         .onChange(of: shakeOn) { _, isOn in
                             ShakeToRoll.isEnabled = isOn
+                        }
+
+                        Toggle(isOn: $passOn) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Doorgeefscherm")
+                                    .font(AppTheme.rounded(m.bodySize, .bold))
+                                    .foregroundStyle(AppTheme.ink)
+                                Text("Even pauze tot de volgende speler klaar zit")
+                                    .font(AppTheme.rounded(m.captionSize, .bold))
+                                    .foregroundStyle(AppTheme.soft)
+                            }
+                        }
+                        .tint(AppTheme.mint)
+                        .padding(m.gutter)
+                        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
+                        .onChange(of: passOn) { _, isOn in
+                            PassAndPlay.isEnabled = isOn
                         }
                     }
 

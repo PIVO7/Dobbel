@@ -25,6 +25,10 @@ final class GameEngine {
     /// True kort nadat een speler scoorde — UI toont beurt-wissel.
     private(set) var turnJustChanged: Bool = false
 
+    /// De stand van vlak vóór de laatste menselijke zet. Kinderen tikken
+    /// vaak per ongeluk; tot de volgende speler gooit mag de zet terug.
+    private var undoSnapshot: GameSnapshot?
+
     private var rng: SplitMix64
     private let computerAI: ComputerAI
 
@@ -43,6 +47,27 @@ final class GameEngine {
     /// Stenen vastzetten mag zolang er nog een worp over is.
     var canHold: Bool {
         canScore && rollsRemaining > 0
+    }
+
+    /// De vorige zet mag terug zolang het spel niet uit is en de volgende
+    /// (menselijke) speler nog niets heeft gedaan. Solo betekent dit: ook de
+    /// tegenzet van de computer wordt teruggedraaid en hij speelt opnieuw.
+    var canUndoScore: Bool {
+        undoSnapshot != nil && !isFinished && !isRolling && !isSettling
+            && !hasRolledThisTurn && !currentPlayer.isComputer
+    }
+
+    func undoLastScore() {
+        guard canUndoScore, let undoSnapshot else { return }
+        players = undoSnapshot.players
+        currentPlayerIndex = undoSnapshot.currentPlayerIndex
+        dice = undoSnapshot.dice
+        rollsRemaining = undoSnapshot.rollsRemaining
+        hasRolledThisTurn = undoSnapshot.hasRolledThisTurn
+        turnMessage = undoSnapshot.turnMessage
+        lastYahtzeeBonus = 0
+        self.undoSnapshot = nil
+        markDirty()
     }
 
     /// De tip voor de speler, of `nil` zolang er niets te kiezen valt.
@@ -128,12 +153,15 @@ final class GameEngine {
     func toggleHold(dieID: UUID) {
         guard canHold else { return }
         guard let index = dice.firstIndex(where: { $0.id == dieID }) else { return }
+        // Wie de stenen aanraakt, is aan zijn eigen beurt begonnen.
+        undoSnapshot = nil
         dice[index].isHeld.toggle()
         markDirty()
     }
 
     func rollDice() async {
         guard canRoll else { return }
+        undoSnapshot = nil
         await performRoll()
     }
 
@@ -142,7 +170,12 @@ final class GameEngine {
     @discardableResult
     func score(in category: ScoreCategory) -> Bool {
         guard canScore else { return false }
-        return placeScore(category)
+        let beforeScore = snapshot
+        guard placeScore(category) else { return false }
+        // Pas na een geslaagde zet vastleggen, en niet voor de computer:
+        // die vergist zich niet.
+        undoSnapshot = isFinished ? nil : beforeScore
+        return true
     }
 
     func acknowledgeTurnChange() {

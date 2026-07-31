@@ -24,6 +24,7 @@ struct GameView: View {
     @State private var didRecordResult = false
     @State private var showTurnBanner = false
     @State private var showExitConfirm = false
+    @State private var showPassScreen = false
     @State private var tipExplanation: String?
     @State private var coachStep: CoachStep = .none
     @State private var coachVisible = false
@@ -45,7 +46,8 @@ struct GameView: View {
             score: place,
             roll: roll,
             leave: requestLeave,
-            explainTip: explainTip
+            explainTip: explainTip,
+            undo: undoLastScore
         )
     }
 
@@ -98,6 +100,24 @@ struct GameView: View {
                 if celebrateBonus {
                     CelebrationBurstView(title: "+\(engine.lastYahtzeeBonus)!", tint: AppTheme.amber)
                         .zIndex(3)
+                }
+
+                if showPassScreen {
+                    PassDeviceView(
+                        player: engine.currentPlayer,
+                        onReady: {
+                            withAnimation(.easeOut(duration: 0.15)) {
+                                showPassScreen = false
+                            }
+                        },
+                        onUndo: engine.canUndoScore ? {
+                            withAnimation(.easeOut(duration: 0.15)) {
+                                showPassScreen = false
+                            }
+                            undoLastScore()
+                        } : nil
+                    )
+                    .zIndex(4)
                 }
 
                 if engine.isFinished {
@@ -313,6 +333,13 @@ struct GameView: View {
         }
     }
 
+    private func undoLastScore() {
+        engine.undoLastScore()
+        holdPulse += 1
+        SoundPlayer.shared.play(.hold)
+        AccessibilityNotification.Announcement("Zet teruggezet. \(engine.currentPlayer.name) is weer aan de beurt.").post()
+    }
+
     private func dismissTip() {
         withAnimation(.easeOut(duration: 0.15)) {
             tipExplanation = nil
@@ -368,14 +395,24 @@ struct GameView: View {
 
     private func presentTurnBanner() {
         guard !engine.isFinished else { return }
-        withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.8)) {
-            showTurnBanner = true
-        }
         scorePulse += 1
         SoundPlayer.shared.play(.turn)
         AccessibilityNotification.Announcement(
             bannerTitle ?? "\(engine.currentPlayer.name) is aan de beurt"
         ).post()
+
+        // Met z'n allen aan één toestel pauzeert het spel tot de volgende
+        // speler het toestel heeft; solo volstaat de vluchtige banner.
+        if engine.mode == .versusFriends, PassAndPlay.isEnabled {
+            withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.8)) {
+                showPassScreen = true
+            }
+            return
+        }
+
+        withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.8)) {
+            showTurnBanner = true
+        }
         // Bij twee snelle beurtwissels zou de timer van de eerste de banner
         // van de tweede verbergen; annuleren voorkomt dat.
         bannerDismissal?.cancel()

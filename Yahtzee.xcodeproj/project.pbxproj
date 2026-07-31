@@ -34,6 +34,7 @@
 		5492C01EA728726351BB7FC3 /* ScorecardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */; };
 		54A59FD47CA1BE54945B2F36 /* SplitMix64.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8348FF0337C91FE0353105B /* SplitMix64.swift */; };
 		5D207723B91545974B637C78 /* RollButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F0C9DBD4CD175E1C97178 /* RollButtonView.swift */; };
+		63233A228AA1F948E9941505 /* PassDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE73F4BB04F736E52DB51AA /* PassDeviceView.swift */; };
 		646B569EA87C987FAA4BF3FD /* YahtzeeScorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E449E4980AE76BDCCB6160 /* YahtzeeScorerTests.swift */; };
 		69BF7C1F37A60D4B5ED36AD0 /* DiePips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F108A028507411656E8EA7 /* DiePips.swift */; };
 		69F4CE35DFC06EFDB252D3C5 /* AvatarBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C02D33A6AED897584ACA5 /* AvatarBadge.swift */; };
@@ -74,6 +75,7 @@
 		D4E86C377774E8E4B862A829 /* ProfileStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103B4B773BB381BB998F8FA0 /* ProfileStatsView.swift */; };
 		D60633C12F873678F5C69D27 /* GameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCF4F19D03D2D396A148AF8 /* GameHeaderView.swift */; };
 		DA7BE6DBF31DD2EDE1281FC3 /* ComputerLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E82DA8D203741690A3A61 /* ComputerLevel.swift */; };
+		DCCE377C60655D839587CD38 /* UndoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD55E248F68E765CE9A6A002 /* UndoButtonView.swift */; };
 		DDADFFE85F3A9DB75697B99C /* SoundPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD21D48ADB1B8BE26E2E9764 /* SoundPlayerTests.swift */; };
 		E126FC6778CE3B96E676705A /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FABA3B8C6BF0BC93C60C15 /* GameStore.swift */; };
 		E178DCBAD43AA8CA0431E65B /* PlayerProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD11B45827DBEE55EC3F78D /* PlayerProfile.swift */; };
@@ -125,6 +127,7 @@
 		62BE3285D458FEEA3160D888 /* ShakeDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeDetection.swift; sourceTree = "<group>"; };
 		68918AF5B5585DAB009B168A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6B9EE9E317DAB2739473E5CC /* ThemePalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePalette.swift; sourceTree = "<group>"; };
+		6EE73F4BB04F736E52DB51AA /* PassDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassDeviceView.swift; sourceTree = "<group>"; };
 		76EF818C857F3C3D5867F896 /* GameResultOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResultOverlay.swift; sourceTree = "<group>"; };
 		791EFB62323913A0870D317F /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		7B43D5459D0FEB7686BE80C5 /* ScorecardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorecardView.swift; sourceTree = "<group>"; };
@@ -142,6 +145,7 @@
 		A96E82DA8D203741690A3A61 /* ComputerLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerLevel.swift; sourceTree = "<group>"; };
 		ABA031A0050389C7AFDC085E /* CategoryIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIcon.swift; sourceTree = "<group>"; };
 		ACE6B60723C0645454FB6A29 /* RollPhraseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollPhraseTests.swift; sourceTree = "<group>"; };
+		AD55E248F68E765CE9A6A002 /* UndoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoButtonView.swift; sourceTree = "<group>"; };
 		B4106C2B985977A5F087D6B2 /* CelebrationBurstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationBurstView.swift; sourceTree = "<group>"; };
 		B5FABA3B8C6BF0BC93C60C15 /* GameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
 		B8348FF0337C91FE0353105B /* SplitMix64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitMix64.swift; sourceTree = "<group>"; };
@@ -349,11 +353,13 @@
 				D97BC2DB763DCC3E5A8EDE58 /* GameTallLayout.swift */,
 				791EFB62323913A0870D317F /* GameView.swift */,
 				C068493FA00825E0C2F9EBA0 /* GameWideLayout.swift */,
+				6EE73F4BB04F736E52DB51AA /* PassDeviceView.swift */,
 				4A2F0C9DBD4CD175E1C97178 /* RollButtonView.swift */,
 				A4AC710E333FBE5D667208B9 /* RollCalloutView.swift */,
 				53ECA4D176E447222DBE3ABE /* RoundStripView.swift */,
 				4AC111B5B1855BFA41B3C704 /* TipButtonView.swift */,
 				DC56DB7E3019793D4CA0B66C /* TurnBannerView.swift */,
+				AD55E248F68E765CE9A6A002 /* UndoButtonView.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -556,6 +562,7 @@
 				013A9411EA07AABA538F7669 /* GameView.swift in Sources */,
 				1DC38851CC10561EAF648C55 /* GameWideLayout.swift in Sources */,
 				C87BE4FCA2BFB637F962D337 /* HomeView.swift in Sources */,
+				63233A228AA1F948E9941505 /* PassDeviceView.swift in Sources */,
 				1476C3AA2E25387C26411FC0 /* PlayerHeaderView.swift in Sources */,
 				E178DCBAD43AA8CA0431E65B /* PlayerProfile.swift in Sources */,
 				C70D3580E17554575DACA2FF /* ProfileRowView.swift in Sources */,
@@ -583,6 +590,7 @@
 				0850B3E2D4DEEA234ECB7823 /* ToyButtonStyle.swift in Sources */,
 				D012F3B21085B23B10CA3061 /* ToyDialog.swift in Sources */,
 				B27AF48579CF1F6ABF8F4FD6 /* TurnBannerView.swift in Sources */,
+				DCCE377C60655D839587CD38 /* UndoButtonView.swift in Sources */,
 				767B02B74C9BA50FFA2E1B3F /* YahtzeeApp.swift in Sources */,
 				2A93A05B1ED555AF435D9A1D /* YahtzeeScorer.swift in Sources */,
 			);

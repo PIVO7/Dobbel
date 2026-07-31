@@ -68,6 +68,10 @@ struct GameTallLayout: View {
 
                     TipButtonView(advice: engine.adviceCategory, onExplain: actions.explainTip)
 
+                    if engine.canUndoScore {
+                        UndoButtonView(onUndo: actions.undo)
+                    }
+
                     Spacer(minLength: m.gutter)
 
                     ScorecardView(

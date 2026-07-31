@@ -154,3 +154,52 @@ final class GameEngineRobustnessTests: XCTestCase {
         XCTAssertEqual(engine.winnerProfileIDs, [strong.profileID])
     }
 }
+
+@MainActor
+final class GameEngineUndoTests: XCTestCase {
+    func testUndoRestoresPreviousTurn() async throws {
+        let engine = GameEngine(
+            mode: .versusFriends,
+            profiles: [PlayerProfile(name: "A"), PlayerProfile(name: "B")],
+            seed: 6
+        )
+        await engine.rollDice()
+        let diceBefore = engine.dice
+        let category = try XCTUnwrap(YahtzeeScorer.availableCategories(
+            dice: engine.diceValues, scorecard: engine.currentPlayer.scorecard
+        ).first)
+
+        XCTAssertTrue(engine.score(in: category))
+        XCTAssertEqual(engine.currentPlayerIndex, 1)
+        XCTAssertTrue(engine.canUndoScore)
+
+        engine.undoLastScore()
+
+        XCTAssertEqual(engine.currentPlayerIndex, 0)
+        XCTAssertNil(engine.players[0].scorecard.scores[category])
+        XCTAssertEqual(engine.dice, diceBefore)
+        XCTAssertTrue(engine.canScore)
+        XCTAssertFalse(engine.canUndoScore)
+    }
+
+    /// Zodra de volgende speler gooit of vasthoudt, is de terugweg dicht.
+    func testUndoWindowClosesAfterNextRoll() async throws {
+        let engine = GameEngine(
+            mode: .versusFriends,
+            profiles: [PlayerProfile(name: "A"), PlayerProfile(name: "B")],
+            seed: 6
+        )
+        await engine.rollDice()
+        let category = try XCTUnwrap(YahtzeeScorer.availableCategories(
+            dice: engine.diceValues, scorecard: engine.currentPlayer.scorecard
+        ).first)
+        engine.score(in: category)
+        XCTAssertTrue(engine.canUndoScore)
+
+        await engine.rollDice()
+        XCTAssertFalse(engine.canUndoScore)
+
+        engine.undoLastScore()
+        XCTAssertEqual(engine.players[0].scorecard.filledCount, 1)
+    }
+}
