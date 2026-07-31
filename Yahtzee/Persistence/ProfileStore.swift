@@ -28,7 +28,7 @@ final class ProfileStore {
     func addProfile(name: String) {
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
-        let color = profiles.count % 6
+        let color = profiles.count % PlayerProfile.avatarPaletteCount
         let profile = PlayerProfile(name: trimmed, avatarColorIndex: color)
         profiles.append(profile)
         save()

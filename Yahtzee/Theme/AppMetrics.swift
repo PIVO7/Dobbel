@@ -139,4 +139,3 @@ extension View {
     }
 }
 
-/// Het kenmerk van deze stijl: een gevuld blok met een inktrand, en daarachter

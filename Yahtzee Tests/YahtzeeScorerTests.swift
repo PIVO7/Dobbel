@@ -86,3 +86,23 @@ final class YahtzeeScorerTests: XCTestCase {
     }
 }
 
+
+extension YahtzeeScorerTests {
+    /// De jokerregel geldt ook als het Dobbel-vakje met een nul is
+    /// afgestreept: vaste punten voor vol huis en straten, en het
+    /// bijpassende vakje bovenin wordt eerst afgedwongen.
+    func testJokerAppliesAfterZeroedYahtzee() {
+        var card = Scorecard()
+        card.place(category: .yahtzee, score: 0, yahtzeeBonus: 0)
+        let dice = [4, 4, 4, 4, 4]
+
+        XCTAssertTrue(YahtzeeScorer.canUseJoker(dice: dice, scorecard: card))
+        XCTAssertEqual(YahtzeeScorer.availableCategories(dice: dice, scorecard: card), [.fours])
+
+        card.place(category: .fours, score: 20, yahtzeeBonus: 0)
+        let fullHouse = YahtzeeScorer.pointsForPlacing(category: .fullHouse, dice: dice, scorecard: card)
+        XCTAssertEqual(fullHouse.score, 25)
+        // Maar de 100-puntenbonus blijft voorbehouden aan een echte 50.
+        XCTAssertEqual(fullHouse.yahtzeeBonus, 0)
+    }
+}

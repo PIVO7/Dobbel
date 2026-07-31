@@ -191,7 +191,7 @@ struct GameView: View {
     }
 
     private func place(_ category: ScoreCategory) {
-        engine.score(in: category)
+        guard engine.score(in: category) else { return }
         scorePulse += 1
         if coachStep != .none {
             finishCoaching()

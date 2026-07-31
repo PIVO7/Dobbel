@@ -170,21 +170,12 @@ struct GameSetupView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(item: $activeGame) { game in
-            GameView(
-                engine: game.engine,
-                onRematch: {
-                    let engine = GameEngine(
-                        mode: game.engine.mode,
-                        profiles: game.engine.rematchProfiles()
-                    )
-                    gameStore.save(engine.snapshot)
-                    activeGame = ActiveGame(engine: engine)
-                },
-                onClose: { activeGame = nil }
+            GameCoverView(
+                game: game,
+                profileStore: profileStore,
+                gameStore: gameStore,
+                activeGame: $activeGame
             )
-            .environment(profileStore)
-            .environment(gameStore)
-            .appMetrics()
         }
     }
 

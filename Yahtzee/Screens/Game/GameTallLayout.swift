@@ -55,7 +55,7 @@ struct GameTallLayout: View {
                     DiceTrayView(
                         dice: engine.dice,
                         isRolling: engine.isRolling,
-                        canInteract: engine.canScore && engine.rollsRemaining > 0,
+                        canInteract: engine.canHold,
                         onToggle: actions.toggleHold
                     )
 
@@ -66,7 +66,7 @@ struct GameTallLayout: View {
                     )
                     .padding(.top, m.gutter * 0.4)
 
-                    TipButtonView(engine: engine, onExplain: actions.explainTip)
+                    TipButtonView(advice: engine.adviceCategory, onExplain: actions.explainTip)
 
                     Spacer(minLength: m.gutter)
 

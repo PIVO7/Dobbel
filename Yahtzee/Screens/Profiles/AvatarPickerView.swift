@@ -12,13 +12,20 @@ struct AvatarPickerView: View {
     @State private var colorIndex: Int
     @State private var symbol: String?
 
-    /// Kindvriendelijke symbolen; de eerste keuze is "gewoon je letters".
-    static let symbols: [String] = [
-        "cat.fill", "dog.fill", "hare.fill", "tortoise.fill",
-        "bird.fill", "fish.fill", "ladybug.fill", "pawprint.fill",
-        "star.fill", "heart.fill", "bolt.fill", "crown.fill",
-        "sun.max.fill", "moon.stars.fill", "flame.fill", "leaf.fill"
+    /// Kindvriendelijke symbolen met een uitspreekbare naam; de eerste keuze
+    /// is "gewoon je letters".
+    static let symbols: [(name: String, label: String)] = [
+        ("cat.fill", "Kat"), ("dog.fill", "Hond"),
+        ("hare.fill", "Haas"), ("tortoise.fill", "Schildpad"),
+        ("bird.fill", "Vogel"), ("fish.fill", "Vis"),
+        ("ladybug.fill", "Lieveheersbeestje"), ("pawprint.fill", "Pootafdruk"),
+        ("star.fill", "Ster"), ("heart.fill", "Hart"),
+        ("bolt.fill", "Bliksem"), ("crown.fill", "Kroon"),
+        ("sun.max.fill", "Zon"), ("moon.stars.fill", "Maan"),
+        ("flame.fill", "Vlam"), ("leaf.fill", "Blad")
     ]
+
+    private static let colorNames = ["Koraal", "Blauw", "Geel", "Mint", "Paars", "Oranje"]
 
     init(profile: PlayerProfile, onSave: @escaping (Int, String?) -> Void) {
         self.profile = profile
@@ -55,10 +62,14 @@ struct AvatarPickerView: View {
                                 )
                                 .frame(width: m.tapTarget * 0.8, height: m.tapTarget * 0.8)
                                 .scaleEffect(colorIndex == index ? 1.12 : 1)
+                                // Het bolletje blijft visueel klein, maar het
+                                // tikvlak haalt de 44-puntsgrens.
+                                .frame(minWidth: m.tapTarget, minHeight: m.tapTarget)
+                                .contentShape(.rect)
                         }
                         .buttonStyle(.plain)
                         .animation(.easeOut(duration: 0.12), value: colorIndex)
-                        .accessibilityLabel("Kleur \(index + 1)")
+                        .accessibilityLabel("Kleur \(Self.colorNames[index % Self.colorNames.count])")
                         .accessibilityAddTraits(colorIndex == index ? .isSelected : [])
                     }
                 }
@@ -68,9 +79,9 @@ struct AvatarPickerView: View {
                     columns: Array(repeating: GridItem(.flexible(), spacing: m.cellGap * 2), count: 6),
                     spacing: m.cellGap * 2
                 ) {
-                    symbolCell(nil)
-                    ForEach(Self.symbols, id: \.self) { name in
-                        symbolCell(name)
+                    symbolCell(nil, label: "Initialen")
+                    ForEach(Self.symbols, id: \.name) { symbol in
+                        symbolCell(symbol.name, label: symbol.label)
                     }
                 }
 
@@ -100,7 +111,7 @@ struct AvatarPickerView: View {
         }
     }
 
-    private func symbolCell(_ name: String?) -> some View {
+    private func symbolCell(_ name: String?, label: String) -> some View {
         let picked = symbol == name
         return Button {
             symbol = name
@@ -116,7 +127,7 @@ struct AvatarPickerView: View {
             }
             .foregroundStyle(picked ? .white : AppTheme.ink)
             .frame(maxWidth: .infinity)
-            .frame(height: m.tapTarget * 0.95)
+            .frame(height: m.tapTarget)
         }
         .buttonStyle(ToyButtonStyle(
             fill: picked ? AppTheme.coral : .white,
@@ -124,7 +135,7 @@ struct AvatarPickerView: View {
             depth: picked ? 3 : 2,
             border: m.thinBorder
         ))
-        .accessibilityLabel(name.map { "Symbool \($0)" } ?? "Initialen")
+        .accessibilityLabel(label)
         .accessibilityAddTraits(picked ? .isSelected : [])
     }
 

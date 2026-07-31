@@ -40,6 +40,17 @@ final class GameEngine {
         !isFinished && !isRolling && !isSettling && hasRolledThisTurn && !currentPlayer.isComputer
     }
 
+    /// Stenen vastzetten mag zolang er nog een worp over is.
+    var canHold: Bool {
+        canScore && rollsRemaining > 0
+    }
+
+    /// De tip voor de speler, of `nil` zolang er niets te kiezen valt.
+    var adviceCategory: ScoreCategory? {
+        guard canScore else { return nil }
+        return YahtzeeScorer.adviceCategory(dice: diceValues, scorecard: currentPlayer.scorecard)
+    }
+
     /// De worp in woorden. Staat naast `turnMessage`, zodat het spelscherm
     /// geen beurtstand hoeft na te rekenen om te weten wat er mag staan.
     var calloutTitle: String {
@@ -115,7 +126,7 @@ final class GameEngine {
     }
 
     func toggleHold(dieID: UUID) {
-        guard canScore, rollsRemaining > 0 else { return }
+        guard canHold else { return }
         guard let index = dice.firstIndex(where: { $0.id == dieID }) else { return }
         dice[index].isHeld.toggle()
         markDirty()
@@ -126,9 +137,12 @@ final class GameEngine {
         await performRoll()
     }
 
-    func score(in category: ScoreCategory) {
-        guard canScore else { return }
-        placeScore(category)
+    /// Meldt of de zet echt geplaatst is, zodat de UI geen geluid of
+    /// viering afvuurt bij een afgewezen tik.
+    @discardableResult
+    func score(in category: ScoreCategory) -> Bool {
+        guard canScore else { return false }
+        return placeScore(category)
     }
 
     func acknowledgeTurnChange() {
@@ -222,9 +236,10 @@ final class GameEngine {
         markDirty()
     }
 
-    private func placeScore(_ category: ScoreCategory) {
+    @discardableResult
+    private func placeScore(_ category: ScoreCategory) -> Bool {
         let open = YahtzeeScorer.availableCategories(dice: diceValues, scorecard: currentPlayer.scorecard)
-        guard open.contains(category) else { return }
+        guard open.contains(category) else { return false }
 
         let result = YahtzeeScorer.pointsForPlacing(
             category: category,
@@ -238,6 +253,7 @@ final class GameEngine {
             yahtzeeBonus: result.yahtzeeBonus
         )
         advanceTurn()
+        return true
     }
 
     private func advanceTurn() {

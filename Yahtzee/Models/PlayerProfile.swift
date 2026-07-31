@@ -72,6 +72,10 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         bestStreak = try container.decodeIfPresent(Int.self, forKey: .bestStreak) ?? 0
     }
 
+    /// Aantal kleuren in het avatarpalet; `AvatarBadge.palette` moet even
+    /// lang zijn (een test bewaakt dat).
+    static let avatarPaletteCount = 6
+
     /// Vaste id's, zodat een bewaard spel na een herstart dezelfde
     /// tegenstander terugvindt.
     static let computerIDs: [ComputerLevel: UUID] = [

@@ -17,4 +17,3 @@ struct Die: Identifiable, Equatable, Codable, Hashable {
     }
 }
 
-typealias Dice = [Die]

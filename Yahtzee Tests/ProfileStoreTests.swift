@@ -1,4 +1,5 @@
 import XCTest
+import SwiftUI
 @testable import Yahtzee
 
 @MainActor
@@ -58,5 +59,13 @@ final class ProfileStoreTests: XCTestCase {
         store.recordGameResult(players: players, winnerProfileIDs: ids)
         XCTAssertTrue(store.humanProfiles.allSatisfy { $0.wins == 0 })
         XCTAssertTrue(store.humanProfiles.allSatisfy { $0.gamesPlayed == 1 })
+    }
+}
+
+extension ProfileStoreTests {
+    /// De kleurtoewijzing in de store en het palet in de badge moeten
+    /// dezelfde lengte delen.
+    func testAvatarPaletteCountMatchesBadge() {
+        XCTAssertEqual(AvatarBadge.palette.count, PlayerProfile.avatarPaletteCount)
     }
 }

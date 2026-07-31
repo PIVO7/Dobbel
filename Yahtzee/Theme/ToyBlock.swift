@@ -52,4 +52,3 @@ extension View {
     }
 }
 
-/// Knop die bij het indrukken echt inzakt: de schaduw krimpt terwijl de knop

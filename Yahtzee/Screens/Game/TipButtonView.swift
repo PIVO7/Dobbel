@@ -1,20 +1,13 @@
 import SwiftUI
 
 /// Het "waarom?"-knopje onder de worp: zichtbaar zodra de tip een vakje
-/// aanraadt, en een tik legt de keuze in kindertaal uit.
+/// aanraadt, en een tik legt de keuze in kindertaal uit. De tip zelf komt van
+/// de engine, zodat hij maar één keer per hertekening wordt uitgerekend.
 struct TipButtonView: View {
-    let engine: GameEngine
+    let advice: ScoreCategory?
     let onExplain: (ScoreCategory) -> Void
 
     @Environment(\.metrics) private var m
-
-    private var advice: ScoreCategory? {
-        guard engine.canScore else { return nil }
-        return YahtzeeScorer.adviceCategory(
-            dice: engine.diceValues,
-            scorecard: engine.currentPlayer.scorecard
-        )
-    }
 
     var body: some View {
         if let advice {
@@ -33,22 +26,16 @@ struct TipButtonView: View {
                 depth: 3,
                 border: m.thinBorder
             ))
+            // Het gele blok blijft compact; het tikvlak eromheen haalt de
+            // 44-puntsgrens.
+            .frame(minHeight: m.tapTarget)
+            .contentShape(.rect)
         }
     }
 }
 
 #Preview {
-    let engine: GameEngine = {
-        let engine = GameEngine(
-            mode: .versusFriends,
-            profiles: [PlayerProfile(name: "Lene"), PlayerProfile(name: "Ellis")],
-            seed: 5
-        )
-        Task { await engine.rollDice() }
-        return engine
-    }()
-
-    TipButtonView(engine: engine, onExplain: { _ in })
+    TipButtonView(advice: .fives, onExplain: { _ in })
         .padding()
         .background(AppTheme.cream)
         .appMetrics()

@@ -69,11 +69,14 @@ enum YahtzeeScorer {
         }
     }
 
-    /// Classic joker rule: after a scored Yahtzee (50), later Yahtzees may fill
-    /// other boxes. Upper face of the Yahtzee must be used first if still open.
+    /// De jokerregel: is het Dobbel-vakje al gevuld — ook met een nul — dan
+    /// moet een nieuwe Dobbel eerst naar het bijpassende vakje bovenin, en
+    /// mag hij anders als joker in een vast vakje onderin. De 100-punten-
+    /// bonus blijft apart voorbehouden aan een échte 50 (zie
+    /// `pointsForPlacing`).
     static func canUseJoker(dice: [Int], scorecard: Scorecard) -> Bool {
         guard isYahtzee(dice) else { return false }
-        guard scorecard.scores[.yahtzee] == yahtzeePoints else { return false }
+        guard scorecard.scores[.yahtzee] != nil else { return false }
         return true
     }
 
