@@ -33,6 +33,9 @@ struct GameView: View {
     @State private var coachVisible = false
     @State private var celebrateDobbel = false
     @State private var celebrateBonus = false
+    /// De beurtbanner die nog even inhoudt tot het DOBBEL!-feest voorbij is;
+    /// anders staan de viering en "Jij bent aan de beurt" samen in beeld.
+    @State private var pendingTurnBanner = false
     @State private var bannerDismissal: Task<Void, Never>?
     @State private var dobbelDismissal: Task<Void, Never>?
     @State private var bonusDismissal: Task<Void, Never>?
@@ -205,9 +208,16 @@ struct GameView: View {
             engine.acknowledgeTurnChange()
         }
         .onChange(of: celebrateBonus) { _, show in
-            guard show else { return }
-            bonusDismissal?.cancel()
-            bonusDismissal = dismissCelebration { celebrateBonus = false }
+            if show {
+                bonusDismissal?.cancel()
+                bonusDismissal = dismissCelebration { celebrateBonus = false }
+            } else {
+                presentPendingTurnBannerIfNeeded()
+            }
+        }
+        .onChange(of: celebrateDobbel) { _, show in
+            guard !show else { return }
+            presentPendingTurnBannerIfNeeded()
         }
         .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.85), trigger: rollPulse)
         .sensoryFeedback(.selection, trigger: holdPulse)
@@ -442,6 +452,24 @@ struct GameView: View {
     }
 
     private func presentTurnBanner() {
+        guard !engine.isFinished else { return }
+        // Loopt het DOBBEL!- of bonusfeest nog? Dan wacht de banner (met
+        // geluid en al) tot dat is uitgeraasd in plaats van erdoorheen te
+        // vallen.
+        if celebrateDobbel || celebrateBonus {
+            pendingTurnBanner = true
+            return
+        }
+        showTurnBannerNow()
+    }
+
+    private func presentPendingTurnBannerIfNeeded() {
+        guard pendingTurnBanner, !celebrateDobbel, !celebrateBonus else { return }
+        pendingTurnBanner = false
+        showTurnBannerNow()
+    }
+
+    private func showTurnBannerNow() {
         guard !engine.isFinished else { return }
         scorePulse += 1
         SoundPlayer.shared.play(.turn)
