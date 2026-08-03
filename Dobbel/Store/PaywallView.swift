@@ -54,7 +54,7 @@ struct PaywallView: View {
                         feature("person.3.fill", "Speel met 3 of 4 spelers aan één toestel")
                         feature("graduationcap.fill", "Alle drie de tegenstanders: Dommel, Robbie en Professor Punt")
                         feature("paintpalette.fill", "Alle kleurenthema's: Snoep, Oceaan en Nacht")
-                        feature("chart.bar.fill", "Statistieken per speler, met records en winreeks")
+                        feature("chart.bar.fill", "Statistieken met trofeeën, een grafiekje en gezinsrecords")
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(m.gutter)

@@ -19,6 +19,9 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
     var bonusCount: Int
     var currentStreak: Int
     var bestStreak: Int
+    /// De laatste potjes (nieuwste achteraan), voor het grafiekje. Afgetopt
+    /// in `ProfileStore`, zodat het profielbestand klein blijft.
+    var history: [GameRecord]
 
     init(
         id: UUID = UUID(),
@@ -34,7 +37,8 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         dobbelCount: Int = 0,
         bonusCount: Int = 0,
         currentStreak: Int = 0,
-        bestStreak: Int = 0
+        bestStreak: Int = 0,
+        history: [GameRecord] = []
     ) {
         self.id = id
         self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -50,6 +54,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         self.bonusCount = bonusCount
         self.currentStreak = currentStreak
         self.bestStreak = bestStreak
+        self.history = history
     }
 
     /// Met de hand, zodat oudere profielbestanden zonder de statistiekvelden
@@ -70,6 +75,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         bonusCount = try container.decodeIfPresent(Int.self, forKey: .bonusCount) ?? 0
         currentStreak = try container.decodeIfPresent(Int.self, forKey: .currentStreak) ?? 0
         bestStreak = try container.decodeIfPresent(Int.self, forKey: .bestStreak) ?? 0
+        history = try container.decodeIfPresent([GameRecord].self, forKey: .history) ?? []
     }
 
     /// Aantal kleuren in het avatarpalet; `AvatarBadge.palette` moet even

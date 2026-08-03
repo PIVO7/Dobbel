@@ -45,6 +45,63 @@ final class ProfileStoreTests: XCTestCase {
         XCTAssertEqual(reloaded.humanProfiles.first(where: { $0.id == mila.id })?.wins, 1)
     }
 
+    func testRecordsHistoryAndCapsIt() throws {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("yahtzee-history-\(UUID().uuidString).json")
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let store = ProfileStore(fileURL: url)
+        store.addProfile(name: "Mila")
+        store.addProfile(name: "Noah")
+        let mila = try XCTUnwrap(store.humanProfiles.first(where: { $0.name == "Mila" }))
+        let noah = try XCTUnwrap(store.humanProfiles.first(where: { $0.name == "Noah" }))
+
+        // Eén potje meer dan de limiet: het oudste record moet eruit vallen.
+        for round in 0...ProfileStore.maxHistoryLength {
+            var milaPlayer = GamePlayer(profile: mila)
+            milaPlayer.scorecard.place(category: .ones, score: round, dobbelBonus: 0)
+            let noahPlayer = GamePlayer(profile: noah)
+            store.recordGameResult(players: [milaPlayer, noahPlayer], winnerProfileIDs: [mila.id])
+        }
+
+        let updated = try XCTUnwrap(store.humanProfiles.first(where: { $0.id == mila.id }))
+        XCTAssertEqual(updated.history.count, ProfileStore.maxHistoryLength)
+        // Nieuwste achteraan, en de eerste (score 0) is weggevallen.
+        XCTAssertEqual(updated.history.last?.score, ProfileStore.maxHistoryLength)
+        XCTAssertEqual(updated.history.first?.score, 1)
+        XCTAssertTrue(updated.history.allSatisfy(\.won))
+
+        let loser = try XCTUnwrap(store.humanProfiles.first(where: { $0.id == noah.id }))
+        XCTAssertFalse(loser.history.isEmpty)
+        XCTAssertTrue(loser.history.allSatisfy { !$0.won })
+
+        // Herladen bewaart de geschiedenis; oude bestanden zonder het veld
+        // laden als leeg (gedekt doordat decodeIfPresent op [] terugvalt).
+        let reloaded = ProfileStore(fileURL: url)
+        XCTAssertEqual(
+            reloaded.humanProfiles.first(where: { $0.id == mila.id })?.history.count,
+            ProfileStore.maxHistoryLength
+        )
+    }
+
+    func testBadgeCollectionMarksEarned() {
+        let starter = PlayerProfile(name: "Nieuw")
+        XCTAssertTrue(ProfileBadge.collection(for: starter).allSatisfy { !$0.isEarned })
+
+        let kampioen = PlayerProfile(
+            name: "Kampioen", wins: 12, gamesPlayed: 25,
+            bestScore: 201, totalPoints: 3000, dobbelCount: 5, bonusCount: 5,
+            currentStreak: 3, bestStreak: 3
+        )
+        XCTAssertTrue(ProfileBadge.collection(for: kampioen).allSatisfy(\.isEarned))
+
+        let beginner = PlayerProfile(name: "Beginner", wins: 0, gamesPlayed: 1, bestScore: 99)
+        let badges = ProfileBadge.collection(for: beginner)
+        XCTAssertTrue(badges.first { $0.id == "eerste-potje" }!.isEarned)
+        XCTAssertFalse(badges.first { $0.id == "winnaar" }!.isEarned)
+        XCTAssertFalse(badges.first { $0.id == "honderdklapper" }!.isEarned)
+    }
+
     func testTieDoesNotAwardWin() throws {
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("yahtzee-tie-\(UUID().uuidString).json")
