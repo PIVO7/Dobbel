@@ -22,6 +22,10 @@ final class GameEngine {
     private(set) var saveVersion: Int = 0
     /// Laatste Dobbel-bonus die zojuist geplaatst werd (voor viering).
     private(set) var lastDobbelBonus: Int = 0
+    /// Of de laatst voltooide worp een Dobbel was. Hier vastgelegd op het
+    /// moment van de worp: als de UI het achteraf uit `diceValues` afleidt,
+    /// kan de beurt al gewisseld zijn en tellen de vijf gereset énen mee.
+    private(set) var lastRollWasDobbel: Bool = false
     /// True kort nadat een speler scoorde — UI toont beurt-wissel.
     private(set) var turnJustChanged: Bool = false
 
@@ -245,6 +249,7 @@ final class GameEngine {
 
         rollsRemaining -= 1
         hasRolledThisTurn = true
+        lastRollWasDobbel = DobbelScorer.isDobbel(diceValues)
         isRolling = false
 
         // De stenen zijn uitgeteld maar veren nog na; pas daarna gaat het

@@ -12,7 +12,7 @@ struct HomeHeroView: View {
     var body: some View {
         Button(action: tumble) {
             HStack(spacing: -m.dieSize * 0.18) {
-                heroDie(face: faces[0], fill: .white, tilt: -9)
+                heroDie(face: faces[0], fill: AppTheme.card, tilt: -9)
                     .zIndex(1)
                 heroDie(face: faces[1], fill: AppTheme.amber, tilt: 8)
                     .offset(y: m.dieSize * 0.16)

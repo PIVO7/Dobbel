@@ -126,7 +126,7 @@ struct DieView: View {
             .frame(width: m.dieSize, height: m.dieSize)
             .background(
                 RoundedRectangle(cornerRadius: m.dieCorner, style: .continuous)
-                    .fill(die.isHeld ? AppTheme.amber : .white)
+                    .fill(die.isHeld ? AppTheme.amber : AppTheme.card)
             )
             .overlay {
                 RoundedRectangle(cornerRadius: m.dieCorner, style: .continuous)

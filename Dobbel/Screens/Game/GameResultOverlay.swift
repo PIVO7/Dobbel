@@ -56,7 +56,7 @@ struct GameResultOverlay: View {
 
                 Text(message)
                     .font(AppTheme.rounded(m.bodySize, .bold))
-                    .foregroundStyle(AppTheme.soft)
+                    .foregroundStyle(AppTheme.cardSoft)
                     .multilineTextAlignment(.center)
 
                 VStack(spacing: 8) {
@@ -90,14 +90,14 @@ struct GameResultOverlay: View {
                         .frame(height: m.buttonHeight * 0.9)
                 }
                 .buttonStyle(ToyButtonStyle(
-                    fill: .white,
+                    fill: AppTheme.card,
                     radius: m.cardCorner * 0.8,
                     depth: m.depth,
                     border: m.border
                 ))
             }
             .padding(m.gutter * 1.5)
-            .toyBlock(fill: .white, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
+            .toyBlock(fill: AppTheme.card, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
             .frame(maxWidth: m.overlayMaxWidth)
             .padding(m.gutter * 2)
             // Modaal voor VoiceOver: het spelbord eronder is voorbij.

@@ -34,7 +34,7 @@ struct ScorecardView: View {
             column(categories: ScoreCategory.lower, showsBonus: false, open: open, advice: advice)
         }
         .padding(m.gutter * 0.8)
-        .toyBlock(fill: .white, radius: m.cardCorner, depth: m.depth, border: m.border)
+        .toyBlock(fill: AppTheme.card, radius: m.cardCorner, depth: m.depth, border: m.border)
     }
 
     private var current: GamePlayer? {
@@ -120,15 +120,19 @@ struct ScorecardView: View {
             ForEach(visiblePlayers) { player in
                 let subtotal = player.scorecard.upperSubtotal
                 let reached = player.scorecard.upperBonus > 0
-                Text(reached ? "+35" : "\(subtotal)/63")
+                // Ook mét bonus blijft het bovenbladtotaal staan: "66 +35"
+                // vertelt wat je haalde, niet alleen dát je de bonus hebt.
+                Text(reached ? "\(subtotal) +35" : "\(subtotal)/63")
                     .font(AppTheme.rounded(m.captionSize))
                     .foregroundStyle(reached ? AppTheme.mint : AppTheme.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
                     .toyBlock(fill: AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)
                     .accessibilityLabel(
                         reached
-                            ? String(localized: "Bonus behaald, 35 punten")
+                            ? String(localized: "\(subtotal) punten bovenin, bonus van 35 behaald")
                             : String(localized: "Bonus bij 63, nu \(subtotal)")
                     )
             }

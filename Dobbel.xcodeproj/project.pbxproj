@@ -67,6 +67,7 @@
 		A2D6B114F1876470D3EF04C7 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EBCC40993A8234F81F852 /* GameEngineTests.swift */; };
 		A72FE49A389F07BF90898679 /* ScorecardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA576E1403CCA19E282FC00 /* ScorecardView.swift */; };
 		AD52786FBADE00CCC7BF9C69 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5B0C0368334450137CB09C /* PaywallView.swift */; };
+		AF46015FD479377E5D747BC9 /* ThemedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24703A4ACFC4D3D521720333 /* ThemedBackground.swift */; };
 		B4DC9A39E9EB81FC152FB32B /* RollPhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952EBCB4AD504FE415F41DCA /* RollPhrase.swift */; };
 		B660CBE5403A39EB5FBC8A0A /* AdviceExplainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E04F637CD144657AAD851C /* AdviceExplainerTests.swift */; };
 		B77B30C09A72565E73E2E895 /* ScoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E159D8759998EAB9C183A /* ScoreCategory.swift */; };
@@ -123,6 +124,7 @@
 		210FFB1C453B799B3F23FC42 /* ComputerAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerAI.swift; sourceTree = "<group>"; };
 		231B3F1B68D00878FD678F9D /* wissel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wissel.wav; sourceTree = "<group>"; };
 		23B53AF71BCB702DBDB79C27 /* StraightGlyph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StraightGlyph.swift; sourceTree = "<group>"; };
+		24703A4ACFC4D3D521720333 /* ThemedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemedBackground.swift; sourceTree = "<group>"; };
 		26B5A57B0B0489B8F6A2A33E /* ProfilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesView.swift; sourceTree = "<group>"; };
 		271C5C87771CEB3965B56C3A /* GameTallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTallLayout.swift; sourceTree = "<group>"; };
 		28D5AD65F0631D89070200A4 /* PassDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassDeviceView.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 			children = (
 				2C443FB43CCD05A94F8FCA7F /* AppMetrics.swift */,
 				0DA24EB6ACAD51BE024CDA05 /* AppTheme.swift */,
+				24703A4ACFC4D3D521720333 /* ThemedBackground.swift */,
 				F7F3773EB5783E7F3502A2E6 /* ThemePalette.swift */,
 				328813BAA027060922F007F1 /* ThemeStore.swift */,
 				BB7421877E483BC1C2CD6972 /* ToyBlock.swift */,
@@ -629,6 +632,7 @@
 				BC39ACCA4EFF44B7A57C26A0 /* StraightGlyph.swift in Sources */,
 				7DF9F67EF25A7F4DEAFB8DEA /* ThemePalette.swift in Sources */,
 				3BC8C78E52D96DD648D20CCC /* ThemeStore.swift in Sources */,
+				AF46015FD479377E5D747BC9 /* ThemedBackground.swift in Sources */,
 				FB5E5AC98D88DE12047EEF36 /* TipButtonView.swift in Sources */,
 				53D36C2143F838174C4D53C1 /* ToyBlock.swift in Sources */,
 				FFE29790B7C75F340773CFB7 /* ToyButtonStyle.swift in Sources */,

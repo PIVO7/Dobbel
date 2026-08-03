@@ -5,6 +5,9 @@ struct ProfilesView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.metrics) private var m
     @State private var newName = ""
+    /// Het zojuist toegevoegde profiel: daarvoor gaat meteen de avatarkiezer
+    /// open, anders vindt niemand het potloodje op het bolletje.
+    @State private var freshProfile: PlayerProfile?
 
     /// Op een iPad past er een tweede kolom naast; op een iPhone niet.
     private var columns: [GridItem] {
@@ -14,7 +17,7 @@ struct ProfilesView: View {
 
     var body: some View {
         ZStack {
-            AppTheme.cream.ignoresSafeArea()
+            ThemedBackground()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: m.gutter * 1.5) {
@@ -43,17 +46,17 @@ struct ProfilesView: View {
                                 .disabled(!canAdd)
                         }
                         .padding(m.gutter)
-                        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
+                        .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
                     }
 
                     section("SPELERS") {
                         if profileStore.humanProfiles.isEmpty {
                             Text("Nog geen profielen. Maak er een aan om te spelen.")
                                 .font(AppTheme.rounded(m.bodySize, .bold))
-                                .foregroundStyle(AppTheme.soft)
+                                .foregroundStyle(AppTheme.cardSoft)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(m.gutter)
-                                .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
+                                .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
                         } else {
                             LazyVGrid(columns: columns, spacing: m.gutter) {
                                 ForEach(profileStore.humanProfiles) { profile in
@@ -77,6 +80,12 @@ struct ProfilesView: View {
         }
         .navigationTitle("Profielen")
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(item: $freshProfile) { profile in
+            AvatarPickerView(profile: profile, onSave: { colorIndex, symbol in
+                profileStore.updateAvatar(id: profile.id, colorIndex: colorIndex, symbol: symbol)
+            })
+            .appMetrics()
+        }
     }
 
     private var canAdd: Bool {
@@ -85,8 +94,9 @@ struct ProfilesView: View {
 
     private func addProfile() {
         guard canAdd else { return }
-        profileStore.addProfile(name: newName)
+        let profile = profileStore.addProfile(name: newName)
         newName = ""
+        freshProfile = profile
     }
 
     @ViewBuilder

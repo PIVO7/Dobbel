@@ -19,7 +19,7 @@ struct SettingsView: View {
 
     var body: some View {
         ZStack {
-            AppTheme.cream.ignoresSafeArea()
+            ThemedBackground()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: m.gutter * 1.4) {
@@ -37,7 +37,7 @@ struct SettingsView: View {
                                 .foregroundStyle(AppTheme.ink)
                                 .frame(width: m.tapTarget, height: m.tapTarget)
                         }
-                        .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+                        .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: 3, border: m.thinBorder))
                     }
 
                     section("THEMA") {
@@ -59,7 +59,7 @@ struct SettingsView: View {
                         }
                         .tint(AppTheme.mint)
                         .padding(m.gutter)
-                        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
+                        .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
                         .onChange(of: soundOn) { _, isOn in
                             SoundPlayer.shared.isEnabled = isOn
                             if isOn {
@@ -76,12 +76,12 @@ struct SettingsView: View {
                                     .foregroundStyle(AppTheme.ink)
                                 Text("Schud het toestel en de stenen rollen")
                                     .font(AppTheme.rounded(m.captionSize, .bold))
-                                    .foregroundStyle(AppTheme.soft)
+                                    .foregroundStyle(AppTheme.cardSoft)
                             }
                         }
                         .tint(AppTheme.mint)
                         .padding(m.gutter)
-                        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
+                        .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
                         .onChange(of: shakeOn) { _, isOn in
                             ShakeToRoll.isEnabled = isOn
                         }
@@ -93,12 +93,12 @@ struct SettingsView: View {
                                     .foregroundStyle(AppTheme.ink)
                                 Text("Even pauze tot de volgende speler klaar zit")
                                     .font(AppTheme.rounded(m.captionSize, .bold))
-                                    .foregroundStyle(AppTheme.soft)
+                                    .foregroundStyle(AppTheme.cardSoft)
                             }
                         }
                         .tint(AppTheme.mint)
                         .padding(m.gutter)
-                        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
+                        .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
                         .onChange(of: passOn) { _, isOn in
                             PassAndPlay.isEnabled = isOn
                         }
@@ -119,7 +119,7 @@ struct SettingsView: View {
                             }
                             .padding(m.gutter)
                         }
-                        .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border))
+                        .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border))
                         .sheet(isPresented: $showRules) {
                             RulesView()
                                 .appMetrics()
@@ -138,7 +138,7 @@ struct SettingsView: View {
                                  ? LocalizedStringKey("Bij het volgende potje bieden we de uitleg weer aan")
                                  : LocalizedStringKey("Uitleg opnieuw aanbieden"))
                                     .font(AppTheme.rounded(m.bodySize, .bold))
-                                    .foregroundStyle(coachReset ? AppTheme.soft : AppTheme.ink)
+                                    .foregroundStyle(coachReset ? AppTheme.cardSoft : AppTheme.ink)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 Image(systemName: coachReset ? "checkmark.circle.fill" : "questionmark.bubble.fill")
                                     .font(.system(size: m.bodySize, weight: .black))
@@ -146,7 +146,7 @@ struct SettingsView: View {
                             }
                             .padding(m.gutter)
                         }
-                        .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border))
+                        .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border))
                         .disabled(coachReset)
                     }
                 }

@@ -18,7 +18,7 @@ struct UndoButtonView: View {
                 .padding(.vertical, 7)
         }
         .buttonStyle(ToyButtonStyle(
-            fill: .white,
+            fill: AppTheme.card,
             radius: m.cellCorner + 2,
             depth: 3,
             border: m.thinBorder

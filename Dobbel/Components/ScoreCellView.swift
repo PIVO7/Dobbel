@@ -35,7 +35,7 @@ struct ScoreCellView: View {
             // Diepte op élk open vakje: zo zie je in één oogopslag wat nog te
             // kiezen valt, en zakt het vakje voelbaar in bij het tikken.
             .buttonStyle(ToyButtonStyle(
-                fill: isAdvised ? AppTheme.mint : .white,
+                fill: isAdvised ? AppTheme.mint : AppTheme.card,
                 radius: m.cellCorner,
                 depth: 3,
                 border: m.thinBorder
@@ -49,7 +49,7 @@ struct ScoreCellView: View {
             let scored = player.scorecard.scores[category]
             Text(scored.map { "\($0)" } ?? "–")
                 .font(AppTheme.rounded(m.cellTextSize, .bold))
-                .foregroundStyle(scored == nil ? AppTheme.dim : AppTheme.ink)
+                .foregroundStyle(scored == nil ? AppTheme.cardDim : AppTheme.ink)
                 .frame(maxWidth: .infinity)
                 .frame(height: m.rowHeight)
                 .toyBlock(fill: isMine ? AppTheme.tintCoral : AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)

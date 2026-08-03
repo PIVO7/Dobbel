@@ -10,6 +10,8 @@ enum AppTheme {
 
     // Grond en inkt
     @MainActor static var cream: Color { palette.cream }
+    /// Kaarten, knoppen en dobbelstenen; wit behalve in het nachtthema.
+    @MainActor static var card: Color { palette.card }
     @MainActor static var ink: Color { palette.ink }
     /// Voor tekst die rechtstreeks op de achtergrond staat; wijkt alleen in
     /// het nachtthema af van `ink`.
@@ -28,10 +30,15 @@ enum AppTheme {
     @MainActor static var tintCoral: Color { palette.tintCoral }
     @MainActor static var tintStone: Color { palette.tintStone }
 
-    // Tekst
+    // Tekst op de achtergrond
     @MainActor static var faint: Color { palette.faint }
     @MainActor static var soft: Color { palette.soft }
     @MainActor static var dim: Color { palette.dim }
+
+    // Tekst óp een kaart: altijd inkt-gebaseerd. `soft` en `dim` zijn in het
+    // nachtthema licht en verdwijnen daar tegen een lichte kaart.
+    @MainActor static var cardSoft: Color { palette.ink.opacity(0.65) }
+    @MainActor static var cardDim: Color { palette.ink.opacity(0.42) }
 
     // Uitgeschakeld
     @MainActor static var offFill: Color { palette.offFill }

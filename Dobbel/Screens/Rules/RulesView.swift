@@ -8,7 +8,7 @@ struct RulesView: View {
 
     var body: some View {
         ZStack {
-            AppTheme.cream.ignoresSafeArea()
+            ThemedBackground()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: m.gutter * 1.4) {
@@ -28,7 +28,7 @@ struct RulesView: View {
                                 .foregroundStyle(AppTheme.ink)
                                 .frame(width: m.tapTarget, height: m.tapTarget)
                         }
-                        .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+                        .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: 3, border: m.thinBorder))
                     }
 
                     section("ZO SPEEL JE") {
@@ -44,7 +44,7 @@ struct RulesView: View {
                         card {
                             Text("Bij de enen tot en met de zessen tellen alleen díé ogen. Drie vijven bij de vijven? Dat is 15 punten.")
                                 .font(AppTheme.rounded(m.captionSize + 2, .bold))
-                                .foregroundStyle(AppTheme.soft)
+                                .foregroundStyle(AppTheme.cardSoft)
                                 .fixedSize(horizontal: false, vertical: true)
 
                             HStack(spacing: m.gutter * 0.6) {
@@ -102,7 +102,7 @@ struct RulesView: View {
                     .foregroundStyle(AppTheme.ink)
                 Text(text)
                     .font(AppTheme.rounded(m.captionSize, .bold))
-                    .foregroundStyle(AppTheme.soft)
+                    .foregroundStyle(AppTheme.cardSoft)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -136,7 +136,7 @@ struct RulesView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(m.gutter)
-        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
+        .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
     }
 
     @ViewBuilder

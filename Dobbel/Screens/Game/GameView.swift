@@ -65,7 +65,7 @@ struct GameView: View {
             let sideBySide = isWide && proxy.size.width > proxy.size.height
 
             ZStack {
-                AppTheme.cream.ignoresSafeArea()
+                ThemedBackground()
 
                 if sideBySide {
                     GameWideLayout(
@@ -423,7 +423,9 @@ struct GameView: View {
         default:
             break
         }
-        guard DobbelScorer.isDobbel(engine.diceValues) else { return }
+        // Niet uit `diceValues` afleiden: na de zet van de computer zijn de
+        // stenen al gereset naar vijf énen, en dat telt als valse Dobbel.
+        guard engine.lastRollWasDobbel else { return }
         celebrateDobbel = true
         dobbelPulse += 1
         SoundPlayer.shared.play(.fanfare)

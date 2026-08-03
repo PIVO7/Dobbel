@@ -282,6 +282,9 @@
     "%lld": {
       "shouldTranslate": false
     },
+    "%lld +35": {
+      "shouldTranslate": false
+    },
     "%lld op rij · beste %lld": {
       "localizations": {
         "en": {
@@ -310,6 +313,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld victoires"
+          }
+        }
+      }
+    },
+    "%lld punten bovenin, bonus van 35 behaald": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld points in the upper section, 35-point bonus earned"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld points en haut, bonus de 35 obtenu"
           }
         }
       }
@@ -686,22 +705,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Éclair"
-          }
-        }
-      }
-    },
-    "Bonus behaald, 35 punten": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bonus earned, 35 points"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bonus obtenu, 35 points"
           }
         }
       }

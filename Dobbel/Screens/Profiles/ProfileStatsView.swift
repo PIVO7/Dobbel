@@ -14,7 +14,7 @@ struct ProfileStatsView: View {
 
     var body: some View {
         ZStack {
-            AppTheme.cream.ignoresSafeArea()
+            ThemedBackground()
 
             ScrollView {
                 VStack(spacing: m.gutter) {
@@ -65,7 +65,7 @@ struct ProfileStatsView: View {
                     .foregroundStyle(AppTheme.ink)
                     .frame(width: m.tapTarget, height: m.tapTarget)
             }
-            .buttonStyle(ToyButtonStyle(fill: .white, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+            .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: 3, border: m.thinBorder))
             .padding(m.gutter)
         }
     }
@@ -79,7 +79,7 @@ struct ProfileStatsView: View {
 
             Text(title)
                 .font(AppTheme.rounded(m.bodySize, .bold))
-                .foregroundStyle(AppTheme.soft)
+                .foregroundStyle(AppTheme.cardSoft)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             Text(value)
@@ -88,7 +88,7 @@ struct ProfileStatsView: View {
         }
         .padding(.horizontal, m.gutter)
         .padding(.vertical, m.gutter * 0.7)
-        .toyBlock(fill: .white, radius: m.cardCorner * 0.8, depth: 3, border: m.thinBorder + 0.5)
+        .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.8, depth: 3, border: m.thinBorder + 0.5)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(title): \(value)")
     }

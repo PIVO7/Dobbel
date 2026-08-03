@@ -33,7 +33,7 @@ struct ToyDialog: View {
                     .font(AppTheme.rounded(m.bodySize * 0.94, .bold))
                     // Gedempte inkt en niet `soft`: de kaart is altijd wit,
                     // maar soft is in het nachtthema licht.
-                    .foregroundStyle(AppTheme.ink.opacity(0.65))
+                    .foregroundStyle(AppTheme.cardSoft)
                     .multilineTextAlignment(.center)
 
                 Button(action: onConfirm) {
@@ -60,7 +60,7 @@ struct ToyDialog: View {
                             .frame(height: m.buttonHeight * 0.82)
                     }
                     .buttonStyle(ToyButtonStyle(
-                        fill: .white,
+                        fill: AppTheme.card,
                         radius: m.cardCorner * 0.8,
                         depth: m.depth,
                         border: m.border
@@ -70,7 +70,7 @@ struct ToyDialog: View {
             .padding(m.gutter * 1.4)
             // Wit en niet cream: in het nachtthema is cream donker en zou de
             // donkere inkt onleesbaar worden.
-            .toyBlock(fill: .white, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
+            .toyBlock(fill: AppTheme.card, radius: m.cardCorner + 4, depth: m.depth + 1, border: m.border)
             .frame(maxWidth: m.overlayMaxWidth * 0.82)
             .padding(m.gutter * 2)
             // Modaal voor VoiceOver: de spelknoppen eronder zijn even weg.

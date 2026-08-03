@@ -9,7 +9,10 @@ struct StraightGlyph: View {
     let bars: Int
 
     var body: some View {
-        Canvas { context, size in
+        // Buiten de Canvas-closure lezen: die is niet aan de MainActor
+        // gebonden en mag dus niet rechtstreeks bij AppTheme.
+        let plateFill = AppTheme.card
+        return Canvas { context, size in
             // Brede kaartjes en een stevige lijn: dunner werd het op de
             // getinte tegels een vage vlek.
             let plateWidth = size.width * (bars == 4 ? 0.46 : 0.40)
@@ -29,7 +32,7 @@ struct StraightGlyph: View {
                     height: plateHeight
                 )
                 let path = Path(roundedRect: rect, cornerRadius: plateWidth * 0.3, style: .continuous)
-                ctx.fill(path, with: .color(.white))
+                ctx.fill(path, with: .color(plateFill))
                 ctx.stroke(path, with: .foreground, lineWidth: lineWidth)
             }
         }

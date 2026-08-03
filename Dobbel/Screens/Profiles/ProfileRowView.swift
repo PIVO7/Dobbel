@@ -49,7 +49,7 @@ struct ProfileRowView: View {
                             .lineLimit(1)
                         Text("\(profile.wins)× gewonnen · \(profile.gamesPlayed) gespeeld")
                             .font(AppTheme.rounded(m.captionSize, .bold))
-                            .foregroundStyle(AppTheme.soft)
+                            .foregroundStyle(AppTheme.cardSoft)
                             .lineLimit(1)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -70,7 +70,7 @@ struct ProfileRowView: View {
             deleteButton
         }
         .padding(m.gutter * 0.9)
-        .toyBlock(fill: .white, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
+        .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
     }
 
     private var renameButton: some View {
