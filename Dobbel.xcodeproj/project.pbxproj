@@ -61,7 +61,6 @@
 		806E8ED2666C0193C542D12C /* plop.wav in Resources */ = {isa = PBXBuildFile; fileRef = B76865AAF8AB87AEA38756B9 /* plop.wav */; };
 		86EBAD9014F72F75380755C3 /* HomeHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A24CBF95A9EB422723BBCC /* HomeHeroView.swift */; };
 		90B097EEFFA0F084647FE61D /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE8CEF36D7B776EF85BEF91 /* GameMode.swift */; };
-		92BDF2D75DB104706797485E /* UndoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E426107C2AEAC73BAF6E4287 /* UndoButtonView.swift */; };
 		945684E276D9EF6F33D559E6 /* PlayerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA087AD4156DF5828C988298 /* PlayerHeaderView.swift */; };
 		96C15CE2017E2039EBDF2A3E /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 57BB4BF59BDF9DA71C07FE0F /* Localizable.xcstrings */; };
 		A0793FA4CA54306DB9D1ED69 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3B305257282763806CA022 /* ProfileStore.swift */; };
@@ -186,7 +185,6 @@
 		D491309C80B97159B9E1EDD3 /* DobbelScorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DobbelScorer.swift; sourceTree = "<group>"; };
 		DC72CC84A33E80E08A2DB4CE /* ScoreCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCellView.swift; sourceTree = "<group>"; };
 		DE49D2C2E3BBFDDA269BE20F /* GameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
-		E426107C2AEAC73BAF6E4287 /* UndoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoButtonView.swift; sourceTree = "<group>"; };
 		E63EBCC40993A8234F81F852 /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
 		E6B17AE47E42E2C370A73923 /* DobbelScorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DobbelScorerTests.swift; sourceTree = "<group>"; };
 		EC074CB152AE7CE587F66E1C /* GameActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameActions.swift; sourceTree = "<group>"; };
@@ -353,7 +351,6 @@
 				451E0FF36676B00400090C99 /* RollCalloutView.swift */,
 				4B161FB2E1EA6D70AF3D576C /* RoundStripView.swift */,
 				5DC7390667D2952B31C5539E /* TurnBannerView.swift */,
-				E426107C2AEAC73BAF6E4287 /* UndoButtonView.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -638,7 +635,6 @@
 				FFE29790B7C75F340773CFB7 /* ToyButtonStyle.swift in Sources */,
 				6FFF006AE6280603EA1E24E1 /* ToyDialog.swift in Sources */,
 				28CB383404A14A9D5652D99E /* TurnBannerView.swift in Sources */,
-				92BDF2D75DB104706797485E /* UndoButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,7 +729,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -796,7 +792,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

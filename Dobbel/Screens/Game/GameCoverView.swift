@@ -9,19 +9,28 @@ struct GameCoverView: View {
     let gameStore: GameStore
     @Binding var activeGame: ActiveGame?
 
+    /// Bij een rematch wisselt alleen de engine en blijft de cover staan.
+    /// Het cover-item vervangen liet iOS de cover sluiten en heropenen,
+    /// met het oude eindscherm nog even in beeld.
+    @State private var rematchEngine: GameEngine?
+
     var body: some View {
+        let engine = rematchEngine ?? game.engine
         GameView(
-            engine: game.engine,
+            engine: engine,
             onRematch: {
-                let engine = GameEngine(
-                    mode: game.engine.mode,
-                    profiles: game.engine.rematchProfiles()
+                let fresh = GameEngine(
+                    mode: engine.mode,
+                    profiles: engine.rematchProfiles()
                 )
-                gameStore.save(engine.snapshot)
-                activeGame = ActiveGame(engine: engine)
+                gameStore.save(fresh.snapshot)
+                rematchEngine = fresh
             },
             onClose: { activeGame = nil }
         )
+        // Verse engine, verse view-state: banners, vieringen en de
+        // record-vlag beginnen bij een rematch opnieuw.
+        .id(ObjectIdentifier(engine))
         .environment(profileStore)
         .environment(gameStore)
         .appMetrics()

@@ -31,6 +31,8 @@ struct GameWideLayout: View {
             GameHeaderView(
                 players: engine.players,
                 currentPlayerID: engine.currentPlayer.id,
+                canUndo: engine.canUndoScore,
+                onUndo: actions.undo,
                 onLeave: actions.leave
             )
             .padding(.top, 6)
@@ -84,9 +86,6 @@ struct GameWideLayout: View {
             .padding(.top, 4)
 
 
-            if engine.canUndoScore {
-                UndoButtonView(onUndo: actions.undo)
-            }
 
             Spacer(minLength: 8)
 
