@@ -86,6 +86,7 @@
 		E15EA71074AE5710BB96BE2F /* AdviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE8915882B66D156E194DAF /* AdviceTests.swift */; };
 		E5B44EAD0F2B7E5CC1C6DEB1 /* ScoreCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC72CC84A33E80E08A2DB4CE /* ScoreCellView.swift */; };
 		E96A9E280847E995846D3D41 /* GameTallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271C5C87771CEB3965B56C3A /* GameTallLayout.swift */; };
+		ECBA69B41DF46D310AC33957 /* StatsOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F7CC5C997B0F685028D141 /* StatsOverviewView.swift */; };
 		EE4B776CC5E7F0732A40C652 /* CelebrationBurstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6268D814EC36029913547561 /* CelebrationBurstView.swift */; };
 		EEA1AC3E3746A02A0AF0CC95 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37F07BE52D36273BC8554E2 /* GameView.swift */; };
 		EFAEA76BC26A179B30FDDAC0 /* Scorecard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E44B091491848BCD87346 /* Scorecard.swift */; };
@@ -182,6 +183,7 @@
 		D1787F67F9612CBC2CE6B64B /* ProfileBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBadge.swift; sourceTree = "<group>"; };
 		D2BCAAB11780A5B92700D603 /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
 		D37F07BE52D36273BC8554E2 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		D3F7CC5C997B0F685028D141 /* StatsOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsOverviewView.swift; sourceTree = "<group>"; };
 		D491309C80B97159B9E1EDD3 /* DobbelScorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DobbelScorer.swift; sourceTree = "<group>"; };
 		DC72CC84A33E80E08A2DB4CE /* ScoreCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCellView.swift; sourceTree = "<group>"; };
 		DE49D2C2E3BBFDDA269BE20F /* GameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				D2BCAAB11780A5B92700D603 /* ProfileRowView.swift */,
 				B75AF74281F76AA0AC9D6DED /* ProfileStatsView.swift */,
 				26B5A57B0B0489B8F6A2A33E /* ProfilesView.swift */,
+				D3F7CC5C997B0F685028D141 /* StatsOverviewView.swift */,
 			);
 			path = Profiles;
 			sourceTree = "<group>";
@@ -627,6 +630,7 @@
 				6A8813A8B602937CAC4D3A35 /* ShakeDetection.swift in Sources */,
 				62DB8F5E072EB552B37DDFFE /* SoundPlayer.swift in Sources */,
 				01330E8029552461E8560CDA /* SplitMix64.swift in Sources */,
+				ECBA69B41DF46D310AC33957 /* StatsOverviewView.swift in Sources */,
 				BC39ACCA4EFF44B7A57C26A0 /* StraightGlyph.swift in Sources */,
 				7DF9F67EF25A7F4DEAFB8DEA /* ThemePalette.swift in Sources */,
 				3BC8C78E52D96DD648D20CCC /* ThemeStore.swift in Sources */,
@@ -729,7 +733,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -792,7 +796,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

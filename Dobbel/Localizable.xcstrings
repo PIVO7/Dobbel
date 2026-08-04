@@ -3521,6 +3521,22 @@
         }
       }
     },
+    "Trofeeën en records": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trophies and records"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trophées et records"
+          }
+        }
+      }
+    },
     "Trofeeën, het grafiekje en de gezinsrecords horen bij de Gezinsversie.": {
       "localizations": {
         "en": {
