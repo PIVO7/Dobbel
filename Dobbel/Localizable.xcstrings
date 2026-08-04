@@ -712,22 +712,6 @@
         }
       }
     },
-    "Bij het vraagteken tellen alle ogen gewoon op: %lld punten. Handig als er niets beters past.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The question mark simply adds up all the dice: %lld points. Handy when nothing else fits."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Le point d'interrogation additionne tous les dés : %lld points. Pratique quand rien d'autre ne va."
-          }
-        }
-      }
-    },
     "Blad": {
       "localizations": {
         "en": {
@@ -852,22 +836,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "CHIFFRES"
-          }
-        }
-      }
-    },
-    "Daarom!": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Here's why!"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Voilà pourquoi !"
           }
         }
       }
@@ -1089,22 +1057,6 @@
         }
       }
     },
-    "Drie dezelfde! Dan mag je álle ogen optellen: %lld punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Three of a kind! You get to add up all the dice: %lld points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Trois pareils ! Tu peux additionner tous les dés : %lld points."
-          }
-        }
-      }
-    },
     "Drieën": {
       "localizations": {
         "en": {
@@ -1165,22 +1117,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Première partie"
-          }
-        }
-      }
-    },
-    "En alles bovenin helpt voor de +35-bonus bij 63!": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "And everything up top counts toward the +35 bonus at 63!"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Et tout ce qui est en haut compte pour le bonus de +35 à 63 !"
           }
         }
       }
@@ -1905,54 +1841,6 @@
         }
       }
     },
-    "Je hebt %lld %@: samen %lld punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "You have %lld %@: %lld points in all."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tu as %lld %@ : %lld points en tout."
-          }
-        }
-      }
-    },
-    "Je hebt één %@: %lld punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "You have one %@: %lld points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tu as un %@ : %lld points."
-          }
-        }
-      }
-    },
-    "Je hebt één %@: 1 punt.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "You have one %@: 1 point."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tu as un %@ : 1 point."
-          }
-        }
-      }
-    },
     "Je voortgang wordt bewaard.": {
       "localizations": {
         "en": {
@@ -2625,54 +2513,6 @@
         }
       }
     },
-    "Nog eens vijf dezelfde! De jokerregel laat die als grote straat tellen: 40 punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Five of a kind again! The joker rule lets it count as a large straight: 40 points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Encore cinq identiques ! La règle du joker les compte comme une grande suite : 40 points."
-          }
-        }
-      }
-    },
-    "Nog eens vijf dezelfde! De jokerregel laat die als kleine straat tellen: 30 punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Five of a kind again! The joker rule lets it count as a small straight: 30 points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Encore cinq identiques ! La règle du joker les compte comme une petite suite : 30 points."
-          }
-        }
-      }
-    },
-    "Nog eens vijf dezelfde! De jokerregel laat die als vol huis tellen: 25 punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Five of a kind again! The joker rule lets it count as a full house: 25 points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Encore cinq identiques ! La règle du joker les compte comme un full : 25 points."
-          }
-        }
-      }
-    },
     "Nog geen profielen. Maak er een aan om te spelen.": {
       "localizations": {
         "en": {
@@ -3133,22 +2973,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fermer"
-          }
-        }
-      }
-    },
-    "Snap ik!": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Got it!"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Compris !"
           }
         }
       }
@@ -3761,22 +3585,6 @@
         }
       }
     },
-    "Twee én drie dezelfde — een vol huis! Dat is altijd 25 punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A pair and three of a kind — a full house! Always worth 25 points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Une paire et un brelan — un full ! Ça vaut toujours 25 points."
-          }
-        }
-      }
-    },
     "Tweede Dobbel! Die moet bovenin, bij %@": {
       "localizations": {
         "en": {
@@ -3937,38 +3745,6 @@
         }
       }
     },
-    "Vier dezelfde! Dan mag je álle ogen optellen: %lld punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Four of a kind! You get to add up all the dice: %lld points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quatre pareils ! Tu peux additionner tous les dés : %lld points."
-          }
-        }
-      }
-    },
-    "Vier stenen op een rij — een kleine straat, goed voor 30 punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Four dice in a row — a small straight, worth 30 points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quatre dés qui se suivent — une petite suite, qui vaut 30 points."
-          }
-        }
-      }
-    },
     "Vier stenen op een rij.": {
       "localizations": {
         "en": {
@@ -4017,22 +3793,6 @@
         }
       }
     },
-    "Vijf dezelfde — DOBBEL! Het duurste vakje van het blad: 50 punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Five of a kind — DOBBEL! The most valuable box on the card: 50 points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cinq identiques — DOBBEL ! La case la plus chère de la feuille : 50 points."
-          }
-        }
-      }
-    },
     "Vijf dezelfde: DOBBEL!": {
       "localizations": {
         "en": {
@@ -4045,22 +3805,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cinq identiques : DOBBEL !"
-          }
-        }
-      }
-    },
-    "Vijf stenen op een rij — een grote straat! De volle 40 punten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Five dice in a row — a large straight! The full 40 points."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cinq dés qui se suivent — une grande suite ! Les 40 points entiers."
           }
         }
       }
@@ -4205,22 +3949,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Demande à papa ou maman"
-          }
-        }
-      }
-    },
-    "Waarom %@?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Why %@?"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pourquoi %@ ?"
           }
         }
       }
@@ -4465,22 +4193,6 @@
         }
       }
     },
-    "drie": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "three"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "trois"
-          }
-        }
-      }
-    },
     "drieën": {
       "localizations": {
         "en": {
@@ -4493,22 +4205,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "trois"
-          }
-        }
-      }
-    },
-    "een": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "one"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "un"
           }
         }
       }
@@ -4577,22 +4273,6 @@
         }
       }
     },
-    "twee": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "two"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "deux"
-          }
-        }
-      }
-    },
     "tweeën": {
       "localizations": {
         "en": {
@@ -4605,22 +4285,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "deux"
-          }
-        }
-      }
-    },
-    "vier": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "four"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "quatre"
           }
         }
       }
@@ -4641,22 +4305,6 @@
         }
       }
     },
-    "vijf": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "five"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "cinq"
-          }
-        }
-      }
-    },
     "vijven": {
       "localizations": {
         "en": {
@@ -4669,22 +4317,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "cinq"
-          }
-        }
-      }
-    },
-    "zes": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "six"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "six"
           }
         }
       }

@@ -7,8 +7,6 @@ struct GameActions {
     var score: (ScoreCategory) -> Void
     var roll: () -> Void
     var leave: () -> Void
-    /// Legt in kindertaal uit waarom de tip dit vakje aanraadt.
-    var explainTip: (ScoreCategory) -> Void
     /// Zet de vorige zet terug zolang dat nog mag.
     var undo: () -> Void
 }

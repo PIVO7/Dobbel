@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01061E22BC8E5A8792020266 /* AdviceExplainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCCDA1F802BA841E56EF111 /* AdviceExplainer.swift */; };
 		01330E8029552461E8560CDA /* SplitMix64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187AA6D493F021E6C588F719 /* SplitMix64.swift */; };
 		0A52646227552F8F58992892 /* ComputerAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210FFB1C453B799B3F23FC42 /* ComputerAI.swift */; };
 		0BAD3605DFD21318B105090B /* GameActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC074CB152AE7CE587F66E1C /* GameActions.swift */; };
@@ -72,7 +71,6 @@
 		AD52786FBADE00CCC7BF9C69 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5B0C0368334450137CB09C /* PaywallView.swift */; };
 		AF46015FD479377E5D747BC9 /* ThemedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24703A4ACFC4D3D521720333 /* ThemedBackground.swift */; };
 		B4DC9A39E9EB81FC152FB32B /* RollPhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952EBCB4AD504FE415F41DCA /* RollPhrase.swift */; };
-		B660CBE5403A39EB5FBC8A0A /* AdviceExplainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E04F637CD144657AAD851C /* AdviceExplainerTests.swift */; };
 		B77B30C09A72565E73E2E895 /* ScoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E159D8759998EAB9C183A /* ScoreCategory.swift */; };
 		B790A92AB740FC66281C9055 /* CategoryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DD8B33444F289A8F7E2BB3 /* CategoryIcon.swift */; };
 		B87B68399561E6A056E51A9A /* DiceTrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ED1578E69240D91402F7BA /* DiceTrayView.swift */; };
@@ -94,7 +92,6 @@
 		EFAEA76BC26A179B30FDDAC0 /* Scorecard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E44B091491848BCD87346 /* Scorecard.swift */; };
 		F207ECE0E09A731ACF6056AB /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147083822C0469EC385349A0 /* GameEngine.swift */; };
 		F4E23929D86019AEE8CB07AE /* ParentalGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E643D60229E1082AACFF1FD /* ParentalGateTests.swift */; };
-		FB5E5AC98D88DE12047EEF36 /* TipButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0125DF00E8C166014F2FD4 /* TipButtonView.swift */; };
 		FFE29790B7C75F340773CFB7 /* ToyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D0011C5B8BC46610AF13B /* ToyButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
@@ -145,7 +142,6 @@
 		4EE8CEF36D7B776EF85BEF91 /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
 		4F3E159D8759998EAB9C183A /* ScoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCategory.swift; sourceTree = "<group>"; };
 		57BB4BF59BDF9DA71C07FE0F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		58E04F637CD144657AAD851C /* AdviceExplainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceExplainerTests.swift; sourceTree = "<group>"; };
 		5DC7390667D2952B31C5539E /* TurnBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnBannerView.swift; sourceTree = "<group>"; };
 		6268D814EC36029913547561 /* CelebrationBurstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationBurstView.swift; sourceTree = "<group>"; };
 		6316662C59511E4CE7840908 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -193,10 +189,8 @@
 		E426107C2AEAC73BAF6E4287 /* UndoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoButtonView.swift; sourceTree = "<group>"; };
 		E63EBCC40993A8234F81F852 /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
 		E6B17AE47E42E2C370A73923 /* DobbelScorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DobbelScorerTests.swift; sourceTree = "<group>"; };
-		EBCCDA1F802BA841E56EF111 /* AdviceExplainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceExplainer.swift; sourceTree = "<group>"; };
 		EC074CB152AE7CE587F66E1C /* GameActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameActions.swift; sourceTree = "<group>"; };
 		EDEFD905000685539C9A16A6 /* ParentalGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalGate.swift; sourceTree = "<group>"; };
-		EF0125DF00E8C166014F2FD4 /* TipButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipButtonView.swift; sourceTree = "<group>"; };
 		F4E4329E23FCB7CA3C646DE6 /* DiePips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiePips.swift; sourceTree = "<group>"; };
 		F7F3773EB5783E7F3502A2E6 /* ThemePalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePalette.swift; sourceTree = "<group>"; };
 		FD5B0C0368334450137CB09C /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
@@ -358,7 +352,6 @@
 				16D7D5D991FC6DF0EFC4C52F /* RollButtonView.swift */,
 				451E0FF36676B00400090C99 /* RollCalloutView.swift */,
 				4B161FB2E1EA6D70AF3D576C /* RoundStripView.swift */,
-				EF0125DF00E8C166014F2FD4 /* TipButtonView.swift */,
 				5DC7390667D2952B31C5539E /* TurnBannerView.swift */,
 				E426107C2AEAC73BAF6E4287 /* UndoButtonView.swift */,
 			);
@@ -387,7 +380,6 @@
 		B2B1E840AB34DD85A6C5AA49 /* Dobbel Tests */ = {
 			isa = PBXGroup;
 			children = (
-				58E04F637CD144657AAD851C /* AdviceExplainerTests.swift */,
 				6FE8915882B66D156E194DAF /* AdviceTests.swift */,
 				109B42C18652897F0F3E8F41 /* ComputerAITests.swift */,
 				E6B17AE47E42E2C370A73923 /* DobbelScorerTests.swift */,
@@ -412,7 +404,6 @@
 		CD8A842D07A1AF2BAEF553DA /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				EBCCDA1F802BA841E56EF111 /* AdviceExplainer.swift */,
 				D491309C80B97159B9E1EDD3 /* DobbelScorer.swift */,
 				147083822C0469EC385349A0 /* GameEngine.swift */,
 				86433F3A326EE75260EDDBBF /* GamePlayer.swift */,
@@ -563,7 +554,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B660CBE5403A39EB5FBC8A0A /* AdviceExplainerTests.swift in Sources */,
 				E15EA71074AE5710BB96BE2F /* AdviceTests.swift in Sources */,
 				C84296C405A36427144734BF /* ComputerAITests.swift in Sources */,
 				742A8C0F7502750B1EC75928 /* DobbelScorerTests.swift in Sources */,
@@ -581,7 +571,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				60911091725D7F71FFE88A2F /* ActiveGame.swift in Sources */,
-				01061E22BC8E5A8792020266 /* AdviceExplainer.swift in Sources */,
 				583B9BDCB560BF1A88D27A16 /* AppMetrics.swift in Sources */,
 				79E57406D5C95501CF02C51C /* AppTheme.swift in Sources */,
 				613F3F75144F02247504EE4B /* AvatarBadge.swift in Sources */,
@@ -645,7 +634,6 @@
 				7DF9F67EF25A7F4DEAFB8DEA /* ThemePalette.swift in Sources */,
 				3BC8C78E52D96DD648D20CCC /* ThemeStore.swift in Sources */,
 				AF46015FD479377E5D747BC9 /* ThemedBackground.swift in Sources */,
-				FB5E5AC98D88DE12047EEF36 /* TipButtonView.swift in Sources */,
 				53D36C2143F838174C4D53C1 /* ToyBlock.swift in Sources */,
 				FFE29790B7C75F340773CFB7 /* ToyButtonStyle.swift in Sources */,
 				6FFF006AE6280603EA1E24E1 /* ToyDialog.swift in Sources */,
@@ -745,7 +733,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -808,7 +796,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

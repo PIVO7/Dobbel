@@ -28,7 +28,6 @@ struct GameView: View {
     @State private var showTurnBanner = false
     @State private var showExitConfirm = false
     @State private var showPassScreen = false
-    @State private var tipExplanation: String?
     @State private var coachStep: CoachStep = .none
     @State private var coachVisible = false
     @State private var celebrateDobbel = false
@@ -52,7 +51,6 @@ struct GameView: View {
             score: place,
             roll: roll,
             leave: requestLeave,
-            explainTip: explainTip,
             undo: undoLastScore
         )
     }
@@ -166,16 +164,6 @@ struct GameView: View {
                     .zIndex(5)
                 }
 
-                if let tipExplanation {
-                    ToyDialog(
-                        title: String(localized: "Daarom!"),
-                        message: tipExplanation,
-                        confirmTitle: String(localized: "Snap ik!"),
-                        onConfirm: dismissTip,
-                        onCancel: dismissTip
-                    )
-                    .zIndex(5)
-                }
             }
         }
         .task(id: engine.currentPlayerIndex) {
@@ -261,8 +249,7 @@ struct GameView: View {
         guard ShakeToRoll.isEnabled,
               engine.canRoll,
               !showExitConfirm,
-              !showCoachOffer,
-              tipExplanation == nil else { return }
+              !showCoachOffer else { return }
         roll()
     }
 
@@ -369,16 +356,6 @@ struct GameView: View {
         .padding(.horizontal, 24)
     }
 
-    private func explainTip(_ category: ScoreCategory) {
-        withAnimation(.easeOut(duration: 0.15)) {
-            tipExplanation = AdviceExplainer.explain(
-                category: category,
-                dice: engine.diceValues,
-                scorecard: engine.currentPlayer.scorecard
-            )
-        }
-    }
-
     private func undoLastScore() {
         engine.undoLastScore()
         holdPulse += 1
@@ -386,12 +363,6 @@ struct GameView: View {
         AccessibilityNotification.Announcement(
             String(localized: "Zet teruggezet. \(engine.currentPlayer.name) is weer aan de beurt.")
         ).post()
-    }
-
-    private func dismissTip() {
-        withAnimation(.easeOut(duration: 0.15)) {
-            tipExplanation = nil
-        }
     }
 
     /// Solo spreekt de banner je aan; met z'n allen aan één toestel noemt hij

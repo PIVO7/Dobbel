@@ -62,11 +62,11 @@ struct GameTallLayout: View {
                     RollCalloutView(
                         title: engine.calloutTitle,
                         message: engine.turnMessage,
+                        player: engine.currentPlayer,
                         isCelebrating: isCelebrating
                     )
                     .padding(.top, m.gutter * 0.4)
 
-                    TipButtonView(advice: engine.adviceCategory, onExplain: actions.explainTip)
 
                     if engine.canUndoScore {
                         UndoButtonView(onUndo: actions.undo)

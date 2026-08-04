@@ -127,13 +127,21 @@ private struct MetricsProvider: ViewModifier {
     @ScaledMetric(relativeTo: .body) private var textScale: CGFloat = 1
 
     func body(content: Content) -> some View {
-        content.environment(\.metrics, AppMetrics.resolve(sizeClass).scaled(by: textScale))
+        content
+            .environment(\.metrics, AppMetrics.resolve(sizeClass).scaled(by: textScale))
+            // Het systeemkleurenschema volgt het gekozen thema, niet de
+            // instelling van het toestel: in donkere modus werden de
+            // navigatietitel en placeholders anders wit op onze lichte
+            // vlakken. Op elke presentatiewortel, want een blad erft het
+            // schema niet van het scherm eronder.
+            .preferredColorScheme(ThemeStore.shared.themeID == .nacht ? .dark : .light)
     }
 }
 
 extension View {
-    /// Zet de maten klaar voor alles hieronder. Hoort op elke schermwortel,
-    /// ook binnen een cover — die erft de omgeving niet altijd.
+    /// Zet de maten en het kleurenschema klaar voor alles hieronder. Hoort op
+    /// elke schermwortel, ook binnen een blad of cover — die erven de
+    /// omgeving niet altijd.
     func appMetrics() -> some View {
         modifier(MetricsProvider())
     }
