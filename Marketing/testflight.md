@@ -5,11 +5,12 @@ het stappenplan om de eerste build bij testers te krijgen.
 
 ## Wat al klaarstaat
 
-- **Archive "Dobbel 1.0 (3)"** (2026-08-03) — ondertekend en zichtbaar in
+- **Archive "Dobbel 1.0 (4)"** (2026-08-04) — ondertekend en zichtbaar in
   Xcode → Window → **Organizer**. Bevat Dobbel.app (nl/en/fr), dSYM-symbolen,
-  versie 1.0 (3), minimum iOS 17.0, inclusief alle bugfixes, de nieuwe
-  nachtmodus en de uitgebreide statistieken (trofeeën, grafiekje,
-  gezinsrecords). De oudere archives (1) en (2) zijn achterhaald — niet
+  versie 1.0 (4), minimum iOS 17.0, inclusief alle bugfixes, de nieuwe
+  nachtmodus, de uitgebreide statistieken (trofeeën, grafiekje,
+  gezinsrecords), de beurtchip onder de stenen en het themavaste
+  kleurenschema. De oudere archives (1) t/m (3) zijn achterhaald — niet
   uploaden.
 - `ITSAppUsesNonExemptEncryption` staat op NO in het project, dus TestFlight
   slaat de export-compliance-vraag bij elke build over.
@@ -23,7 +24,7 @@ het stappenplan om de eerste build bij testers te krijgen.
 2. **In-app-aankoop aanmaken** (mag ook later, maar vóór het testen van de
    Gezinsversie): niet-verbruiksartikel `com.pivo7.dobbel.gezin`,
    gezinsdeling aan — alle waarden staan in [appstore-tekst.md](appstore-tekst.md).
-3. **Uploaden**: Xcode → Window → Organizer → archive "Dobbel 1.0 (3)" →
+3. **Uploaden**: Xcode → Window → Organizer → archive "Dobbel 1.0 (4)" →
    **Distribute App → TestFlight & App Store → Upload**. Automatische
    ondertekening regelt het distributiecertificaat.
 4. Na 5–15 minuten verwerken verschijnt de build onder het tabblad
@@ -64,7 +65,7 @@ het stappenplan om de eerste build bij testers te krijgen.
   gekocht? Zet terug" werkt daar ook. Het product moet wél eerst in App Store
   Connect bestaan (stap 2), anders blijft de prijs op "…" staan.
 - **Volgende build uploaden**: verhoog `CURRENT_PROJECT_VERSION` in
-  project.yml (3 → 4), draai `xcodegen generate`, archiveer en upload opnieuw.
+  project.yml (4 → 5), draai `xcodegen generate`, archiveer en upload opnieuw.
   Testers krijgen de update automatisch.
 - De **privacyverklaring-URL** is voor TestFlight nog niet verplicht, wel voor
   de echte review — regel die dus ergens tijdens de testronde.
