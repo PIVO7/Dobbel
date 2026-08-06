@@ -25,19 +25,8 @@ struct PaywallView: View {
 
             ScrollView {
                 VStack(spacing: m.gutter) {
-                    HStack {
-                        Spacer()
-                        Button(action: { dismiss() }) {
-                            Label("Sluiten", systemImage: "xmark")
-                                .labelStyle(.iconOnly)
-                                .font(.system(size: m.captionSize + 2, weight: .black))
-                                .foregroundStyle(AppTheme.ink)
-                                .frame(width: m.tapTarget, height: m.tapTarget)
-                        }
-                        .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: 3, border: m.thinBorder))
-                    }
-
                     Image(systemName: "figure.2.and.child.holdinghands")
+                    .padding(.top, m.gutter)
                         .font(.system(size: m.titleSize, weight: .black))
                         .foregroundStyle(AppTheme.coral)
 
@@ -110,6 +99,21 @@ struct PaywallView: View {
                 .padding(.bottom, m.gutter * 2)
                 .frame(maxWidth: m.overlayMaxWidth)
                 .frame(maxWidth: .infinity)
+            }
+            // De sluitknop hoort in de hoek van het vénster, niet los boven
+            // de smallere tekstkolom — daar zweefde hij scheef en scrolde
+            // hij mee het beeld uit.
+            .overlay(alignment: .topTrailing) {
+                Button(action: { dismiss() }) {
+                    Label("Sluiten", systemImage: "xmark")
+                        .labelStyle(.iconOnly)
+                        .font(.system(size: m.captionSize + 2, weight: .black))
+                        .foregroundStyle(AppTheme.ink)
+                        .frame(width: m.tapTarget, height: m.tapTarget)
+                }
+                .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+                .padding(.top, m.gutter)
+                .padding(.trailing, m.gutter)
             }
 
             // De ouder-poort: verplicht voor de kindercategorie, en eerlijk
