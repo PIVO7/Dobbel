@@ -34,6 +34,7 @@
 		53D36C2143F838174C4D53C1 /* ToyBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7421877E483BC1C2CD6972 /* ToyBlock.swift */; };
 		557971F5F0EAD4DDD98BE886 /* wissel.wav in Resources */ = {isa = PBXBuildFile; fileRef = 231B3F1B68D00878FD678F9D /* wissel.wav */; };
 		583B9BDCB560BF1A88D27A16 /* AppMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C443FB43CCD05A94F8FCA7F /* AppMetrics.swift */; };
+		5AB42E9DAEF77CBB06061CDB /* FamilyRecordMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1B3D46B94E6075BED0E52F /* FamilyRecordMath.swift */; };
 		5AC1FE19172E42F3705C4BC5 /* GameResultOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2089C0B867956C5CD1157B25 /* GameResultOverlay.swift */; };
 		5B2257F14A623DA3F6BFFCB0 /* GameSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA262A58708B045C0D3CE7D /* GameSnapshot.swift */; };
 		5E0D9308DB1B87A6E1B64B77 /* DieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7CE29C080518BF0AAB06C3 /* DieView.swift */; };
@@ -90,6 +91,7 @@
 		EE4B776CC5E7F0732A40C652 /* CelebrationBurstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6268D814EC36029913547561 /* CelebrationBurstView.swift */; };
 		EEA1AC3E3746A02A0AF0CC95 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37F07BE52D36273BC8554E2 /* GameView.swift */; };
 		EFAEA76BC26A179B30FDDAC0 /* Scorecard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E44B091491848BCD87346 /* Scorecard.swift */; };
+		F0876B5DEB144F66AD682D87 /* StatsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51617ECC1F63D6653AF6746 /* StatsModelTests.swift */; };
 		F207ECE0E09A731ACF6056AB /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147083822C0469EC385349A0 /* GameEngine.swift */; };
 		F4E23929D86019AEE8CB07AE /* ParentalGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E643D60229E1082AACFF1FD /* ParentalGateTests.swift */; };
 		FFE29790B7C75F340773CFB7 /* ToyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D0011C5B8BC46610AF13B /* ToyButtonStyle.swift */; };
@@ -109,6 +111,7 @@
 		01F85C8909FE03943F01D950 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		0454BB802C60B1B7E369F899 /* GameWideLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWideLayout.swift; sourceTree = "<group>"; };
 		08A24CBF95A9EB422723BBCC /* HomeHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeroView.swift; sourceTree = "<group>"; };
+		0C1B3D46B94E6075BED0E52F /* FamilyRecordMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyRecordMath.swift; sourceTree = "<group>"; };
 		0CA136F036E87322F2977FAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0DA24EB6ACAD51BE024CDA05 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		0E643D60229E1082AACFF1FD /* ParentalGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalGateTests.swift; sourceTree = "<group>"; };
@@ -180,6 +183,7 @@
 		BF866AA6025F88377488B50B /* AvatarBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarBadge.swift; sourceTree = "<group>"; };
 		BFA576E1403CCA19E282FC00 /* ScorecardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorecardView.swift; sourceTree = "<group>"; };
 		C000DB53EE34B5256E116BAD /* Dobbel Tests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = "Dobbel Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C51617ECC1F63D6653AF6746 /* StatsModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsModelTests.swift; sourceTree = "<group>"; };
 		D1787F67F9612CBC2CE6B64B /* ProfileBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBadge.swift; sourceTree = "<group>"; };
 		D2BCAAB11780A5B92700D603 /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
 		D37F07BE52D36273BC8554E2 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				6E65B5DB62750017A92A6081 /* Die.swift */,
+				0C1B3D46B94E6075BED0E52F /* FamilyRecordMath.swift */,
 				4EE8CEF36D7B776EF85BEF91 /* GameMode.swift */,
 				B9FD15C3FF513744F9E7F89D /* GameRecord.swift */,
 				A2AE944B49C1D22033B6A7A5 /* PlayerProfile.swift */,
@@ -389,6 +394,7 @@
 				45AC01179248DA13F6EEB2E7 /* ProfileStoreTests.swift */,
 				A67ABD6A0DE72C5FDBCE61E2 /* RollPhraseTests.swift */,
 				9C2847D7252B521F0C4F286A /* SoundPlayerTests.swift */,
+				C51617ECC1F63D6653AF6746 /* StatsModelTests.swift */,
 			);
 			path = "Dobbel Tests";
 			sourceTree = "<group>";
@@ -563,6 +569,7 @@
 				77087AF9FF9E12136B3A2242 /* ProfileStoreTests.swift in Sources */,
 				64A47296E45F4EEA158467BB /* RollPhraseTests.swift in Sources */,
 				513C6AF68FFCE80F9AE941E7 /* SoundPlayerTests.swift in Sources */,
+				F0876B5DEB144F66AD682D87 /* StatsModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,6 +597,7 @@
 				6A6654F7C2E4A0A5D4C5D8CF /* DobbelApp.swift in Sources */,
 				BC90CC80729FF657C149F1FB /* DobbelScorer.swift in Sources */,
 				3E62F9A06386A0BFBCB78536 /* EntitlementStore.swift in Sources */,
+				5AB42E9DAEF77CBB06061CDB /* FamilyRecordMath.swift in Sources */,
 				A53F72334C1C546FF0F6A4C3 /* FamilyRecordsView.swift in Sources */,
 				0BAD3605DFD21318B105090B /* GameActions.swift in Sources */,
 				0BE910D7094C1DAA23CD2EBF /* GameCoverView.swift in Sources */,

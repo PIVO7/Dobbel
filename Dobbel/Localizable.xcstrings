@@ -18,6 +18,20 @@
       }
     },
     "%@ %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %lld"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %lld"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "%@ denkt na…": {
@@ -261,6 +275,20 @@
       }
     },
     "%@: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "%@: %@ Punten: %@.": {
@@ -280,12 +308,54 @@
       }
     },
     "%@: %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@, %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@, %@"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "%lld +35": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld +35"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld +35"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "%lld Dobbels": {
@@ -433,6 +503,20 @@
       }
     },
     "%lld/63": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld/63"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld/63"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "%lld× gewonnen · %lld gespeeld": {
@@ -452,6 +536,20 @@
       }
     },
     "+35": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+35"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+35"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "2 tot 4 spelers, één toestel": {
@@ -487,6 +585,20 @@
       }
     },
     "3×": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3×"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3×"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "4 dezelfde": {
@@ -506,12 +618,54 @@
       }
     },
     "4×": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4×"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4×"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "ABC": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ABC"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ABC"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "Alle drie de tegenstanders: Dommel, Robbie en Professor Punt": {
@@ -611,9 +765,37 @@
       }
     },
     "BONUS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BONUS"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BONUS"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "BONUS\n+35": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BONUS\n+35"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BONUS\n+35"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "BOVENIN": {
@@ -905,9 +1087,37 @@
       }
     },
     "Dobbel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dobbel"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dobbel"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "Dobbel!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dobbel!"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dobbel!"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "Dobbel-bonus %lld": {
@@ -959,6 +1169,20 @@
       }
     },
     "Dobbels": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dobbels"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dobbels"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "Dobbelsteen %lld": {
@@ -4354,6 +4578,20 @@
       }
     },
     "–": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "–"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "–"
+          }
+        }
+      },
       "shouldTranslate": false
     }
   },
