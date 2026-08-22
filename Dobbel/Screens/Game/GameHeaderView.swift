@@ -86,7 +86,8 @@ struct ScoreChipsView: View {
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            "\(player.name), \(player.scorecard.total) punten" + (isMine ? ", aan de beurt" : "")
+            String(localized: "\(player.name), \(player.scorecard.total) punten")
+                + (isMine ? String(localized: ", aan de beurt") : "")
         )
     }
 }

@@ -1,6 +1,22 @@
 {
   "sourceLanguage": "nl",
   "strings": {
+    ", aan de beurt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ", their turn"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ", c'est son tour"
+          }
+        }
+      }
+    },
     "%@ %@!": {
       "localizations": {
         "en": {

@@ -83,8 +83,6 @@ struct GameWideLayout: View {
             )
             .padding(.top, 4)
 
-
-
             Spacer(minLength: 8)
 
             RollButtonView(
