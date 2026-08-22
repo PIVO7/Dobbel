@@ -16,6 +16,25 @@ final class RenderSmokeTests: XCTestCase {
         }
     }
 
+    func testRenderThemeBackgrounds() throws {
+        guard let outputDirectory else {
+            throw XCTSkip("RENDER_OUTPUT_DIR niet gezet; rooktest alleen op verzoek.")
+        }
+        let previous = ThemeStore.shared.themeID
+        defer { ThemeStore.shared.select(previous) }
+
+        for theme in [ThemeID.snoep, .oceaan, .nacht] {
+            ThemeStore.shared.select(theme)
+            let renderer = ImageRenderer(
+                content: ThemedBackground().frame(width: 393, height: 852)
+            )
+            renderer.scale = 2
+            let image = try XCTUnwrap(renderer.uiImage)
+            try XCTUnwrap(image.pngData())
+                .write(to: outputDirectory.appending(path: "thema-\(theme.rawValue).png"))
+        }
+    }
+
     func testRenderTallLayout() async throws {
         guard let outputDirectory else {
             throw XCTSkip("RENDER_OUTPUT_DIR niet gezet; rooktest alleen op verzoek.")
