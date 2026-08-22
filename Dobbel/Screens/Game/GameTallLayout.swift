@@ -109,8 +109,6 @@ struct GameTallLayout: View {
 
         RollCalloutView(
             title: engine.calloutTitle,
-            message: engine.turnMessage,
-            player: engine.currentPlayer,
             isCelebrating: isCelebrating
         )
         .padding(.bottom, m.gutter * 0.5)
