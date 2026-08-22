@@ -45,6 +45,30 @@ final class AdviceTests: XCTestCase {
         XCTAssertEqual(advice, .fullHouse)
     }
 
+    /// Vier vijven terwijl de vijven al gevuld zijn: "3 dezelfde" en
+    /// "4 dezelfde" zijn dan evenveel waard, maar het carré is zeldzamer en
+    /// wint dus de tip — drie dezelfde gooi je later veel makkelijker nog eens.
+    func testFourOfAKindWinsTieOverThreeOfAKind() {
+        var scorecard = Scorecard()
+        scorecard.place(category: .fives, score: 15, dobbelBonus: 0)
+
+        let advice = DobbelScorer.adviceCategory(dice: [1, 5, 5, 5, 5], scorecard: scorecard)
+        XCTAssertEqual(advice, .fourOfAKind)
+    }
+
+    /// Bij een gelijke stand tussen "3 dezelfde" en Kans wint "3 dezelfde":
+    /// Kans scoort altijd en bewaar je dus liever voor een slechte worp.
+    func testThreeOfAKindWinsTieOverChance() {
+        var scorecard = Scorecard()
+        scorecard.place(category: .sixes, score: 30, dobbelBonus: 0)
+        scorecard.place(category: .fours, score: 20, dobbelBonus: 0)
+        scorecard.place(category: .threes, score: 15, dobbelBonus: 0)
+        scorecard.place(category: .twos, score: 0, dobbelBonus: 0)
+
+        let advice = DobbelScorer.adviceCategory(dice: [2, 2, 2, 6, 5], scorecard: scorecard)
+        XCTAssertEqual(advice, .threeOfAKind)
+    }
+
     /// Levert elk open vakje nul op, dan is er geen tip.
     func testNoAdviceWhenEverythingScoresZero() {
         var scorecard = Scorecard()

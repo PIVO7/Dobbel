@@ -154,11 +154,27 @@ enum DobbelScorer {
             if category.isUpper {
                 value += Double(score) * bonusWeight
             }
-            if value > (best?.value ?? 0) {
+            if let current = best {
+                if value > current.value
+                    || (value == current.value && scarcity(category) > scarcity(current.category)) {
+                    best = (category, value)
+                }
+            } else {
                 best = (category, value)
             }
         }
         return best?.category
+    }
+
+    /// Bij gelijke opbrengst wint het zeldzaamste vakje: vier vijven horen in
+    /// "4 dezelfde", want "3 dezelfde" vul je in een latere ronde veel
+    /// makkelijker nog eens. Kans staat onderaan — die scoort altijd.
+    private static func scarcity(_ category: ScoreCategory) -> Int {
+        switch category {
+        case .chance: return 0
+        case .fourOfAKind: return 2
+        default: return 1
+        }
     }
 
     private static func hasStraight(_ values: [Int], length: Int) -> Bool {

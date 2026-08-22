@@ -122,14 +122,25 @@ struct ScorecardView: View {
                 let reached = player.scorecard.upperBonus > 0
                 // Ook mét bonus blijft het bovenbladtotaal staan: "66 +35"
                 // vertelt wat je haalde, niet alleen dát je de bonus hebt.
-                Text(reached ? "\(subtotal) +35" : "\(subtotal)/63")
-                    .font(AppTheme.rounded(m.captionSize))
-                    .foregroundStyle(reached ? AppTheme.mint : AppTheme.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: m.rowHeight)
-                    .toyBlock(fill: AppTheme.sunk, radius: m.cellCorner, depth: 0, border: m.thinBorder)
+                HStack(spacing: 3) {
+                    if reached {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: m.captionSize, weight: .black))
+                    }
+                    Text(reached ? "\(subtotal) +35" : "\(subtotal)/63")
+                        .font(AppTheme.rounded(m.captionSize))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+                .foregroundStyle(AppTheme.ink)
+                .frame(maxWidth: .infinity)
+                .frame(height: m.rowHeight)
+                .toyBlock(
+                    fill: reached ? AppTheme.mint : AppTheme.sunk,
+                    radius: m.cellCorner,
+                    depth: 0,
+                    border: m.thinBorder
+                )
                     .accessibilityLabel(
                         reached
                             ? String(localized: "\(subtotal) punten bovenin, bonus van 35 behaald")
