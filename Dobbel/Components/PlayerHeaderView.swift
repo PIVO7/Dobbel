@@ -10,6 +10,10 @@ struct PlayerHeaderView: View {
     let currentPlayerID: UUID
     /// Alleen de linkerkolom toont de naam; anders staat hij er twee keer.
     var showsName = true
+    /// Breedte van de kolommen van wie níet aan de beurt is; nil betekent
+    /// gelijke kolommen. Moet meelopen met `ScorecardView.passiveWidth`,
+    /// anders staan de bolletjes naast hun kolom.
+    var passiveWidth: CGFloat?
 
     @Environment(\.metrics) private var m
 
@@ -38,7 +42,8 @@ struct PlayerHeaderView: View {
                             .minimumScaleFactor(0.7)
                     }
                 }
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: passiveWidth != nil && !isMine ? nil : .infinity)
+                .frame(width: passiveWidth != nil && !isMine ? passiveWidth : nil)
                 .accessibilityElement()
                 .accessibilityLabel(accessibilityText(for: player, isMine: isMine, bonus: bonus))
             }

@@ -22,6 +22,24 @@ struct ScorecardView: View {
         return players.filter { $0.id == currentPlayerID }
     }
 
+    /// Op een smal scherm krijgt wie aan de beurt is de brede kolom en
+    /// versmalt de rest tot een spiekstrook: de keuzevakjes zijn dan groot,
+    /// terwijl de stand van de ander zichtbaar blijft.
+    private var passiveWidth: CGFloat? {
+        guard sizeClass == .compact, visiblePlayers.count > 1 else { return nil }
+        return max(m.iconWidth, 46)
+    }
+
+    /// De brede actieve kolom of de smalle spiekstrook.
+    @ViewBuilder
+    private func columnFrame(_ content: some View, isMine: Bool) -> some View {
+        if let passiveWidth, !isMine {
+            content.frame(width: passiveWidth)
+        } else {
+            content.frame(maxWidth: .infinity)
+        }
+    }
+
     var body: some View {
         // Eén keer per hertekening rekenen: de lijst voedt zowel de open-check
         // als de tip, zodat de scorer niet per vakje — of dubbel — draait.
@@ -65,7 +83,8 @@ struct ScorecardView: View {
             PlayerHeaderView(
                 players: visiblePlayers,
                 currentPlayerID: currentPlayerID,
-                showsName: showsBonus
+                showsName: showsBonus,
+                passiveWidth: passiveWidth
             )
 
             ForEach(categories) { category in
@@ -90,14 +109,17 @@ struct ScorecardView: View {
             ForEach(visiblePlayers) { player in
                 let isMine = player.id == currentPlayerID
                 let selectable = isMine && canScore && open.contains(category)
-                ScoreCellView(
-                    category: category,
-                    player: player,
-                    diceValues: diceValues,
-                    isMine: isMine,
-                    selectable: selectable,
-                    isAdvised: selectable && category == advice,
-                    onSelect: onSelect
+                columnFrame(
+                    ScoreCellView(
+                        category: category,
+                        player: player,
+                        diceValues: diceValues,
+                        isMine: isMine,
+                        selectable: selectable,
+                        isAdvised: selectable && category == advice,
+                        onSelect: onSelect
+                    ),
+                    isMine: isMine
                 )
             }
         }
@@ -120,32 +142,36 @@ struct ScorecardView: View {
             ForEach(visiblePlayers) { player in
                 let subtotal = player.scorecard.upperSubtotal
                 let reached = player.scorecard.upperBonus > 0
+                let isMine = player.id == currentPlayerID
                 // Ook mét bonus blijft het bovenbladtotaal staan: "66 +35"
                 // vertelt wat je haalde, niet alleen dát je de bonus hebt.
-                HStack(spacing: 3) {
-                    if reached {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: m.captionSize, weight: .black))
+                columnFrame(
+                    HStack(spacing: 3) {
+                        if reached {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: m.captionSize, weight: .black))
+                        }
+                        Text(reached ? "\(subtotal) +35" : "\(subtotal)/63")
+                            .font(AppTheme.rounded(m.captionSize))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
                     }
-                    Text(reached ? "\(subtotal) +35" : "\(subtotal)/63")
-                        .font(AppTheme.rounded(m.captionSize))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-                }
-                .foregroundStyle(AppTheme.ink)
-                .frame(maxWidth: .infinity)
-                .frame(height: m.rowHeight)
-                .toyBlock(
-                    fill: reached ? AppTheme.mint : AppTheme.sunk,
-                    radius: m.cellCorner,
-                    depth: 0,
-                    border: m.thinBorder
-                )
+                    .foregroundStyle(AppTheme.ink)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: m.rowHeight)
+                    .toyBlock(
+                        fill: reached ? AppTheme.mint : AppTheme.sunk,
+                        radius: m.cellCorner,
+                        depth: 0,
+                        border: m.thinBorder
+                    )
                     .accessibilityLabel(
                         reached
                             ? String(localized: "\(subtotal) punten bovenin, bonus van 35 behaald")
                             : String(localized: "Bonus bij 63, nu \(subtotal)")
-                    )
+                    ),
+                    isMine: isMine
+                )
             }
         }
     }

@@ -49,38 +49,12 @@ struct GameTallLayout: View {
                     )
                     .padding(.top, m.gutter)
 
-                    // Flexibel: op een hoog scherm spreidt de inhoud zich uit,
-                    // op een klein scherm of bij grote tekst krimpen deze
-                    // tussenruimtes tot hun minimum en schuift de rest.
-                    Spacer(minLength: m.gutter * 0.8)
-
-                    DiceTrayView(
-                        dice: engine.dice,
-                        isRolling: engine.isRolling,
-                        canInteract: engine.canHold,
-                        onToggle: actions.toggleHold
+                    Self.contentStack(
+                        engine: engine,
+                        actions: actions,
+                        isCelebrating: isCelebrating,
+                        metrics: m
                     )
-
-                    RollCalloutView(
-                        title: engine.calloutTitle,
-                        message: engine.turnMessage,
-                        player: engine.currentPlayer,
-                        isCelebrating: isCelebrating
-                    )
-                    .padding(.top, m.gutter * 0.4)
-
-
-
-                    Spacer(minLength: m.gutter)
-
-                    ScorecardView(
-                        players: engine.players,
-                        currentPlayerID: engine.currentPlayer.id,
-                        diceValues: engine.diceValues,
-                        canScore: engine.canScore,
-                        onSelect: actions.score
-                    )
-                    .padding(.bottom, m.gutter)
                 }
                 .padding(.horizontal, m.gutter)
                 .frame(maxWidth: m.contentMaxWidth)
@@ -107,5 +81,50 @@ struct GameTallLayout: View {
             .background(AppTheme.cream)
         }
         .environment(\.metrics, m)
+    }
+
+    /// De middenmoot tussen rondestrook en gooiknop. Eén plek voor de
+    /// volgorde van worp, melding en scoreblad; de render-rooktest stapelt
+    /// precies dit, zodat een render altijd de echte indeling toont.
+    @ViewBuilder
+    static func contentStack(
+        engine: GameEngine,
+        actions: GameActions,
+        isCelebrating: Bool,
+        metrics m: AppMetrics
+    ) -> some View {
+        // Flexibel: op een hoog scherm spreidt de inhoud zich uit, op een
+        // klein scherm of bij grote tekst krimpen deze tussenruimtes tot
+        // hun minimum en schuift de rest.
+        Spacer(minLength: m.gutter * 0.8)
+
+        // Het scoreblad bovenaan, de worp onderaan bij de gooiknop: zo
+        // blijft de hele gooien-vasthouden-lus in de duimzone en pendelt
+        // het oog niet meer het scherm over.
+        ScorecardView(
+            players: engine.players,
+            currentPlayerID: engine.currentPlayer.id,
+            diceValues: engine.diceValues,
+            canScore: engine.canScore,
+            onSelect: actions.score
+        )
+
+        Spacer(minLength: m.gutter)
+
+        RollCalloutView(
+            title: engine.calloutTitle,
+            message: engine.turnMessage,
+            player: engine.currentPlayer,
+            isCelebrating: isCelebrating
+        )
+        .padding(.bottom, m.gutter * 0.5)
+
+        DiceTrayView(
+            dice: engine.dice,
+            isRolling: engine.isRolling,
+            canInteract: engine.canHold,
+            onToggle: actions.toggleHold
+        )
+        .padding(.bottom, m.gutter * 0.4)
     }
 }
