@@ -34,20 +34,8 @@ struct GameTallLayout: View {
         GeometryReader { geo in
             ScrollView {
                 VStack(spacing: 0) {
-                    GameHeaderView(
-                        players: engine.players,
-                        currentPlayerID: engine.currentPlayer.id,
-                        canUndo: engine.canUndoScore,
-                        onUndo: actions.undo,
-                        onLeave: actions.leave
-                    )
-                    .padding(.top, 6)
-
-                    RoundStripView(
-                        roundNumber: engine.roundNumber,
-                        totalRounds: ScoreCategory.allCases.count
-                    )
-                    .padding(.top, m.gutter)
+                    GameTopBar(engine: engine, actions: actions)
+                        .padding(.top, 6)
 
                     Self.contentStack(
                         engine: engine,
@@ -98,6 +86,14 @@ struct GameTallLayout: View {
         // hun minimum en schuift de rest.
         Spacer(minLength: m.gutter * 0.8)
 
+        // De tussenstand vlak boven het blad dat hij samenvat; de
+        // rondeteller is naar de bovenrand verhuisd.
+        ScoreChipsView(
+            players: engine.players,
+            currentPlayerID: engine.currentPlayer.id
+        )
+        .padding(.bottom, m.gutter * 0.6)
+
         // Het scoreblad bovenaan, de worp onderaan bij de gooiknop: zo
         // blijft de hele gooien-vasthouden-lus in de duimzone en pendelt
         // het oog niet meer het scherm over.
@@ -126,5 +122,45 @@ struct GameTallLayout: View {
             onToggle: actions.toggleHold
         )
         .padding(.bottom, m.gutter * 0.4)
+    }
+}
+
+/// De dunne bovenrand van de staande indeling: de rondeteller (passieve
+/// meta-info) met de terugzet- en sluitknop ernaast. De tussenstand staat
+/// niet meer hier maar vlak boven het scoreblad.
+struct GameTopBar: View {
+    let engine: GameEngine
+    let actions: GameActions
+
+    @Environment(\.metrics) private var m
+
+    var body: some View {
+        HStack(spacing: 8) {
+            RoundStripView(
+                roundNumber: engine.roundNumber,
+                totalRounds: ScoreCategory.allCases.count
+            )
+            .frame(maxWidth: .infinity)
+
+            if engine.canUndoScore {
+                Button(action: actions.undo) {
+                    Label("Zet de vorige zet terug", systemImage: "arrow.uturn.backward")
+                        .labelStyle(.iconOnly)
+                        .font(.system(size: m.captionSize + 2, weight: .black))
+                        .foregroundStyle(AppTheme.ink)
+                        .frame(width: m.tapTarget, height: m.tapTarget)
+                }
+                .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+            }
+
+            Button(action: actions.leave) {
+                Label("Spel verlaten", systemImage: "xmark")
+                    .labelStyle(.iconOnly)
+                    .font(.system(size: m.captionSize + 2, weight: .black))
+                    .foregroundStyle(AppTheme.ink)
+                    .frame(width: m.tapTarget, height: m.tapTarget)
+            }
+            .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+        }
     }
 }

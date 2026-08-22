@@ -68,20 +68,8 @@ private struct GameScreenRenderStack: View {
             toggleHold: { _ in }, score: { _ in }, roll: {}, leave: {}, undo: {}
         )
         VStack(spacing: 0) {
-            GameHeaderView(
-                players: engine.players,
-                currentPlayerID: engine.currentPlayer.id,
-                canUndo: engine.canUndoScore,
-                onUndo: actions.undo,
-                onLeave: actions.leave
-            )
-            .padding(.top, 6)
-
-            RoundStripView(
-                roundNumber: engine.roundNumber,
-                totalRounds: ScoreCategory.allCases.count
-            )
-            .padding(.top, m.gutter)
+            GameTopBar(engine: engine, actions: actions)
+                .padding(.top, 6)
 
             GameTallLayout.contentStack(
                 engine: engine,

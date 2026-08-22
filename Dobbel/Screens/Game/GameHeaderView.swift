@@ -16,15 +16,7 @@ struct GameHeaderView: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            HStack(spacing: 6) {
-                ForEach(players) { player in
-                    chip(for: player)
-                }
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, m.gutter * 0.45)
-            .frame(maxWidth: .infinity)
-            .toyBlock(fill: AppTheme.card, radius: m.cellCorner + 3, depth: 3, border: m.thinBorder + 0.5)
+            ScoreChipsView(players: players, currentPlayerID: currentPlayerID)
 
             if canUndo {
                 Button(action: onUndo) {
@@ -46,6 +38,28 @@ struct GameHeaderView: View {
             }
             .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: 3, border: m.thinBorder))
         }
+    }
+}
+
+/// De stand van alle spelers op één regel. Los van de knoppen, zodat de
+/// staande indeling hem vlak boven het scoreblad kan zetten — daar hoort
+/// de tussenstand bij.
+struct ScoreChipsView: View {
+    let players: [GamePlayer]
+    let currentPlayerID: UUID
+
+    @Environment(\.metrics) private var m
+
+    var body: some View {
+        HStack(spacing: 6) {
+            ForEach(players) { player in
+                chip(for: player)
+            }
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, m.gutter * 0.45)
+        .frame(maxWidth: .infinity)
+        .toyBlock(fill: AppTheme.card, radius: m.cellCorner + 3, depth: 3, border: m.thinBorder + 0.5)
     }
 
     private func chip(for player: GamePlayer) -> some View {
