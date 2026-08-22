@@ -136,9 +136,11 @@ struct GameTopBar: View {
         HStack(spacing: 8) {
             RoundStripView(
                 roundNumber: engine.roundNumber,
-                totalRounds: ScoreCategory.allCases.count
+                totalRounds: ScoreCategory.allCases.count,
+                alignment: .leading
             )
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 4)
 
             if engine.canUndoScore {
                 Button(action: actions.undo) {

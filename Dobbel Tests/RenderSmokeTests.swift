@@ -60,18 +60,25 @@ final class RenderSmokeTests: XCTestCase {
         }
         await engine.rollDice()
 
-        let view = GameScreenRenderStack(engine: engine)
-            .environment(\.metrics, .phone)
-            // De render draait buiten een echt venster; zonder deze hint
-            // denkt het scoreblad dat het op een iPad staat.
-            .environment(\.horizontalSizeClass, .compact)
-            .frame(width: 393, height: 852)
+        // Twee maten: iPhone en iPad portret (de staande indeling geldt op
+        // beide; de sizeclass-hint stuurt het scoreblad, want de render
+        // draait buiten een echt venster).
+        let variants: [(suffix: String, width: CGFloat, height: CGFloat, metrics: AppMetrics, sizeClass: UserInterfaceSizeClass)] = [
+            ("", 393, 852, .phone, .compact),
+            ("-ipad", 834, 1194, AppMetrics.pad.roomier(), .regular)
+        ]
+        for variant in variants {
+            let view = GameScreenRenderStack(engine: engine)
+                .environment(\.metrics, variant.metrics)
+                .environment(\.horizontalSizeClass, variant.sizeClass)
+                .frame(width: variant.width, height: variant.height)
 
-        let renderer = ImageRenderer(content: view)
-        renderer.scale = 2
-        let image = try XCTUnwrap(renderer.uiImage)
-        try XCTUnwrap(image.pngData())
-            .write(to: outputDirectory.appending(path: "spelscherm.png"))
+            let renderer = ImageRenderer(content: view)
+            renderer.scale = 2
+            let image = try XCTUnwrap(renderer.uiImage)
+            try XCTUnwrap(image.pngData())
+                .write(to: outputDirectory.appending(path: "spelscherm\(variant.suffix).png"))
+        }
     }
 }
 
