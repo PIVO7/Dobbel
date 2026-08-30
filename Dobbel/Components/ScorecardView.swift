@@ -143,18 +143,17 @@ struct ScorecardView: View {
                 let subtotal = player.scorecard.upperSubtotal
                 let reached = player.scorecard.upperBonus > 0
                 let isMine = player.id == currentPlayerID
-                // Ook mét bonus blijft het bovenbladtotaal staan: "66 +35"
-                // vertelt wat je haalde, niet alleen dát je de bonus hebt.
                 columnFrame(
-                    HStack(spacing: 3) {
+                    Group {
                         if reached {
                             Image(systemName: "checkmark.circle.fill")
-                                .font(.system(size: m.captionSize, weight: .black))
+                                .font(.system(size: m.captionSize * 1.35, weight: .black))
+                        } else {
+                            Text("\(subtotal)/63")
+                                .font(AppTheme.rounded(m.captionSize))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.6)
                         }
-                        Text(reached ? "\(subtotal) +35" : "\(subtotal)/63")
-                            .font(AppTheme.rounded(m.captionSize))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.6)
                     }
                     .foregroundStyle(AppTheme.ink)
                     .frame(maxWidth: .infinity)
