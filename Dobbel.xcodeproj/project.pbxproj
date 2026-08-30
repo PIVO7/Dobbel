@@ -71,6 +71,7 @@
 		A72FE49A389F07BF90898679 /* ScorecardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA576E1403CCA19E282FC00 /* ScorecardView.swift */; };
 		AD52786FBADE00CCC7BF9C69 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5B0C0368334450137CB09C /* PaywallView.swift */; };
 		AF46015FD479377E5D747BC9 /* ThemedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24703A4ACFC4D3D521720333 /* ThemedBackground.swift */; };
+		AF8D8AA016502B6B2493B5DB /* TableclothBand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E22E3FF058A2AC23827D58C /* TableclothBand.swift */; };
 		B4DC9A39E9EB81FC152FB32B /* RollPhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952EBCB4AD504FE415F41DCA /* RollPhrase.swift */; };
 		B77B30C09A72565E73E2E895 /* ScoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E159D8759998EAB9C183A /* ScoreCategory.swift */; };
 		B790A92AB740FC66281C9055 /* CategoryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DD8B33444F289A8F7E2BB3 /* CategoryIcon.swift */; };
@@ -162,6 +163,7 @@
 		836B53A45765FA91E1FE218A /* ding.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ding.wav; sourceTree = "<group>"; };
 		853543419ED1AACBBEB39C19 /* Dobbel.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Dobbel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86433F3A326EE75260EDDBBF /* GamePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlayer.swift; sourceTree = "<group>"; };
+		8E22E3FF058A2AC23827D58C /* TableclothBand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableclothBand.swift; sourceTree = "<group>"; };
 		952EBCB4AD504FE415F41DCA /* RollPhrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollPhrase.swift; sourceTree = "<group>"; };
 		9C2847D7252B521F0C4F286A /* SoundPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayerTests.swift; sourceTree = "<group>"; };
 		A0FD760CC274C0508A482BA4 /* DobbelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DobbelApp.swift; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 				AEE6B486B07F0F5CBD22DA84 /* Destination.swift */,
 				08A24CBF95A9EB422723BBCC /* HomeHeroView.swift */,
 				145DBD1276DF8A2BF438085C /* HomeView.swift */,
+				8E22E3FF058A2AC23827D58C /* TableclothBand.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -644,6 +647,7 @@
 				01330E8029552461E8560CDA /* SplitMix64.swift in Sources */,
 				ECBA69B41DF46D310AC33957 /* StatsOverviewView.swift in Sources */,
 				BC39ACCA4EFF44B7A57C26A0 /* StraightGlyph.swift in Sources */,
+				AF8D8AA016502B6B2493B5DB /* TableclothBand.swift in Sources */,
 				7DF9F67EF25A7F4DEAFB8DEA /* ThemePalette.swift in Sources */,
 				3BC8C78E52D96DD648D20CCC /* ThemeStore.swift in Sources */,
 				AF46015FD479377E5D747BC9 /* ThemedBackground.swift in Sources */,

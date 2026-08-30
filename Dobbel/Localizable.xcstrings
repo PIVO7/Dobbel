@@ -4745,6 +4745,22 @@
           }
         }
       }
+    },
+    "Lopend spel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game in progress"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partie en cours"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
