@@ -25,17 +25,15 @@ struct GameView: View {
     @State private var isNewRecord = false
     /// De uitleg wordt aangeboden, niet opgedrongen: dit is de vraag vooraf.
     @State private var showCoachOffer = false
-    @State private var showTurnBanner = false
     @State private var showExitConfirm = false
     @State private var showPassScreen = false
     @State private var coachStep: CoachStep = .none
     @State private var coachVisible = false
     @State private var celebrateDobbel = false
     @State private var celebrateBonus = false
-    /// De beurtbanner die nog even inhoudt tot het DOBBEL!-feest voorbij is;
-    /// anders staan de viering en "Jij bent aan de beurt" samen in beeld.
-    @State private var pendingTurnBanner = false
-    @State private var bannerDismissal: Task<Void, Never>?
+    /// De beurtwissel die nog even inhoudt tot het DOBBEL!-feest voorbij is;
+    /// anders klinken de viering en de beurtwissel door elkaar.
+    @State private var pendingTurnChange = false
     @State private var dobbelDismissal: Task<Void, Never>?
     @State private var bonusDismissal: Task<Void, Never>?
     @State private var rollPulse = 0
@@ -84,16 +82,6 @@ struct GameView: View {
                 if coachVisible {
                     coachOverlay
                         .zIndex(3)
-                }
-
-                if showTurnBanner {
-                    TurnBannerView(player: engine.currentPlayer, title: bannerTitle)
-                        .transition(
-                            reduceMotion
-                                ? .opacity
-                                : .move(edge: .top).combined(with: .opacity)
-                        )
-                        .zIndex(2)
                 }
 
                 if celebrateDobbel {
@@ -192,7 +180,7 @@ struct GameView: View {
         }
         .onChange(of: engine.turnJustChanged) { _, changed in
             guard changed else { return }
-            presentTurnBanner()
+            presentTurnChange()
             engine.acknowledgeTurnChange()
         }
         .onChange(of: celebrateBonus) { _, show in
@@ -200,12 +188,12 @@ struct GameView: View {
                 bonusDismissal?.cancel()
                 bonusDismissal = dismissCelebration { celebrateBonus = false }
             } else {
-                presentPendingTurnBannerIfNeeded()
+                presentPendingTurnChangeIfNeeded()
             }
         }
         .onChange(of: celebrateDobbel) { _, show in
             guard !show else { return }
-            presentPendingTurnBannerIfNeeded()
+            presentPendingTurnChangeIfNeeded()
         }
         .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.85), trigger: rollPulse)
         .sensoryFeedback(.selection, trigger: holdPulse)
@@ -365,13 +353,13 @@ struct GameView: View {
         ).post()
     }
 
-    /// Solo spreekt de banner je aan; met z'n allen aan één toestel noemt hij
-    /// de naam.
-    private var bannerTitle: String? {
+    /// Solo spreekt de aankondiging je aan; met z'n allen aan één toestel
+    /// noemt ze de naam.
+    private var turnAnnouncement: String {
         if engine.mode == .versusComputer, !engine.currentPlayer.isComputer {
             return String(localized: "Jij bent aan de beurt")
         }
-        return nil
+        return String(localized: "\(engine.currentPlayer.name) is aan de beurt")
     }
 
     // MARK: - Reacties op het spel
@@ -424,57 +412,38 @@ struct GameView: View {
         )
     }
 
-    private func presentTurnBanner() {
+    private func presentTurnChange() {
         guard !engine.isFinished else { return }
-        // Loopt het DOBBEL!- of bonusfeest nog? Dan wacht de banner (met
-        // geluid en al) tot dat is uitgeraasd in plaats van erdoorheen te
-        // vallen.
+        // Loopt het DOBBEL!- of bonusfeest nog? Dan wacht de beurtwissel
+        // (met geluid en al) tot dat is uitgeraasd in plaats van erdoorheen
+        // te vallen.
         if celebrateDobbel || celebrateBonus {
-            pendingTurnBanner = true
+            pendingTurnChange = true
             return
         }
-        showTurnBannerNow()
+        announceTurnChange()
     }
 
-    private func presentPendingTurnBannerIfNeeded() {
-        guard pendingTurnBanner, !celebrateDobbel, !celebrateBonus else { return }
-        pendingTurnBanner = false
-        showTurnBannerNow()
+    private func presentPendingTurnChangeIfNeeded() {
+        guard pendingTurnChange, !celebrateDobbel, !celebrateBonus else { return }
+        pendingTurnChange = false
+        announceTurnChange()
     }
 
-    private func showTurnBannerNow() {
+    /// Geen rood vlak meer bij een beurtwissel: het scorebord zegt al wie er
+    /// mag. De tik, het geluid en de VoiceOver-aankondiging markeren het
+    /// moment.
+    private func announceTurnChange() {
         guard !engine.isFinished else { return }
         scorePulse += 1
-        AccessibilityNotification.Announcement(
-            bannerTitle ?? String(localized: "\(engine.currentPlayer.name) is aan de beurt")
-        ).post()
+        SoundPlayer.shared.play(.turn)
+        AccessibilityNotification.Announcement(turnAnnouncement).post()
 
         // Met z'n allen aan één toestel pauzeert het spel tot de volgende
-        // speler het toestel heeft; solo volstaat de vluchtige banner.
+        // speler het toestel heeft.
         if engine.mode == .versusFriends, PassAndPlay.isEnabled {
-            SoundPlayer.shared.play(.turn)
             withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.8)) {
                 showPassScreen = true
-            }
-            return
-        }
-
-        // De melding is uitschakelbaar; de tik en de VoiceOver-aankondiging
-        // hierboven blijven, want die vertellen hetzelfde zonder rood vlak.
-        guard TurnBanner.isEnabled else { return }
-        SoundPlayer.shared.play(.turn)
-
-        withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.8)) {
-            showTurnBanner = true
-        }
-        // Bij twee snelle beurtwissels zou de timer van de eerste de banner
-        // van de tweede verbergen; annuleren voorkomt dat.
-        bannerDismissal?.cancel()
-        bannerDismissal = Task {
-            try? await Task.sleep(for: .milliseconds(reduceMotion ? 700 : 1100))
-            guard !Task.isCancelled else { return }
-            withAnimation(.easeOut(duration: 0.2)) {
-                showTurnBanner = false
             }
         }
     }
