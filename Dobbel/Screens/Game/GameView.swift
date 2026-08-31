@@ -445,7 +445,6 @@ struct GameView: View {
     private func showTurnBannerNow() {
         guard !engine.isFinished else { return }
         scorePulse += 1
-        SoundPlayer.shared.play(.turn)
         AccessibilityNotification.Announcement(
             bannerTitle ?? String(localized: "\(engine.currentPlayer.name) is aan de beurt")
         ).post()
@@ -453,11 +452,17 @@ struct GameView: View {
         // Met z'n allen aan één toestel pauzeert het spel tot de volgende
         // speler het toestel heeft; solo volstaat de vluchtige banner.
         if engine.mode == .versusFriends, PassAndPlay.isEnabled {
+            SoundPlayer.shared.play(.turn)
             withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.8)) {
                 showPassScreen = true
             }
             return
         }
+
+        // De melding is uitschakelbaar; de tik en de VoiceOver-aankondiging
+        // hierboven blijven, want die vertellen hetzelfde zonder rood vlak.
+        guard TurnBanner.isEnabled else { return }
+        SoundPlayer.shared.play(.turn)
 
         withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .spring(response: 0.35, dampingFraction: 0.8)) {
             showTurnBanner = true
