@@ -17,6 +17,8 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
     var totalPoints: Int
     var dobbelCount: Int
     var bonusCount: Int
+    /// Potjes die op een gedeelde topscore eindigden.
+    var draws: Int
     var currentStreak: Int
     var bestStreak: Int
     /// De laatste potjes (nieuwste achteraan), voor het grafiekje. Afgetopt
@@ -36,6 +38,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         totalPoints: Int = 0,
         dobbelCount: Int = 0,
         bonusCount: Int = 0,
+        draws: Int = 0,
         currentStreak: Int = 0,
         bestStreak: Int = 0,
         history: [GameRecord] = []
@@ -52,6 +55,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         self.totalPoints = totalPoints
         self.dobbelCount = dobbelCount
         self.bonusCount = bonusCount
+        self.draws = draws
         self.currentStreak = currentStreak
         self.bestStreak = bestStreak
         self.history = history
@@ -73,6 +77,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
         totalPoints = try container.decodeIfPresent(Int.self, forKey: .totalPoints) ?? 0
         dobbelCount = try container.decodeIfPresent(Int.self, forKey: .dobbelCount) ?? 0
         bonusCount = try container.decodeIfPresent(Int.self, forKey: .bonusCount) ?? 0
+        draws = try container.decodeIfPresent(Int.self, forKey: .draws) ?? 0
         currentStreak = try container.decodeIfPresent(Int.self, forKey: .currentStreak) ?? 0
         bestStreak = try container.decodeIfPresent(Int.self, forKey: .bestStreak) ?? 0
         history = try container.decodeIfPresent([GameRecord].self, forKey: .history) ?? []
@@ -80,7 +85,7 @@ struct PlayerProfile: Identifiable, Equatable, Codable, Hashable {
 
     /// Aantal kleuren in het avatarpalet; `AvatarBadge.palette` moet even
     /// lang zijn (een test bewaakt dat).
-    static let avatarPaletteCount = 6
+    static let avatarPaletteCount = 7
 
     /// Vaste id's, zodat een bewaard spel na een herstart dezelfde
     /// tegenstander terugvindt.

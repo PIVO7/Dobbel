@@ -4,6 +4,9 @@ import Foundation
 struct GameSnapshot: Codable, Equatable {
     var mode: GameMode
     var players: [GamePlayer]
+    /// Wie dit potje begon; optioneel zodat oudere bewaarde spellen zonder
+    /// dit veld gewoon blijven laden (dan geldt speler 0).
+    var startingPlayerIndex: Int?
     var currentPlayerIndex: Int
     var dice: [Die]
     var rollsRemaining: Int

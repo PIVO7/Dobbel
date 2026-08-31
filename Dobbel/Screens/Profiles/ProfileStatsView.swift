@@ -83,6 +83,7 @@ struct ProfileStatsView: View {
         return VStack(spacing: m.cellGap * 2) {
             statRow(String(localized: "Gespeeld"), "\(profile.gamesPlayed)", icon: "die.face.5.fill")
             statRow(String(localized: "Gewonnen"), "\(profile.wins)", icon: "crown.fill")
+            statRow(String(localized: "Gelijkgespeeld"), "\(profile.draws)", icon: "equal.circle.fill")
             statRow(String(localized: "Hoogste score"), "\(profile.bestScore)", icon: "arrow.up.circle.fill")
             statRow(String(localized: "Gemiddeld"), average.map { "\($0)" } ?? "–", icon: "equal.circle.fill")
             statRow(String(localized: "Dobbels"), "\(profile.dobbelCount)", icon: "star.fill")

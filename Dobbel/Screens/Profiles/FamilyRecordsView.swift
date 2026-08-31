@@ -42,6 +42,12 @@ struct FamilyRecordsView: View {
                             .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.9, depth: m.depth, border: m.border)
                     } else {
                         recordRow(
+                            title: String(localized: "Meeste overwinningen"),
+                            icon: "crown.fill",
+                            value: { $0.wins },
+                            format: { String(localized: "\($0) keer gewonnen") }
+                        )
+                        recordRow(
                             title: String(localized: "Hoogste score"),
                             icon: "arrow.up.circle.fill",
                             value: { $0.bestScore },

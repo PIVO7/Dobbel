@@ -1123,22 +1123,6 @@
         }
       }
     },
-    "De aankoop is niet gelukt. Controleer de internetverbinding en probeer het opnieuw." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The purchase didn't go through. Check the internet connection and try again."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "L'achat n'a pas abouti. Vérifie la connexion internet et réessaie."
-          }
-        }
-      }
-    },
     "De gezinsrecords horen bij de Gezinsversie." : {
       "localizations" : {
         "en" : {
@@ -3802,22 +3786,6 @@
         }
       }
     },
-    "Terugzetten is niet gelukt. Controleer de internetverbinding en probeer het opnieuw." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restoring didn't work. Check the internet connection and try again."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La restauration n'a pas fonctionné. Vérifie la connexion internet et réessaie."
-          }
-        }
-      }
-    },
     "THEMA" : {
       "localizations" : {
         "en" : {
@@ -4759,6 +4727,166 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Soleil"
+          }
+        }
+      }
+    },
+    "Dat lukte niet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "That didn’t work"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ça n’a pas marché"
+          }
+        }
+      }
+    },
+    "Oké" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "De aankoop wacht nog op goedkeuring van een ouder." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The purchase is waiting for a parent’s approval."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’achat attend l’accord d’un parent."
+          }
+        }
+      }
+    },
+    "Kopen is niet gelukt. Controleer de internetverbinding en probeer het straks nog eens." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The purchase didn’t go through. Check the internet connection and try again later."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’achat n’a pas abouti. Vérifie la connexion internet et réessaie plus tard."
+          }
+        }
+      }
+    },
+    "Terugzetten is niet gelukt. Controleer de internetverbinding en probeer het straks nog eens." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restoring didn't work. Check the internet connection and try again later."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La restauration a échoué. Vérifie la connexion Internet et réessaie plus tard."
+          }
+        }
+      }
+    },
+    "Roze" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pink"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rose"
+          }
+        }
+      }
+    },
+    "Basketbal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basketball"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ballon de basket"
+          }
+        }
+      }
+    },
+    "Meeste overwinningen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most wins"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le plus de victoires"
+          }
+        }
+      }
+    },
+    "%lld keer gewonnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Won %lld times"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld victoires"
+          }
+        }
+      }
+    },
+    "Gelijkgespeeld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Draws"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matchs nuls"
           }
         }
       }

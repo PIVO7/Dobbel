@@ -6,6 +6,8 @@ import Observation
 final class GameEngine {
     let mode: GameMode
     private(set) var players: [GamePlayer]
+    /// Wie dit potje begon; de rematch geeft de beurt aan de volgende.
+    let startingPlayerIndex: Int
     private(set) var currentPlayerIndex: Int = 0
     private(set) var dice: [Die]
     private(set) var rollsRemaining: Int = 3
@@ -115,6 +117,7 @@ final class GameEngine {
         GameSnapshot(
             mode: mode,
             players: players,
+            startingPlayerIndex: startingPlayerIndex,
             currentPlayerIndex: currentPlayerIndex,
             dice: dice,
             rollsRemaining: rollsRemaining,
@@ -127,11 +130,14 @@ final class GameEngine {
     init(
         mode: GameMode,
         profiles: [PlayerProfile],
+        startingPlayerIndex: Int = 0,
         seed: UInt64? = nil,
         computerAI: ComputerAI = ComputerAI()
     ) {
         self.mode = mode
         self.players = profiles.map(GamePlayer.init)
+        self.startingPlayerIndex = min(max(startingPlayerIndex, 0), max(profiles.count - 1, 0))
+        self.currentPlayerIndex = self.startingPlayerIndex
         self.dice = (0..<5).map { _ in Die(value: 1) }
         self.computerAI = computerAI
         self.rng = SplitMix64(seed: seed ?? UInt64.random(in: .min ... .max))
@@ -141,6 +147,7 @@ final class GameEngine {
     init(snapshot: GameSnapshot, seed: UInt64? = nil, computerAI: ComputerAI = ComputerAI()) {
         self.mode = snapshot.mode
         self.players = snapshot.players
+        self.startingPlayerIndex = min(max(snapshot.startingPlayerIndex ?? 0, 0), max(snapshot.players.count - 1, 0))
         self.currentPlayerIndex = min(max(snapshot.currentPlayerIndex, 0), max(snapshot.players.count - 1, 0))
         self.dice = snapshot.dice
         self.rollsRemaining = snapshot.rollsRemaining

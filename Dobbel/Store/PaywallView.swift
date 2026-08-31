@@ -13,9 +13,9 @@ struct PaywallView: View {
     /// zijn oudergebied (kindercategorie).
     @State private var gatePassed = false
     @State private var isBusy = false
-    /// StoreKit-fouten mogen niet stil verdwijnen: de ouder staat bij de
-    /// kassa en moet weten waaróm er niets gebeurt.
-    @State private var errorText: String?
+    /// Uitleg wanneer kopen of terugzetten niet doorging; annuleren blijft
+    /// stil.
+    @State private var purchaseNotice: String?
 
     private var priceText: String {
         entitlements.familyProduct?.displayPrice ?? "…"
@@ -54,6 +54,16 @@ struct PaywallView: View {
             // gezegd gewoon verstandig.
             if let question = gateQuestion {
                 gateOverlay(question)
+            }
+
+            if let purchaseNotice {
+                ToyDialog(
+                    title: String(localized: "Dat lukte niet"),
+                    message: purchaseNotice,
+                    confirmTitle: String(localized: "Oké"),
+                    onConfirm: dismissNotice,
+                    onCancel: dismissNotice
+                )
             }
         }
         .interactiveDismissDisabled(isBusy)
@@ -130,16 +140,6 @@ struct PaywallView: View {
                     }
                     .buttonStyle(.plain)
                     .disabled(isBusy)
-
-                    if let errorText {
-                        Label(errorText, systemImage: "exclamationmark.triangle.fill")
-                            .font(AppTheme.rounded(m.captionSize, .bold))
-                            .foregroundStyle(AppTheme.coral)
-                            .multilineTextAlignment(.leading)
-                            .padding(m.gutter * 0.8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.8, depth: 3, border: m.thinBorder)
-                    }
                 }
             }
             .padding(.horizontal, m.gutter * 1.4)
@@ -223,7 +223,6 @@ struct PaywallView: View {
     // MARK: - Kassa
 
     private func startPurchase() {
-        errorText = nil
         isBusy = true
         Task {
             await purchase()
@@ -232,7 +231,6 @@ struct PaywallView: View {
     }
 
     private func startRestore() {
-        errorText = nil
         isBusy = true
         Task {
             await restore()
@@ -240,21 +238,39 @@ struct PaywallView: View {
         }
     }
 
+    /// Annuleren is een keuze en blijft stil; mislukken en wachten-op-ouder
+    /// verdienen uitleg — anders lijkt de knop gewoon kapot.
     private func purchase() async {
         switch await entitlements.purchaseFamily() {
         case .success, .cancelled:
             break
+        case .pending:
+            showNotice(String(localized: "De aankoop wacht nog op goedkeuring van een ouder."))
         case .failed:
-            errorText = String(localized: "De aankoop is niet gelukt. Controleer de internetverbinding en probeer het opnieuw.")
+            showNotice(String(localized: "Kopen is niet gelukt. Controleer de internetverbinding en probeer het straks nog eens."))
         }
     }
 
+    /// Terugzetten dat stilletjes niets doet lijkt kapot; hier hoort een
+    /// antwoord bij, ook als dat "niets gevonden" is.
     private func restore() async {
         let synced = await entitlements.restorePurchases()
         if !synced {
-            errorText = String(localized: "Terugzetten is niet gelukt. Controleer de internetverbinding en probeer het opnieuw.")
+            showNotice(String(localized: "Terugzetten is niet gelukt. Controleer de internetverbinding en probeer het straks nog eens."))
         } else if !entitlements.isFamilyUnlocked {
-            errorText = String(localized: "Er is geen eerdere aankoop gevonden voor dit Apple-account.")
+            showNotice(String(localized: "Er is geen eerdere aankoop gevonden voor dit Apple-account."))
+        }
+    }
+
+    private func showNotice(_ text: String) {
+        withAnimation(.easeOut(duration: 0.15)) {
+            purchaseNotice = text
+        }
+    }
+
+    private func dismissNotice() {
+        withAnimation(.easeOut(duration: 0.15)) {
+            purchaseNotice = nil
         }
     }
 }

@@ -45,6 +45,31 @@ final class ProfileStoreTests: XCTestCase {
         XCTAssertEqual(reloaded.humanProfiles.first(where: { $0.id == mila.id })?.wins, 1)
     }
 
+    func testSharedTopScoreCountsAsDraw() throws {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("yahtzee-draw-\(UUID().uuidString).json")
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let store = ProfileStore(fileURL: url)
+        store.addProfile(name: "Mila")
+        store.addProfile(name: "Noah")
+        let mila = try XCTUnwrap(store.humanProfiles.first(where: { $0.name == "Mila" }))
+        let noah = try XCTUnwrap(store.humanProfiles.first(where: { $0.name == "Noah" }))
+
+        // Gedeelde topscore: beide spelers staan in winnerProfileIDs.
+        store.recordGameResult(
+            players: [GamePlayer(profile: mila), GamePlayer(profile: noah)],
+            winnerProfileIDs: [mila.id, noah.id]
+        )
+
+        let updatedMila = try XCTUnwrap(store.humanProfiles.first(where: { $0.id == mila.id }))
+        let updatedNoah = try XCTUnwrap(store.humanProfiles.first(where: { $0.id == noah.id }))
+        XCTAssertEqual(updatedMila.draws, 1)
+        XCTAssertEqual(updatedNoah.draws, 1)
+        XCTAssertEqual(updatedMila.wins, 0)
+        XCTAssertEqual(updatedMila.currentStreak, 0)
+    }
+
     func testRecordsHistoryAndCapsIt() throws {
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("yahtzee-history-\(UUID().uuidString).json")

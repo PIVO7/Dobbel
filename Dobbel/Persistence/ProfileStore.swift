@@ -102,6 +102,11 @@ final class ProfileStore {
                 profiles[index].currentStreak += 1
                 profiles[index].bestStreak = max(profiles[index].bestStreak, profiles[index].currentStreak)
             } else {
+                // Een gedeelde topscore is een gelijkspel voor iedereen die
+                // hem haalde; de winreeks stopt wel.
+                if winnerProfileIDs.count > 1, winnerProfileIDs.contains(player.profileID) {
+                    profiles[index].draws += 1
+                }
                 profiles[index].currentStreak = 0
             }
             // Voor het grafiekje op de statistiekenpagina; afgetopt zodat het

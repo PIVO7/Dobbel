@@ -19,9 +19,11 @@ struct GameCoverView: View {
         GameView(
             engine: engine,
             onRematch: {
+                // Wie vorige keer tweede was, mag nu beginnen.
                 let fresh = GameEngine(
                     mode: engine.mode,
-                    profiles: engine.rematchProfiles()
+                    profiles: engine.rematchProfiles(),
+                    startingPlayerIndex: (engine.startingPlayerIndex + 1) % max(engine.players.count, 1)
                 )
                 gameStore.save(fresh.snapshot)
                 rematchEngine = fresh
