@@ -10,7 +10,6 @@ struct ScoreCellView: View {
     /// raster meteen ziet wiens beurt het is.
     let isMine: Bool
     let selectable: Bool
-    let isAdvised: Bool
     let onSelect: (ScoreCategory) -> Void
 
     @Environment(\.metrics) private var m
@@ -26,25 +25,23 @@ struct ScoreCellView: View {
             Button {
                 onSelect(category)
             } label: {
+                // Een nul dempt: zo gaat het oog vanzelf naar de vakjes die
+                // iets opleveren, zonder dat het blad een keuze voorzegt.
                 Text("\(points)")
                     .font(AppTheme.rounded(m.cellTextSize, .bold))
-                    .foregroundStyle(isAdvised ? AppTheme.ink : AppTheme.coral)
+                    .foregroundStyle(points == 0 ? AppTheme.cardDim : AppTheme.coral)
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
             }
             // Diepte op élk open vakje: zo zie je in één oogopslag wat nog te
             // kiezen valt, en zakt het vakje voelbaar in bij het tikken.
             .buttonStyle(ToyButtonStyle(
-                fill: isAdvised ? AppTheme.mint : AppTheme.card,
+                fill: AppTheme.card,
                 radius: m.cellCorner,
                 depth: 3,
                 border: m.thinBorder
             ))
-            .accessibilityLabel(
-                isAdvised
-                    ? String(localized: "\(category.title), \(points) punten, tip")
-                    : String(localized: "\(category.title), \(points) punten")
-            )
+            .accessibilityLabel(String(localized: "\(category.title), \(points) punten"))
         } else {
             let scored = player.scorecard.scores[category]
             Text(scored.map { "\($0)" } ?? "–")
@@ -67,15 +64,15 @@ struct ScoreCellView: View {
     HStack(spacing: 8) {
         ScoreCellView(
             category: .threes, player: lene, diceValues: [3, 3, 3, 5, 2],
-            isMine: true, selectable: true, isAdvised: true, onSelect: { _ in }
+            isMine: true, selectable: true, onSelect: { _ in }
         )
         ScoreCellView(
-            category: .chance, player: lene, diceValues: [3, 3, 3, 5, 2],
-            isMine: true, selectable: true, isAdvised: false, onSelect: { _ in }
+            category: .smallStraight, player: lene, diceValues: [3, 3, 3, 5, 2],
+            isMine: true, selectable: true, onSelect: { _ in }
         )
         ScoreCellView(
             category: .dobbel, player: lene, diceValues: [3, 3, 3, 5, 2],
-            isMine: false, selectable: false, isAdvised: false, onSelect: { _ in }
+            isMine: false, selectable: false, onSelect: { _ in }
         )
     }
     .padding()

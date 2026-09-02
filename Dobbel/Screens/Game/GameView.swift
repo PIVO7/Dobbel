@@ -324,7 +324,7 @@ struct GameView: View {
             case .score:
                 Spacer(minLength: 0)
                 CoachBubbleView(
-                    text: String(localized: "Kies een vakje op het scoreblad voor je punten. Het groene vakje is de tip!"),
+                    text: String(localized: "Kies een vakje op het scoreblad voor je punten. Elk vakje kan maar één keer."),
                     icon: "checkmark.circle.fill",
                     onDismiss: hideCoachBubble
                 )

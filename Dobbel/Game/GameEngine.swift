@@ -76,12 +76,6 @@ final class GameEngine {
         markDirty()
     }
 
-    /// De tip voor de speler, of `nil` zolang er niets te kiezen valt.
-    var adviceCategory: ScoreCategory? {
-        guard canScore else { return nil }
-        return DobbelScorer.adviceCategory(dice: diceValues, scorecard: currentPlayer.scorecard)
-    }
-
     /// De worp in woorden. Staat naast `turnMessage`, zodat het spelscherm
     /// geen beurtstand hoeft na te rekenen om te weten wat er mag staan.
     var calloutTitle: String {

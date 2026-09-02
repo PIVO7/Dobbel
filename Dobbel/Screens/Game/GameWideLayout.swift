@@ -89,6 +89,7 @@ struct GameWideLayout: View {
                 isRolling: engine.isRolling,
                 rollsRemaining: engine.rollsRemaining,
                 canRoll: engine.canRoll,
+                mustChoose: engine.canScore && engine.rollsRemaining == 0,
                 onRoll: actions.roll
             )
         }

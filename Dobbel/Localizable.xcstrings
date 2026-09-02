@@ -277,22 +277,6 @@
         }
       }
     },
-    "%@, %lld punten, tip" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@, %lld points, tip"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@, %lld points, conseil"
-          }
-        }
-      }
-    },
     "%@, %lld punten, winnaar" : {
       "localizations" : {
         "en" : {
@@ -2327,22 +2311,6 @@
         }
       }
     },
-    "Kies een vakje" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pick a box"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choisis une case"
-          }
-        }
-      }
-    },
     "Kies een vakje op het scoreblad" : {
       "localizations" : {
         "en" : {
@@ -2359,18 +2327,18 @@
         }
       }
     },
-    "Kies een vakje op het scoreblad voor je punten. Het groene vakje is de tip!" : {
+    "Kies een vakje op het scoreblad voor je punten. Elk vakje kan maar één keer." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pick a box on the scorecard for your points. The green box is the tip!"
+            "value" : "Pick a box on the scorecard for your points. Each box can be used only once."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choisis une case sur la feuille de score pour tes points. La case verte, c'est le conseil !"
+            "value" : "Choisis une case sur la feuille de score pour tes points. Chaque case ne sert qu'une fois."
           }
         }
       }
@@ -3894,6 +3862,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Touche un dé pour le garder. Avec la petite main, il ne sera pas relancé."
+          }
+        }
+      }
+    },
+    "Tik een vakje om te scoren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap a box to score"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touche une case pour marquer"
           }
         }
       }

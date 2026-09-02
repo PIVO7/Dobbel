@@ -41,15 +41,13 @@ struct ScorecardView: View {
     }
 
     var body: some View {
-        // Eén keer per hertekening rekenen: de lijst voedt zowel de open-check
-        // als de tip, zodat de scorer niet per vakje — of dubbel — draait.
-        let openList = openCategories
-        let open = Set(openList)
-        let advice = adviceCategory(open: openList)
+        // Eén keer per hertekening rekenen, zodat de scorer niet per vakje
+        // draait.
+        let open = Set(openCategories)
 
         return HStack(alignment: .top, spacing: m.gutter * 0.6) {
-            column(categories: ScoreCategory.upper, showsBonus: true, open: open, advice: advice)
-            column(categories: ScoreCategory.lower, showsBonus: false, open: open, advice: advice)
+            column(categories: ScoreCategory.upper, showsBonus: true, open: open)
+            column(categories: ScoreCategory.lower, showsBonus: false, open: open)
         }
         .padding(m.gutter * 0.8)
         .toyBlock(fill: AppTheme.card, radius: m.cardCorner, depth: m.depth, border: m.border)
@@ -64,20 +62,12 @@ struct ScorecardView: View {
         return DobbelScorer.availableCategories(dice: diceValues, scorecard: current.scorecard)
     }
 
-    /// De tip van de scorer; alleen tonen als er echt gegooid is. Weegt de
-    /// bonus bovenin mee, maar blijft een vuistregel — kiezen doet de speler.
-    private func adviceCategory(open: [ScoreCategory]) -> ScoreCategory? {
-        guard canScore, !open.isEmpty, let current else { return nil }
-        return DobbelScorer.adviceCategory(dice: diceValues, scorecard: current.scorecard, open: open)
-    }
-
     // Zonder BOVEN/ONDER-kopjes: die zeiden een kind niets en de bonusrij
     // markeert het verschil al. De gewonnen ruimte gaat naar het raster.
     private func column(
         categories: [ScoreCategory],
         showsBonus: Bool,
-        open: Set<ScoreCategory>,
-        advice: ScoreCategory?
+        open: Set<ScoreCategory>
     ) -> some View {
         VStack(spacing: m.cellGap) {
             PlayerHeaderView(
@@ -88,7 +78,7 @@ struct ScorecardView: View {
             )
 
             ForEach(categories) { category in
-                row(for: category, open: open, advice: advice)
+                row(for: category, open: open)
             }
 
             if showsBonus {
@@ -99,8 +89,7 @@ struct ScorecardView: View {
 
     private func row(
         for category: ScoreCategory,
-        open: Set<ScoreCategory>,
-        advice: ScoreCategory?
+        open: Set<ScoreCategory>
     ) -> some View {
         HStack(spacing: m.cellGap) {
             CategoryIcon(category: category)
@@ -108,15 +97,13 @@ struct ScorecardView: View {
 
             ForEach(visiblePlayers) { player in
                 let isMine = player.id == currentPlayerID
-                let selectable = isMine && canScore && open.contains(category)
                 columnFrame(
                     ScoreCellView(
                         category: category,
                         player: player,
                         diceValues: diceValues,
                         isMine: isMine,
-                        selectable: selectable,
-                        isAdvised: selectable && category == advice,
+                        selectable: isMine && canScore && open.contains(category),
                         onSelect: onSelect
                     ),
                     isMine: isMine
@@ -149,17 +136,23 @@ struct ScorecardView: View {
                             Image(systemName: "checkmark.circle.fill")
                                 .font(.system(size: m.captionSize * 1.35, weight: .black))
                         } else {
-                            Text("\(subtotal)/63")
-                                .font(AppTheme.rounded(m.captionSize))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.6)
+                            // Stand plus een klein balkje: zo leeft de rij mee
+                            // met de kolom in plaats van dood grijs te ogen, en
+                            // wordt de bonus iets om naartoe te spelen.
+                            VStack(spacing: m.rowHeight * 0.1) {
+                                Text("\(subtotal)/63")
+                                    .font(AppTheme.rounded(m.captionSize))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.6)
+                                bonusBar(subtotal: subtotal)
+                            }
                         }
                     }
                     .foregroundStyle(AppTheme.ink)
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
                     .toyBlock(
-                        fill: reached ? AppTheme.mint : AppTheme.sunk,
+                        fill: reached ? AppTheme.mint : (isMine ? AppTheme.tintCoral : AppTheme.sunk),
                         radius: m.cellCorner,
                         depth: 0,
                         border: m.thinBorder
@@ -173,6 +166,21 @@ struct ScorecardView: View {
                 )
             }
         }
+    }
+
+    /// Het voortgangsbalkje onder de bonusstand: hoe vol, hoe dichterbij.
+    private func bonusBar(subtotal: Int) -> some View {
+        Capsule()
+            .fill(AppTheme.ink.opacity(0.12))
+            .overlay(alignment: .leading) {
+                GeometryReader { geo in
+                    Capsule()
+                        .fill(AppTheme.amber)
+                        .frame(width: geo.size.width * min(CGFloat(subtotal) / 63, 1))
+                }
+            }
+            .frame(maxWidth: m.iconWidth * 1.1)
+            .frame(height: max(m.rowHeight * 0.09, 3))
     }
 
 }
