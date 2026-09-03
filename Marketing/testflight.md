@@ -8,9 +8,12 @@ een build bij testers te krijgen.
 - **Build 11** (2026-09-03) — het project staat op versie 1.0, build 11
   (`CURRENT_PROJECT_VERSION: 11` in project.yml, gecommit als "Build 11 voor
   versie 1.0"). Ten opzichte van build 10 bevat hij: geen worp-in-woorden
-  meer boven de stenen en "In volgorde" toont het doelvakje. Archiveren en
-  uploaden moet nog gebeuren (zie het stappenplan). Bevat Dobbel.app
-  (nl/en/fr), dSYM-symbolen, minimum iOS 17.0.
+  meer boven de stenen en "In volgorde" toont het doelvakje. De archive
+  **"Dobbel 1.0 (11)"** (gebouwd met Xcode 26.6, iOS 26.5 SDK) staat in de
+  Organizer; uploaden moet nog gebeuren. Bevat Dobbel.app (nl/en/fr),
+  dSYM-symbolen, minimum iOS 17.0.
+- Let op: de archive "Dobbel 03-09-2026, 17.23" van dezelfde dag komt uit
+  Xcode-beta en is door Apple afgekeurd — die mag weg.
 - De oudere archives 1.0 (1) t/m (10) in de Organizer zijn achterhaald —
   niet meer uploaden.
 - `ITSAppUsesNonExemptEncryption` staat op NO in het project, dus TestFlight
@@ -26,9 +29,11 @@ een build bij testers te krijgen.
 2. **In-app-aankoop aanmaken** (mag ook later, maar vóór het testen van de
    Gezinsversie): niet-verbruiksartikel `com.pivo7.dobbel.gezin`,
    gezinsdeling aan — alle waarden staan in [appstore-tekst.md](appstore-tekst.md).
-3. **Archiveren**: Xcode → bestemming "Any iOS Device (arm64)" → Product →
-   **Archive**. De archive verschijnt in Window → Organizer als
-   "Dobbel 1.0 (11)".
+3. **Archiveren, altijd met de definitieve Xcode** (nu Xcode 26.6 in
+   /Applications/Developer/Xcode.app, níét Xcode-beta): bestemming "Any iOS
+   Device (arm64)" → Product → **Archive**. De archive verschijnt in Window →
+   Organizer als "Dobbel 1.0 (11)". Een archive uit een bèta-Xcode wordt bij
+   het valideren afgekeurd met "Unsupported SDK or Xcode version".
 4. **Uploaden**: in de Organizer die archive kiezen →
    **Distribute App → TestFlight & App Store → Upload**. Automatische
    ondertekening regelt het distributiecertificaat.
