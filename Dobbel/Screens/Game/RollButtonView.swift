@@ -60,26 +60,24 @@ struct RollButtonView: View {
     }
 }
 
-/// De wenk op de plek van de gooiknop: een zacht deinend pijltje omhoog met
-/// de uitnodiging om een vakje te tikken. Eigen view, zodat de deining vers
-/// begint telkens als de wenk verschijnt.
+/// De wenk op de plek van de gooiknop: een zacht deinend pijltje omhoog,
+/// dat naar het scoreblad wijst. De woorden erbij staan in de statuschip
+/// vlak boven dat blad — daar moet immers getikt worden. Eigen view, zodat
+/// de deining vers begint telkens als de wenk verschijnt.
 private struct ChooseHintView: View {
     @Environment(\.metrics) private var m
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var bobbing = false
 
     var body: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "chevron.up")
-                .font(.system(size: m.heroButton.textSize * 0.85, weight: .black))
-                .foregroundStyle(AppTheme.coral)
-                .offset(y: bobbing ? -4 : 2)
-            Text("Tik een vakje om te scoren")
-                .font(AppTheme.rounded(m.heroButton.textSize * 0.9))
-                .foregroundStyle(AppTheme.headline)
-        }
-        .frame(maxWidth: .infinity)
-        .accessibilityElement(children: .combine)
+        Image(systemName: "chevron.up")
+            .font(.system(size: m.heroButton.textSize, weight: .black))
+            .foregroundStyle(AppTheme.coral)
+            .offset(y: bobbing ? -4 : 2)
+            .frame(maxWidth: .infinity)
+            // De chip boven het blad zegt het al; hier zou VoiceOver het
+            // een tweede keer voorlezen.
+            .accessibilityHidden(true)
         .onAppear {
             guard !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true)) {

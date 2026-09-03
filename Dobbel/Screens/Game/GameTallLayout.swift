@@ -93,6 +93,13 @@ struct GameTallLayout: View {
             players: engine.players,
             currentPlayerID: engine.currentPlayer.id
         )
+        .padding(.bottom, m.gutter * 0.45)
+
+        // Wat er nú moet gebeuren, vlak boven het blad waar getikt wordt.
+        GameStatusChipView(
+            message: engine.turnMessage,
+            mustChoose: engine.canScore && engine.rollsRemaining == 0
+        )
         .padding(.bottom, m.gutter * 0.6)
 
         // Het scoreblad bovenaan, de worp onderaan bij de gooiknop: zo

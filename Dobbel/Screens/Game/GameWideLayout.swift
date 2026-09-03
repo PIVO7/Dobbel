@@ -41,17 +41,24 @@ struct GameWideLayout: View {
                 rollColumn
                     .frame(width: max(availableWidth * 0.42 - m.gutter, 320))
 
-                ScrollView {
-                    ScorecardView(
-                        players: engine.players,
-                        currentPlayerID: engine.currentPlayer.id,
-                        diceValues: engine.diceValues,
-                        canScore: engine.canScore,
-                        onSelect: actions.score
+                VStack(spacing: m.gutter * 0.5) {
+                    GameStatusChipView(
+                        message: engine.turnMessage,
+                        mustChoose: engine.canScore && engine.rollsRemaining == 0
                     )
-                    .environment(\.metrics, boardMetrics)
+
+                    ScrollView {
+                        ScorecardView(
+                            players: engine.players,
+                            currentPlayerID: engine.currentPlayer.id,
+                            diceValues: engine.diceValues,
+                            canScore: engine.canScore,
+                            onSelect: actions.score
+                        )
+                        .environment(\.metrics, boardMetrics)
+                    }
+                    .scrollBounceBehavior(.basedOnSize)
                 }
-                .scrollBounceBehavior(.basedOnSize)
                 .frame(maxWidth: .infinity)
             }
             .padding(.top, m.gutter * 0.5)

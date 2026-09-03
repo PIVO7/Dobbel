@@ -81,6 +81,7 @@
 		BC90CC80729FF657C149F1FB /* DobbelScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D491309C80B97159B9E1EDD3 /* DobbelScorer.swift */; };
 		C4805C7C57CF762720EDB019 /* rol.wav in Resources */ = {isa = PBXBuildFile; fileRef = 821C366A78F1616CDEBF46C5 /* rol.wav */; };
 		C84296C405A36427144734BF /* ComputerAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109B42C18652897F0F3E8F41 /* ComputerAITests.swift */; };
+		D101B05154CE8783D3754B67 /* GameStatusChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4272ABFA878C90945603728D /* GameStatusChipView.swift */; };
 		D6BBD9A6BCEF14DAE81A2D67 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F85C8909FE03943F01D950 /* ConfettiView.swift */; };
 		D6F4AEAF538A8A03D3876B9E /* GamePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86433F3A326EE75260EDDBBF /* GamePlayer.swift */; };
 		DAB9D4DD9B31B4903D319BF2 /* RollCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451E0FF36676B00400090C99 /* RollCalloutView.swift */; };
@@ -137,6 +138,7 @@
 		328813BAA027060922F007F1 /* ThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStore.swift; sourceTree = "<group>"; };
 		3D4D131FF7BA7F8C274272E9 /* fanfare.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fanfare.wav; sourceTree = "<group>"; };
 		3E3B305257282763806CA022 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
+		4272ABFA878C90945603728D /* GameStatusChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStatusChipView.swift; sourceTree = "<group>"; };
 		451E0FF36676B00400090C99 /* RollCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollCalloutView.swift; sourceTree = "<group>"; };
 		45AC01179248DA13F6EEB2E7 /* ProfileStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStoreTests.swift; sourceTree = "<group>"; };
 		46ED1578E69240D91402F7BA /* DiceTrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceTrayView.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				7AE93370419DACA80B407B80 /* GameCoverView.swift */,
 				1A5F913DAAAB78958FF5F9F9 /* GameHeaderView.swift */,
 				2089C0B867956C5CD1157B25 /* GameResultOverlay.swift */,
+				4272ABFA878C90945603728D /* GameStatusChipView.swift */,
 				271C5C87771CEB3965B56C3A /* GameTallLayout.swift */,
 				D37F07BE52D36273BC8554E2 /* GameView.swift */,
 				0454BB802C60B1B7E369F899 /* GameWideLayout.swift */,
@@ -615,6 +618,7 @@
 				5AC1FE19172E42F3705C4BC5 /* GameResultOverlay.swift in Sources */,
 				3A10CC7A98DB935B1647570B /* GameSetupView.swift in Sources */,
 				5B2257F14A623DA3F6BFFCB0 /* GameSnapshot.swift in Sources */,
+				D101B05154CE8783D3754B67 /* GameStatusChipView.swift in Sources */,
 				7CC349FA6BF0EF7EE3B65832 /* GameStore.swift in Sources */,
 				E96A9E280847E995846D3D41 /* GameTallLayout.swift in Sources */,
 				EEA1AC3E3746A02A0AF0CC95 /* GameView.swift in Sources */,
