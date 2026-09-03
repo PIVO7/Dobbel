@@ -208,6 +208,7 @@ struct GameSetupView: View {
                 activeGame: $activeGame
             )
         }
+        .themeTrialNudge(after: activeGame)
     }
 
     /// De spelvorm: klassiek of in volgorde. De tweede hoort bij de
