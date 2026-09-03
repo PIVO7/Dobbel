@@ -1,36 +1,42 @@
 # TestFlight — Dobbel!
 
-De archive staat klaar; dit document bevat de teksten die TestFlight vraagt en
-het stappenplan om de eerste build bij testers te krijgen.
+Dit document bevat de teksten die TestFlight vraagt en het stappenplan om
+een build bij testers te krijgen.
 
 ## Wat al klaarstaat
 
-- **Archive "Dobbel 1.0 (7)"** (2026-08-06) — ondertekend en zichtbaar in
-  Xcode → Window → **Organizer**. Bevat Dobbel.app (nl/en/fr), dSYM-symbolen,
-  versie 1.0 (7), minimum iOS 17.0, inclusief alle bugfixes tot en met
-  BUG-46, de nachtmodus, de uitgebreide statistieken, de beurtchip en de
-  statistieken-tegel op het startscherm. De oudere archives (1) t/m (6)
-  zijn achterhaald — niet uploaden.
+- **Build 11** (2026-09-03) — het project staat op versie 1.0, build 11
+  (`CURRENT_PROJECT_VERSION: 11` in project.yml, gecommit als "Build 11 voor
+  versie 1.0"). Ten opzichte van build 10 bevat hij: geen worp-in-woorden
+  meer boven de stenen en "In volgorde" toont het doelvakje. Archiveren en
+  uploaden moet nog gebeuren (zie het stappenplan). Bevat Dobbel.app
+  (nl/en/fr), dSYM-symbolen, minimum iOS 17.0.
+- De oudere archives 1.0 (1) t/m (10) in de Organizer zijn achterhaald —
+  niet meer uploaden.
 - `ITSAppUsesNonExemptEncryption` staat op NO in het project, dus TestFlight
   slaat de export-compliance-vraag bij elke build over.
 - Eén universeel 1024-appicoon (vereist voor de upload) zit in de asset catalog.
 
-## Stappenplan (eenmalig, met jouw account)
+## Stappenplan (met jouw account)
 
-1. **App Store Connect → Apps → ➕ Nieuwe app**
+1. **App Store Connect → Apps → ➕ Nieuwe app** (eenmalig, al gedaan als de
+   app er staat)
    - Platform iOS, naam **Dobbel!**, primaire taal **Nederlands**,
      bundle-id **com.pivo7.dobbel**, SKU bv. `dobbel-001`.
 2. **In-app-aankoop aanmaken** (mag ook later, maar vóór het testen van de
    Gezinsversie): niet-verbruiksartikel `com.pivo7.dobbel.gezin`,
    gezinsdeling aan — alle waarden staan in [appstore-tekst.md](appstore-tekst.md).
-3. **Uploaden**: Xcode → Window → Organizer → archive "Dobbel 1.0 (7)" →
+3. **Archiveren**: Xcode → bestemming "Any iOS Device (arm64)" → Product →
+   **Archive**. De archive verschijnt in Window → Organizer als
+   "Dobbel 1.0 (11)".
+4. **Uploaden**: in de Organizer die archive kiezen →
    **Distribute App → TestFlight & App Store → Upload**. Automatische
    ondertekening regelt het distributiecertificaat.
-4. Na 5–15 minuten verwerken verschijnt de build onder het tabblad
+5. Na 5–15 minuten verwerken verschijnt de build onder het tabblad
    **TestFlight**. Vul daar de testinformatie in (teksten hieronder).
-5. **Interne testers** (meteen, geen review): voeg jezelf en gezinsleden toe
+6. **Interne testers** (meteen, geen review): voeg jezelf en gezinsleden toe
    onder Interne testen. Zij krijgen een uitnodiging in de TestFlight-app.
-6. **Externe testers** (optioneel, na een korte beta-review van Apple): maak
+7. **Externe testers** (optioneel, na een korte beta-review van Apple): maak
    een externe groep of deel een publieke link.
 
 ## Testinformatie (tabblad TestFlight, eenmalig)
@@ -44,7 +50,9 @@ het stappenplan om de eerste build bij testers te krijgen.
 
 ## "Wat te testen" (per build in te vullen)
 
-> Eerste build van Dobbel! Alles mag stuk, maar kijk vooral naar:
+> Build 11 van Dobbel! Nieuw sinds de vorige build: boven de stenen staat de
+> worp niet meer in woorden, en bij "In volgorde" zie je welk vakje je
+> vult. Kijk vooral naar:
 >
 > - **Een heel potje** tegen elkaar aan één toestel (2–4 spelers) en solo
 >   tegen Robbie: kloppen de punten, de bonus en de tweede Dobbel?
@@ -64,7 +72,9 @@ het stappenplan om de eerste build bij testers te krijgen.
   gekocht? Zet terug" werkt daar ook. Het product moet wél eerst in App Store
   Connect bestaan (stap 2), anders blijft de prijs op "…" staan.
 - **Volgende build uploaden**: verhoog `CURRENT_PROJECT_VERSION` in
-  project.yml (7 → 8), draai `xcodegen generate`, archiveer en upload opnieuw.
-  Testers krijgen de update automatisch.
+  project.yml (11 → 12), draai `xcodegen generate`, commit ("Build 12 voor
+  versie 1.0"), archiveer en upload opnieuw. Testers krijgen de update
+  automatisch. Voor een nieuwe versie (bv. 1.1) verhoog je ook
+  `MARKETING_VERSION`; het buildnummer loopt gewoon door.
 - De **privacyverklaring-URL** is voor TestFlight nog niet verplicht, wel voor
   de echte review — regel die dus ergens tijdens de testronde.
