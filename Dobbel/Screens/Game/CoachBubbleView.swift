@@ -38,7 +38,7 @@ struct CoachBubbleView: View {
         }
         .buttonStyle(ToyButtonStyle(
             fill: AppTheme.tintAmber,
-            radius: m.cardCorner * 0.8,
+            radius: m.cardCorner,
             depth: m.depth,
             border: m.border
         ))

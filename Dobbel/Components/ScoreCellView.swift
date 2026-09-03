@@ -38,7 +38,7 @@ struct ScoreCellView: View {
             .buttonStyle(ToyButtonStyle(
                 fill: AppTheme.card,
                 radius: m.cellCorner,
-                depth: 3,
+                depth: m.shallowDepth,
                 border: m.thinBorder
             ))
             .accessibilityLabel(String(localized: "\(category.title), \(points) punten"))

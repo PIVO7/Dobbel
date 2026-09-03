@@ -19,7 +19,7 @@ struct CelebrationBurstView: View {
                 .foregroundStyle(AppTheme.ink)
                 .padding(.horizontal, m.gutter * 2)
                 .padding(.vertical, m.gutter * 1.3)
-                .toyBlock(fill: tint, radius: m.cardCorner, depth: m.depth + 1, border: m.border)
+                .toyBlock(fill: tint, radius: m.cardCorner, depth: m.heroDepth, border: m.border)
                 .scaleEffect(reduceMotion ? 1 : 1.05)
         }
         .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.9)))

@@ -26,7 +26,7 @@ struct GameHeaderView: View {
                         .foregroundStyle(AppTheme.ink)
                         .frame(width: m.tapTarget, height: m.tapTarget)
                 }
-                .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+                .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
             }
 
             Button(action: onLeave) {
@@ -36,7 +36,7 @@ struct GameHeaderView: View {
                     .foregroundStyle(AppTheme.ink)
                     .frame(width: m.tapTarget, height: m.tapTarget)
             }
-            .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+            .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
         }
     }
 }
@@ -59,7 +59,7 @@ struct ScoreChipsView: View {
         .padding(.horizontal, 10)
         .padding(.vertical, m.gutter * 0.45)
         .frame(maxWidth: .infinity)
-        .toyBlock(fill: AppTheme.card, radius: m.cellCorner + 3, depth: 3, border: m.thinBorder + 0.5)
+        .toyBlock(fill: AppTheme.card, radius: m.buttonCorner, depth: m.shallowDepth, border: m.thinBorder + 0.5)
     }
 
     private func chip(for player: GamePlayer) -> some View {
@@ -81,7 +81,7 @@ struct ScoreChipsView: View {
         )
         .overlay {
             RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
-                .strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: m.thinBorder)
+                .strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: m.border)
         }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)

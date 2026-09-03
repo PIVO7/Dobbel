@@ -336,7 +336,7 @@ struct GameView: View {
                     icon: "hand.tap.fill",
                     onDismiss: hideCoachBubble
                 )
-                .padding(.bottom, m.buttonHeight + m.gutter * 2)
+                .padding(.bottom, m.heroButton.height + m.gutter * 2)
             case .none:
                 EmptyView()
             }

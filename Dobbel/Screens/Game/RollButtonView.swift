@@ -17,30 +17,30 @@ struct RollButtonView: View {
     var body: some View {
         if mustChoose {
             ChooseHintView()
-                .frame(height: m.buttonHeight)
+                .frame(height: m.heroButton.height)
         } else {
             Button(action: onRoll) {
                 HStack(spacing: 10) {
                     Text(title)
-                        .font(AppTheme.rounded(m.buttonTextSize))
+                        .font(AppTheme.rounded(m.heroButton.textSize))
                     if rollsRemaining > 0 {
                         Text("\(rollsRemaining)")
-                            .font(AppTheme.rounded(m.buttonTextSize * 0.7))
-                            .frame(minWidth: m.buttonTextSize * 1.35, minHeight: m.buttonTextSize * 1.35)
+                            .font(AppTheme.rounded(m.heroButton.textSize * 0.7))
+                            .frame(minWidth: m.heroButton.textSize * 1.35, minHeight: m.heroButton.textSize * 1.35)
                             .background(
                                 Color.black.opacity(0.18),
-                                in: RoundedRectangle(cornerRadius: m.buttonTextSize * 0.42)
+                                in: RoundedRectangle(cornerRadius: m.heroButton.textSize * 0.42)
                             )
                     }
                 }
                 .foregroundStyle(canRoll ? AppTheme.ink : AppTheme.offInk)
                 .frame(maxWidth: .infinity)
-                .frame(height: m.buttonHeight)
+                .frame(height: m.heroButton.height)
             }
             .buttonStyle(ToyButtonStyle(
                 fill: canRoll ? AppTheme.mint : AppTheme.offFill,
-                radius: m.cardCorner * 0.9,
-                depth: m.depth + 1,
+                radius: m.buttonCorner,
+                depth: m.heroDepth,
                 border: m.border
             ))
             .disabled(!canRoll)
@@ -71,11 +71,11 @@ private struct ChooseHintView: View {
     var body: some View {
         HStack(spacing: 10) {
             Image(systemName: "chevron.up")
-                .font(.system(size: m.buttonTextSize * 0.85, weight: .black))
+                .font(.system(size: m.heroButton.textSize * 0.85, weight: .black))
                 .foregroundStyle(AppTheme.coral)
                 .offset(y: bobbing ? -4 : 2)
             Text("Tik een vakje om te scoren")
-                .font(AppTheme.rounded(m.buttonTextSize * 0.9))
+                .font(AppTheme.rounded(m.heroButton.textSize * 0.9))
                 .foregroundStyle(AppTheme.headline)
         }
         .frame(maxWidth: .infinity)

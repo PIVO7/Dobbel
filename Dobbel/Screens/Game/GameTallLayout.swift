@@ -151,7 +151,7 @@ struct GameTopBar: View {
                         .foregroundStyle(AppTheme.ink)
                         .frame(width: m.tapTarget, height: m.tapTarget)
                 }
-                .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+                .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
             }
 
             Button(action: actions.leave) {
@@ -161,7 +161,7 @@ struct GameTopBar: View {
                     .foregroundStyle(AppTheme.ink)
                     .frame(width: m.tapTarget, height: m.tapTarget)
             }
-            .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: 3, border: m.thinBorder))
+            .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
         }
     }
 }
