@@ -1,9 +1,9 @@
 import SwiftUI
 
-/// De worp in woorden, groot en gecentreerd boven de stenen. Wie aan de
-/// beurt is staat al in de scorechips boven het blad; een extra naamkaartje
-/// hier was dubbelop. Hints voor het kiezen leven op het scoreblad zelf
-/// (de tip-markering) en in de VoiceOver-aankondiging.
+/// De regel boven de stenen: "Gooi maar!" vóór de worp, DOBBEL! bij vijf
+/// dezelfde, en bij In volgorde wat de worp waard is voor het doelvakje.
+/// Na een gewone worp staat hier niets — de ruimte blijft, zodat het scherm
+/// niet verspringt.
 struct RollCalloutView: View {
     let title: String
     let isCelebrating: Bool

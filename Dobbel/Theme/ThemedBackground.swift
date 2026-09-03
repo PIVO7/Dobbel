@@ -1,18 +1,19 @@
 import SwiftUI
 
-/// De schermachtergrond: het effen themavlak, met per thema een handvol
-/// subtiele decoraties erbovenop — sterren in de nacht, snoepjes bij Snoep,
-/// zeedieren in de Oceaan, en voor Klassiek een paar dobbelsteentjes op 5%
-/// inkt zodat het gratis thema niet "leeg" voelt naast de rest. Alles staat
-/// op vaste plekken langs de randen, zodat er bij hertekenen niets
+/// De schermachtergrond: het effen themavlak, met per betaald thema een
+/// handvol subtiele decoraties erbovenop — sterren in de nacht, snoepjes bij
+/// Snoep, zeedieren in de Oceaan. Klassiek blijft effen: rustig, en het
+/// verschil met de thema's van de Gezinsversie is meteen zichtbaar. Alles
+/// staat op vaste plekken langs de randen, zodat er bij hertekenen niets
 /// verspringt en geen knop in de weg zit.
 struct ThemedBackground: View {
     var body: some View {
         ZStack {
             AppTheme.cream
-            switch ThemeStore.shared.themeID {
+            // Het actieve thema, dus ook een proefpotje.
+            switch ThemeStore.shared.activeThemeID {
             case .klassiek:
-                ClassicFieldView()
+                EmptyView()
             case .snoep:
                 CandyFieldView()
             case .oceaan:
@@ -22,37 +23,6 @@ struct ThemedBackground: View {
             }
         }
         .ignoresSafeArea()
-    }
-}
-
-/// Een handvol dobbelsteentjes in bijna onzichtbare inkt langs de randen.
-/// Speelser dan effen, zonder de rust te verliezen.
-private struct ClassicFieldView: View {
-    /// Posities als fractie van het scherm; `five` wisselt de vijf en de
-    /// drie af.
-    private static let dice: [(x: CGFloat, y: CGFloat, scale: CGFloat, five: Bool)] = [
-        (0.08, 0.06, 0.9, true), (0.88, 0.05, 0.8, false),
-        (0.94, 0.19, 0.6, true), (0.11, 0.22, 0.55, false),
-        (0.04, 0.40, 0.7, true), (0.96, 0.36, 0.5, false),
-        (0.08, 0.58, 0.5, true), (0.93, 0.54, 0.75, false),
-        (0.05, 0.76, 0.6, true), (0.95, 0.73, 0.5, false),
-        (0.11, 0.92, 0.8, true), (0.56, 0.95, 0.55, false),
-        (0.89, 0.91, 0.65, true)
-    ]
-
-    var body: some View {
-        GeometryReader { geo in
-            ZStack {
-                ForEach(Array(Self.dice.enumerated()), id: \.offset) { _, die in
-                    Image(systemName: die.five ? "die.face.5.fill" : "die.face.3.fill")
-                        .font(.system(size: 14 * die.scale, weight: .bold))
-                        .foregroundStyle(AppTheme.ink.opacity(0.05))
-                        .position(x: geo.size.width * die.x, y: geo.size.height * die.y)
-                }
-            }
-        }
-        .accessibilityHidden(true)
-        .allowsHitTesting(false)
     }
 }
 

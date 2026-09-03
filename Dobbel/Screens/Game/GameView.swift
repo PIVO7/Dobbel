@@ -367,9 +367,11 @@ struct GameView: View {
     private func rollDidFinish() {
         rollPulse += 1
         // De worp in woorden ook uitspreken; visueel staat hij al in beeld.
+        // Na een gewone worp staat er niets boven de stenen; dan is de
+        // beurtstand de hele aankondiging.
         var announcement = engine.calloutTitle
         if !engine.turnMessage.isEmpty {
-            announcement += ". \(engine.turnMessage)"
+            announcement += announcement.isEmpty ? engine.turnMessage : ". \(engine.turnMessage)"
         }
         AccessibilityNotification.Announcement(announcement).post()
         switch coachStep {

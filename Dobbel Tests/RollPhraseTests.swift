@@ -44,8 +44,41 @@ final class RollPhraseTests: XCTestCase {
         XCTAssertEqual(phrase, "…")
     }
 
-    func testNamesTheHighestPairOnATie() {
-        // Twee enen en twee zessen: het hoogste oog wint.
-        XCTAssertEqual(RollPhrase.describe([1, 1, 6, 6, 3]), "Twee zessen!")
+    /// Geen "Grote straat!" meer boven de stenen: dat las als advies terwijl
+    /// je soms beter iets anders kiest. Het blad laat zelf zien wat elk vakje
+    /// oplevert.
+    func testSaysNothingAfterAnOrdinaryRoll() {
+        let phrase = RollPhrase.callout(
+            dice: [1, 2, 3, 4, 5],
+            isRolling: false,
+            hasRolled: true,
+            isComputer: false
+        )
+        XCTAssertEqual(phrase, "")
+    }
+
+    /// In volgorde valt er niets te kiezen; dan mag er wél staan wat de worp
+    /// waard is voor het vakje dat aan de beurt is.
+    func testNamesTheTargetBoxInOrder() {
+        let phrase = RollPhrase.callout(
+            dice: [3, 3, 1, 2, 6],
+            isRolling: false,
+            hasRolled: true,
+            isComputer: false,
+            target: RollPhrase.Target(category: .threes, points: 6)
+        )
+        XCTAssertEqual(phrase, "\(ScoreCategory.threes.title): 6 punten")
+    }
+
+    /// Ook in volgorde blijft DOBBEL! het feest, boven de doelvakje-regel.
+    func testDobbelBeatsTheTargetLine() {
+        let phrase = RollPhrase.callout(
+            dice: [4, 4, 4, 4, 4],
+            isRolling: false,
+            hasRolled: true,
+            isComputer: false,
+            target: RollPhrase.Target(category: .fours, points: 20)
+        )
+        XCTAssertEqual(phrase, RollPhrase.dobbel)
     }
 }

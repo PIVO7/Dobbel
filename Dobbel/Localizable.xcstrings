@@ -181,6 +181,22 @@
         }
       }
     },
+    "%@: %lld punten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %lld points"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ : %lld points"
+          }
+        }
+      }
+    },
     "%@ mag gooien" : {
       "localizations" : {
         "en" : {

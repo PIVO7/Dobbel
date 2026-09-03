@@ -85,8 +85,22 @@ final class GameEngine {
             dice: diceValues,
             isRolling: isRolling,
             hasRolled: hasRolledThisTurn,
-            isComputer: currentPlayer.isComputer
+            isComputer: currentPlayer.isComputer,
+            target: calloutTarget
         )
+    }
+
+    /// In volgorde: het vakje dat aan de beurt is en wat de worp daar nu
+    /// waard is. Klassiek is er niets te melden — daar kiest de speler.
+    private var calloutTarget: RollPhrase.Target? {
+        guard variant == .inOrder, hasRolledThisTurn,
+              let next = currentPlayer.scorecard.nextOpenCategory else { return nil }
+        let points = DobbelScorer.pointsForPlacing(
+            category: next,
+            dice: diceValues,
+            scorecard: currentPlayer.scorecard
+        ).score
+        return RollPhrase.Target(category: next, points: points)
     }
 
     /// Globale ronde (1…13), stabiel over beurtwissels heen.

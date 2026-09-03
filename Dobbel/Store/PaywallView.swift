@@ -98,58 +98,77 @@ struct PaywallView: View {
     }
 
     private var paywallContent: some View {
-        // De ScrollView vult altijd het venster; op een iPad past alles ruim
-        // en hoort het midden op het scherm te staan in plaats van tegen de
-        // bovenrand met een halve lege pagina eronder.
-        GeometryReader { proxy in
+        // Past alles op het scherm (iPad, grote iPhone), dan hoort het in het
+        // midden; anders scrollt het, met de kassa vast onderaan. ViewThatFits
+        // meet dat zelf — een GeometryReader in een sheet rekende zich rijk en
+        // liet op de iPad een halve lege pagina onder de tekst.
+        ViewThatFits(in: .vertical) {
+            VStack(spacing: 0) {
+                Spacer(minLength: 0)
+                paywallBody
+                Spacer(minLength: 0)
+            }
             ScrollView {
-                VStack(spacing: m.gutter) {
-                    Image(systemName: "figure.2.and.child.holdinghands")
-                        .padding(.top, m.gutter)
-                        .font(.system(size: m.titleSize, weight: .black))
-                        .foregroundStyle(AppTheme.coral)
-
-                    if let familyLine {
-                        Text(familyLine)
-                            .font(AppTheme.rounded(m.captionSize + 2, .bold))
-                            .foregroundStyle(AppTheme.soft)
-                            .multilineTextAlignment(.center)
-                    }
-
-                    Text("Gezinsversie")
-                        .font(AppTheme.rounded(m.titleSize * 0.7))
-                        .foregroundStyle(AppTheme.headline)
-
-                    Text("Eén keer kopen, voor het hele gezin — ook via Delen met gezin.")
-                        .font(AppTheme.rounded(m.captionSize + 2, .bold))
-                        .foregroundStyle(AppTheme.soft)
-                        .multilineTextAlignment(.center)
-
-                    VStack(alignment: .leading, spacing: m.gutter * 0.7) {
-                        feature("list.number", "Spelvorm In volgorde", "Het blad van boven naar onder, zonder kiezen")
-                        feature("person.3.fill", "Met z'n vieren", "Speel met 3 of 4 spelers aan één toestel")
-                        feature("graduationcap.fill", "Drie tegenstanders", "Dommel, Robbie en Professor Punt")
-                        feature("paintpalette.fill", "Alle kleurenthema's", "Snoep, Oceaan en Nacht")
-                        feature("chart.bar.fill", "Statistieken en trofeeën", "Met grafiekje en gezinsrecords")
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(m.gutter)
-                    .toyBlock(fill: AppTheme.card, radius: m.cardCorner, depth: m.depth, border: m.border)
-
-                    reassurance
-                }
-                .padding(.horizontal, m.gutter * 1.4)
-                .padding(.bottom, m.gutter)
-                .frame(maxWidth: m.overlayMaxWidth)
-                .frame(maxWidth: .infinity)
-                .frame(minHeight: visibleHeight(proxy), alignment: .center)
+                paywallBody
             }
         }
-        .safeAreaInset(edge: .bottom) { purchaseBar }
+        .safeAreaInset(edge: .bottom) {
+            // Ontgrendeld is er geen kassa meer; het bordje staat dan gewoon
+            // onder de tekst in plaats van te zweven in een lege balk.
+            if !entitlements.isFamilyUnlocked {
+                purchaseBar
+            }
+        }
     }
 
-    private func visibleHeight(_ proxy: GeometryProxy) -> CGFloat {
-        max(proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom, 0)
+    private var paywallBody: some View {
+        VStack(spacing: m.gutter) {
+            Image(systemName: "figure.2.and.child.holdinghands")
+                .padding(.top, m.gutter)
+                .font(.system(size: m.titleSize, weight: .black))
+                .foregroundStyle(AppTheme.coral)
+
+            if let familyLine {
+                Text(familyLine)
+                    .font(AppTheme.rounded(m.captionSize + 2, .bold))
+                    .foregroundStyle(AppTheme.soft)
+                    .multilineTextAlignment(.center)
+            }
+
+            Text("Gezinsversie")
+                .font(AppTheme.rounded(m.titleSize * 0.7))
+                .foregroundStyle(AppTheme.headline)
+
+            Text("Eén keer kopen, voor het hele gezin — ook via Delen met gezin.")
+                .font(AppTheme.rounded(m.captionSize + 2, .bold))
+                .foregroundStyle(AppTheme.soft)
+                .multilineTextAlignment(.center)
+
+            VStack(alignment: .leading, spacing: m.gutter * 0.7) {
+                feature("list.number", "Spelvorm In volgorde", "Het blad van boven naar onder, zonder kiezen")
+                feature("person.3.fill", "Met z'n vieren", "Speel met 3 of 4 spelers aan één toestel")
+                feature("graduationcap.fill", "Drie tegenstanders", "Dommel, Robbie en Professor Punt")
+                feature("paintpalette.fill", "Alle kleurenthema's", "Snoep, Oceaan en Nacht")
+                feature("chart.bar.fill", "Statistieken en trofeeën", "Met grafiekje en gezinsrecords")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(m.gutter)
+            .toyBlock(fill: AppTheme.card, radius: m.cardCorner, depth: m.depth, border: m.border)
+
+            reassurance
+
+            if entitlements.isFamilyUnlocked {
+                Label("Ontgrendeld — veel plezier!", systemImage: "checkmark.seal.fill")
+                    .font(AppTheme.rounded(m.bodySize))
+                    .foregroundStyle(AppTheme.mint)
+                    .padding(.top, m.gutter * 0.5)
+            }
+        }
+        .padding(.horizontal, m.gutter * 1.4)
+        .padding(.top, m.gutter)
+        .padding(.bottom, m.gutter)
+        .frame(maxWidth: m.overlayMaxWidth)
+        .frame(maxWidth: .infinity)
     }
 
     /// Wat een ouder op dit moment wil weten: wat het niet is. Geen abonnement,
@@ -169,42 +188,35 @@ struct PaywallView: View {
     /// onder de vouw en leek het scherm een folder zonder kassa.
     private var purchaseBar: some View {
         VStack(spacing: m.gutter * 0.4) {
-            if entitlements.isFamilyUnlocked {
-                Label("Ontgrendeld — veel plezier!", systemImage: "checkmark.seal.fill")
-                    .font(AppTheme.rounded(m.bodySize))
-                    .foregroundStyle(AppTheme.mint)
-                    .frame(minHeight: m.tapTarget)
-            } else {
-                Text("Eenmalig · geen abonnement")
+            Text("Eenmalig · geen abonnement")
+                .font(AppTheme.rounded(m.captionSize, .bold))
+                .foregroundStyle(AppTheme.cardSoft)
+                .multilineTextAlignment(.center)
+
+            Button(action: startPurchase) {
+                Text("Ontgrendel voor \(priceText)")
+                    .font(AppTheme.rounded(m.defaultButton.textSize))
+                    .foregroundStyle(AppTheme.ink)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: m.defaultButton.height)
+            }
+            .buttonStyle(ToyButtonStyle(
+                fill: AppTheme.mint,
+                radius: m.buttonCorner,
+                depth: m.defaultButton.depth,
+                border: m.border
+            ))
+            .disabled(isBusy)
+
+            Button(action: startRestore) {
+                Text("Eerder gekocht? Zet terug")
                     .font(AppTheme.rounded(m.captionSize, .bold))
                     .foregroundStyle(AppTheme.cardSoft)
-                    .multilineTextAlignment(.center)
-
-                Button(action: startPurchase) {
-                    Text("Ontgrendel voor \(priceText)")
-                        .font(AppTheme.rounded(m.defaultButton.textSize))
-                        .foregroundStyle(AppTheme.ink)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: m.defaultButton.height)
-                }
-                .buttonStyle(ToyButtonStyle(
-                    fill: AppTheme.mint,
-                    radius: m.buttonCorner,
-                    depth: m.defaultButton.depth,
-                    border: m.border
-                ))
-                .disabled(isBusy)
-
-                Button(action: startRestore) {
-                    Text("Eerder gekocht? Zet terug")
-                        .font(AppTheme.rounded(m.captionSize, .bold))
-                        .foregroundStyle(AppTheme.cardSoft)
-                        .frame(minHeight: m.tapTarget)
-                        .contentShape(.rect)
-                }
-                .buttonStyle(.plain)
-                .disabled(isBusy)
+                    .frame(minHeight: m.tapTarget)
+                    .contentShape(.rect)
             }
+            .buttonStyle(.plain)
+            .disabled(isBusy)
         }
         .padding(.horizontal, m.gutter)
         .padding(.vertical, m.gutter * 0.7)
