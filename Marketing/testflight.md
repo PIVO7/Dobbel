@@ -34,6 +34,11 @@ een build bij testers te krijgen.
    Device (arm64)" → Product → **Archive**. De archive verschijnt in Window →
    Organizer als "Dobbel 1.0 (11)". Een archive uit een bèta-Xcode wordt bij
    het valideren afgekeurd met "Unsupported SDK or Xcode version".
+   Weigert macOS (bèta) Xcode 26.6 te openen ("niet compatibel"), start hem
+   dan rechtstreeks vanuit Terminal:
+   `nohup /Applications/Developer/Xcode.app/Contents/MacOS/Xcode &`.
+   Of upload de 26.6-archive gewoon via de Organizer van Xcode-beta; alleen
+   de SDK waarmee de archive gebouwd is telt.
 4. **Uploaden**: in de Organizer die archive kiezen →
    **Distribute App → TestFlight & App Store → Upload**. Automatische
    ondertekening regelt het distributiecertificaat.
