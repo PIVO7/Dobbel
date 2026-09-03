@@ -95,7 +95,7 @@ struct GameSetupView: View {
                         .buttonStyle(ToyButtonStyle(
                             fill: AppTheme.mint,
                             radius: m.buttonCorner,
-                            depth: m.depth,
+                            depth: m.defaultButton.depth,
                             border: m.border
                         ))
 
@@ -116,7 +116,7 @@ struct GameSetupView: View {
                         .buttonStyle(ToyButtonStyle(
                             fill: AppTheme.card,
                             radius: m.buttonCorner,
-                            depth: m.depth,
+                            depth: m.compactButton.depth,
                             border: m.border
                         ))
                     }
@@ -160,7 +160,7 @@ struct GameSetupView: View {
                     .buttonStyle(ToyButtonStyle(
                         fill: canStart ? AppTheme.mint : AppTheme.offFill,
                         radius: m.buttonCorner,
-                        depth: m.heroDepth,
+                        depth: m.heroButton.depth,
                         border: m.border
                     ))
                     .disabled(!canStart)

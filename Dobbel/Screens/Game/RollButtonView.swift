@@ -40,7 +40,7 @@ struct RollButtonView: View {
             .buttonStyle(ToyButtonStyle(
                 fill: canRoll ? AppTheme.mint : AppTheme.offFill,
                 radius: m.buttonCorner,
-                depth: m.heroDepth,
+                depth: m.heroButton.depth,
                 border: m.border
             ))
             .disabled(!canRoll)
