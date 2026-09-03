@@ -50,21 +50,61 @@ een build bij testers te krijgen.
 
 ## "Wat te testen" (per build in te vullen)
 
-> Build 11 van Dobbel! Nieuw sinds de vorige build: boven de stenen staat de
-> worp niet meer in woorden, en bij "In volgorde" zie je welk vakje je
-> vult. Kijk vooral naar:
->
-> - **Een heel potje** tegen elkaar aan één toestel (2–4 spelers) en solo
->   tegen Robbie: kloppen de punten, de bonus en de tweede Dobbel?
-> - **De Gezinsversie kopen** (gratis in TestFlight): lukt de ouder-poort, en
->   ontgrendelen thema's, statistieken en de extra tegenstanders meteen?
-> - **Taal**: zet het toestel eens op Engels of Frans — is álles vertaald?
-> - **Onderbreken**: sluit de app midden in een potje af en open opnieuw —
->   gaat het spel verder waar het was?
-> - **Schudden om te gooien**, de terugzet-knop en het doorgeefscherm.
->
-> Feedback graag via de TestFlight-app (schermafbeelding + opmerking) of
-> naar jelle@pivo7.be.
+App Store Connect → TestFlight → de build kiezen → **Test Details** →
+"What to Test". Het veld is per taal; plak de Nederlandse tekst bij
+Dutch, de Engelse bij English en de Franse bij French. Platte tekst,
+geen markdown; elk blok blijft ruim onder de limiet van 4000 tekens.
+
+### Nederlands (build 11)
+
+```text
+Build 11 van Dobbel! Nieuw sinds de vorige build: boven de stenen staat de worp niet meer in woorden, en bij "In volgorde" zie je meteen welk vakje je vult.
+
+Kijk vooral naar:
+
+- Een heel potje tegen elkaar aan één toestel (2 tot 4 spelers) en solo tegen Robbie: kloppen de punten, de bonus en de tweede Dobbel?
+- "In volgorde": is het duidelijk welk vakje aan de beurt is, ook nadat je een worp opnieuw gooit?
+- De Gezinsversie kopen (gratis in TestFlight): lukt de ouder-poort, en ontgrendelen thema's, statistieken en de extra tegenstanders meteen?
+- Taal: zet het toestel eens op Engels of Frans. Is alles vertaald?
+- Onderbreken: sluit de app midden in een potje af en open opnieuw. Gaat het spel verder waar het was?
+- Schudden om te gooien, de terugzet-knop en het doorgeefscherm.
+
+Feedback graag via de TestFlight-app (schermafbeelding plus opmerking) of naar jelle@pivo7.be.
+```
+
+### English (build 11)
+
+```text
+Build 11 of Dobbel! New since the previous build: the roll is no longer spelled out in words above the dice, and "In order" now shows you which box you are filling.
+
+Please look at:
+
+- A full game against each other on one device (2 to 4 players) and solo against Robbie: are the points, the bonus and the second Dobbel correct?
+- "In order": is it clear which box is up, also after you reroll?
+- Buying the Family Version (free in TestFlight): does the parent gate work, and do themes, statistics and the extra opponents unlock right away?
+- Language: switch the device to Dutch or French. Is everything translated?
+- Interrupting: quit the app in the middle of a game and open it again. Does the game continue where it was?
+- Shake to roll, the undo button and the pass-the-device screen.
+
+Feedback via the TestFlight app (screenshot plus a note) or to jelle@pivo7.be.
+```
+
+### Français (build 11)
+
+```text
+Build 11 de Dobbel ! Nouveau depuis la version précédente : le lancer n'est plus écrit en mots au-dessus des dés, et « Dans l'ordre » montre directement la case que vous remplissez.
+
+À tester en priorité :
+
+- Une partie complète les uns contre les autres sur un seul appareil (2 à 4 joueurs) et en solo contre Robbie : les points, le bonus et le deuxième Dobbel sont-ils corrects ?
+- « Dans l'ordre » : voit-on clairement quelle case est en jeu, aussi après avoir relancé ?
+- Acheter la version Famille (gratuite dans TestFlight) : le contrôle parental fonctionne-t-il, et les thèmes, les statistiques et les adversaires supplémentaires se débloquent-ils tout de suite ?
+- Langue : mettez l'appareil en néerlandais ou en anglais. Tout est-il traduit ?
+- Interruption : quittez l'app au milieu d'une partie et rouvrez-la. La partie reprend-elle où elle en était ?
+- Secouer pour lancer, le bouton d'annulation et l'écran de passage de l'appareil.
+
+Vos retours via l'app TestFlight (capture d'écran plus remarque) ou à jelle@pivo7.be.
+```
 
 ## Goed om te weten tijdens het testen
 
