@@ -116,6 +116,93 @@ Build 11 de Dobbel ! Nouveau depuis la version précédente : le lancer n'est pl
 Vos retours via l'app TestFlight (capture d'écran plus remarque) ou à jelle@pivo7.be.
 ```
 
+## Uitnodiging voor externe testers (versturen via bericht of mail)
+
+Vervang `<LINK>` door de publieke link van de externe groep (App Store
+Connect → TestFlight → de groep → Public Link → Enable). Het onderwerp voor
+een mail: **Wil je Dobbel! mee testen?**
+
+### Nederlands
+
+```text
+Hallo!
+
+Ik heb een dobbelspel-app gemaakt voor kinderen en het gezin: Dobbel! Je speelt samen aan één toestel of solo tegen de computer, met tips die uitleggen wat slim is. Geen reclame, geen accounts, alles blijft op het toestel.
+
+Voor de app in de App Store komt, zoek ik een paar gezinnen die hem willen uitproberen. Dat duurt een kwartiertje, en het is helemaal gratis.
+
+Zo doe je mee:
+1. Installeer de app TestFlight uit de App Store (dat is Apple's testapp).
+2. Open deze link op je iPhone of iPad: <LINK>
+3. Tik op "Accepteren" en daarna op "Installeren". Dobbel! staat dan gewoon tussen je apps.
+
+Waar ik vooral benieuwd naar ben:
+- Speel een heel potje met twee of meer, en eens solo tegen Robbie. Kloppen de punten?
+- Probeer de Gezinsversie te kopen. In TestFlight is dat gratis en er wordt niets aangerekend. Werkt de rekensom voor ouders, en gaan de extra thema's en spelers meteen open?
+- Laat de kinderen gewoon spelen en kijk waar ze vastlopen. Dat is voor mij het waardevolst.
+
+Feedback geven kan rechtstreeks in TestFlight: open TestFlight, tik op Dobbel! en dan op "Feedback versturen". Een schermafbeelding nemen in de app werkt ook; TestFlight vraagt dan of je ze wilt delen. Of mail me gewoon op jelle@pivo7.be.
+
+De testversie werkt 90 dagen. Als de app in de App Store staat, laat ik het weten.
+
+Alvast bedankt!
+Jelle
+```
+
+### English
+
+```text
+Hi!
+
+I've made a dice game app for children and families: Dobbel! You play together on one device or solo against the computer, with hints that explain what a smart move is. No ads, no accounts, everything stays on the device.
+
+Before it goes to the App Store, I'm looking for a few families to try it out. It takes about fifteen minutes and is completely free.
+
+How to join:
+1. Install the TestFlight app from the App Store (Apple's testing app).
+2. Open this link on your iPhone or iPad: <LINK>
+3. Tap "Accept", then "Install". Dobbel! will appear among your apps.
+
+What I'm most curious about:
+- Play a full game with two or more people, and one solo game against Robbie. Are the scores right?
+- Try buying the Family Version. In TestFlight it's free and nothing is charged. Does the parent gate work, and do the extra themes and players unlock right away?
+- Let the kids just play and watch where they get stuck. That's the most valuable feedback for me.
+
+You can send feedback straight from TestFlight: open TestFlight, tap Dobbel!, then "Send Feedback". Taking a screenshot in the app also works; TestFlight will ask if you want to share it. Or just email me at jelle@pivo7.be.
+
+The test version works for 90 days. I'll let you know when the app is in the App Store.
+
+Thanks a lot!
+Jelle
+```
+
+### Français
+
+```text
+Bonjour !
+
+J'ai créé une app de jeu de dés pour les enfants et la famille : Dobbel ! On joue ensemble sur un seul appareil ou en solo contre l'ordinateur, avec des conseils qui expliquent ce qui est malin. Pas de publicité, pas de compte, tout reste sur l'appareil.
+
+Avant sa sortie sur l'App Store, je cherche quelques familles pour l'essayer. Cela prend un quart d'heure et c'est entièrement gratuit.
+
+Pour participer :
+1. Installez l'app TestFlight depuis l'App Store (l'app de test d'Apple).
+2. Ouvrez ce lien sur votre iPhone ou iPad : <LINK>
+3. Touchez « Accepter », puis « Installer ». Dobbel ! apparaît alors parmi vos apps.
+
+Ce qui m'intéresse surtout :
+- Jouez une partie complète à deux ou plus, et une partie en solo contre Robbie. Les points sont-ils corrects ?
+- Essayez d'acheter la Version Famille. Dans TestFlight c'est gratuit, rien n'est facturé. Le contrôle parental fonctionne-t-il, et les thèmes et joueurs supplémentaires se débloquent-ils tout de suite ?
+- Laissez simplement les enfants jouer et regardez où ils bloquent. C'est le retour le plus précieux pour moi.
+
+Vous pouvez envoyer vos remarques directement depuis TestFlight : ouvrez TestFlight, touchez Dobbel !, puis « Envoyer des commentaires ». Une capture d'écran dans l'app fonctionne aussi ; TestFlight vous propose alors de la partager. Ou écrivez-moi simplement à jelle@pivo7.be.
+
+La version de test fonctionne pendant 90 jours. Je vous préviens dès que l'app est sur l'App Store.
+
+Merci d'avance !
+Jelle
+```
+
 ## Goed om te weten tijdens het testen
 
 - **Aankopen in TestFlight zijn gratis** en gebruiken de sandbox; "Eerder
