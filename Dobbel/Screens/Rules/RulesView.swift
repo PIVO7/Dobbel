@@ -1,7 +1,8 @@
 import SwiftUI
 
 /// De spelregels op kindhoogte: hoe een beurt werkt, wat de vakjes betekenen,
-/// en de twee lastige regels — de bonus bovenin en de extra Dobbel.
+/// de twee lastige regels — de bonus bovenin en de extra Dobbel — en de
+/// spelvorm "In volgorde" uit de Gezinsversie.
 struct RulesView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.metrics) private var m
@@ -79,6 +80,14 @@ struct RulesView: View {
                         card {
                             bullet("star.fill", String(localized: "Gooi je nóg eens vijf dezelfde terwijl je Dobbel-vakje al vol is? Dan krijg je er 100 punten bij!"))
                             bullet("arrow.uturn.up", String(localized: "De worp zelf zet je bovenin bij dat getal. Is dat vakje al vol, dan mag hij als joker in een vakje onderin."))
+                        }
+                    }
+
+                    section("IN VOLGORDE") {
+                        card {
+                            bullet("list.number", String(localized: "In deze spelvorm vul je het blad van boven naar onder: eerst de enen, dan de tweeën… tot en met kans."))
+                            bullet("die.face.5.fill", String(localized: "Kiezen hoeft niet — het volgende vakje staat al klaar. Gooi zo goed mogelijk voor precies dát vakje!"))
+                            bullet("figure.2.and.child.holdinghands", String(localized: "Hoort bij de Gezinsversie."))
                         }
                     }
                 }

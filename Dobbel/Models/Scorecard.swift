@@ -35,6 +35,12 @@ struct Scorecard: Equatable, Codable {
         scores.count
     }
 
+    /// Het eerste lege vakje van boven naar onder — het enige dat bij
+    /// "In volgorde" gevuld mag worden.
+    var nextOpenCategory: ScoreCategory? {
+        ScoreCategory.allCases.first { scores[$0] == nil }
+    }
+
     mutating func place(category: ScoreCategory, score: Int, dobbelBonus: Int) {
         precondition(scores[category] == nil)
         scores[category] = score

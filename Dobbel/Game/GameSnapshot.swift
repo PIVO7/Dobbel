@@ -3,6 +3,9 @@ import Foundation
 /// Serialiseerbare snapshot van een lopend spel, zodat kids kunnen hervatten.
 struct GameSnapshot: Codable, Equatable {
     var mode: GameMode
+    /// Optioneel zodat bewaarde spellen van vóór de spelvormen blijven
+    /// laden; die waren allemaal klassiek.
+    var variant: GameVariant?
     var players: [GamePlayer]
     /// Wie dit potje begon; optioneel zodat oudere bewaarde spellen zonder
     /// dit veld gewoon blijven laden (dan geldt speler 0).
@@ -16,11 +19,14 @@ struct GameSnapshot: Codable, Equatable {
 
     var summaryTitle: String {
         let names = players.filter { !$0.isComputer }.map(\.name)
+        let base: String
         switch mode {
         case .versusComputer:
-            return names.first.map { String(localized: "\($0) vs Computer") } ?? mode.title
+            base = names.first.map { String(localized: "\($0) vs Computer") } ?? mode.title
         case .versusFriends:
-            return names.joined(separator: " · ")
+            base = names.joined(separator: " · ")
         }
+        guard let variant, variant != .classic else { return base }
+        return "\(base) · \(variant.title)"
     }
 }

@@ -1,6 +1,22 @@
 {
   "sourceLanguage" : "nl",
   "strings" : {
+    "%@ speelt voor %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ is playing for %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ joue pour %2$@"
+          }
+        }
+      }
+    },
     "Aan" : {
       "localizations" : {
         "en" : {
@@ -17,6 +33,198 @@
         }
       }
     },
+    "Hoort bij de Gezinsversie." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Part of the Family Version."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fait partie de la Version Famille."
+          }
+        }
+      }
+    },
+    "IN VOLGORDE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IN ORDER"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DANS L'ORDRE"
+          }
+        }
+      }
+    },
+    "In deze spelvorm vul je het blad van boven naar onder: eerst de enen, dan de tweeën… tot en met kans." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In this mode you fill the sheet from top to bottom: ones first, then twos… all the way to chance."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dans cette variante, tu remplis la feuille de haut en bas : d'abord les uns, puis les deux… jusqu'à la chance."
+          }
+        }
+      }
+    },
+    "In volgorde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In order"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dans l'ordre"
+          }
+        }
+      }
+    },
+    "KIES DE SPELVORM" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CHOOSE THE GAME MODE"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CHOISIS LA VARIANTE"
+          }
+        }
+      }
+    },
+    "Kies zelf je vakje" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick your own box"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisis toi-même ta case"
+          }
+        }
+      }
+    },
+    "Kiezen hoeft niet — het volgende vakje staat al klaar. Gooi zo goed mogelijk voor precies dát vakje!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No choosing needed — the next box is already waiting. Roll your best for exactly that box!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas besoin de choisir : la case suivante t'attend déjà. Lance au mieux pour cette case-là !"
+          }
+        }
+      }
+    },
+    "Nog %lld worpen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld rolls left"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encore %lld lancers"
+          }
+        }
+      }
+    },
+    "Nog %lld worpen voor %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld rolls left for %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encore %1$lld lancers pour %2$@"
+          }
+        }
+      }
+    },
+    "Nog 1 worp" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 roll left"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encore 1 lancer"
+          }
+        }
+      }
+    },
+    "Nog 1 worp voor %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 roll left for %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encore 1 lancer pour %@"
+          }
+        }
+      }
+    },
+    "Spelvorm In volgorde: het blad van boven naar onder, zonder kiezen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In order mode: the sheet from top to bottom, no choosing"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Variante Dans l'ordre : la feuille de haut en bas, sans choisir"
+          }
+        }
+      }
+    },
     "Uit" : {
       "localizations" : {
         "en" : {
@@ -29,6 +237,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Désactivé"
+          }
+        }
+      }
+    },
+    "Van de enen tot en met kans" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From ones all the way to chance"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Des uns jusqu'à la chance"
           }
         }
       }

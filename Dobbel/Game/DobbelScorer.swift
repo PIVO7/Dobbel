@@ -80,7 +80,17 @@ enum DobbelScorer {
         return true
     }
 
-    static func availableCategories(dice: [Int], scorecard: Scorecard) -> [ScoreCategory] {
+    /// De vakjes die nu gevuld mogen worden. Bij "In volgorde" is dat er
+    /// precies één: het eerste lege vakje van boven naar onder. De jokerregel
+    /// speelt daar niet — een Dobbel gaat gewoon als joker in dat vakje.
+    static func availableCategories(
+        dice: [Int],
+        scorecard: Scorecard,
+        variant: GameVariant = .classic
+    ) -> [ScoreCategory] {
+        if variant == .inOrder {
+            return scorecard.nextOpenCategory.map { [$0] } ?? []
+        }
         let open = ScoreCategory.allCases.filter { scorecard.scores[$0] == nil }
         guard canUseJoker(dice: dice, scorecard: scorecard), let face = dice.first,
               let upperForFace = ScoreCategory.upper.first(where: { $0.faceValue == face }) else {

@@ -11,6 +11,7 @@ struct GameSetupView: View {
     /// beurtvolgorde in het spel.
     @State private var selectedIDs: [UUID] = []
     @State private var opponentLevel: ComputerLevel = .medium
+    @State private var variant: GameVariant = .classic
     @State private var activeGame: ActiveGame?
     @State private var showRules = false
     @State private var showPaywall = false
@@ -99,6 +100,8 @@ struct GameSetupView: View {
                             border: m.border
                         ))
 
+                        variantSection
+
                         // Meteen kunnen spelen zonder eerst een profiel aan
                         // te maken; gasten worden niet bewaard.
                         Button(action: requestGuestStart) {
@@ -149,6 +152,8 @@ struct GameSetupView: View {
                             }
                         }
                     }
+
+                    variantSection
 
                     Button(action: requestStart) {
                         Text("Start spel")
@@ -203,6 +208,82 @@ struct GameSetupView: View {
                 activeGame: $activeGame
             )
         }
+    }
+
+    /// De spelvorm: klassiek of in volgorde. De tweede hoort bij de
+    /// Gezinsversie; het slotje leidt naar de paywall.
+    @ViewBuilder
+    private var variantSection: some View {
+        Text("KIES DE SPELVORM")
+            .font(AppTheme.rounded(m.captionSize * 0.9))
+            .kerning(1.4)
+            .foregroundStyle(AppTheme.faint)
+
+        HStack(spacing: m.gutter * 0.75) {
+            ForEach(GameVariant.allCases) { option in
+                variantButton(option)
+            }
+        }
+    }
+
+    private func variantButton(_ option: GameVariant) -> some View {
+        let picked = variant == option
+        let locked = option.isPremium && !entitlements.isFamilyUnlocked
+        return Button {
+            if locked {
+                showPaywall = true
+            } else {
+                variant = option
+            }
+        } label: {
+            HStack(spacing: m.gutter * 0.6) {
+                Image(systemName: option.symbol)
+                    .font(.system(size: m.bodySize, weight: .black))
+                    .foregroundStyle(AppTheme.ink)
+                    .frame(width: m.tapTarget * 0.9, height: m.tapTarget * 0.9)
+                    .toyBlock(fill: picked ? AppTheme.tintAmber : AppTheme.tintStone, radius: m.cellCorner, depth: 0, border: m.thinBorder + 0.5)
+                    .overlay(alignment: .bottomTrailing) {
+                        if locked {
+                            Image(systemName: "lock.fill")
+                                .font(.system(size: m.captionSize * 0.9, weight: .black))
+                                .foregroundStyle(.white)
+                                .padding(3)
+                                .background(Circle().fill(AppTheme.ink))
+                                .offset(x: 5, y: 5)
+                        }
+                    }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(option.title)
+                        .font(AppTheme.rounded(m.captionSize + 2))
+                        .foregroundStyle(AppTheme.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                    Text(option.subtitle)
+                        .font(AppTheme.rounded(m.captionSize * 0.82, .bold))
+                        .foregroundStyle(AppTheme.cardSoft)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.7)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.vertical, m.gutter * 0.6)
+            .padding(.horizontal, m.gutter * 0.7)
+        }
+        .buttonStyle(ToyButtonStyle(
+            fill: picked ? AppTheme.tintCoral : AppTheme.card,
+            radius: m.cardCorner,
+            depth: picked ? m.depth : m.shallowDepth,
+            border: m.border,
+            borderColor: picked ? AppTheme.coral : AppTheme.ink
+        ))
+        .accessibilityLabel(
+            locked
+                ? String(localized: "\(option.title), \(option.subtitle), Gezinsversie nodig")
+                : "\(option.title), \(option.subtitle)"
+        )
+        .accessibilityAddTraits(picked ? .isSelected : [])
     }
 
     private func profileButton(_ profile: PlayerProfile) -> some View {
@@ -358,7 +439,7 @@ struct GameSetupView: View {
             profiles.append(.computer(level: opponentLevel))
         }
         gameStore.clear()
-        let engine = GameEngine(mode: mode, profiles: profiles)
+        let engine = GameEngine(mode: mode, variant: variant, profiles: profiles)
         gameStore.save(engine.snapshot)
         activeGame = ActiveGame(engine: engine)
     }
@@ -372,7 +453,7 @@ struct GameSetupView: View {
             profiles.append(.computer(level: opponentLevel))
         }
         gameStore.clear()
-        let engine = GameEngine(mode: mode, profiles: profiles)
+        let engine = GameEngine(mode: mode, variant: variant, profiles: profiles)
         // Meteen de verse stand wegschrijven: sluit je de app direct af,
         // dan komt anders het oude bewaarde spel weer boven.
         gameStore.save(engine.snapshot)

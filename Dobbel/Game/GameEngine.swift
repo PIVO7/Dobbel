@@ -5,6 +5,8 @@ import Observation
 @Observable
 final class GameEngine {
     let mode: GameMode
+    /// Klassiek of "in volgorde"; bepaalt welke vakjes open staan.
+    let variant: GameVariant
     private(set) var players: [GamePlayer]
     /// Wie dit potje begon; de rematch geeft de beurt aan de volgende.
     let startingPlayerIndex: Int
@@ -101,7 +103,8 @@ final class GameEngine {
     /// Het vakje bovenin dat de jokerregel afdwingt bij een tweede Dobbel,
     /// of `nil` als de speler vrij mag kiezen.
     private var jokerForcedCategory: ScoreCategory? {
-        guard DobbelScorer.canUseJoker(dice: diceValues, scorecard: currentPlayer.scorecard),
+        guard variant == .classic,
+              DobbelScorer.canUseJoker(dice: diceValues, scorecard: currentPlayer.scorecard),
               let upper = ScoreCategory.upper.first(where: { $0.faceValue == diceValues.first }),
               currentPlayer.scorecard.scores[upper] == nil else { return nil }
         return upper
@@ -110,6 +113,7 @@ final class GameEngine {
     var snapshot: GameSnapshot {
         GameSnapshot(
             mode: mode,
+            variant: variant,
             players: players,
             startingPlayerIndex: startingPlayerIndex,
             currentPlayerIndex: currentPlayerIndex,
@@ -123,23 +127,26 @@ final class GameEngine {
 
     init(
         mode: GameMode,
+        variant: GameVariant = .classic,
         profiles: [PlayerProfile],
         startingPlayerIndex: Int = 0,
         seed: UInt64? = nil,
         computerAI: ComputerAI = ComputerAI()
     ) {
         self.mode = mode
+        self.variant = variant
         self.players = profiles.map(GamePlayer.init)
         self.startingPlayerIndex = min(max(startingPlayerIndex, 0), max(profiles.count - 1, 0))
         self.currentPlayerIndex = self.startingPlayerIndex
         self.dice = (0..<5).map { _ in Die(value: 1) }
         self.computerAI = computerAI
         self.rng = SplitMix64(seed: seed ?? UInt64.random(in: .min ... .max))
-        self.turnMessage = String(localized: "\(currentPlayer.name) mag gooien")
+        self.turnMessage = turnStartMessage(opening: true)
     }
 
     init(snapshot: GameSnapshot, seed: UInt64? = nil, computerAI: ComputerAI = ComputerAI()) {
         self.mode = snapshot.mode
+        self.variant = snapshot.variant ?? .classic
         self.players = snapshot.players
         self.startingPlayerIndex = min(max(snapshot.startingPlayerIndex ?? 0, 0), max(snapshot.players.count - 1, 0))
         self.currentPlayerIndex = min(max(snapshot.currentPlayerIndex, 0), max(snapshot.players.count - 1, 0))
@@ -209,14 +216,16 @@ final class GameEngine {
                 dice: dice,
                 rollsRemaining: rollsRemaining,
                 scorecard: currentPlayer.scorecard,
-                level: currentPlayer.computerLevel ?? .medium
+                level: currentPlayer.computerLevel ?? .medium,
+                variant: variant
             )
 
             if decision.shouldScore || rollsRemaining == 0 {
                 let category = decision.category
                     ?? DobbelScorer.availableCategories(
                         dice: diceValues,
-                        scorecard: currentPlayer.scorecard
+                        scorecard: currentPlayer.scorecard,
+                        variant: variant
                     ).first
                 if let category {
                     placeScore(category)
@@ -265,19 +274,48 @@ final class GameEngine {
             // De jokerregel sluit alle andere vakjes; zonder uitleg ziet dat
             // eruit alsof het scoreblad kapot is.
             turnMessage = String(localized: "Tweede Dobbel! Die moet bovenin, bij \(forced.title.lowercased())")
+        } else if rollsRemaining == 0 {
+            turnMessage = String(localized: "Kies een vakje op het scoreblad")
         } else {
-            // Midden in de beurt geen staande instructie: de worp in woorden
-            // is genoeg, en het scherm blijft rustig.
-            turnMessage = rollsRemaining == 0
-                ? String(localized: "Kies een vakje op het scoreblad")
-                : ""
+            // Midden in de beurt telt de chip de worpen; de worp in woorden
+            // bij de stenen zegt de rest.
+            turnMessage = rollsLeftMessage()
         }
         markDirty()
     }
 
+    /// Bij "In volgorde" staat het volgende vakje al vast; dat hoort in de
+    /// beurtmelding, want kiezen valt er niet te doen.
+    private func turnStartMessage(opening: Bool) -> String {
+        if variant == .inOrder, let next = currentPlayer.scorecard.nextOpenCategory {
+            return String(localized: "\(currentPlayer.name) speelt voor \(next.title)")
+        }
+        return opening
+            ? String(localized: "\(currentPlayer.name) mag gooien")
+            : String(localized: "\(currentPlayer.name) is aan de beurt")
+    }
+
+    private func rollsLeftMessage() -> String {
+        let target = variant == .inOrder ? currentPlayer.scorecard.nextOpenCategory : nil
+        switch (rollsRemaining, target) {
+        case (1, let target?):
+            return String(localized: "Nog 1 worp voor \(target.title)")
+        case (_, let target?):
+            return String(localized: "Nog \(rollsRemaining) worpen voor \(target.title)")
+        case (1, nil):
+            return String(localized: "Nog 1 worp")
+        default:
+            return String(localized: "Nog \(rollsRemaining) worpen")
+        }
+    }
+
     @discardableResult
     private func placeScore(_ category: ScoreCategory) -> Bool {
-        let open = DobbelScorer.availableCategories(dice: diceValues, scorecard: currentPlayer.scorecard)
+        let open = DobbelScorer.availableCategories(
+            dice: diceValues,
+            scorecard: currentPlayer.scorecard,
+            variant: variant
+        )
         guard open.contains(category) else { return false }
 
         let result = DobbelScorer.pointsForPlacing(
@@ -310,7 +348,7 @@ final class GameEngine {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.count
         } while players[currentPlayerIndex].scorecard.isComplete
 
-        turnMessage = String(localized: "\(currentPlayer.name) is aan de beurt")
+        turnMessage = turnStartMessage(opening: false)
         turnJustChanged = true
         markDirty()
     }

@@ -5,10 +5,15 @@ struct ComputerAI {
         dice: [Die],
         rollsRemaining: Int,
         scorecard: Scorecard,
-        level: ComputerLevel = .medium
+        level: ComputerLevel = .medium,
+        variant: GameVariant = .classic
     ) -> ComputerDecision {
         let values = dice.map(\.value)
-        let open = DobbelScorer.availableCategories(dice: values, scorecard: scorecard)
+        let open = DobbelScorer.availableCategories(dice: values, scorecard: scorecard, variant: variant)
+
+        if variant == .inOrder, let target = open.first {
+            return decideInOrder(values: values, target: target, rollsRemaining: rollsRemaining, scorecard: scorecard)
+        }
 
         if level == .easy {
             return decideEasy(values: values, open: open, rollsRemaining: rollsRemaining, scorecard: scorecard)
@@ -55,6 +60,54 @@ struct ComputerAI {
             shouldScore: false,
             category: nil
         )
+    }
+
+    /// "In volgorde": er valt niets te kiezen, alleen zo goed mogelijk te
+    /// gooien voor het ene vakje dat open staat. Elk niveau speelt dit even
+    /// goed — het verschil tussen Dommel en de professor zit in het kiezen,
+    /// en dat is hier weg.
+    private func decideInOrder(
+        values: [Int],
+        target: ScoreCategory,
+        rollsRemaining: Int,
+        scorecard: Scorecard
+    ) -> ComputerDecision {
+        let score = DobbelScorer.pointsForPlacing(category: target, dice: values, scorecard: scorecard).score
+        let settled: Bool
+        switch target {
+        case .fullHouse, .smallStraight, .largeStraight, .dobbel:
+            // Vaste vakjes: binnen is binnen.
+            settled = score > 0
+        case .ones, .twos, .threes, .fours, .fives, .sixes:
+            settled = values.allSatisfy { $0 == target.faceValue }
+        case .threeOfAKind, .fourOfAKind:
+            settled = score > 0 && values.allSatisfy { $0 >= 5 }
+        case .chance:
+            settled = values.allSatisfy { $0 >= 5 }
+        }
+        if settled || rollsRemaining == 0 {
+            return ComputerDecision(holdMask: Array(repeating: true, count: values.count), shouldScore: true, category: target)
+        }
+        return ComputerDecision(holdMask: holdMask(values: values, target: target), shouldScore: false, category: nil)
+    }
+
+    /// Wat vast te houden als het doelvakje al bekend is.
+    private func holdMask(values: [Int], target: ScoreCategory) -> [Bool] {
+        if let face = target.faceValue {
+            return values.map { $0 == face }
+        }
+        switch target {
+        case .smallStraight, .largeStraight:
+            return straightHoldMask(values: values) ?? Array(repeating: false, count: values.count)
+        case .fullHouse:
+            // Paren en drietallen houden; losse stenen gooien mee.
+            let counts = DobbelScorer.counts(for: values)
+            return values.map { (counts[$0] ?? 0) >= 2 }
+        case .chance:
+            return values.map { $0 >= 5 }
+        default:
+            return holdMaskFor(values: values)
+        }
     }
 
     /// Dommel: houdt alleen drie-of-meer dezelfde vast, ziet geen straten of

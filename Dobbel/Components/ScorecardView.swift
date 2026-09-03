@@ -8,6 +8,7 @@ struct ScorecardView: View {
     let currentPlayerID: UUID
     let diceValues: [Int]
     let canScore: Bool
+    var variant: GameVariant = .classic
     let onSelect: (ScoreCategory) -> Void
 
     @Environment(\.metrics) private var m
@@ -59,7 +60,7 @@ struct ScorecardView: View {
 
     private var openCategories: [ScoreCategory] {
         guard let current else { return [] }
-        return DobbelScorer.availableCategories(dice: diceValues, scorecard: current.scorecard)
+        return DobbelScorer.availableCategories(dice: diceValues, scorecard: current.scorecard, variant: variant)
     }
 
     // Zonder BOVEN/ONDER-kopjes: die zeiden een kind niets en de bonusrij

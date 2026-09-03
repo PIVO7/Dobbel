@@ -110,6 +110,7 @@ struct GameTallLayout: View {
             currentPlayerID: engine.currentPlayer.id,
             diceValues: engine.diceValues,
             canScore: engine.canScore,
+            variant: engine.variant,
             onSelect: actions.score
         )
 

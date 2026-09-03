@@ -101,6 +101,7 @@ struct PaywallView: View {
                     .multilineTextAlignment(.center)
 
                 VStack(alignment: .leading, spacing: m.gutter * 0.7) {
+                    feature("list.number", "Spelvorm In volgorde: het blad van boven naar onder, zonder kiezen")
                     feature("person.3.fill", "Speel met 3 of 4 spelers aan één toestel")
                     feature("graduationcap.fill", "Alle drie de tegenstanders: Dommel, Robbie en Professor Punt")
                     feature("paintpalette.fill", "Alle kleurenthema's: Snoep, Oceaan en Nacht")
