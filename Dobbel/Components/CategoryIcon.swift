@@ -29,9 +29,9 @@ struct CategoryIcon: View {
         case .fullHouse:
             Image(systemName: "house.fill").font(.system(size: glyphSize, weight: .black))
         case .smallStraight:
-            StraightGlyph(bars: 4).padding(m.iconWidth * 0.24)
+            StraightGlyph(bars: 4).padding(m.iconWidth * 0.2)
         case .largeStraight:
-            StraightGlyph(bars: 5).padding(m.iconWidth * 0.24)
+            StraightGlyph(bars: 5).padding(m.iconWidth * 0.18)
         case .dobbel:
             Image(systemName: "star.fill").font(.system(size: glyphSize * 1.1, weight: .black))
         case .chance:

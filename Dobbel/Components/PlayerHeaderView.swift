@@ -24,7 +24,7 @@ struct PlayerHeaderView: View {
     var body: some View {
         HStack(spacing: m.cellGap) {
             Color.clear
-                .frame(width: m.iconWidth, height: avatarSize + 10)
+                .frame(width: m.iconWidth, height: avatarSize + 4)
 
             ForEach(players) { player in
                 let isMine = player.id == currentPlayerID

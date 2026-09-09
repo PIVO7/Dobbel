@@ -58,8 +58,8 @@ struct GameTallLayout: View {
                 onRoll: actions.roll
             )
             .padding(.horizontal, m.gutter)
-            .padding(.top, m.gutter * 0.4)
-            .padding(.bottom, m.gutter * 0.6)
+            .padding(.top, m.gutter * 0.3)
+            .padding(.bottom, m.gutter * 0.45)
             .frame(maxWidth: m.contentMaxWidth)
             .frame(maxWidth: .infinity)
             .background(AppTheme.cream)

@@ -32,13 +32,6 @@ struct ScorecardView: View {
         return max(m.iconWidth, 46)
     }
 
-    /// De overzichtsrijen (Totaal en de twee bonussen) zijn geen tikdoelen,
-    /// dus die mogen lager dan de speelvakjes: dat houdt het blad — met de
-    /// Dobbel-bonusrij erbij — op één scherm en zet ze visueel apart.
-    private var summaryRowHeight: CGFloat {
-        m.rowHeight * 0.72
-    }
-
     /// De brede actieve kolom of de smalle spiekstrook.
     @ViewBuilder
     private func columnFrame(_ content: some View, isMine: Bool) -> some View {
@@ -148,7 +141,7 @@ struct ScorecardView: View {
                     }
                     .foregroundStyle(AppTheme.ink)
                     .frame(maxWidth: .infinity)
-                    .frame(height: summaryRowHeight)
+                    .frame(height: m.rowHeight)
                     .toyBlock(
                         fill: isMine ? AppTheme.tintCoral : AppTheme.sunk,
                         radius: m.cellCorner,
@@ -190,7 +183,7 @@ struct ScorecardView: View {
                         }
                     }
                     .frame(maxWidth: .infinity)
-                    .frame(height: summaryRowHeight)
+                    .frame(height: m.rowHeight)
                     .toyBlock(
                         fill: reached ? AppTheme.mint : (isMine ? AppTheme.tintCoral : AppTheme.sunk),
                         radius: m.cellCorner,
@@ -234,7 +227,7 @@ struct ScorecardView: View {
                         }
                     }
                     .frame(maxWidth: .infinity)
-                    .frame(height: summaryRowHeight)
+                    .frame(height: m.rowHeight)
                     .toyBlock(
                         fill: total > 0 ? AppTheme.mint : (isMine ? AppTheme.tintCoral : AppTheme.sunk),
                         radius: m.cellCorner,
@@ -268,7 +261,7 @@ struct ScorecardView: View {
                     .foregroundStyle(AppTheme.ink)
             }
         }
-        .frame(width: m.iconWidth, height: summaryRowHeight)
+        .frame(width: m.iconWidth, height: m.rowHeight)
         .toyBlock(fill: AppTheme.tintStone, radius: m.cellCorner, depth: 0, border: m.thinBorder)
     }
 
