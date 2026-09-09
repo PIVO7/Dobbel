@@ -12,12 +12,13 @@ struct GameWideLayout: View {
     @Environment(\.metrics) private var m
 
     /// Het scoreblad groeit mee met de schermhoogte: op een liggende iPad
-    /// bleef er anders een halve lege pagina onder over.
+    /// bleef er anders een halve lege pagina onder over. Op een krappe iPad
+    /// mini mag het juist een fractie krimpen, zodat het blad niet scrollt.
     private var boardMetrics: AppMetrics {
-        let naturalHeight: CGFloat = 7 * (m.rowHeight + m.cellGap) + 100
+        let naturalHeight: CGFloat = 8 * (m.rowHeight + m.cellGap) + 100
         let room = availableHeight - 170
-        let factor = min(max(room / naturalHeight, 1), 1.5)
-        guard factor > 1 else { return m }
+        let factor = min(max(room / naturalHeight, 0.85), 1.5)
+        guard factor != 1 else { return m }
         var copy = m
         copy.rowHeight *= factor
         copy.iconWidth *= factor

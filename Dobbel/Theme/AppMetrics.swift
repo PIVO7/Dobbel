@@ -114,6 +114,35 @@ struct AppMetrics {
         return copy
     }
 
+    /// Dezelfde ruimere maten, maar begrensd door de schermhoogte: de volle
+    /// verruiming past alleen op een 13-inch iPad. Daaronder smelt de extra
+    /// ruimte lineair weg naar de gewone maten, zodat het spel ook op een
+    /// kleinere iPad op één scherm blijft staan in plaats van te scrollen.
+    func roomier(fitting height: CGFloat) -> AppMetrics {
+        let full = roomier()
+        let t = min(max((height - 1130) / 246, 0), 1)
+        guard t < 1 else { return full }
+        guard t > 0 else {
+            var copy = self
+            copy.contentMaxWidth = full.contentMaxWidth
+            return copy
+        }
+
+        func mix(_ a: CGFloat, _ b: CGFloat) -> CGFloat { a + (b - a) * t }
+        var copy = self
+        copy.dieSize = mix(dieSize, full.dieSize)
+        copy.dieCorner = mix(dieCorner, full.dieCorner)
+        copy.dieGap = mix(dieGap, full.dieGap)
+        copy.rowHeight = mix(rowHeight, full.rowHeight)
+        copy.iconWidth = mix(iconWidth, full.iconWidth)
+        copy.cellTextSize = mix(cellTextSize, full.cellTextSize)
+        copy.cellGap = mix(cellGap, full.cellGap)
+        copy.displaySize = mix(displaySize, full.displaySize)
+        copy.avatarSize = mix(avatarSize, full.avatarSize)
+        copy.contentMaxWidth = full.contentMaxWidth
+        return copy
+    }
+
     /// Laat de maten meegroeien met de tekstgrootte van de gebruiker. Drie
     /// snelheden, want niet alles kan even hard groeien:
     ///

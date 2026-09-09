@@ -1,8 +1,9 @@
 import SwiftUI
 
 /// Het hele scoreblad in twee kolommen, zodat alle dertien vakjes tegelijk in
-/// beeld staan. De zevende rij links draagt de bonus; rechts loopt Chance daar
-/// gewoon door, waardoor het raster sluit.
+/// beeld staan. Links sluiten Totaal- en Bonusrij het bovenblad af; rechts
+/// staat de Dobbel-bonus (+100) onder het Dobbel-vakje, waardoor beide
+/// kolommen even hoog blijven.
 struct ScorecardView: View {
     let players: [GamePlayer]
     let currentPlayerID: UUID
@@ -31,6 +32,13 @@ struct ScorecardView: View {
         return max(m.iconWidth, 46)
     }
 
+    /// De overzichtsrijen (Totaal en de twee bonussen) zijn geen tikdoelen,
+    /// dus die mogen lager dan de speelvakjes: dat houdt het blad — met de
+    /// Dobbel-bonusrij erbij — op één scherm en zet ze visueel apart.
+    private var summaryRowHeight: CGFloat {
+        m.rowHeight * 0.72
+    }
+
     /// De brede actieve kolom of de smalle spiekstrook.
     @ViewBuilder
     private func columnFrame(_ content: some View, isMine: Bool) -> some View {
@@ -50,7 +58,8 @@ struct ScorecardView: View {
             column(categories: ScoreCategory.upper, showsBonus: true, open: open)
             column(categories: ScoreCategory.lower, showsBonus: false, open: open)
         }
-        .padding(m.gutter * 0.8)
+        .padding(.horizontal, m.gutter * 0.8)
+        .padding(.vertical, m.gutter * 0.55)
         .toyBlock(fill: AppTheme.card, radius: m.cardCorner, depth: m.depth, border: m.border)
     }
 
@@ -80,9 +89,16 @@ struct ScorecardView: View {
 
             ForEach(categories) { category in
                 row(for: category, open: open)
+
+                // De 100-puntenbonus voor een tweede Dobbel, vlak onder het
+                // Dobbel-vakje waar hij bij hoort.
+                if category == .dobbel, !showsBonus {
+                    dobbelBonusRow
+                }
             }
 
             if showsBonus {
+                totalRow
                 bonusRow
             }
         }
@@ -113,45 +129,68 @@ struct ScorecardView: View {
         }
     }
 
-    private var bonusRow: some View {
+    /// De rij met het bovenbladtotaal op weg naar 63: stand plus een klein
+    /// voortgangsbalkje, zodat de bonus iets is om naartoe te spelen.
+    private var totalRow: some View {
         HStack(spacing: m.cellGap) {
-            VStack(spacing: 0) {
-                Text("BONUS")
-                    .font(AppTheme.rounded(m.captionSize * 0.82))
-                    .kerning(0.6)
-                    .foregroundStyle(AppTheme.ink)
-                Text("+35")
-                    .font(AppTheme.rounded(m.captionSize))
-                    .foregroundStyle(AppTheme.ink)
-            }
-            .frame(width: m.iconWidth, height: m.rowHeight)
-            .toyBlock(fill: AppTheme.tintStone, radius: m.cellCorner, depth: 0, border: m.thinBorder)
+            labelCell(title: "TOTAAL", subtitle: nil)
 
             ForEach(visiblePlayers) { player in
                 let subtotal = player.scorecard.upperSubtotal
+                let isMine = player.id == currentPlayerID
+                columnFrame(
+                    VStack(spacing: m.rowHeight * 0.1) {
+                        Text("\(subtotal)/63")
+                            .font(AppTheme.rounded(m.captionSize))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                        bonusBar(subtotal: subtotal)
+                    }
+                    .foregroundStyle(AppTheme.ink)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: summaryRowHeight)
+                    .toyBlock(
+                        fill: isMine ? AppTheme.tintCoral : AppTheme.sunk,
+                        radius: m.cellCorner,
+                        depth: 0,
+                        border: m.thinBorder
+                    )
+                    .accessibilityLabel(String(localized: "Bonus bij 63, nu \(subtotal)")),
+                    isMine: isMine
+                )
+            }
+        }
+    }
+
+    /// De bonusrij zelf spreekt in tekens: een vinkje zodra de 63 binnen is,
+    /// een kruisje als de bonus zelfs met maximale worpen niet meer kan, en
+    /// tot die tijd een streepje zoals elk nog open vakje.
+    private var bonusRow: some View {
+        HStack(spacing: m.cellGap) {
+            labelCell(title: "BONUS", subtitle: "+35")
+
+            ForEach(visiblePlayers) { player in
                 let reached = player.scorecard.upperBonus > 0
+                let stillPossible = DobbelScorer.upperBonusStillPossible(scorecard: player.scorecard)
                 let isMine = player.id == currentPlayerID
                 columnFrame(
                     Group {
                         if reached {
                             Image(systemName: "checkmark.circle.fill")
                                 .font(.system(size: m.captionSize * 1.35, weight: .black))
+                                .foregroundStyle(AppTheme.ink)
+                        } else if !stillPossible {
+                            Image(systemName: "xmark")
+                                .font(.system(size: m.captionSize * 1.2, weight: .black))
+                                .foregroundStyle(AppTheme.coral)
                         } else {
-                            // Stand plus een klein balkje: zo leeft de rij mee
-                            // met de kolom in plaats van dood grijs te ogen, en
-                            // wordt de bonus iets om naartoe te spelen.
-                            VStack(spacing: m.rowHeight * 0.1) {
-                                Text("\(subtotal)/63")
-                                    .font(AppTheme.rounded(m.captionSize))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.6)
-                                bonusBar(subtotal: subtotal)
-                            }
+                            Text(verbatim: "–")
+                                .font(AppTheme.rounded(m.cellTextSize, .bold))
+                                .foregroundStyle(AppTheme.cardDim)
                         }
                     }
-                    .foregroundStyle(AppTheme.ink)
                     .frame(maxWidth: .infinity)
-                    .frame(height: m.rowHeight)
+                    .frame(height: summaryRowHeight)
                     .toyBlock(
                         fill: reached ? AppTheme.mint : (isMine ? AppTheme.tintCoral : AppTheme.sunk),
                         radius: m.cellCorner,
@@ -160,13 +199,77 @@ struct ScorecardView: View {
                     )
                     .accessibilityLabel(
                         reached
-                            ? String(localized: "\(subtotal) punten bovenin, bonus van 35 behaald")
-                            : String(localized: "Bonus bij 63, nu \(subtotal)")
+                            ? String(localized: "Bonus van 35 behaald")
+                            : stillPossible
+                                ? String(localized: "Bonus nog te verdienen")
+                                : String(localized: "Bonus niet meer haalbaar")
                     ),
                     isMine: isMine
                 )
             }
         }
+    }
+
+    /// De rij voor de 100-puntenbonus van een tweede Dobbel: een streepje
+    /// zolang hij er niet is, en de opgetelde bonus zodra hij valt.
+    private var dobbelBonusRow: some View {
+        HStack(spacing: m.cellGap) {
+            labelCell(title: "BONUS", subtitle: "+100")
+
+            ForEach(visiblePlayers) { player in
+                let total = player.scorecard.dobbelBonusTotal
+                let isMine = player.id == currentPlayerID
+                columnFrame(
+                    Group {
+                        if total > 0 {
+                            Text(verbatim: "+\(total)")
+                                .font(AppTheme.rounded(m.captionSize))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.6)
+                                .foregroundStyle(AppTheme.ink)
+                        } else {
+                            Text(verbatim: "–")
+                                .font(AppTheme.rounded(m.cellTextSize, .bold))
+                                .foregroundStyle(AppTheme.cardDim)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: summaryRowHeight)
+                    .toyBlock(
+                        fill: total > 0 ? AppTheme.mint : (isMine ? AppTheme.tintCoral : AppTheme.sunk),
+                        radius: m.cellCorner,
+                        depth: 0,
+                        border: m.thinBorder
+                    )
+                    .accessibilityLabel(
+                        total > 0
+                            ? String(localized: "Dobbel-bonus: \(total) punten")
+                            : String(localized: "Nog geen Dobbel-bonus")
+                    ),
+                    isMine: isMine
+                )
+            }
+        }
+    }
+
+    /// Het naamvakje links van een bonusrij, in de stijl van de
+    /// categorie-iconen.
+    private func labelCell(title: LocalizedStringKey, subtitle: LocalizedStringKey?) -> some View {
+        VStack(spacing: 0) {
+            Text(title)
+                .font(AppTheme.rounded(m.captionSize * 0.82))
+                .kerning(0.6)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .foregroundStyle(AppTheme.ink)
+            if let subtitle {
+                Text(subtitle)
+                    .font(AppTheme.rounded(m.captionSize))
+                    .foregroundStyle(AppTheme.ink)
+            }
+        }
+        .frame(width: m.iconWidth, height: summaryRowHeight)
+        .toyBlock(fill: AppTheme.tintStone, radius: m.cellCorner, depth: 0, border: m.thinBorder)
     }
 
     /// Het voortgangsbalkje onder de bonusstand: hoe vol, hoe dichterbij.

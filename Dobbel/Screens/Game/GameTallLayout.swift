@@ -16,18 +16,13 @@ struct GameTallLayout: View {
         sizeClass == .regular ? base.roomier() : base
     }
 
-    /// Op hogere iPhones gaat het overgebleven wit naar het scoreblad: de
-    /// rijen groeien tot twaalf procent mee met de schermhoogte. Kleine
-    /// schermen blijven op de basismaat en scrollen zoals voorheen.
+    /// Op een iPad krimpt de verruiming mee met de schermhoogte, zodat ook
+    /// een 11-inch of mini alles op één scherm houdt. De iPhone blijft op de
+    /// basismaat: sinds de Dobbel-bonusrij is het overgebleven wit dat de
+    /// rijen vroeger opvulden, al door het blad zelf ingenomen.
     private func boosted(for height: CGFloat) -> AppMetrics {
-        guard sizeClass != .regular else { return m }
-        let factor = min(max(1 + (height - 700) / 1500, 1), 1.12)
-        guard factor > 1 else { return base }
-        var copy = base
-        copy.rowHeight *= factor
-        copy.iconWidth *= factor
-        copy.cellTextSize *= factor
-        return copy
+        guard sizeClass != .regular else { return base.roomier(fitting: height) }
+        return base
     }
 
     var body: some View {
@@ -85,7 +80,7 @@ struct GameTallLayout: View {
         // Flexibel: op een hoog scherm spreidt de inhoud zich uit, op een
         // klein scherm of bij grote tekst krimpen deze tussenruimtes tot
         // hun minimum en schuift de rest.
-        Spacer(minLength: m.gutter * 0.8)
+        Spacer(minLength: m.gutter * 0.5)
 
         // De tussenstand vlak boven het blad dat hij samenvat; de
         // rondeteller is naar de bovenrand verhuisd.
@@ -93,14 +88,14 @@ struct GameTallLayout: View {
             players: engine.players,
             currentPlayerID: engine.currentPlayer.id
         )
-        .padding(.bottom, m.gutter * 0.45)
+        .padding(.bottom, m.gutter * 0.3)
 
         // Wat er nú moet gebeuren, vlak boven het blad waar getikt wordt.
         GameStatusChipView(
             message: engine.turnMessage,
             mustChoose: engine.canScore && engine.rollsRemaining == 0
         )
-        .padding(.bottom, m.gutter * 0.6)
+        .padding(.bottom, m.gutter * 0.45)
 
         // Het scoreblad bovenaan, de worp onderaan bij de gooiknop: zo
         // blijft de hele gooien-vasthouden-lus in de duimzone en pendelt
@@ -114,13 +109,13 @@ struct GameTallLayout: View {
             onSelect: actions.score
         )
 
-        Spacer(minLength: m.gutter)
+        Spacer(minLength: m.gutter * 0.5)
 
         RollCalloutView(
             title: engine.calloutTitle,
             isCelebrating: isCelebrating
         )
-        .padding(.bottom, m.gutter * 0.5)
+        .padding(.bottom, m.gutter * 0.35)
 
         DiceTrayView(
             dice: engine.dice,
@@ -128,7 +123,7 @@ struct GameTallLayout: View {
             canInteract: engine.canHold,
             onToggle: actions.toggleHold
         )
-        .padding(.bottom, m.gutter * 0.4)
+        .padding(.bottom, m.gutter * 0.3)
     }
 }
 
