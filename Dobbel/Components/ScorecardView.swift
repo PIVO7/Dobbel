@@ -129,17 +129,15 @@ struct ScorecardView: View {
 
             ForEach(categories) { category in
                 row(for: category, open: open)
-
-                // De 100-puntenbonus voor een tweede Dobbel, vlak onder het
-                // Dobbel-vakje waar hij bij hoort.
-                if category == .dobbel, !showsBonus {
-                    dobbelBonusRow
-                }
             }
 
+            // Beide kolommen sluiten onderaan af met hun bonus: links het
+            // totaal op weg naar +35, rechts de Dobbel-bonus van +100.
             if showsBonus {
                 totalRow
                 bonusRow
+            } else {
+                dobbelBonusRow
             }
         }
     }
@@ -212,9 +210,9 @@ struct ScorecardView: View {
         }
     }
 
-    /// De bonusrij zelf spreekt in tekens: een vinkje zodra de 63 binnen is,
-    /// een kruisje als de bonus zelfs met maximale worpen niet meer kan, en
-    /// tot die tijd een streepje zoals elk nog open vakje.
+    /// De bonusrij spreekt in stempels: een mintgroene cirkel met vinkje
+    /// zodra de 63 binnen is, een rood kruis als de bonus zelfs met
+    /// maximale worpen niet meer kan.
     private var bonusRow: some View {
         HStack(spacing: m.cellGap) {
             labelCell(title: "BONUS", subtitle: "+35")
@@ -222,84 +220,79 @@ struct ScorecardView: View {
             ForEach(visiblePlayers) { player in
                 let reached = player.scorecard.upperBonus > 0
                 let stillPossible = DobbelScorer.upperBonusStillPossible(scorecard: player.scorecard)
-                let isMine = player.id == currentPlayerID
                 columnFrame(
-                    Group {
-                        if reached {
-                            Image(systemName: "checkmark.circle.fill")
-                                .font(.system(size: m.captionSize * 1.35, weight: .black))
-                                .foregroundStyle(AppTheme.ink)
-                        } else if !stillPossible {
-                            Image(systemName: "xmark")
-                                .font(.system(size: m.captionSize * 1.2, weight: .black))
-                                .foregroundStyle(AppTheme.coral)
-                        } else {
-                            Text(verbatim: "–")
-                                .font(AppTheme.rounded(m.cellTextSize, .bold))
-                                .foregroundStyle(AppTheme.cardDim)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: m.rowHeight)
-                    .toyBlock(
-                        fill: reached ? AppTheme.mint : (isMine ? AppTheme.tintCoral : AppTheme.sunk),
-                        radius: m.cellCorner,
-                        depth: 0,
-                        border: m.thinBorder
-                    )
-                    .accessibilityLabel(
-                        reached
-                            ? String(localized: "Bonus van 35 behaald")
-                            : stillPossible
-                                ? String(localized: "Bonus nog te verdienen")
-                                : String(localized: "Bonus niet meer haalbaar")
-                    ),
-                    isMine: isMine
+                    bonusCircle(earned: reached, missed: !reached && !stillPossible)
+                        .accessibilityLabel(
+                            reached
+                                ? String(localized: "Bonus van 35 behaald")
+                                : stillPossible
+                                    ? String(localized: "Bonus nog te verdienen")
+                                    : String(localized: "Bonus niet meer haalbaar")
+                        ),
+                    isMine: player.id == currentPlayerID
                 )
             }
         }
     }
 
-    /// De rij voor de 100-puntenbonus van een tweede Dobbel: een streepje
-    /// zolang hij er niet is, en de opgetelde bonus zodra hij valt.
+    /// De rij voor de 100-puntenbonus van een tweede Dobbel, in dezelfde
+    /// stempeltaal. Het kruis komt pas als het Dobbel-vakje met een nul is
+    /// doorgestreept — dan kan de bonus voorgoed niet meer.
     private var dobbelBonusRow: some View {
         HStack(spacing: m.cellGap) {
             labelCell(title: "BONUS", subtitle: "+100")
 
             ForEach(visiblePlayers) { player in
-                let total = player.scorecard.dobbelBonusTotal
-                let isMine = player.id == currentPlayerID
+                let count = player.scorecard.dobbelBonusTotal / DobbelScorer.dobbelBonusPoints
+                let missed = player.scorecard.scores[.dobbel] == 0
                 columnFrame(
-                    Group {
-                        if total > 0 {
-                            Text(verbatim: "+\(total)")
-                                .font(AppTheme.rounded(m.captionSize))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.6)
-                                .foregroundStyle(AppTheme.ink)
-                        } else {
-                            Text(verbatim: "–")
-                                .font(AppTheme.rounded(m.cellTextSize, .bold))
-                                .foregroundStyle(AppTheme.cardDim)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: m.rowHeight)
-                    .toyBlock(
-                        fill: total > 0 ? AppTheme.mint : (isMine ? AppTheme.tintCoral : AppTheme.sunk),
-                        radius: m.cellCorner,
-                        depth: 0,
-                        border: m.thinBorder
-                    )
-                    .accessibilityLabel(
-                        total > 0
-                            ? String(localized: "Dobbel-bonus: \(total) punten")
-                            : String(localized: "Nog geen Dobbel-bonus")
-                    ),
-                    isMine: isMine
+                    bonusCircle(earned: count > 0, missed: missed, count: count)
+                        .accessibilityLabel(
+                            count > 0
+                                ? String(localized: "Dobbel-bonus: \(player.scorecard.dobbelBonusTotal) punten")
+                                : missed
+                                    ? String(localized: "Bonus niet meer haalbaar")
+                                    : String(localized: "Nog geen Dobbel-bonus")
+                        ),
+                    isMine: player.id == currentPlayerID
                 )
             }
         }
+    }
+
+    /// Het bonusoordeel als cirkel — bewust een andere vorm dan de
+    /// speelvakjes: dit is geen vakje om te kiezen maar een stempel. Twee of
+    /// meer Dobbel-bonussen tonen hun aantal in plaats van het vinkje.
+    private func bonusCircle(earned: Bool, missed: Bool, count: Int = 1) -> some View {
+        ZStack {
+            Circle()
+                .fill(earned ? AppTheme.mint : (missed ? AppTheme.tintCoral : AppTheme.sunk))
+            Circle()
+                .strokeBorder(AppTheme.ink, lineWidth: m.thinBorder)
+
+            if earned {
+                if count > 1 {
+                    Text(verbatim: "\(count)×")
+                        .font(AppTheme.rounded(m.captionSize))
+                        .foregroundStyle(AppTheme.ink)
+                } else {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: m.captionSize * 1.15, weight: .black))
+                        .foregroundStyle(AppTheme.ink)
+                }
+            } else if missed {
+                Image(systemName: "xmark")
+                    .font(.system(size: m.captionSize * 1.15, weight: .black))
+                    .foregroundStyle(AppTheme.coral)
+            } else {
+                Text(verbatim: "–")
+                    .font(AppTheme.rounded(m.captionSize, .bold))
+                    .foregroundStyle(AppTheme.cardDim)
+            }
+        }
+        .frame(width: m.rowHeight * 0.8, height: m.rowHeight * 0.8)
+        .frame(maxWidth: .infinity)
+        .frame(height: m.rowHeight)
     }
 
     /// Het naamvakje links van een bonusrij, in de stijl van de
