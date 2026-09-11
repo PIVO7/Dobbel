@@ -295,19 +295,23 @@ struct ScorecardView: View {
     /// Het naamvakje links van een bonusrij, in de stijl van de
     /// categorie-iconen.
     private func labelCell(title: LocalizedStringKey, subtitle: LocalizedStringKey?) -> some View {
+        // Zonder kerning en met wat binnenmarge: "TOTAAL" en "BONUS" raakten
+        // anders letterlijk de randen van het vakje.
         VStack(spacing: 0) {
             Text(title)
-                .font(AppTheme.rounded(m.captionSize * 0.82))
-                .kerning(0.6)
+                .font(AppTheme.rounded(m.captionSize * 0.78))
                 .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .minimumScaleFactor(0.6)
                 .foregroundStyle(AppTheme.ink)
             if let subtitle {
                 Text(subtitle)
-                    .font(AppTheme.rounded(m.captionSize))
+                    .font(AppTheme.rounded(m.captionSize * 0.95))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
                     .foregroundStyle(AppTheme.ink)
             }
         }
+        .padding(.horizontal, 3)
         .frame(width: m.iconWidth, height: m.rowHeight)
         .toyBlock(fill: AppTheme.tintStone, radius: m.cellCorner, depth: 0, border: m.thinBorder)
     }

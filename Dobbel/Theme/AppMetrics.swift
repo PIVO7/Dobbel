@@ -64,7 +64,7 @@ struct AppMetrics {
 
     static let phone = AppMetrics(
         dieSize: 54, dieCorner: 15, dieGap: 8,
-        rowHeight: 44, iconWidth: 44, cellGap: 3,
+        rowHeight: 44, iconWidth: 44, cellGap: 5,
         cellCorner: 11, buttonCorner: 16, cardCorner: 20, dialogCorner: 24,
         shallowDepth: 3, depth: 5, heroDepth: 6,
         border: 3, thinBorder: 2,

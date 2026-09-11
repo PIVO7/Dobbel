@@ -44,6 +44,11 @@ enum AppTheme {
     @MainActor static var offFill: Color { palette.offFill }
     @MainActor static var offInk: Color { palette.offInk }
 
+    /// Donkergroen voor winstcijfers op een kaart ("+21"): dit kán je erbij
+    /// krijgen. Mint zelf is als tekstkleur te licht op wit; de kaarten zijn
+    /// in elk thema licht, dus één vaste donkere tint leest overal.
+    static let gain = Color(red: 0.05, green: 0.52, blue: 0.31)
+
     /// Alle tekst in de app komt hier langs; de maat komt uit `AppMetrics`,
     /// zodat een iPad grotere letters krijgt zonder aparte fontconstanten.
     static func rounded(_ size: CGFloat, _ weight: Font.Weight = .black) -> Font {

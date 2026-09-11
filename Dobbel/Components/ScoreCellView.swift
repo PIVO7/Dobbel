@@ -36,7 +36,7 @@ struct ScoreCellView: View {
                 // blad een keuze voorzegt.
                 Text(verbatim: "+\(points)")
                     .font(AppTheme.rounded(m.cellTextSize, .bold))
-                    .foregroundStyle(points == 0 ? AppTheme.cardDim : AppTheme.coral)
+                    .foregroundStyle(points == 0 ? AppTheme.cardDim : AppTheme.gain)
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
             }

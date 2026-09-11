@@ -13,13 +13,17 @@ struct RollButtonView: View {
     let onRoll: () -> Void
 
     @Environment(\.metrics) private var m
+    /// De knop wisselt na een tik meteen naar "Bezig…", waardoor de klik
+    /// van ToyButtonStyle visueel wegvalt. Daarom zakt hij hier eerst
+    /// zichtbaar in en start de worp een tel later.
+    @State private var isPressBouncing = false
 
     var body: some View {
         if mustChoose {
             ChooseHintView()
                 .frame(height: m.heroButton.height)
         } else {
-            Button(action: onRoll) {
+            Button(action: pressAndRoll) {
                 HStack(spacing: 10) {
                     Text(title)
                         .font(AppTheme.rounded(m.heroButton.textSize))
@@ -38,10 +42,11 @@ struct RollButtonView: View {
                 .frame(height: m.heroButton.height)
             }
             .buttonStyle(ToyButtonStyle(
-                fill: canRoll ? AppTheme.mint : AppTheme.offFill,
+                fill: canRoll || isPressBouncing ? AppTheme.mint : AppTheme.offFill,
                 radius: m.buttonCorner,
                 depth: m.heroButton.depth,
-                border: m.border
+                border: m.border,
+                forcePressed: isPressBouncing
             ))
             .disabled(!canRoll)
             .accessibilityLabel(
@@ -52,10 +57,24 @@ struct RollButtonView: View {
         }
     }
 
+    /// Eerst de klik laten zien, dan pas gooien: het inzakken duurt één
+    /// tel en daarna neemt de rolanimatie van de stenen het over.
+    private func pressAndRoll() {
+        guard !isPressBouncing else { return }
+        isPressBouncing = true
+        Task {
+            try? await Task.sleep(for: .milliseconds(120))
+            isPressBouncing = false
+            onRoll()
+        }
+    }
+
     private var title: String {
         // Zonder worpen over is hier altijd een computer aan het kiezen; de
         // wenk voor de speler zelf staat in `ChooseHintView`.
         if isRolling || rollsRemaining == 0 { return String(localized: "Bezig…") }
+        // Tijdens de klik nog geen "Bezig…": de knop moet ingedrukt ogen,
+        // niet alvast van tekst wisselen.
         return String(localized: "Gooien")
     }
 }
