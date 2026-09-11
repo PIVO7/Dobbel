@@ -83,6 +83,7 @@ struct GameWideLayout: View {
             DiceTrayView(
                 dice: engine.dice,
                 isRolling: engine.isRolling,
+                hasRolled: engine.hasRolledThisTurn,
                 canInteract: engine.canHold,
                 onToggle: actions.toggleHold
             )
