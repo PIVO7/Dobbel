@@ -31,7 +31,7 @@ Voor het taal-tabblad **English (U.S.)** in App Store Connect (VK/Australië nem
 > Three opponents, each with their own character: Snoozy just rolls anything, Robbie puts up a decent fight and Professor Dot is dead serious. So the game grows along with your child.
 >
 > LEARNING WITHOUT LESSONS
-> A built-in tip shows which box is the smart choice — and explains why, if you ask. New players get a short tour, and the rules sheet "How does Dobbel work?" is never far away. Meanwhile plenty of adding and multiplying is going on, but we just call it playing.
+> New players get a short tour, the rules sheet "How does Dobbel work?" is never far away, and the score sheet does all the math for you. Meanwhile plenty of adding and multiplying is going on, but we just call it playing.
 >
 > MADE FOR LITTLE HANDS
 > Big buttons, cheerful colors, a personal avatar for every player, and dice you can roll by shaking the device. Every game ends with confetti for the winner.
@@ -63,4 +63,4 @@ Voor het taal-tabblad **English (U.S.)** in App Store Connect (VK/Australië nem
 
 ## What's New (eerste release)
 
-> Welcome to Dobbel! The very first version: play with the whole family on one device or against the computer, with tips that teach you how to win.
+> Welcome to Dobbel! The very first version: play with the whole family on one device or against the computer.

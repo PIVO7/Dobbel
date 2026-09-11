@@ -31,7 +31,7 @@ Voor het taal-tabblad **French (France)** in App Store Connect (Frans-Canada nee
 > Trois adversaires, chacun avec son caractère : Dodo lance au hasard, Robbie se défend bien et Professeur Point ne rigole pas. Le jeu grandit avec votre enfant.
 >
 > APPRENDRE SANS LEÇONS
-> Un conseil intégré montre quelle case est la plus maligne — et explique pourquoi, si on lui demande. Les nouveaux joueurs ont droit à une petite visite guidée, et la règle du jeu « Comment jouer à Dobbel ? » n'est jamais loin. Pendant ce temps, ça additionne et ça multiplie — mais nous, on appelle ça jouer.
+> Les nouveaux joueurs ont droit à une petite visite guidée, la règle du jeu « Comment jouer à Dobbel ? » n'est jamais loin, et la feuille de score fait tous les calculs. Pendant ce temps, ça additionne et ça multiplie — mais nous, on appelle ça jouer.
 >
 > FAIT POUR LES PETITES MAINS
 > De gros boutons, des couleurs joyeuses, un avatar personnel pour chaque joueur, et des dés qu'on lance en secouant l'appareil. Chaque partie se termine par des confettis pour le gagnant.
@@ -63,4 +63,4 @@ Voor het taal-tabblad **French (France)** in App Store Connect (Frans-Canada nee
 
 ## Nouveautés (eerste release)
 
-> Bienvenue dans Dobbel ! La toute première version : jouez en famille sur un seul appareil ou contre l'ordinateur, avec des conseils qui apprennent à gagner.
+> Bienvenue dans Dobbel ! La toute première version : jouez en famille sur un seul appareil ou contre l'ordinateur.

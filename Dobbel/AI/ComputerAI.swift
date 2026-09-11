@@ -12,7 +12,7 @@ struct ComputerAI {
         let open = DobbelScorer.availableCategories(dice: values, scorecard: scorecard, variant: variant)
 
         if variant == .inOrder, let target = open.first {
-            return decideInOrder(values: values, target: target, rollsRemaining: rollsRemaining, scorecard: scorecard)
+            return decideInOrder(values: values, target: target, rollsRemaining: rollsRemaining, scorecard: scorecard, level: level)
         }
 
         if level == .easy {
@@ -70,25 +70,48 @@ struct ComputerAI {
         values: [Int],
         target: ScoreCategory,
         rollsRemaining: Int,
-        scorecard: Scorecard
+        scorecard: Scorecard,
+        level: ComputerLevel
     ) -> ComputerDecision {
         let score = DobbelScorer.pointsForPlacing(category: target, dice: values, scorecard: scorecard).score
+
+        // Dommel neemt genoegen met de eerste punten die het doelvakje
+        // oplevert en jaagt nooit door op een betere worp.
+        if level == .easy, score > 0 {
+            return ComputerDecision(holdMask: Array(repeating: true, count: values.count), shouldScore: true, category: target)
+        }
+
         let settled: Bool
         switch target {
         case .fullHouse, .smallStraight, .largeStraight, .dobbel:
             // Vaste vakjes: binnen is binnen.
             settled = score > 0
         case .ones, .twos, .threes, .fours, .fives, .sixes:
-            settled = values.allSatisfy { $0 == target.faceValue }
+            // Robbie is tevreden met vier gelijke; de professor gooit door
+            // tot alle vijf de stenen het doelgetal tonen.
+            let matching = values.count(where: { $0 == target.faceValue })
+            settled = level == .hard ? matching == values.count : matching >= 4
         case .threeOfAKind, .fourOfAKind:
-            settled = score > 0 && values.allSatisfy { $0 >= 5 }
+            settled = score > 0 && values.allSatisfy { $0 >= (level == .hard ? 5 : 4) }
         case .chance:
-            settled = values.allSatisfy { $0 >= 5 }
+            settled = values.allSatisfy { $0 >= (level == .hard ? 5 : 4) }
         }
         if settled || rollsRemaining == 0 {
             return ComputerDecision(holdMask: Array(repeating: true, count: values.count), shouldScore: true, category: target)
         }
-        return ComputerDecision(holdMask: holdMask(values: values, target: target), shouldScore: false, category: nil)
+        let mask = level == .easy
+            ? easyInOrderHoldMask(values: values, target: target)
+            : holdMask(values: values, target: target)
+        return ComputerDecision(holdMask: mask, shouldScore: false, category: nil)
+    }
+
+    /// Dommel bij In volgorde: getallen herkent hij nog wel, maar patronen
+    /// ziet hij niet — voor combinatievakjes gooit hij alles opnieuw.
+    private func easyInOrderHoldMask(values: [Int], target: ScoreCategory) -> [Bool] {
+        if let face = target.faceValue {
+            return values.map { $0 == face }
+        }
+        return Array(repeating: false, count: values.count)
     }
 
     /// Wat vast te houden als het doelvakje al bekend is.

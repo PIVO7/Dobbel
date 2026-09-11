@@ -44,3 +44,34 @@ extension ComputerAITests {
         XCTAssertEqual(hard.category, .sixes)
     }
 }
+
+extension ComputerAITests {
+    /// In volgorde, doelvakje enen met twee enen op tafel: Dommel pakt die
+    /// paar punten meteen, de professor houdt de enen vast en gooit door.
+    func testInOrderEasySettlesWhereHardKeepsRolling() {
+        let ai = ComputerAI()
+        let dice = [1, 1, 3, 4, 6].map { Die(value: $0) }
+
+        let easy = ai.decide(dice: dice, rollsRemaining: 2, scorecard: Scorecard(), level: .easy, variant: .inOrder)
+        let hard = ai.decide(dice: dice, rollsRemaining: 2, scorecard: Scorecard(), level: .hard, variant: .inOrder)
+
+        XCTAssertTrue(easy.shouldScore)
+        XCTAssertEqual(easy.category, .ones)
+        XCTAssertFalse(hard.shouldScore)
+        XCTAssertEqual(hard.holdMask, [true, true, false, false, false])
+    }
+
+    /// Vier enen en een losse zes: Robbie legt tevreden vast, terwijl de
+    /// professor de laatste steen nog omgooit voor het maximum.
+    func testInOrderHardChasesTheFifthDieWhereMediumSettles() {
+        let ai = ComputerAI()
+        let dice = [1, 1, 1, 1, 6].map { Die(value: $0) }
+
+        let medium = ai.decide(dice: dice, rollsRemaining: 1, scorecard: Scorecard(), level: .medium, variant: .inOrder)
+        let hard = ai.decide(dice: dice, rollsRemaining: 1, scorecard: Scorecard(), level: .hard, variant: .inOrder)
+
+        XCTAssertTrue(medium.shouldScore)
+        XCTAssertFalse(hard.shouldScore)
+        XCTAssertEqual(hard.holdMask, [true, true, true, true, false])
+    }
+}

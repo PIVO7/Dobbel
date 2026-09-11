@@ -387,6 +387,7 @@ final class GameEngine {
                 id: player.profileID,
                 name: player.name,
                 avatarColorIndex: player.avatarColorIndex,
+                avatarSymbol: player.avatarSymbol,
                 computerLevel: player.computerLevel
             )
         }

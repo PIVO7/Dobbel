@@ -14,8 +14,10 @@ accounts, dus er is geen demo-account nodig.
 
 > Dobbel! is a dice game (Yahtzee-style rules) for children and families.
 > No account, no sign-in, no internet connection required — the app is fully
-> playable offline from first launch. No data is collected, there are no
-> ads, no third-party SDKs, and no external links inside the app.
+> playable offline from first launch. Nothing leaves the device (all data is
+> stored locally), there are no ads, no third-party SDKs, and no external
+> links inside the app. The privacy statement is available in the app under
+> Settings → For parents → Privacy and contact.
 >
 > LANGUAGES
 > The primary language is Dutch, with full English and French
@@ -29,17 +31,17 @@ accounts, dus er is geen demo-account nodig.
 > opponents, three extra color themes, and the full statistics pages.
 >
 > HOW TO REACH THE PURCHASE SCREEN
-> Tap the gear icon (top right on the home screen) → "Family version",
-> or tap any locked item (a third player slot in game setup, a locked
-> theme, or the locked statistics teaser).
+> Tap the gear icon (top right on the home screen) → section "For
+> parents" → "Family version", or tap any locked item (a third player
+> slot in game setup, a locked theme, or the locked statistics teaser).
 >
 > PARENTAL GATE (Kids Category, guideline 1.3)
 > Every route to the purchase screen — including Restore Purchases — is
 > protected by a parental gate: a multiplication question such as
-> "How much is 7 × 8?" with three answer buttons. The question is
-> randomized on every attempt (both factors are between 4 and 9). Simply
-> multiply the two numbers shown and tap the matching answer; a wrong
-> answer dismisses the gate.
+> "How much is 7 × 8?". Type the answer (e.g. 56) with the number pad
+> and tap the confirm button. The question is randomized on every
+> attempt (both factors are between 4 and 9); a wrong answer produces a
+> new question.
 >
 > TESTING THE PURCHASE
 > After passing the parental gate, the paywall shows the "Family version"

@@ -37,7 +37,7 @@ French (France) als extra lokalisaties toe.
 > Drie tegenstanders met elk hun eigen karakter: Dommel gooit maar wat, Robbie doet aardig zijn best en Professor Punt is bloedserieus. Zo groeit het spel mee met je kind.
 >
 > LEREN ZONDER LES
-> Een ingebouwde tip laat zien welk vakje slim is — en legt op verzoek uit wáárom. Nieuwe spelers krijgen een korte rondleiding, en het regelblad "Hoe werkt Dobbel?" is nooit ver weg. Ondertussen wordt er heel wat opgeteld en vermenigvuldigd, maar dat noemen we gewoon spelen.
+> Nieuwe spelers krijgen een korte rondleiding, het regelblad "Hoe werkt Dobbel?" is nooit ver weg, en het scoreblad rekent alles voor. Ondertussen wordt er heel wat opgeteld en vermenigvuldigd, maar dat noemen we gewoon spelen.
 >
 > GEMAAKT VOOR KINDERHANDEN
 > Grote knoppen, vrolijke kleuren, een eigen avatar voor elke speler en stenen die je met een schudbeweging kan gooien. Elk potje eindigt met confetti voor de winnaar.
@@ -79,4 +79,4 @@ French (France) als extra lokalisaties toe.
 - **Privacybeleid-URL:** publieke URL van `privacyverklaring.md` (bv. pivo7.be/dobbel/privacy).
 - **Copyright:** © 2026 PIVO7.
 - **Versietekst "Nieuw in deze versie" (eerste release):**
-  > Welkom bij Dobbel! De allereerste versie: speel met het hele gezin aan één toestel of tegen de computer, met tips die je leren winnen.
+  > Welkom bij Dobbel! De allereerste versie: speel met het hele gezin aan één toestel of tegen de computer.

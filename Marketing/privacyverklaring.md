@@ -6,7 +6,7 @@ Dobbel! is een dobbelspel voor kinderen en gezinnen, gemaakt door PIVO7. We houd
 
 ## Wat we verzamelen
 
-**Niets.** Dobbel! verzamelt geen persoonsgegevens, stuurt niets naar servers en bevat geen analytics of tracking van welke aard dan ook.
+**Niets dat het toestel verlaat.** Dobbel! stuurt niets naar servers en bevat geen analytics of tracking van welke aard dan ook. Spelersprofielen, scores en instellingen worden uitsluitend lokaal op het toestel bewaard; verwijder je de app, dan zijn die gegevens ook weg.
 
 ## Wat op je toestel blijft
 
@@ -31,7 +31,7 @@ De Gezinsversie koop je via het App Store-systeem van Apple. De betaling loopt v
 
 ## Kinderen
 
-Dobbel! is gemaakt vóór kinderen, en juist daarom verzamelen we niets. De app voldoet daarmee aan de regels van Apple's kindercategorie en aan de AVG/GDPR — er worden simpelweg geen gegevens verwerkt.
+Dobbel! is gemaakt vóór kinderen, en juist daarom verlaat er niets het toestel. De app voldoet daarmee aan de regels van Apple's kindercategorie en aan de AVG/GDPR — wat de app bewaart, blijft lokaal en onder jullie eigen beheer.
 
 ## Contact
 
@@ -45,7 +45,7 @@ Vragen over deze verklaring? Mail naar **jelle@pivo7.be**.
 
 Dobbel! is a dice game for kids and families, made by PIVO7.
 
-**We collect nothing.** Dobbel! gathers no personal data, sends nothing to any server, and contains no analytics or tracking of any kind. Player profiles, game progress and settings are stored only on your own device and are deleted along with the app. There are no ads, no accounts, and no access to camera, microphone, location, contacts or photos. The Family Version purchase is handled entirely by Apple's App Store, behind a parental gate; we never see any payment details. Because no data is processed at all, the app complies with Apple's Kids Category rules and the GDPR by design.
+**Nothing leaves your device.** Dobbel! sends nothing to any server and contains no analytics or tracking of any kind. Player profiles, game progress and settings are stored only on your own device and are deleted along with the app. There are no ads, no accounts, and no access to camera, microphone, location, contacts or photos. The Family Version purchase is handled entirely by Apple's App Store, behind a parental gate; we never see any payment details. Because everything the app stores stays local and under your own control, the app complies with Apple's Kids Category rules and the GDPR by design.
 
 Questions? Contact **jelle@pivo7.be**.
 
@@ -57,6 +57,6 @@ Questions? Contact **jelle@pivo7.be**.
 
 Dobbel! est un jeu de dés pour les enfants et les familles, créé par PIVO7.
 
-**Nous ne collectons rien.** Dobbel! ne recueille aucune donnée personnelle, n'envoie rien vers un serveur et ne contient aucun outil d'analyse ou de suivi. Les profils des joueurs, la progression du jeu et les réglages sont stockés uniquement sur votre appareil et disparaissent avec l'app. Pas de publicité, pas de compte, pas d'accès à l'appareil photo, au micro, à la position, aux contacts ni aux photos. L'achat de la version Famille passe entièrement par l'App Store d'Apple, derrière un contrôle parental ; nous ne voyons jamais aucune donnée de paiement. Comme aucune donnée n'est traitée, l'app respecte par conception les règles de la catégorie Enfants d'Apple et le RGPD.
+**Rien ne quitte votre appareil.** Dobbel! n'envoie rien vers un serveur et ne contient aucun outil d'analyse ou de suivi. Les profils des joueurs, la progression du jeu et les réglages sont stockés uniquement sur votre appareil et disparaissent avec l'app. Pas de publicité, pas de compte, pas d'accès à l'appareil photo, au micro, à la position, aux contacts ni aux photos. L'achat de la version Famille passe entièrement par l'App Store d'Apple, derrière un contrôle parental ; nous ne voyons jamais aucune donnée de paiement. Comme tout ce que l'app enregistre reste local et sous votre contrôle, l'app respecte par conception les règles de la catégorie Enfants d'Apple et le RGPD.
 
 Des questions ? Écrivez à **jelle@pivo7.be**.

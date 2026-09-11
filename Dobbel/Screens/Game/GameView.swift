@@ -237,7 +237,10 @@ struct GameView: View {
         guard ShakeToRoll.isEnabled,
               engine.canRoll,
               !showExitConfirm,
-              !showCoachOffer else { return }
+              !showCoachOffer,
+              // Tijdens het doorgeven mag het bewegen van het toestel niet
+              // stiekem de eerste worp van de volgende speler verbruiken.
+              !showPassScreen else { return }
         roll()
     }
 
