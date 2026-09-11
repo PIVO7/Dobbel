@@ -9,21 +9,21 @@ struct CategoryExplainerChip: View {
     @Environment(\.metrics) private var m
 
     var body: some View {
-        HStack(spacing: m.gutter * 0.6) {
+        HStack(spacing: m.gutter * 0.7) {
             CategoryIcon(category: category)
-                .frame(width: m.iconWidth, height: m.rowHeight)
+                .frame(width: m.iconWidth * 1.25, height: m.rowHeight * 1.25)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(category.title)
-                    .font(AppTheme.rounded(m.captionSize + 2))
+                    .font(AppTheme.rounded(m.captionSize + 4))
                     .foregroundStyle(AppTheme.ink)
                 Text(category.explanation)
-                    .font(AppTheme.rounded(m.captionSize, .bold))
+                    .font(AppTheme.rounded(m.captionSize + 1, .bold))
                     .foregroundStyle(AppTheme.cardSoft)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .padding(m.gutter * 0.8)
+        .padding(m.gutter * 0.9)
         .toyBlock(fill: AppTheme.card, radius: m.cardCorner * 0.8, depth: m.depth, border: m.border)
         .accessibilityElement(children: .combine)
     }

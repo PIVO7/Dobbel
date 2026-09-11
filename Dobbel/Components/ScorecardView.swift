@@ -60,16 +60,24 @@ struct ScorecardView: View {
         .padding(.horizontal, m.gutter * 0.8)
         .padding(.vertical, m.gutter * 0.55)
         .toyBlock(fill: AppTheme.card, radius: m.cardCorner, depth: m.depth, border: m.border)
-        // Het uitlegbordje zweeft bovenaan het blad, over de kopjes heen:
-        // het is er maar even en een tik stuurt het meteen weg.
-        .overlay(alignment: .top) {
+        // Het uitlegbordje ligt midden op het blad, met een gedimde laag
+        // eronder: bovenaan viel het wit-op-wit nauwelijks op. Een tik
+        // waar dan ook stuurt het weg, en na een paar tellen gaat het
+        // vanzelf.
+        .overlay {
             if let explained {
-                CategoryExplainerChip(category: explained)
-                    .padding(.horizontal, m.gutter)
-                    .padding(.top, m.gutter * 0.4)
-                    .transition(.scale(scale: 0.9).combined(with: .opacity))
-                    .onTapGesture { dismissExplainer() }
-                    .zIndex(1)
+                ZStack {
+                    RoundedRectangle(cornerRadius: m.cardCorner, style: .continuous)
+                        .fill(AppTheme.ink.opacity(0.35))
+                        .onTapGesture { dismissExplainer() }
+                        .accessibilityHidden(true)
+
+                    CategoryExplainerChip(category: explained)
+                        .padding(.horizontal, m.gutter * 1.5)
+                        .onTapGesture { dismissExplainer() }
+                }
+                .transition(.opacity.combined(with: .scale(scale: 0.96)))
+                .zIndex(1)
             }
         }
     }
@@ -79,8 +87,10 @@ struct ScorecardView: View {
         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
             explained = category
         }
+        // Zes tellen: genoeg om rustig te lezen, kort genoeg om niet in de
+        // weg te zitten — en een tik stuurt het altijd meteen weg.
         explainDismissal = Task {
-            try? await Task.sleep(for: .seconds(3.5))
+            try? await Task.sleep(for: .seconds(6))
             guard !Task.isCancelled else { return }
             dismissExplainer()
         }

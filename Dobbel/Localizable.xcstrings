@@ -2977,6 +2977,22 @@
         }
       }
     },
+    "Kies een vakje": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a box"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez une case"
+          }
+        }
+      }
+    },
     "Kies een vakje op het scoreblad": {
       "localizations": {
         "en": {
