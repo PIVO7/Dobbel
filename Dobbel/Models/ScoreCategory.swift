@@ -37,6 +37,26 @@ enum ScoreCategory: String, CaseIterable, Codable, Identifiable, Hashable {
         }
     }
 
+    /// Eén regel uitleg voor op het bordje bij het categorie-icoon: wat het
+    /// vakje wil zien en wat het waard is. Kort genoeg om spelend te lezen.
+    var explanation: String {
+        switch self {
+        case .ones: return String(localized: "Tel alle enen bij elkaar.")
+        case .twos: return String(localized: "Tel alle tweeën bij elkaar.")
+        case .threes: return String(localized: "Tel alle drieën bij elkaar.")
+        case .fours: return String(localized: "Tel alle vieren bij elkaar.")
+        case .fives: return String(localized: "Tel alle vijven bij elkaar.")
+        case .sixes: return String(localized: "Tel alle zessen bij elkaar.")
+        case .threeOfAKind: return String(localized: "Drie dezelfde? Dan tellen álle ogen mee.")
+        case .fourOfAKind: return String(localized: "Vier dezelfde? Dan tellen álle ogen mee.")
+        case .fullHouse: return String(localized: "Drie dezelfde plus twee dezelfde: 25 punten.")
+        case .smallStraight: return String(localized: "Vier stenen op een rij: 30 punten.")
+        case .largeStraight: return String(localized: "Vijf stenen op een rij: 40 punten.")
+        case .dobbel: return String(localized: "Vijf dezelfde: 50 punten. Een tweede Dobbel is +100!")
+        case .chance: return String(localized: "Altijd goed: tel alle ogen bij elkaar.")
+        }
+    }
+
     var isUpper: Bool {
         switch self {
         case .ones, .twos, .threes, .fours, .fives, .sixes:

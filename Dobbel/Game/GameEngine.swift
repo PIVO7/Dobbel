@@ -26,6 +26,9 @@ final class GameEngine {
     private(set) var saveVersion: Int = 0
     /// Laatste Dobbel-bonus die zojuist geplaatst werd (voor viering).
     private(set) var lastDobbelBonus: Int = 0
+    /// De zojuist vastgelegde zet, zodat het scoreblad die cel even kan
+    /// laten oplichten. Niet bewaard: na een herstart is er niets vers.
+    private(set) var lastPlaced: PlacedMark?
     /// Of de laatst voltooide worp een Dobbel was. Hier vastgelegd op het
     /// moment van de worp: als de UI het achteraf uit `diceValues` afleidt,
     /// kan de beurt al gewisseld zijn en tellen de vijf gereset énen mee.
@@ -74,6 +77,7 @@ final class GameEngine {
         hasRolledThisTurn = undoSnapshot.hasRolledThisTurn
         turnMessage = undoSnapshot.turnMessage
         lastDobbelBonus = 0
+        lastPlaced = nil
         self.undoSnapshot = nil
         markDirty()
     }
@@ -343,6 +347,13 @@ final class GameEngine {
             score: result.score,
             dobbelBonus: result.dobbelBonus
         )
+        // Vóór advanceTurn: daarna is de volgende speler "current". Het
+        // versienummer maakt elke zet uniek, ook twee keer hetzelfde vakje.
+        lastPlaced = PlacedMark(
+            playerID: currentPlayer.id,
+            category: category,
+            version: (lastPlaced?.version ?? 0) + 1
+        )
         advanceTurn()
         return true
     }
@@ -399,4 +410,13 @@ final class GameEngine {
     private func markDirty() {
         saveVersion += 1
     }
+}
+
+/// Eén vastgelegde zet op het scoreblad: wie, welk vakje, en een oplopend
+/// versienummer zodat ook twee zetten op hetzelfde vakje (na terugzetten)
+/// van elkaar te onderscheiden zijn.
+struct PlacedMark: Equatable {
+    let playerID: UUID
+    let category: ScoreCategory
+    let version: Int
 }

@@ -10,10 +10,16 @@ struct ScorecardView: View {
     let diceValues: [Int]
     let canScore: Bool
     var variant: GameVariant = .classic
+    /// De zojuist vastgelegde zet; die cel licht even op.
+    var lastPlaced: PlacedMark?
     let onSelect: (ScoreCategory) -> Void
 
     @Environment(\.metrics) private var m
     @Environment(\.horizontalSizeClass) private var sizeClass
+    /// Het categorie-icoon waar net op getikt is; het bordje met uitleg
+    /// verdwijnt vanzelf weer.
+    @State private var explained: ScoreCategory?
+    @State private var explainDismissal: Task<Void, Never>?
 
     /// Bij drie of vier spelers op een smal scherm worden de vakjes te smal
     /// om te raken (ver onder de 44 punten). Dan toont het blad alleen de
@@ -54,6 +60,37 @@ struct ScorecardView: View {
         .padding(.horizontal, m.gutter * 0.8)
         .padding(.vertical, m.gutter * 0.55)
         .toyBlock(fill: AppTheme.card, radius: m.cardCorner, depth: m.depth, border: m.border)
+        // Het uitlegbordje zweeft bovenaan het blad, over de kopjes heen:
+        // het is er maar even en een tik stuurt het meteen weg.
+        .overlay(alignment: .top) {
+            if let explained {
+                CategoryExplainerChip(category: explained)
+                    .padding(.horizontal, m.gutter)
+                    .padding(.top, m.gutter * 0.4)
+                    .transition(.scale(scale: 0.9).combined(with: .opacity))
+                    .onTapGesture { dismissExplainer() }
+                    .zIndex(1)
+            }
+        }
+    }
+
+    private func explain(_ category: ScoreCategory) {
+        explainDismissal?.cancel()
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+            explained = category
+        }
+        explainDismissal = Task {
+            try? await Task.sleep(for: .seconds(3.5))
+            guard !Task.isCancelled else { return }
+            dismissExplainer()
+        }
+    }
+
+    private func dismissExplainer() {
+        explainDismissal?.cancel()
+        withAnimation(.easeOut(duration: 0.2)) {
+            explained = nil
+        }
     }
 
     private var current: GamePlayer? {
@@ -102,8 +139,15 @@ struct ScorecardView: View {
         open: Set<ScoreCategory>
     ) -> some View {
         HStack(spacing: m.cellGap) {
-            CategoryIcon(category: category)
-                .frame(width: m.iconWidth, height: m.rowHeight)
+            // Tikbaar: de naam en één regel uitleg verschijnen op verzoek.
+            Button {
+                explain(category)
+            } label: {
+                CategoryIcon(category: category)
+                    .frame(width: m.iconWidth, height: m.rowHeight)
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint(String(localized: "Toont de uitleg"))
 
             ForEach(visiblePlayers) { player in
                 let isMine = player.id == currentPlayerID
@@ -114,6 +158,9 @@ struct ScorecardView: View {
                         diceValues: diceValues,
                         isMine: isMine,
                         selectable: isMine && canScore && open.contains(category),
+                        freshVersion: lastPlaced.flatMap {
+                            $0.playerID == player.id && $0.category == category ? $0.version : nil
+                        },
                         onSelect: onSelect
                     ),
                     isMine: isMine

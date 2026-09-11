@@ -55,6 +55,7 @@ struct GameWideLayout: View {
                             diceValues: engine.diceValues,
                             canScore: engine.canScore,
                             variant: engine.variant,
+                            lastPlaced: engine.lastPlaced,
                             onSelect: actions.score
                         )
                         .environment(\.metrics, boardMetrics)

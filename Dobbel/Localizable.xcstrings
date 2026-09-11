@@ -324,6 +324,22 @@
         }
       }
     },
+    "%@, levert %lld punten op": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, would score %2$lld points"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ rapporterait %2$lld points"
+          }
+        }
+      }
+    },
     "%@, nog %lld worpen": {
       "localizations": {
         "en": {
@@ -910,6 +926,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "En invité, rien à créer"
+          }
+        }
+      }
+    },
+    "Altijd goed: tel alle ogen bij elkaar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always scores: add up all the dice."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toujours bon : additionnez tous les dés."
           }
         }
       }
@@ -1718,6 +1750,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Trois dés identiques."
+          }
+        }
+      }
+    },
+    "Drie dezelfde plus twee dezelfde: 25 punten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Three of a kind plus a pair: 25 points."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trois pareils plus deux pareils : 25 points."
+          }
+        }
+      }
+    },
+    "Drie dezelfde? Dan tellen álle ogen mee.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Three of a kind? Then every die counts."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trois pareils ? Alors tous les dés comptent."
           }
         }
       }
@@ -4771,6 +4835,102 @@
         }
       }
     },
+    "Tel alle drieën bij elkaar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add up all the threes."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Additionnez tous les 3."
+          }
+        }
+      }
+    },
+    "Tel alle enen bij elkaar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add up all the ones."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Additionnez tous les 1."
+          }
+        }
+      }
+    },
+    "Tel alle tweeën bij elkaar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add up all the twos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Additionnez tous les 2."
+          }
+        }
+      }
+    },
+    "Tel alle vieren bij elkaar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add up all the fours."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Additionnez tous les 4."
+          }
+        }
+      }
+    },
+    "Tel alle vijven bij elkaar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add up all the fives."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Additionnez tous les 5."
+          }
+        }
+      }
+    },
+    "Tel alle zessen bij elkaar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add up all the sixes."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Additionnez tous les 6."
+          }
+        }
+      }
+    },
     "Terug naar menu": {
       "localizations": {
         "en": {
@@ -4959,6 +5119,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Affiche les statistiques"
+          }
+        }
+      }
+    },
+    "Toont de uitleg": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows the explanation"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Affiche l'explication"
           }
         }
       }
@@ -5317,6 +5493,22 @@
         }
       }
     },
+    "Vier dezelfde? Dan tellen álle ogen mee.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Four of a kind? Then every die counts."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quatre pareils ? Alors tous les dés comptent."
+          }
+        }
+      }
+    },
     "Vier stenen op een rij.": {
       "localizations": {
         "en": {
@@ -5329,6 +5521,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Quatre dés qui se suivent."
+          }
+        }
+      }
+    },
+    "Vier stenen op een rij: 30 punten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Four dice in a row: 30 points."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quatre dés qui se suivent : 30 points."
           }
         }
       }
@@ -5366,6 +5574,22 @@
         }
       }
     },
+    "Vijf dezelfde: 50 punten. Een tweede Dobbel is +100!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Five of a kind: 50 points. A second Dobbel adds +100!"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cinq pareils : 50 points. Un deuxième Dobbel : +100 !"
+          }
+        }
+      }
+    },
     "Vijf dezelfde: DOBBEL!": {
       "localizations": {
         "en": {
@@ -5394,6 +5618,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cinq dés qui se suivent."
+          }
+        }
+      }
+    },
+    "Vijf stenen op een rij: 40 punten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Five dice in a row: 40 points."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cinq dés qui se suivent : 40 points."
           }
         }
       }
