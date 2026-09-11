@@ -51,15 +51,78 @@ struct ScoreChipsView: View {
     @Environment(\.metrics) private var m
 
     var body: some View {
-        HStack(spacing: 6) {
-            ForEach(players) { player in
-                chip(for: player)
+        Group {
+            // Met z'n tweeën een echt scorebord: avatars aan de buitenkant
+            // en de standen groot rond "VS", zoals op een sporttableau. Bij
+            // drie of vier spelers is daar geen plaats voor; dan blijven de
+            // compacte chips.
+            if players.count == 2 {
+                HStack(spacing: m.gutter * 0.5) {
+                    versusSide(players[0], mirrored: false)
+                    Text(verbatim: "VS")
+                        .font(AppTheme.rounded(m.captionSize * 0.9))
+                        .kerning(1)
+                        .foregroundStyle(AppTheme.cardDim)
+                    versusSide(players[1], mirrored: true)
+                }
+                .padding(.horizontal, m.gutter * 0.6)
+                .padding(.vertical, m.gutter * 0.3)
+            } else {
+                HStack(spacing: 6) {
+                    ForEach(players) { player in
+                        chip(for: player)
+                    }
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, m.gutter * 0.45)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, m.gutter * 0.45)
         .frame(maxWidth: .infinity)
         .toyBlock(fill: AppTheme.card, radius: m.buttonCorner, depth: m.shallowDepth, border: m.thinBorder + 0.5)
+    }
+
+    /// Eén helft van het scorebord: avatar buitenaan, naam boven de grote
+    /// stand. Wie aan de beurt is krijgt dezelfde ring als de chips.
+    private func versusSide(_ player: GamePlayer, mirrored: Bool) -> some View {
+        let isMine = player.id == currentPlayerID
+        let info = VStack(spacing: 0) {
+            Text(player.name)
+                .font(AppTheme.rounded(m.captionSize * 0.85, .bold))
+                .foregroundStyle(isMine ? AppTheme.ink : AppTheme.cardSoft)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+            Text("\(player.scorecard.total)")
+                .font(AppTheme.rounded(m.bodySize + 5))
+                .foregroundStyle(AppTheme.ink)
+                .contentTransition(.numericText())
+        }
+        .frame(maxWidth: .infinity)
+
+        return HStack(spacing: 6) {
+            if mirrored {
+                info
+                AvatarBadge(player: player, size: m.captionSize * 2.3)
+            } else {
+                AvatarBadge(player: player, size: m.captionSize * 2.3)
+                info
+            }
+        }
+        .padding(.horizontal, m.gutter * 0.35 + m.border)
+        .padding(.vertical, m.gutter * 0.15 + m.border)
+        .background(
+            RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
+                .fill(isMine ? AppTheme.tintCoral : .clear)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
+                .strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: m.border)
+        }
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "\(player.name), \(player.scorecard.total) punten")
+                + (isMine ? String(localized: ", aan de beurt") : "")
+        )
     }
 
     private func chip(for player: GamePlayer) -> some View {
