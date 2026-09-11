@@ -18,6 +18,10 @@ struct ScoreCellView: View {
 
     @Environment(\.metrics) private var m
     @State private var isFlashing = false
+    /// Net als de gooiknop: het vakje wisselt na een tik meteen naar de
+    /// vastgelegde staat, waardoor de klik van ToyButtonStyle wegvalt.
+    /// Daarom zakt het eerst zichtbaar in en volgt de score een tel later.
+    @State private var isPressBouncing = false
 
     var body: some View {
         if selectable {
@@ -28,7 +32,7 @@ struct ScoreCellView: View {
             ).score
 
             Button {
-                onSelect(category)
+                pressAndScore()
             } label: {
                 // Het plusje zegt wat het rode cijfer is: wat je erbíj zou
                 // krijgen, niet wat je hebt. Een nul dempt: zo gaat het oog
@@ -46,7 +50,8 @@ struct ScoreCellView: View {
                 fill: AppTheme.card,
                 radius: m.cellCorner,
                 depth: m.shallowDepth,
-                border: m.thinBorder
+                border: m.thinBorder,
+                forcePressed: isPressBouncing
             ))
             .accessibilityLabel(String(localized: "\(category.title), levert \(points) punten op"))
         } else {
@@ -77,6 +82,18 @@ struct ScoreCellView: View {
                     scored.map { String(localized: "\(category.title), \($0) punten") }
                         ?? String(localized: "\(category.title), leeg")
                 )
+        }
+    }
+
+    /// Eerst de klik laten zien, dan pas scoren: daarna wisselt de cel naar
+    /// de vastgelegde staat en licht hij mint op.
+    private func pressAndScore() {
+        guard !isPressBouncing else { return }
+        isPressBouncing = true
+        Task {
+            try? await Task.sleep(for: .milliseconds(120))
+            isPressBouncing = false
+            onSelect(category)
         }
     }
 }
