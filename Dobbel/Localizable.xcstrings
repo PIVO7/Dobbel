@@ -898,6 +898,22 @@
         }
       }
     },
+    "Als gast, zonder iets aan te maken": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As a guest, nothing to set up"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En invité, rien à créer"
+          }
+        }
+      }
+    },
     "Annuleer": {
       "localizations": {
         "en": {
@@ -1798,6 +1814,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Première partie"
+          }
+        }
+      }
+    },
+    "Eigen avatars, trofeeën en records": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your own avatars, trophies and records"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos propres avatars, trophées et records"
           }
         }
       }
@@ -3133,6 +3165,22 @@
         }
       }
     },
+    "Liever eigen avatars?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prefer your own avatars?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envie de vos propres avatars ?"
+          }
+        }
+      }
+    },
     "Lopend spel": {
       "localizations": {
         "en": {
@@ -3193,6 +3241,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Crée d'abord un joueur"
+          }
+        }
+      }
+    },
+    "Maak spelers aan": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create players"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créer des joueurs"
           }
         }
       }
@@ -3261,6 +3325,22 @@
         }
       }
     },
+    "Met een profiel onthoudt Dobbel wie er wint — met een eigen avatar, trofeeën en records.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With a profile, Dobbel remembers who wins — with your own avatar, trophies and records."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avec un profil, Dobbel retient qui gagne — avec son propre avatar, des trophées et des records."
+          }
+        }
+      }
+    },
     "Met grafiekje en gezinsrecords": {
       "localizations": {
         "en": {
@@ -3277,6 +3357,22 @@
         }
       }
     },
+    "Met twee gasten, zonder iets aan te maken": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With two guests, nothing to set up"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avec deux invités, rien à créer"
+          }
+        }
+      }
+    },
     "Met z'n vieren": {
       "localizations": {
         "en": {
@@ -3289,6 +3385,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "À quatre"
+          }
+        }
+      }
+    },
+    "Meteen spelen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play right away"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jouer tout de suite"
           }
         }
       }
