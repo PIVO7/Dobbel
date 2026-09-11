@@ -81,8 +81,8 @@ struct ScoreChipsView: View {
         .toyBlock(fill: AppTheme.card, radius: m.buttonCorner, depth: m.shallowDepth, border: m.thinBorder + 0.5)
     }
 
-    /// Eén helft van het scorebord: avatar buitenaan, naam boven de grote
-    /// stand. Wie aan de beurt is krijgt dezelfde ring als de chips.
+    /// Eén helft van het scorebord: de avatar staat groot en vrij aan de
+    /// buitenkant; de beurt-ring omvat alleen de naam met de stand.
     private func versusSide(_ player: GamePlayer, mirrored: Bool) -> some View {
         let isMine = player.id == currentPlayerID
         let info = VStack(spacing: 0) {
@@ -97,16 +97,6 @@ struct ScoreChipsView: View {
                 .contentTransition(.numericText())
         }
         .frame(maxWidth: .infinity)
-
-        return HStack(spacing: 6) {
-            if mirrored {
-                info
-                AvatarBadge(player: player, size: m.captionSize * 2.3)
-            } else {
-                AvatarBadge(player: player, size: m.captionSize * 2.3)
-                info
-            }
-        }
         .padding(.horizontal, m.gutter * 0.35 + m.border)
         .padding(.vertical, m.gutter * 0.15 + m.border)
         .background(
@@ -116,6 +106,16 @@ struct ScoreChipsView: View {
         .overlay {
             RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
                 .strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: m.border)
+        }
+
+        return HStack(spacing: 7) {
+            if mirrored {
+                info
+                AvatarBadge(player: player, size: m.captionSize * 3)
+            } else {
+                AvatarBadge(player: player, size: m.captionSize * 3)
+                info
+            }
         }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
