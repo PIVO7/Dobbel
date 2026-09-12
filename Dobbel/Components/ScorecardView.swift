@@ -197,8 +197,11 @@ struct ScorecardView: View {
                     .foregroundStyle(AppTheme.ink)
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
+                    // Geen beurtkleur hier: de roze cel was de enige
+                    // afwijkende in de kolom en brak het rustige raster.
+                    // Wie aan de beurt is, zie je al aan de ring bovenaan.
                     .toyBlock(
-                        fill: isMine ? AppTheme.tintCoral : AppTheme.sunk,
+                        fill: AppTheme.sunk,
                         radius: m.cellCorner,
                         depth: 0,
                         border: m.thinBorder

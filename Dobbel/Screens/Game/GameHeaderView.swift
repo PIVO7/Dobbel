@@ -78,7 +78,10 @@ struct ScoreChipsView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .toyBlock(fill: AppTheme.card, radius: m.buttonCorner, depth: m.shallowDepth, border: m.thinBorder + 0.5)
+        // Hemelsblauw in plaats van kaartwit: het scorebord, de statuschip
+        // en het blad waren drie witte balken op elkaar — een eigen tint
+        // geeft het scherm gelaagdheid en het bord zijn eigen gezicht.
+        .toyBlock(fill: AppTheme.tintSky, radius: m.buttonCorner, depth: m.shallowDepth, border: m.thinBorder + 0.5)
     }
 
     /// Eén helft van het scorebord: de avatar staat groot en vrij aan de

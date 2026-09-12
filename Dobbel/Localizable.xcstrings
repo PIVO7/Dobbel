@@ -3590,18 +3590,18 @@
         }
       }
     },
-    "Naam van je kind": {
+    "Naam van de speler": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Your child's name"
+            "value": "Player's name"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Prénom de l'enfant"
+            "value": "Nom du joueur"
           }
         }
       }

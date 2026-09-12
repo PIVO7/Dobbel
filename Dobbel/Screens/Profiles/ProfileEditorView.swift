@@ -127,12 +127,12 @@ struct ProfileEditorFormView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
                     TextField(
-                        "Naam van je kind",
+                        "Naam van de speler",
                         text: $name,
                         // Eigen promptkleur: de systeemplaceholder kleurt met
                         // het toestelschema mee en werd in donkere modus wit
                         // op de lichte kaart.
-                        prompt: Text("Naam van je kind").foregroundStyle(AppTheme.cardDim)
+                        prompt: Text("Naam van de speler").foregroundStyle(AppTheme.cardDim)
                     )
                     .textInputAutocapitalization(.words)
                     .submitLabel(.done)
