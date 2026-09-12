@@ -319,7 +319,8 @@ struct ScorecardView: View {
         }
         .padding(.horizontal, 3)
         .frame(width: m.iconWidth, height: m.rowHeight)
-        .toyBlock(fill: AppTheme.tintStone, radius: m.cellCorner, depth: 0, border: m.thinBorder)
+        // Zelfde tint als de categorievakjes: één ononderbroken labelkolom.
+        .toyBlock(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: 0, border: m.thinBorder)
     }
 
     /// Het voortgangsbalkje onder de bonusstand: hoe vol, hoe dichterbij.

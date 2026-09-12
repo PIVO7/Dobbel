@@ -43,13 +43,14 @@ struct CategoryIcon: View {
         category.faceValue ?? 6
     }
 
+    // Eén kleur voor álle categorievakjes: de gele ogen-kolom en de blauwe
+    // combikolom lazen als twee soorten vakjes, terwijl ze hetzelfde zeggen —
+    // hier staat wát je scoort. Alleen de Dobbel-ster houdt haar feestkleur.
     private var tint: Color {
-        if category == .dobbel { return AppTheme.tintCoral }
-        return category.isUpper ? AppTheme.tintAmber : AppTheme.tintSky
+        AppTheme.tintAmber
     }
 
     private var inkColor: Color {
-        if category == .dobbel { return AppTheme.coral }
-        return category.isUpper ? AppTheme.ink : AppTheme.sky
+        category == .dobbel ? AppTheme.coral : AppTheme.ink
     }
 }
