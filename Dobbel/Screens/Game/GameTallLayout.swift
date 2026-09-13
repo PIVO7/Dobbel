@@ -139,34 +139,39 @@ struct GameTopBar: View {
     @Environment(\.metrics) private var m
 
     var body: some View {
-        HStack(spacing: 8) {
+        // De teller staat in het échte midden van het scherm, niet in het
+        // midden van de restruimte naast de knoppen: zo valt hij in de as
+        // van het bord en het blad eronder, en staat hij stil wanneer het
+        // terugzet-knopje verschijnt of verdwijnt.
+        ZStack {
             RoundStripView(
                 roundNumber: engine.roundNumber,
-                totalRounds: ScoreCategory.allCases.count,
-                alignment: .leading
+                totalRounds: ScoreCategory.allCases.count
             )
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 4)
 
-            if engine.canUndoScore {
-                Button(action: actions.undo) {
-                    Label("Zet de vorige zet terug", systemImage: "arrow.uturn.backward")
+            HStack(spacing: 8) {
+                Spacer()
+
+                if engine.canUndoScore {
+                    Button(action: actions.undo) {
+                        Label("Zet de vorige zet terug", systemImage: "arrow.uturn.backward")
+                            .labelStyle(.iconOnly)
+                            .font(.system(size: m.captionSize + 2, weight: .black))
+                            .foregroundStyle(AppTheme.ink)
+                            .frame(width: m.tapTarget, height: m.tapTarget)
+                    }
+                    .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
+                }
+
+                Button(action: actions.leave) {
+                    Label("Spel verlaten", systemImage: "xmark")
                         .labelStyle(.iconOnly)
                         .font(.system(size: m.captionSize + 2, weight: .black))
                         .foregroundStyle(AppTheme.ink)
                         .frame(width: m.tapTarget, height: m.tapTarget)
                 }
-                .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
+                .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
             }
-
-            Button(action: actions.leave) {
-                Label("Spel verlaten", systemImage: "xmark")
-                    .labelStyle(.iconOnly)
-                    .font(.system(size: m.captionSize + 2, weight: .black))
-                    .foregroundStyle(AppTheme.ink)
-                    .frame(width: m.tapTarget, height: m.tapTarget)
-            }
-            .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
         }
     }
 }
