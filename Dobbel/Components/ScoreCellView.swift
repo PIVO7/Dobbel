@@ -34,13 +34,13 @@ struct ScoreCellView: View {
             Button {
                 pressAndScore()
             } label: {
-                // Het plusje zegt wat het rode cijfer is: wat je erbíj zou
-                // krijgen, niet wat je hebt. Een nul dempt: zo gaat het oog
-                // vanzelf naar de vakjes die iets opleveren, zonder dat het
-                // blad een keuze voorzegt.
+                // Het plusje zegt wat het groene cijfer is: wat je erbíj zou
+                // krijgen, niet wat je hebt. Ook +0 kleurt gewoon mee: een
+                // nul wegstrepen is soms de slimste zet, dus het blad doet
+                // niet alsof dat vakje minder telt.
                 Text(verbatim: "+\(points)")
                     .font(AppTheme.rounded(m.cellTextSize, .bold))
-                    .foregroundStyle(points == 0 ? AppTheme.cardDim : AppTheme.gain)
+                    .foregroundStyle(AppTheme.gain)
                     .frame(maxWidth: .infinity)
                     .frame(height: m.rowHeight)
             }

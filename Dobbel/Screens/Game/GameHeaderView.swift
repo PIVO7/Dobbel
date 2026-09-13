@@ -52,18 +52,17 @@ struct ScoreChipsView: View {
 
     var body: some View {
         Group {
-            // Met z'n tweeën een echt scorebord: avatars aan de buitenkant
-            // en de standen groot rond "VS", zoals op een sporttableau. Bij
-            // drie of vier spelers is daar geen plaats voor; dan blijven de
-            // compacte chips.
+            // Met z'n tweeën een echt scorebord: de standen groot rond "VS",
+            // zoals op een sporttableau. Bij drie of vier spelers is daar
+            // geen plaats voor; dan blijven de compacte chips.
             if players.count == 2 {
                 HStack(spacing: m.gutter * 0.5) {
-                    versusSide(players[0], mirrored: false)
+                    versusSide(players[0])
                     Text(verbatim: "VS")
                         .font(AppTheme.rounded(m.captionSize * 0.9))
                         .kerning(1)
                         .foregroundStyle(AppTheme.cardDim)
-                    versusSide(players[1], mirrored: true)
+                    versusSide(players[1])
                 }
                 .padding(.horizontal, m.gutter * 0.6)
                 .padding(.vertical, m.gutter * 0.3)
@@ -84,11 +83,13 @@ struct ScoreChipsView: View {
         .toyBlock(fill: AppTheme.tintSky, radius: m.buttonCorner, depth: m.shallowDepth, border: m.thinBorder + 0.5)
     }
 
-    /// Eén helft van het scorebord: de avatar staat groot en vrij aan de
-    /// buitenkant; de beurt-ring omvat alleen de naam met de stand.
-    private func versusSide(_ player: GamePlayer, mirrored: Bool) -> some View {
+    /// Eén helft van het scorebord: alleen de naam met de stand, met de
+    /// beurt-ring eromheen. De bolletjes staan al boven de kolommen van het
+    /// blad — dezelfde avatar twee keer vlak boven elkaar maakte het scherm
+    /// drukker zonder iets toe te voegen.
+    private func versusSide(_ player: GamePlayer) -> some View {
         let isMine = player.id == currentPlayerID
-        let info = VStack(spacing: 0) {
+        return VStack(spacing: 0) {
             Text(player.name)
                 .font(AppTheme.rounded(m.captionSize * 0.85, .bold))
                 .foregroundStyle(isMine ? AppTheme.ink : AppTheme.cardSoft)
@@ -110,17 +111,6 @@ struct ScoreChipsView: View {
             RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
                 .strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: m.border)
         }
-
-        return HStack(spacing: 7) {
-            if mirrored {
-                info
-                AvatarBadge(player: player, size: m.captionSize * 3)
-            } else {
-                AvatarBadge(player: player, size: m.captionSize * 3)
-                info
-            }
-        }
-        .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
             String(localized: "\(player.name), \(player.scorecard.total) punten")

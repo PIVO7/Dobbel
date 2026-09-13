@@ -59,7 +59,11 @@ struct ScorecardView: View {
         }
         .padding(.horizontal, m.gutter * 0.8)
         .padding(.vertical, m.gutter * 0.55)
-        .toyBlock(fill: AppTheme.card, radius: m.cardCorner, depth: m.depth, border: m.border)
+        // Hemelsblauw blad in plaats van kaartwit: op wit vielen de witte
+        // scorevakjes weg tegen hun eigen achtergrond. Op de blauwe
+        // ondergrond springen ze eruit als dé plekken waar iets te kiezen
+        // valt — het verschil dat kinderen op het bleke blad misten.
+        .toyBlock(fill: AppTheme.tintSky, radius: m.cardCorner, depth: m.depth, border: m.border)
         // Het uitlegbordje ligt midden op het blad, met een gedimde laag
         // eronder: bovenaan viel het wit-op-wit nauwelijks op. Een tik
         // waar dan ook stuurt het weg, en na een paar tellen gaat het
