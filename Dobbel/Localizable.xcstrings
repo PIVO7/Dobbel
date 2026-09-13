@@ -3364,6 +3364,22 @@
         }
       }
     },
+    "Meer spelers, thema's en spelvormen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More players, themes and game modes"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plus de joueurs, de thèmes et de modes de jeu"
+          }
+        }
+      }
+    },
     "Meeste Dobbels": {
       "localizations": {
         "en": {

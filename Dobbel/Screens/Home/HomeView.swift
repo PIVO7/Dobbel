@@ -7,6 +7,7 @@ struct HomeView: View {
     @Environment(\.metrics) private var m
     @State private var activeGame: ActiveGame?
     @State private var showSettings = false
+    @State private var showPaywall = false
 
     var body: some View {
         NavigationStack {
@@ -116,6 +117,51 @@ struct HomeView: View {
                             .frame(maxWidth: m.contentMaxWidth)
                             .frame(maxWidth: .infinity)
 
+                            // De Gezinsversie zat verstopt in de instellingen;
+                            // wie niet snuffelt, wist niet dat ze bestond. Een
+                            // eigen kaartje in dezelfde taal als de spelkaarten
+                            // zegt wat erin zit — en verdwijnt na aankoop.
+                            if !entitlements.isFamilyUnlocked {
+                                Button {
+                                    showPaywall = true
+                                } label: {
+                                    HStack(spacing: m.gutter * 0.8) {
+                                        Image(systemName: "star.fill")
+                                            .font(.system(size: m.bodySize, weight: .black))
+                                            .foregroundStyle(.white)
+                                            .frame(width: m.avatarSize * 0.75, height: m.avatarSize * 0.75)
+                                            .toyBlock(fill: AppTheme.amber, radius: m.cellCorner, depth: 0, border: m.thinBorder + 0.5)
+
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("Gezinsversie")
+                                                .font(AppTheme.rounded(m.bodySize))
+                                                .foregroundStyle(AppTheme.ink)
+                                            Text("Meer spelers, thema's en spelvormen")
+                                                .font(AppTheme.rounded(m.captionSize - 1, .bold))
+                                                .foregroundStyle(AppTheme.cardSoft)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.8)
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                                        Image(systemName: "chevron.right")
+                                            .font(.system(size: m.bodySize * 0.8, weight: .black))
+                                            .foregroundStyle(AppTheme.cardDim)
+                                    }
+                                    .padding(.horizontal, m.gutter * 0.8)
+                                    .padding(.vertical, m.gutter * 0.55)
+                                    // Botergeel met volle diepte, net als de
+                                    // spelkaarten: tussen de witte pillen moet
+                                    // dit kaartje juist opvallen.
+                                    .toyBlock(fill: AppTheme.tintAmber, radius: m.cardCorner, depth: m.depth, border: m.border)
+                                }
+                                .padding(.horizontal, m.gutter * 1.5)
+                                .padding(.top, m.gutter * 0.85)
+                                .frame(maxWidth: m.contentMaxWidth)
+                                .frame(maxWidth: .infinity)
+                                .accessibilityLabel(Text(verbatim: "\(String(localized: "Gezinsversie")), \(String(localized: "Meer spelers, thema's en spelvormen"))"))
+                            }
+
                             Spacer(minLength: 0)
 
                             // De tafel blijft vrij van knoppen: vaste marge
@@ -160,6 +206,10 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showSettings) {
                 SettingsView(entitlements: entitlements)
+                    .appMetrics()
+            }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView(entitlements: entitlements)
                     .appMetrics()
             }
             .fullScreenCover(item: $activeGame) { game in
