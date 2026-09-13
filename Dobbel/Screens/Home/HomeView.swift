@@ -150,10 +150,11 @@ struct HomeView: View {
                                     }
                                     .padding(.horizontal, m.gutter * 0.8)
                                     .padding(.vertical, m.gutter * 0.55)
-                                    // Botergeel met volle diepte, net als de
-                                    // spelkaarten: tussen de witte pillen moet
-                                    // dit kaartje juist opvallen.
-                                    .toyBlock(fill: AppTheme.tintAmber, radius: m.cardCorner, depth: m.depth, border: m.border)
+                                    // Mint met volle diepte: de enige
+                                    // gezinskleur die het startscherm nog
+                                    // niet gebruikt, dus dit kaartje is in
+                                    // één blik iets ánders dan de spelmodi.
+                                    .toyBlock(fill: AppTheme.tintMint, radius: m.cardCorner, depth: m.depth, border: m.border)
                                 }
                                 .padding(.horizontal, m.gutter * 1.5)
                                 .padding(.top, m.gutter * 0.85)
