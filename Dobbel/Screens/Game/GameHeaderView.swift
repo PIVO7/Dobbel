@@ -100,8 +100,10 @@ struct ScoreChipsView: View {
                 .foregroundStyle(AppTheme.ink)
                 .contentTransition(.numericText())
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, m.gutter * 0.35 + m.border)
+        // De chip sluit om naam en stand heen in plaats van de halve balk te
+        // vullen: een roze vlak van rand tot rand las als achtergrond, niet
+        // als markering van wie aan de beurt is.
+        .padding(.horizontal, m.gutter * 0.7 + m.border)
         .padding(.vertical, m.gutter * 0.15 + m.border)
         .background(
             RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
@@ -111,6 +113,7 @@ struct ScoreChipsView: View {
             RoundedRectangle(cornerRadius: m.cellCorner, style: .continuous)
                 .strokeBorder(isMine ? AppTheme.coral : .clear, lineWidth: m.border)
         }
+        .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
             String(localized: "\(player.name), \(player.scorecard.total) punten")

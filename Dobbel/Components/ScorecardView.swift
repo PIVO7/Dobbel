@@ -53,7 +53,10 @@ struct ScorecardView: View {
         // draait.
         let open = Set(openCategories)
 
-        return HStack(alignment: .top, spacing: m.gutter * 0.6) {
+        // Ruime kier tussen de twee helften: met een smalle spleet plakten
+        // de laatste kolom en de volgende iconenkolom aan elkaar, alsof het
+        // één doorlopend raster was.
+        return HStack(alignment: .top, spacing: m.gutter * 1.1) {
             column(categories: ScoreCategory.upper, showsBonus: true, open: open)
             column(categories: ScoreCategory.lower, showsBonus: false, open: open)
         }
