@@ -10,7 +10,7 @@ enum AppTheme {
 
     // Grond en inkt
     @MainActor static var cream: Color { palette.cream }
-    /// Kaarten, knoppen en dobbelstenen; wit behalve in het nachtthema.
+    /// Kaarten, knoppen en speelstukken; wit behalve in het nachtthema.
     @MainActor static var card: Color { palette.card }
     @MainActor static var ink: Color { palette.ink }
     /// Voor tekst die rechtstreeks op de achtergrond staat; wijkt alleen in

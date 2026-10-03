@@ -57,7 +57,7 @@ struct ProfileStatsView: View {
                     }
                 } else {
                     section("CIJFERS") {
-                        VStack(spacing: m.cellGap * 2) {
+                        VStack(spacing: m.gutter * 0.6) {
                             statRow(String(localized: "Gespeeld"), "\(profile.gamesPlayed)", icon: "die.face.5.fill")
                             statRow(String(localized: "Gewonnen"), "\(profile.wins)", icon: "crown.fill")
                         }
@@ -83,7 +83,7 @@ struct ProfileStatsView: View {
             ? Int((Double(profile.totalPoints) / Double(profile.gamesPlayed)).rounded())
             : nil
 
-        return VStack(spacing: m.cellGap * 2) {
+        return VStack(spacing: m.gutter * 0.6) {
             statRow(String(localized: "Gespeeld"), "\(profile.gamesPlayed)", icon: "die.face.5.fill")
             statRow(String(localized: "Gewonnen"), "\(profile.wins)", icon: "crown.fill")
             statRow(String(localized: "Gelijkgespeeld"), "\(profile.draws)", icon: "equal.circle.fill")
@@ -143,7 +143,7 @@ struct ProfileStatsView: View {
                     .padding(m.gutter)
                     .toyBlock(fill: AppTheme.card, radius: m.cardCorner, depth: m.depth, border: m.border)
             } else {
-                HStack(alignment: .bottom, spacing: m.cellGap * 1.5) {
+                HStack(alignment: .bottom, spacing: m.gutter * 0.45) {
                     ForEach(Array(games.enumerated()), id: \.offset) { index, game in
                         VStack(spacing: 4) {
                             if game.won {
@@ -184,14 +184,14 @@ struct ProfileStatsView: View {
     // MARK: - Trofeeën
 
     private var badgeColumns: [GridItem] {
-        Array(repeating: GridItem(.flexible(), spacing: m.cellGap * 2), count: sizeClass == .regular ? 4 : 3)
+        Array(repeating: GridItem(.flexible(), spacing: m.gutter * 0.6), count: sizeClass == .regular ? 4 : 3)
     }
 
     private func trophyCase(for profile: PlayerProfile) -> some View {
         let badges = ProfileBadge.collection(for: profile)
         let tints = [AppTheme.amber, AppTheme.mint, AppTheme.sky, AppTheme.coral]
 
-        return LazyVGrid(columns: badgeColumns, spacing: m.cellGap * 2) {
+        return LazyVGrid(columns: badgeColumns, spacing: m.gutter * 0.6) {
             ForEach(Array(badges.enumerated()), id: \.element.id) { index, badge in
                 VStack(spacing: 6) {
                     Image(systemName: badge.isEarned ? badge.icon : "lock.fill")
@@ -254,7 +254,7 @@ struct ProfileStatsView: View {
         let preview = Array((badges.filter(\.isEarned) + badges.filter { !$0.isEarned }).prefix(6))
 
         return VStack(spacing: m.gutter) {
-            LazyVGrid(columns: badgeColumns, spacing: m.cellGap * 2) {
+            LazyVGrid(columns: badgeColumns, spacing: m.gutter * 0.6) {
                 ForEach(preview) { badge in
                     Image(systemName: badge.isEarned ? badge.icon : "lock.fill")
                         .font(.system(size: m.bodySize + 4, weight: .black))

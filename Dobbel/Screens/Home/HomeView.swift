@@ -36,7 +36,8 @@ struct HomeView: View {
 
                                 ClothBandView(height: m.gutter * 0.6, lineWidth: m.border) {
                                     VStack(spacing: 8) {
-                                        Text("Dobbel!")
+                                        // De merknaam vertaalt niet mee.
+                                        Text(verbatim: "Dobbel!")
                                             .font(AppTheme.rounded(m.brandSize * 0.82))
                                             .foregroundStyle(AppTheme.ink)
                                             .minimumScaleFactor(0.6)
