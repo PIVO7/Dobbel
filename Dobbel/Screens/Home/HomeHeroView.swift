@@ -40,7 +40,9 @@ struct HomeHeroView: View {
             .background(
                 RoundedRectangle(cornerRadius: m.dieCorner * 1.15, style: .continuous)
                     .fill(AppTheme.ink)
-                    .offset(y: m.depth)
+                    // Ondiep, zoals de held van Raak en Memo: losse
+                    // speelstukken krijgen `shallowDepth`.
+                    .offset(y: m.shallowDepth)
             )
             .rotationEffect(.degrees(tilt))
     }

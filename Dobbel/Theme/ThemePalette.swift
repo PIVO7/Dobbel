@@ -5,7 +5,7 @@ import SwiftUI
 struct ThemePalette {
     /// De achtergrond van elk scherm.
     let cream: Color
-    /// Kaarten, knoppen en dobbelstenen. In de lichte thema's wit; in het
+    /// Kaarten, knoppen en speelstukken. In de lichte thema's wit; in het
     /// nachtthema warm papier, zodat de vlakken niet fel oplichten.
     let card: Color
     /// Randen, slagschaduwen en tekst óp kaarten. Blijft in elk thema
@@ -65,9 +65,9 @@ enum ThemeID: String, CaseIterable, Identifiable {
 
 extension ThemePalette {
     /// De tinten staan hier voller dan vroeger: het bleke geel, beige en
-    /// wit lazen op het scoreblad als één vlak. Botergeel voor de labels,
-    /// koel grijs voor lege vakjes en voller roze en blauw houden label,
-    /// leeg en beurt nu ook voor kinderogen uit elkaar.
+    /// wit lazen op de spelborden als één vlak. Botergeel, koel grijs en
+    /// voller roze en blauw houden de vlakken ook voor kinderogen uit
+    /// elkaar.
     static let klassiek = ThemePalette(
         cream: Color(red: 1.00, green: 0.98, blue: 0.95),
         card: .white,
@@ -136,7 +136,7 @@ extension ThemePalette {
         offInk: Color(red: 0.27, green: 0.35, blue: 0.35)
     )
 
-    /// Avondlicht in plaats van schel wit: de kaarten en het scoreblad zijn
+    /// Avondlicht in plaats van schel wit: de kaarten en de spelborden zijn
     /// warm papier met donkere inkt, zodat het spel leesbaar blijft zonder
     /// dat de vlakken uit het donker knallen. De tinten zijn een tikje
     /// gedempt en de tekst op de achtergrond juist lichter.

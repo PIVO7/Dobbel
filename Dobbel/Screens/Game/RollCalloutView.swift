@@ -11,13 +11,27 @@ struct RollCalloutView: View {
     @Environment(\.metrics) private var m
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    private var isDobbel: Bool { title == RollPhrase.dobbel }
+
     var body: some View {
         Text(title)
             .font(AppTheme.rounded(m.displaySize))
-            .foregroundStyle(title == RollPhrase.dobbel ? AppTheme.coral : AppTheme.headline)
+            .kerning(isDobbel ? 1.5 : 0)
+            .foregroundStyle(isDobbel ? AppTheme.card : AppTheme.headline)
             .multilineTextAlignment(.center)
             .minimumScaleFactor(0.7)
             .contentTransition(.opacity)
+            // DOBBEL! krijgt hetzelfde koraalrode blok als de uitroepen in
+            // Raak en Memo. Als achtergrond, zodat de regel even hoog blijft
+            // en het scherm niet verspringt.
+            .background {
+                if isDobbel {
+                    Color.clear
+                        .toyBlock(fill: AppTheme.coral, radius: m.cellCorner, depth: m.heroDepth, border: m.border)
+                        .padding(.horizontal, -m.gutter * 1.2)
+                        .padding(.vertical, -m.gutter * 0.25)
+                }
+            }
             .scaleEffect(isCelebrating && !reduceMotion ? 1.08 : 1)
             .frame(maxWidth: .infinity)
             .frame(minHeight: m.displaySize * 1.3)

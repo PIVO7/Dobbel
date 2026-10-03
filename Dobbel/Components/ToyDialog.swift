@@ -31,7 +31,7 @@ struct ToyDialog: View {
 
                 Text(message)
                     .font(AppTheme.rounded(m.bodySize * 0.94, .bold))
-                    // Gedempte inkt en niet `soft`: de kaart is altijd wit,
+                    // Gedempte inkt en niet `soft`: de kaart is altijd licht,
                     // maar soft is in het nachtthema licht.
                     .foregroundStyle(AppTheme.cardSoft)
                     .multilineTextAlignment(.center)
@@ -68,8 +68,8 @@ struct ToyDialog: View {
                 }
             }
             .padding(m.gutter * 1.4)
-            // Wit en niet cream: in het nachtthema is cream donker en zou de
-            // donkere inkt onleesbaar worden.
+            // De kaart in `card` en niet `cream`: in het nachtthema is cream
+            // donker en zou de inkt onleesbaar worden.
             .toyBlock(fill: AppTheme.card, radius: m.dialogCorner, depth: m.heroDepth, border: m.border)
             .frame(maxWidth: m.overlayMaxWidth * 0.82)
             .padding(m.gutter * 2)

@@ -155,8 +155,8 @@ struct ProfileEditorFormView: View {
 
             sectionTitle("SYMBOOL")
             LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: m.cellGap * 2), count: 6),
-                spacing: m.cellGap * 2
+                columns: Array(repeating: GridItem(.flexible(), spacing: m.gutter * 0.6), count: 6),
+                spacing: m.gutter * 0.6
             ) {
                 symbolCell(nil, label: String(localized: "Initialen"))
                 ForEach(Self.symbols, id: \.name) { symbol in
