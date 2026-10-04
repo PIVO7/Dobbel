@@ -33,6 +33,17 @@ final class StatsModelTests: XCTestCase {
         XCTAssertTrue(badges.allSatisfy { !$0.isEarned })
     }
 
+    func testMedalsGoFromBronzeToGold() {
+        let tiers = ProfileBadge.collection(for: profile(name: "Lene")).map(\.tier)
+        XCTAssertEqual(tiers.first, .brons)
+        XCTAssertEqual(tiers.last, .goud)
+        XCTAssertTrue(tiers.contains(.zilver))
+        // Nooit terug van goud naar brons verderop in de kast.
+        let order: [MedalTier] = [.brons, .zilver, .goud]
+        let ranks = tiers.compactMap { order.firstIndex(of: $0) }
+        XCTAssertEqual(ranks, ranks.sorted())
+    }
+
     func testBadgeThresholds() {
         let speler = profile(
             name: "Lene",
