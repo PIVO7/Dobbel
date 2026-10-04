@@ -40,7 +40,7 @@ Voor het taal-tabblad **French (France)** in App Store Connect (Frans-Canada nee
 > Pas de pub, pas de compte, pas besoin d'internet. Tout reste sur votre appareil. Point final.
 >
 > COMMENCEZ GRATUITEMENT, DÉBLOQUEZ UNE SEULE FOIS
-> Gratuitement, vous jouez à deux, contre Robbie, dans le thème classique. La version Famille, en un seul achat, débloque les parties à 3 ou 4 joueurs, les trois adversaires, les thèmes Bonbons, Océan et Nuit, et les statistiques par joueur — avec records et séries de victoires. Un achat pour toute la famille, via le partage familial. Le tout derrière un contrôle parental, pour que les petits doigts n'achètent rien par accident.
+> Gratuitement, vous jouez à deux, contre Robbie, dans le thème classique. La version Famille, en un seul achat, débloque les parties à 3 ou 4 joueurs, les trois adversaires, les thèmes Bonbon, Océan et Nuit, et les statistiques par joueur — avec records et séries de victoires. Un achat pour toute la famille, via le partage familial. Le tout derrière un contrôle parental, pour que les petits doigts n'achètent rien par accident.
 >
 > Attrapez les dés. Dobbel !
 

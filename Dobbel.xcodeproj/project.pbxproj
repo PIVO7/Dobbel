@@ -43,6 +43,7 @@
 		5E8B48DBD5C76C17923CA309 /* PassDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D5AD65F0631D89070200A4 /* PassDeviceView.swift */; };
 		5F2823DD0E92C24896E129C2 /* RoundStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B161FB2E1EA6D70AF3D576C /* RoundStripView.swift */; };
 		60911091725D7F71FFE88A2F /* ActiveGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E818F9037618DF377959570 /* ActiveGame.swift */; };
+		7EABEEA960A82C2620E683CD /* TileBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155DCB0DDAAC9C91BDF26D35 /* TileBadge.swift */; };
 		613F3F75144F02247504EE4B /* AvatarBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF866AA6025F88377488B50B /* AvatarBadge.swift */; };
 		624FC54EE0DC481957349468 /* ProfileStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AF74281F76AA0AC9D6DED /* ProfileStatsView.swift */; };
 		62DB8F5E072EB552B37DDFFE /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE51F3BBF7CB30781C204C8 /* SoundPlayer.swift */; };
@@ -196,6 +197,7 @@
 		BA087AD4156DF5828C988298 /* PlayerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHeaderView.swift; sourceTree = "<group>"; };
 		BB7421877E483BC1C2CD6972 /* ToyBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToyBlock.swift; sourceTree = "<group>"; };
 		BCA262A58708B045C0D3CE7D /* GameSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSnapshot.swift; sourceTree = "<group>"; };
+		155DCB0DDAAC9C91BDF26D35 /* TileBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileBadge.swift; sourceTree = "<group>"; };
 		BF866AA6025F88377488B50B /* AvatarBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarBadge.swift; sourceTree = "<group>"; };
 		BFA576E1403CCA19E282FC00 /* ScorecardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorecardView.swift; sourceTree = "<group>"; };
 		C000DB53EE34B5256E116BAD /* Dobbel Tests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = "Dobbel Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -389,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				BF866AA6025F88377488B50B /* AvatarBadge.swift */,
+				155DCB0DDAAC9C91BDF26D35 /* TileBadge.swift */,
 				12310349453C40F84AE1E412 /* CategoryExplainerChip.swift */,
 				48DD8B33444F289A8F7E2BB3 /* CategoryIcon.swift */,
 				01F85C8909FE03943F01D950 /* ConfettiView.swift */,
@@ -611,6 +614,7 @@
 				583B9BDCB560BF1A88D27A16 /* AppMetrics.swift in Sources */,
 				79E57406D5C95501CF02C51C /* AppTheme.swift in Sources */,
 				613F3F75144F02247504EE4B /* AvatarBadge.swift in Sources */,
+				7EABEEA960A82C2620E683CD /* TileBadge.swift in Sources */,
 				7C0FF68766F9012CFB7B70D5 /* CategoryExplainerChip.swift in Sources */,
 				B790A92AB740FC66281C9055 /* CategoryIcon.swift in Sources */,
 				EE4B776CC5E7F0732A40C652 /* CelebrationBurstView.swift in Sources */,
