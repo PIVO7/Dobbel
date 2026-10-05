@@ -23,8 +23,9 @@ struct GameWideLayout: View {
     @State private var board: (height: CGFloat, scale: CGFloat)?
 
     /// Op een krappe iPad mini mag het blad een fractie krimpen, op een grote
-    /// iPad groeit het mee tot de onderrand.
-    private static let boardScaleRange: ClosedRange<CGFloat> = 0.85...1.5
+    /// iPad groeit het mee tot de onderrand. Een liggende 13-inch heeft
+    /// zo'n 1,7 nodig; met 1,5 als plafond bleef er onderaan een strook leeg.
+    private static let boardScaleRange: ClosedRange<CGFloat> = 0.85...1.8
 
     private var columnWidth: CGFloat {
         max(availableWidth * 0.42 - m.gutter, 320)
@@ -137,7 +138,6 @@ struct GameWideLayout: View {
                 roundNumber: engine.roundNumber,
                 totalRounds: ScoreCategory.allCases.count
             )
-            .padding(.top, m.gutter * 0.5)
 
             Spacer(minLength: 8)
 
