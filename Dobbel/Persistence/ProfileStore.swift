@@ -35,16 +35,16 @@ final class ProfileStore {
         profiles.filter { !$0.isComputer }.sorted { $0.createdAt < $1.createdAt }
     }
 
-    /// Geeft het nieuwe profiel terug, zodat de UI meteen de avatarkiezer
-    /// kan openen.
+    /// Geeft het nieuwe profiel terug, of nil bij een lege naam.
     @discardableResult
-    func addProfile(name: String, colorIndex: Int? = nil, symbol: String? = nil) {
+    func addProfile(name: String, colorIndex: Int? = nil, symbol: String? = nil) -> PlayerProfile? {
         let trimmed = cleaned(name)
-        guard !trimmed.isEmpty else { return }
+        guard !trimmed.isEmpty else { return nil }
         let color = colorIndex ?? profiles.count % PlayerProfile.avatarPaletteCount
         let profile = PlayerProfile(name: trimmed, avatarColorIndex: color, avatarSymbol: symbol)
         profiles.append(profile)
         save()
+        return profile
     }
 
     func renameProfile(id: UUID, to name: String) {
