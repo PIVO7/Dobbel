@@ -143,6 +143,36 @@ struct AppMetrics {
         return copy
     }
 
+    /// Het deel van het scoreblad dat met `boardScaled(by:)` meegroeit: per
+    /// kolom acht rijen met hun tussenruimte. Kopje en randen blijven gelijk.
+    var boardRowsHeight: CGFloat {
+        8 * (rowHeight + cellGap)
+    }
+
+    /// Het scoreblad een fractie groter of kleiner, zodat het precies de
+    /// hoogte vult die het spelscherm ervoor over heeft.
+    func boardScaled(by factor: CGFloat) -> AppMetrics {
+        guard factor != 1 else { return self }
+        var copy = self
+        copy.rowHeight *= factor
+        copy.iconWidth *= factor
+        copy.cellTextSize *= factor
+        copy.cellGap *= factor
+        return copy
+    }
+
+    /// De schaal waarbij het blad de vrije ruimte precies opvult. `slack` is
+    /// wat er bij schaal `current` over (positief) of te kort (negatief) was;
+    /// het meegroeiende deel is lineair in de schaal, dus één stap volstaat.
+    func boardScale(
+        from current: CGFloat,
+        slack: CGFloat,
+        in range: ClosedRange<CGFloat>
+    ) -> CGFloat {
+        let next = current + slack / boardRowsHeight
+        return min(max(next, range.lowerBound), range.upperBound)
+    }
+
     /// Laat de maten meegroeien met de tekstgrootte van de gebruiker. Drie
     /// snelheden, want niet alles kan even hard groeien:
     ///

@@ -25,8 +25,22 @@ struct GameTallLayout: View {
         return base
     }
 
+    /// Hoeveel het scoreblad meegroeit om de schermhoogte te vullen. Zonder
+    /// dit bleef er op een iPad in portret een gat boven het scorebord en
+    /// een gat onder het blad, waardoor alles leek te zweven.
+    @State private var boardScale: CGFloat = 1
+
+    /// Tot hier groeit het blad; wat daarna nog over is, komt tussen het blad
+    /// en de stenen.
+    private static let boardScaleRange: ClosedRange<CGFloat> = 1...1.35
+
     var body: some View {
         GeometryReader { geo in
+            let metrics = boosted(for: geo.size.height)
+            // Vastgelegd bij deze tekenbeurt, zodat de meting hieronder weet
+            // bij welke schaal de vrije ruimte hoorde.
+            let scale = boardScale
+
             ScrollView {
                 VStack(spacing: 0) {
                     GameTopBar(engine: engine, actions: actions)
@@ -36,16 +50,28 @@ struct GameTallLayout: View {
                         engine: engine,
                         actions: actions,
                         isCelebrating: isCelebrating,
-                        metrics: m
+                        metrics: metrics,
+                        boardScale: scale,
+                        onSlack: { slack in
+                            let next = metrics.boardScale(from: scale, slack: slack, in: Self.boardScaleRange)
+                            if abs(next - boardScale) > 0.002 {
+                                boardScale = next
+                            }
+                        }
                     )
                 }
                 .padding(.horizontal, m.gutter)
                 .frame(maxWidth: m.contentMaxWidth)
                 .frame(maxWidth: .infinity)
                 .frame(minHeight: geo.size.height)
-                .environment(\.metrics, boosted(for: geo.size.height))
+                .environment(\.metrics, metrics)
             }
             .scrollBounceBehavior(.basedOnSize)
+            // Een andere hoogte (Split View, Stage Manager) begint opnieuw
+            // vanaf de gewone maat en meet dan opnieuw.
+            .onChange(of: geo.size.height) { _, _ in
+                boardScale = 1
+            }
         }
         // De gooiknop blijft onderaan staan, ook als het scoreblad bij een
         // grote tekstinstelling langer wordt dan het scherm.
@@ -70,24 +96,28 @@ struct GameTallLayout: View {
     /// De middenmoot tussen rondestrook en gooiknop. Eén plek voor de
     /// volgorde van worp, melding en scoreblad; de render-rooktest stapelt
     /// precies dit, zodat een render altijd de echte indeling toont.
+    ///
+    /// `onSlack` krijgt de ruimte die tussen blad en stenen over is boven de
+    /// vaste marge; daarmee laat de indeling het blad meegroeien.
     @ViewBuilder
     static func contentStack(
         engine: GameEngine,
         actions: GameActions,
         isCelebrating: Bool,
-        metrics m: AppMetrics
+        metrics m: AppMetrics,
+        boardScale: CGFloat = 1,
+        onSlack: ((CGFloat) -> Void)? = nil
     ) -> some View {
-        // Flexibel: op een hoog scherm spreidt de inhoud zich uit, op een
-        // klein scherm of bij grote tekst krimpen deze tussenruimtes tot
-        // hun minimum en schuift de rest.
-        Spacer(minLength: m.gutter * 0.5)
+        let gap = m.gutter * 0.75
 
-        // De tussenstand vlak boven het blad dat hij samenvat; de
-        // rondeteller is naar de bovenrand verhuisd.
+        // De tussenstand vlak onder de rondestrook en boven het blad dat hij
+        // samenvat: een vaste afstand, zodat het scorebord niet meer los in
+        // de ruimte hangt.
         ScoreChipsView(
             players: engine.players,
             currentPlayerID: engine.currentPlayer.id
         )
+        .padding(.top, gap)
         .padding(.bottom, m.gutter * 0.3)
 
         // Wat er nú moet gebeuren, vlak boven het blad waar getikt wordt.
@@ -109,8 +139,17 @@ struct GameTallLayout: View {
             lastPlaced: engine.lastPlaced,
             onSelect: actions.score
         )
+        .environment(\.metrics, m.boardScaled(by: boardScale))
 
-        Spacer(minLength: m.gutter * 0.5)
+        // De enige rekbare ruimte: de indeling meet hem en laat het blad
+        // groeien tot hij op zijn minimum staat. Op een klein scherm of bij
+        // grote tekst blijft het minimum en schuift de rest.
+        Spacer(minLength: gap)
+            .onGeometryChange(for: CGFloat.self) { proxy in
+                proxy.size.height
+            } action: { height in
+                onSlack?(height - gap)
+            }
 
         RollCalloutView(
             title: engine.calloutTitle,
@@ -149,28 +188,13 @@ struct GameTopBar: View {
                 totalRounds: ScoreCategory.allCases.count
             )
 
-            HStack(spacing: 8) {
+            HStack(spacing: 0) {
                 Spacer()
-
-                if engine.canUndoScore {
-                    Button(action: actions.undo) {
-                        Label("Zet de vorige zet terug", systemImage: "arrow.uturn.backward")
-                            .labelStyle(.iconOnly)
-                            .font(.system(size: m.captionSize + 2, weight: .black))
-                            .foregroundStyle(AppTheme.ink)
-                            .frame(width: m.tapTarget, height: m.tapTarget)
-                    }
-                    .buttonStyle(ToyButtonStyle(fill: AppTheme.tintAmber, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
-                }
-
-                Button(action: actions.leave) {
-                    Label("Spel verlaten", systemImage: "xmark")
-                        .labelStyle(.iconOnly)
-                        .font(.system(size: m.captionSize + 2, weight: .black))
-                        .foregroundStyle(AppTheme.ink)
-                        .frame(width: m.tapTarget, height: m.tapTarget)
-                }
-                .buttonStyle(ToyButtonStyle(fill: AppTheme.card, radius: m.cellCorner, depth: m.shallowDepth, border: m.thinBorder))
+                GameCornerButtons(
+                    canUndo: engine.canUndoScore,
+                    onUndo: actions.undo,
+                    onLeave: actions.leave
+                )
             }
         }
     }
