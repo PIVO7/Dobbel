@@ -1,13 +1,9 @@
 import SwiftUI
 
-/// De stand van alle spelers op één regel, met de sluitknop ernaast. Wie aan
-/// de beurt is krijgt een gekleurde chip met zijn bolletje — een kleurtje in
-/// de naam alleen bleek te subtiel.
-struct GameHeaderView: View {
-    let players: [GamePlayer]
-    let currentPlayerID: UUID
-    /// Alleen waar zolang de vorige zet nog terug mag; dan verschijnt het
-    /// terugzet-knopje naast de sluitknop, weg uit het speelveld.
+/// Het terugzet- en sluitknopje rechtsboven, in beide indelingen gelijk.
+/// Het terugzet-knopje verschijnt alleen zolang de vorige zet nog terug mag,
+/// weg uit het speelveld.
+struct GameCornerButtons: View {
     let canUndo: Bool
     let onUndo: () -> Void
     let onLeave: () -> Void
@@ -16,8 +12,6 @@ struct GameHeaderView: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            ScoreChipsView(players: players, currentPlayerID: currentPlayerID)
-
             if canUndo {
                 Button(action: onUndo) {
                     Label("Zet de vorige zet terug", systemImage: "arrow.uturn.backward")
@@ -158,8 +152,11 @@ struct ScoreChipsView: View {
     let lene = GamePlayer(profile: PlayerProfile(name: "Lene", avatarColorIndex: 0))
     let ellis = GamePlayer(profile: PlayerProfile(name: "Ellis", avatarColorIndex: 1))
 
-    GameHeaderView(players: [lene, ellis], currentPlayerID: lene.id, canUndo: true, onUndo: {}, onLeave: {})
-        .padding()
-        .background(AppTheme.cream)
-        .appMetrics()
+    HStack(spacing: 8) {
+        ScoreChipsView(players: [lene, ellis], currentPlayerID: lene.id)
+        GameCornerButtons(canUndo: true, onUndo: {}, onLeave: {})
+    }
+    .padding()
+    .background(AppTheme.cream)
+    .appMetrics()
 }
